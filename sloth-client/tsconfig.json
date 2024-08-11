@@ -17,10 +17,10 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "paths": {
-      "sloth-http": [
+      "@sloth-http": [
         "./dist/sloth-http"
       ],
-      "sloth-ui": [
+      "@sloth-ui": [
         "./dist/sloth-ui"
       ]
     },

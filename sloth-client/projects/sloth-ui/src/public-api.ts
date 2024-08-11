@@ -2,5 +2,8 @@
  * Public API Surface of sloth-ui
  */
 
-export * from './lib/sloth-ui.service';
-export * from './lib/sloth-ui.component';
+// components
+export * from './lib/navigation/main-navigation-button/main-navigation-button.component';
+
+// models
+export * from './lib/models/main-navigation.model'

@@ -1,0 +1,1 @@
+export type ICON_TYPES = 'fas' | 'far';

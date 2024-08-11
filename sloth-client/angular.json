@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "yarn"
+  },
   "newProjectRoot": "projects",
   "projects": {
     "sloth": {
@@ -12,7 +15,7 @@
       },
       "root": "projects/sloth",
       "sourceRoot": "projects/sloth/src",
-      "prefix": "app",
+      "prefix": "sl",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -20,9 +23,7 @@
             "outputPath": "dist/sloth",
             "index": "projects/sloth/src/index.html",
             "browser": "projects/sloth/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": [],
             "tsConfig": "projects/sloth/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -78,10 +79,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": [],
             "tsConfig": "projects/sloth/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -98,11 +96,16 @@
         }
       }
     },
-    "sloth-ui": {
+    "@sloth-ui": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "projects/sloth-ui",
       "sourceRoot": "projects/sloth-ui/src",
-      "prefix": "lib",
+      "prefix": "sl",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -123,19 +126,21 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/sloth-ui/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": []
           }
         }
       }
     },
-    "sloth-http": {
+    "@sloth-http": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "projects/sloth-http",
       "sourceRoot": "projects/sloth-http/src",
-      "prefix": "lib",
+      "prefix": "sl",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -156,10 +161,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/sloth-http/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": []
           }
         }
       }

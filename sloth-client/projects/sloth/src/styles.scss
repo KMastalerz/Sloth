@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --sloth-font: "Inter", sans-serif;
+}
+
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--sloth-font) !important;
+    font-weight: 300;
+}
+
+html {
+    /* Reset base pixels to set new rem base */
+    /* 10px / 16px = 0.625*/
+    /* Procentage of users browser font-size setting */
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    line-height: 1;
+    color: var(--on-background);
+    overflow-x: hidden;
+    font-size: var(--font-size);
+}
+
+*:focus {
+    outline: none;
+}
+
+::placeholder {
+    color: var(--on-background);
+    opacity: 0.7; 
+  }
