@@ -1,41 +1,38 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "cli": {
-    "packageManager": "yarn"
-  },
   "newProjectRoot": "projects",
   "projects": {
-    "sloth-client": {
+    "sloth": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/sloth",
+      "sourceRoot": "projects/sloth/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/sloth-client",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
+            "outputPath": "dist/sloth",
+            "index": "projects/sloth/src/index.html",
+            "browser": "projects/sloth/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "projects/sloth/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/sloth/public"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/sloth/src/styles.scss"
             ],
             "scripts": []
           },
@@ -67,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sloth-client:build:production"
+              "buildTarget": "sloth:build:production"
             },
             "development": {
-              "buildTarget": "sloth-client:build:development"
+              "buildTarget": "sloth:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,18 +82,84 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "projects/sloth/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/sloth/public"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/sloth/src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "sloth-ui": {
+      "projectType": "library",
+      "root": "projects/sloth-ui",
+      "sourceRoot": "projects/sloth-ui/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/sloth-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sloth-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/sloth-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/sloth-ui/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "sloth-http": {
+      "projectType": "library",
+      "root": "projects/sloth-http",
+      "sourceRoot": "projects/sloth-http/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/sloth-http/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sloth-http/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/sloth-http/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/sloth-http/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

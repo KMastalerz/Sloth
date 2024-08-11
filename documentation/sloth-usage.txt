@@ -1,0 +1,3 @@
+--build documentation and like documents to functionalities within application/applications
+--create list of products/tasks within company, to track progres, kpi etc. 
+--create templated tasks that will be created automatically on weekly, daily or monthly basis. 

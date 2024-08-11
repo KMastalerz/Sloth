@@ -16,6 +16,14 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
+    "paths": {
+      "sloth-http": [
+        "./dist/sloth-http"
+      ],
+      "sloth-ui": [
+        "./dist/sloth-ui"
+      ]
+    },
     "target": "ES2022",
     "module": "ES2022",
     "lib": [
