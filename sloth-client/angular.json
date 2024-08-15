@@ -23,7 +23,9 @@
             "outputPath": "dist/sloth",
             "index": "projects/sloth/src/index.html",
             "browser": "projects/sloth/src/main.ts",
-            "polyfills": [],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/sloth/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -35,7 +37,8 @@
             "styles": [
               "projects/sloth/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -79,7 +82,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/sloth/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -126,7 +131,9 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/sloth-ui/tsconfig.spec.json",
-            "polyfills": []
+            "polyfills": [
+              "zone.js"
+            ]
           }
         }
       }
@@ -161,7 +168,9 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/sloth-http/tsconfig.spec.json",
-            "polyfills": []
+            "polyfills": [
+              "zone.js"
+            ]
           }
         }
       }

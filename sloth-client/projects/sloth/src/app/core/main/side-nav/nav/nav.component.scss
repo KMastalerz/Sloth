@@ -1,0 +1,68 @@
+.sl-nav-link {
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--gray-600);
+}
+
+.sl-nav-link:hover {
+    color: var(--primary);
+}
+
+.sl-nav-icon {
+    font-family: "Material Symbols Outlined" !important;
+    font-size: var(--font-size-lg);
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+.sl-nav-text {
+    overflow: hidden;
+    font-size: var(--font-size-xs);
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    padding: var(--space-xxs) 0;
+}
+
+.sl-nav-count {
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--info-light);
+    color: var(--gray-100);
+    font-weight: 600;
+    font-size: 0.8rem;
+    align-self: center;
+}
+.sl-badge-err {
+    .mat-badge-content {
+        background-color: var(--error-light);
+    }
+}
+
+.sl-count-err {
+    background-color: var(--error-light);
+}
+
+.sl-badge-warn {
+    .mat-badge-content {
+        background-color: var(--warning-light);
+    }
+}
+
+.sl-count-warn {
+    background-color: var(--warning-light);
+}
+
+.mat-badge-content {
+    background:  var(--info-light);
+}

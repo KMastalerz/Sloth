@@ -1,0 +1,29 @@
+<nav [class]="{
+        'sl-side-nav-exp': collapsed() === false,
+        'sl-side-nav-col': collapsed() === true
+    }"
+    class="sl-side-nav">
+    <div>
+        <sl-header [collapsed]="collapsed()"/>
+    </div>
+    <div class="sl-side-nav-buttons">
+        <span>Main</span>
+        <sl-nav [nav]="dashboard()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="critical()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="bugs()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="projects()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="tasks()" [collapsed]="collapsed()"/>
+        <span>Info</span>
+        <sl-nav [nav]="documentation()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="releases()" [collapsed]="collapsed()"/>
+        <span>User</span>
+        <sl-nav [nav]="messages()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="timesheet()" [collapsed]="collapsed()"/>
+        <sl-nav [nav]="settings()" [collapsed]="collapsed()"/>
+    </div>
+    <button class="sl-side-nav-toggle" (click)="toggle()"> 
+        <span>{{ toggleIcon() }}</span>
+    </button>
+</nav>
+
+

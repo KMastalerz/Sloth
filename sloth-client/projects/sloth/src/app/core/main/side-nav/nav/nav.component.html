@@ -1,0 +1,27 @@
+<a class="sl-nav-link">
+    @if(collapsed()) {
+         <span  [class]="{
+                    'sl-badge-warn': warningCount() === true,
+                    'sl-badge-err': errorCount() === true
+                }" 
+                [matBadge]="nav().count" 
+                [matBadgeHidden]="!nav().count"
+                [matTooltip]="nav().text" 
+                matTooltipPosition="right" 
+                class="sl-nav-icon">{{ nav().icon }}</span> 
+    }
+    @else {
+        <span class="sl-nav-icon">{{ nav().icon }}</span>
+    }
+
+    @if(!collapsed()) {
+        <span class="sl-nav-text">{{ nav().text }}</span>
+    }
+
+    @if(!collapsed() && nav().count) {
+        <p [class]="{
+            'sl-count-warn': warningCount() === true,
+            'sl-count-err': errorCount() === true
+        }" class="sl-nav-count"> {{ nav().count }}</p>
+    }
+</a>

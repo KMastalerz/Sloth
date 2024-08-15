@@ -1,10 +1,111 @@
-/* You can add global styles to this file, and also import other style files */
+// get angular-material styles
+@use '@angular/material' as mat;
+@import "@angular/material/prebuilt-themes/azure-blue.css";
+@include mat.core();
+
+$material-icons-font-path: './' !default;
+$material-icons-font-size: 24px !default;
+$material-icons-font-display: block !default;
+
 :root {
-    --sloth-font: "Inter", sans-serif;
+    --sloth-font: "Work Sans", sans-serif;
+
+    --nav-exp: 18rem;
+    --nav-col: 4rem;
+
+    /* Primary color and its shades/tints */
+    --primary: #3f51b5; /* Primary */
+    --primary-light: #6574C4; /* Primary light */
+    --primary-dark: #202346; /* Primary dark */
+    --primary-100: #7985CB; /* Very light */
+    --primary-300: #5262BC; /* Slightly lighter */
+    --primary-700: #35418e; /* Slightly darker */
+    --primary-900: #151525; /* Very dark */
+
+    /* Secondary color and its shades/tints */
+    --secondary: #3fb568; /* Secondary */
+    --secondary-light: #65C486; /* Secondary light */
+    --secondary-dark: #21462c; /* Secondary dark */
+    --secondary-100: #79CB95; /* Very light */
+    --secondary-300: #52BC77; /* Slightly lighter */
+    --secondary-700: #368e53; /* Slightly darker */
+    --secondary-900: #162519; /* Very dark */
+
+    /* Error color */
+    --error: #b41c2b;
+    --error-light: #CB606B;
+    --error-dark: #6C111A;
+
+    /* Warning color */
+    --warning: #cc8800;
+    --warning-light: #DBAC4D;
+    --warning-dark: #7A5200;
+
+    /* Info color */
+    --info: #388cfa;
+    --info-light: #74AFFC;
+    --info-dark: #225496;
+
+    /* Success color */
+    --success: #009f42;
+    --success-light: #4DBC7B;
+    --success-dark: #005F28;
+
+    /* Neutral/Grays */
+    --gray-000: #FFFFFF;
+    --gray-100: #EFEFEF;
+    --gray-200: #CFCFCF;
+    --gray-300: #5E5E5E;
+    --gray-400: #555555;
+    --gray-500: #424242;
+    --gray-600: #303030;
+    --gray-700: #262626;
+    --gray-800: #1C1C1C;
+    --gray-900: #090909;
+
+    /* Spacing (gap, padding, margin) */
+    --space-xxs: 0.4rem;  
+    --space-xs: 0.8rem;   
+    --space-sm: 1.2rem;  
+    --space-md: 1.6rem;  
+    --space-lg: 2.4rem;   
+    --space-xl: 3.2rem;   
+    --space-xxl: 4.8rem; 
+
+    /* Font Sizes */
+    --font-size-xxs: 1.0rem;  
+    --font-size-xs: 1.2rem;
+    --font-size-sm: 1.4rem;  
+    --font-size-md: 1.6rem;  
+    --font-size-lg: 2.0rem;  
+    --font-size-xl: 2.4rem;  
+    --font-size-xxl: 3.2rem; 
+    --font-size-xxxl: 4.0rem; 
+
+    /* Icon Sizes */
+    --icon-size-xs: 1.6rem;   
+    --icon-size-sm: 2.0rem;  
+    --icon-size-md: 2.4rem;   
+    --icon-size-lg: 3.2rem;   
+    --icon-size-xl: 4.0rem;   
+
+    /* Border Widths */
+    --border-width-thin: 0.1rem; 
+    --border-width-md: 0.2rem;   
+    --border-width-thick: 0.4rem; 
+
+    /* Border Radius */
+    --border-radius-sm: 0.4rem;  
+    --border-radius-md: 0.8rem;  
+    --border-radius-lg: 1.6rem;  
+    --border-radius-pill: 5rem;  
+
+    /* Component Heights */
+    --height-sm: 3.2rem;   
+    --height-md: 4.0rem;   
+    --height-lg: 4.8rem;  
+    --height-xl: 6.4rem;   
 }
-
-
-
 
 * {
     padding: 0;
@@ -15,10 +116,8 @@
 }
 
 html {
-    /* Reset base pixels to set new rem base */
-    /* 10px / 16px = 0.625*/
-    /* Procentage of users browser font-size setting */
-    font-size: 62.5%;
+    // for now lets not reset
+    // font-size: 62.5%;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -30,6 +129,12 @@ body {
     font-size: var(--font-size);
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 *:focus {
     outline: none;
 }
@@ -37,4 +142,8 @@ body {
 ::placeholder {
     color: var(--on-background);
     opacity: 0.7; 
-  }
+}
+
+.sl-icon {
+    font-family: "Material Icons" !important;
+}
