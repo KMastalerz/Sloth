@@ -2,9 +2,11 @@
  * Public API Surface of sloth-ui
  */
 
-// serivces
-export * from './lib/services/icon-library/icon-library.service';
-
 // constants
-export * from './lib/icons/sl-icons.class';
+export * from './lib/icons/sloth.icon';
 
+// constols 
+export * from './lib/controls/side-nav/side-nav.component';
+
+// models
+export * from './lib/models/side-nav.model'

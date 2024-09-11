@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'sl-base-control',
@@ -6,7 +6,5 @@ import { Component, input, OnInit } from '@angular/core';
   template: ``
 })
 export class BaseControlComponent {
-  
   config = input.required<any>()
-
 }

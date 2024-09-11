@@ -1,4 +1,5 @@
-export interface NavConfig {
+export interface SideNavConfig {
+    id: string,
     text: string,
     icon: string;
     count?: number;

@@ -1,0 +1,53 @@
+<nav class="sl-side-nav" [class]="{
+    'sl-side-nav-expanded': !collapsed(),
+    'sl-side-nav-collapsed': collapsed(),
+}">
+    <button class="sl-side-nav-toggle" (click)="onToggleExpander()"> 
+        <span>{{ toggleIcon() }}</span>
+    </button>
+
+    @if(hasMainNavigation()) {
+        @if(!collapsed()){
+            <span>Main</span>
+        }
+        @for(nav of mainNavigations(); track $index) {
+            <sl-side-nav 
+            [collapsed]="collapsed()"
+            [icon]="nav.icon"
+            [text]="nav.text"
+            [count]="nav.count ?? 0"
+            [warningCount]="nav.warningCount ?? null"
+            [errorCount]="nav.errorCount ?? null"/>
+        }
+    }
+
+    @if(hasUserNavigations()) {
+        @if(!collapsed()){
+            <span>User</span>
+        }
+        @for(nav of userNavigations(); track $index) {
+            <sl-side-nav 
+            [collapsed]="collapsed()"
+            [icon]="nav.icon"
+            [text]="nav.text"
+            [count]="nav.count ?? 0"
+            [warningCount]="nav.warningCount ?? null"
+            [errorCount]="nav.errorCount ?? null"/>
+        }
+    }
+    
+    @if(hasSettingsNavigations()) {
+        @if(!collapsed()){
+            <span>Settings</span>
+        }
+        @for(nav of settingsNavigations(); track $index) {
+            <sl-side-nav
+            [collapsed]="collapsed()"
+            [icon]="nav.icon"
+            [text]="nav.text"
+            [count]="nav.count ?? 0"
+            [warningCount]="nav.warningCount ?? null"
+            [errorCount]="nav.errorCount ?? null"/>
+        }
+    }
+</nav>

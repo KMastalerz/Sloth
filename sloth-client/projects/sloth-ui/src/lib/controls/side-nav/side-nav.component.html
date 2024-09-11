@@ -1,0 +1,26 @@
+<a #navLink class="sl-nav-link" 
+            [class]="{
+                'sl-count-info': type() === 'info',
+                'sl-count-warning': type() === 'warn',
+                'sl-count-error': type() === 'err',
+                'sl-nav-collapsed': collapsed()
+            }">
+    <span   [class]="{
+                'sl-badge-warning': type() === 'warn',
+                'sl-badge-error': type() === 'err'
+            }" 
+            class="sl-nav-icon"
+            [matBadge]="count()" 
+            [matBadgeHidden]="hideBagde()"
+            [matTooltip]="text()"
+            matTooltipPosition="left"
+            >
+        {{ icon() }}
+    </span>
+
+    <span class="sl-nav-text">{{ text() }}</span>
+
+    @if(hideBagde()) {
+        <p class="sl-nav-counter"> {{ count() }}</p>
+    }
+</a>

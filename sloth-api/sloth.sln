@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sloth-api", "sloth-api\sloth-api.csproj", "{0B19CBC5-E1DE-4461-9035-2A533F35B57E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sloth-application", "sloth-application\sloth-application.csproj", "{0E88157F-8B31-4F19-9C95-4A64F8A22422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sloth-domain", "sloth-domain\sloth-domain.csproj", "{424573E0-E48D-4F48-B634-8A0ADA29811D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sloth-infrastucture", "sloth-infrastucture\sloth-infrastucture.csproj", "{27693275-058B-4844-BDF6-BCC58C30655E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B19CBC5-E1DE-4461-9035-2A533F35B57E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B19CBC5-E1DE-4461-9035-2A533F35B57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B19CBC5-E1DE-4461-9035-2A533F35B57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B19CBC5-E1DE-4461-9035-2A533F35B57E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E88157F-8B31-4F19-9C95-4A64F8A22422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E88157F-8B31-4F19-9C95-4A64F8A22422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E88157F-8B31-4F19-9C95-4A64F8A22422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E88157F-8B31-4F19-9C95-4A64F8A22422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424573E0-E48D-4F48-B634-8A0ADA29811D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424573E0-E48D-4F48-B634-8A0ADA29811D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424573E0-E48D-4F48-B634-8A0ADA29811D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424573E0-E48D-4F48-B634-8A0ADA29811D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27693275-058B-4844-BDF6-BCC58C30655E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27693275-058B-4844-BDF6-BCC58C30655E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27693275-058B-4844-BDF6-BCC58C30655E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27693275-058B-4844-BDF6-BCC58C30655E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

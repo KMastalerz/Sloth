@@ -22,6 +22,9 @@
       ],
       "@sloth-ui": [
         "./dist/sloth-ui"
+      ],
+      "@sloth-styles": [
+        "./dist/sloth-styles"
       ]
     },
     "target": "ES2022",
