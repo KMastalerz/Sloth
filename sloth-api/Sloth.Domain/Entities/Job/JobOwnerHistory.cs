@@ -1,17 +1,20 @@
 ﻿namespace Sloth.Domain.Entities;
-public class JobAssignmentHistory
+/// <summary>
+/// represents history of owner assignments on Job
+/// </summary>
+public class JobOwnerHistory
 {
     /// <summary>
     /// references Job
     /// </summary>
     public int JobID { get; set; }
     /// <summary>
-    /// references Team
+    /// references User
     /// </summary>
-    public int? PreviousTeamID { get; set; }
+    public Guid? PreviousOwner {  get; set; }
     /// <summary>
-    /// references Team
+    /// references User
     /// </summary>
-    public int? CurrentTeamID { get; set; }
+    public Guid? CurrentOwner { get; set; }
     public DateTime ChangeDate { get; set; }
 }

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Sloth.Domain\Sloth.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\Security\" />
+  </ItemGroup>
+
 </Project>

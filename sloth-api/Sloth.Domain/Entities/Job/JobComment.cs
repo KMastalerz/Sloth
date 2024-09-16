@@ -4,7 +4,7 @@
 /// </summary>
 public class JobComment
 {
-    public int JobCommentID { get; set; } 
+    public long CommentID { get; set; } 
     /// <summary>
     /// references Job
     /// </summary>
@@ -19,9 +19,9 @@ public class JobComment
     /// This flag represents if this comment is an update that can be shared with client. 
     /// Otherwise comments will be hidden from them
     /// </summary>
-    public bool IsUpdate { get; set; }
+    public bool IsUpdate { get; set; } = false;
     /// <summary>
     /// Indicates if comment was edited. 
     /// </summary>
-    public bool IsEdited { get; set; }
+    public bool IsEdited { get; set; } = false;
 }

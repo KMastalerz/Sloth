@@ -4,7 +4,10 @@
 /// </summary>
 public class JobCommentHistory
 {
-    public int JobCommentID { get; set; }
+    /// <summary>
+    /// references JobComment
+    /// </summary>
+    public int CommentID { get; set; }
     /// <summary>
     /// references Job
     /// </summary>
@@ -23,9 +26,5 @@ public class JobCommentHistory
     /// This flag represents if this comment is an update that can be shared with client. 
     /// Otherwise comments will be hidden from them
     /// </summary>
-    public bool IsUpdate { get; set; }
-    /// <summary>
-    /// If comment was removed not updated. 
-    /// </summary>
-    public bool IsDeleted { get; set; }
+    public bool IsUpdate { get; set; } 
 }

@@ -17,5 +17,7 @@ public class Team
     public string? BuildingSection { get; set; }
     public string? InternalNumber { get; set; }
     public string? ClientDescription { get; set; }
+    public string? UserGroup { get; set; }
+    public Guid? UserRoleID { get; set; }
 
 }

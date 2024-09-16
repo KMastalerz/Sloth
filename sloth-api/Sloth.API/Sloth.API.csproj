@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sloth.Application\Sloth.Application.csproj" />
     <ProjectReference Include="..\Sloth.Infrastructure\Sloth.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sloth.Shared\Sloth.Shared.csproj" />
   </ItemGroup>
 
 </Project>
