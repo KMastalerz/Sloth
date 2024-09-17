@@ -1,25 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Entities;
-using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;
 using Sloth.Infrastructure.DatabaseContext;
 
 namespace Sloth.Infrastructure.Repositories;
 internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepository
 {
-    public string? GetSystemOption(string optionID)
+    public async Task<WebPage?> GetWebPageAsync(string PageID)
     {
-        var option = dbContext.SystemOption.FirstOrDefault(so => so.OptionID == optionID) ??
-            throw new NotFoundException(nameof(SystemOption), optionID);
+        var webPage = await dbContext.WebPage
+            .Include(wp => wp.WebControls)
+                .ThenInclude(wc => wc.WebControlSecurities) // Include WebControlSecurities for each WebControl
+            .Include(wp => wp.WebControls)
+                .ThenInclude(wc => wc.Validations) // Include Validations for each WebControl through WebControlValidation
+            .Include(wp => wp.SecurityTables) // Include related SecurityTables
+            .Include(wp => wp.WebPageSecurities) // Include related WebPageSecurities
+            .FirstOrDefaultAsync(wp => wp.PageID == PageID); // Fetch the specific WebPage by PageID
 
-        return option.OptionValue;
-    }
+        // Fetch Translations where ENUText matches ControlLabel or ControlPlaceholder
+        if (webPage != null)
+        {
+            foreach (var webControl in webPage.WebControls)
+            {
+                var translations = await dbContext.Translation
+                    .Where(t => t.ENUText == webControl.ControlLabel || t.ENUText == webControl.ControlPlaceholder)
+                    .ToListAsync();
 
-    public async Task<string?> GetSystemOptionAsync(string optionID)
-    {
-        var option = await dbContext.SystemOption.FirstOrDefaultAsync(so => so.OptionID == optionID) ??
-            throw new NotFoundException(nameof(SystemOption), optionID);
+                // Assign fetched translations to WebControl's Translations property
+                webControl.Translations = translations;
+            }
+        }
 
-        return option.OptionValue;
+        return webPage;
     }
 }

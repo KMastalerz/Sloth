@@ -1,8 +1,9 @@
 ﻿
+using Sloth.Domain.Entities;
+
 namespace Sloth.Domain.Repositories;
 
 public interface IUIElementsRepository
 {
-    Task<string?> GetSystemOptionAsync(string optionID);
-    string? GetSystemOption(string optionID);
+    Task<WebPage?> GetWebPageAsync(string PageID);
 }

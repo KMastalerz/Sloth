@@ -46,8 +46,7 @@ namespace Sloth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SystemOption", x => x.OptionID)
-                        .Annotation("SqlServer:Clustered", true);
+                    table.PrimaryKey("PK_SystemOption", x => x.OptionID);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,7 +55,7 @@ namespace Sloth.Infrastructure.Migrations
                 {
                     ThemeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ThemeName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ThemeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PrimaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecondaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BackGroundColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -69,8 +68,7 @@ namespace Sloth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Theme", x => x.ThemeID)
-                        .Annotation("SqlServer:Clustered", true);
+                    table.PrimaryKey("PK_Theme", x => x.ThemeID);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,6 +89,18 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Validation",
+                columns: table => new
+                {
+                    ValidationName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ValidationDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Validation", x => x.ValidationName);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WebPage",
                 columns: table => new
                 {
@@ -101,28 +111,7 @@ namespace Sloth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebPage", x => x.PageID)
-                        .Annotation("SqlServer:Clustered", true);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Translation",
-                columns: table => new
-                {
-                    ENUText = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LanguageCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Translation", x => x.ENUText)
-                        .Annotation("SqlServer:Clustered", true);
-                    table.ForeignKey(
-                        name: "FK_Translation_Language_LanguageCode",
-                        column: x => x.LanguageCode,
-                        principalTable: "Language",
-                        principalColumn: "LanguageCode",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_WebPage", x => x.PageID);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,36 +170,13 @@ namespace Sloth.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebControl", x => new { x.PageID, x.ControlID })
-                        .Annotation("SqlServer:Clustered", true);
+                    table.PrimaryKey("PK_WebControl", x => new { x.PageID, x.ControlID });
                     table.ForeignKey(
                         name: "FK_WebControl_WebPage_PageID",
                         column: x => x.PageID,
                         principalTable: "WebPage",
                         principalColumn: "PageID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SecurityTable",
-                columns: table => new
-                {
-                    SecurityTableID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserGroupID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ControlName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsHidden = table.Column<bool>(type: "bit", nullable: false),
-                    IsReadOnly = table.Column<bool>(type: "bit", nullable: false),
-                    IsDisabled = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SecurityTable", x => new { x.SecurityTableID, x.UserGroupID });
-                    table.ForeignKey(
-                        name: "FK_SecurityTable_UserGroup_UserGroupID",
-                        column: x => x.UserGroupID,
-                        principalTable: "UserGroup",
-                        principalColumn: "UserGroupID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -263,6 +229,88 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WebPageSecurity",
+                columns: table => new
+                {
+                    PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserGroupID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CanAccess = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CanAdd = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CanDelete = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebPageSecurity", x => new { x.PageID, x.UserGroupID });
+                    table.ForeignKey(
+                        name: "FK_WebPageSecurity_UserGroup_UserGroupID",
+                        column: x => x.UserGroupID,
+                        principalTable: "UserGroup",
+                        principalColumn: "UserGroupID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WebPageSecurity_WebPage_PageID",
+                        column: x => x.PageID,
+                        principalTable: "WebPage",
+                        principalColumn: "PageID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SecurityTable",
+                columns: table => new
+                {
+                    SecurityTableID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserGroupID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ControlName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsHidden = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsReadOnly = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsDisabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    WebControlControlID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WebControlPageID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SecurityTable", x => new { x.SecurityTableID, x.UserGroupID });
+                    table.ForeignKey(
+                        name: "FK_SecurityTable_UserGroup_UserGroupID",
+                        column: x => x.UserGroupID,
+                        principalTable: "UserGroup",
+                        principalColumn: "UserGroupID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SecurityTable_WebControl_WebControlPageID_WebControlControlID",
+                        columns: x => new { x.WebControlPageID, x.WebControlControlID },
+                        principalTable: "WebControl",
+                        principalColumns: new[] { "PageID", "ControlID" });
+                    table.ForeignKey(
+                        name: "FK_SecurityTable_WebPage_SecurityTableID",
+                        column: x => x.SecurityTableID,
+                        principalTable: "WebPage",
+                        principalColumn: "PageID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Translation",
+                columns: table => new
+                {
+                    ENUText = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LanguageCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TranslatedText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WebControlControlID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WebControlPageID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Translation", x => new { x.ENUText, x.LanguageCode });
+                    table.ForeignKey(
+                        name: "FK_Translation_WebControl_WebControlPageID_WebControlControlID",
+                        columns: x => new { x.WebControlPageID, x.WebControlControlID },
+                        principalTable: "WebControl",
+                        principalColumns: new[] { "PageID", "ControlID" });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WebControlSecurity",
                 columns: table => new
                 {
@@ -282,27 +330,37 @@ namespace Sloth.Infrastructure.Migrations
                         principalTable: "UserGroup",
                         principalColumn: "UserGroupID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WebControlSecurity_WebControl_PageID_ControlID",
+                        columns: x => new { x.PageID, x.ControlID },
+                        principalTable: "WebControl",
+                        principalColumns: new[] { "PageID", "ControlID" },
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WebPageSecurity",
+                name: "WebControlValidation",
                 columns: table => new
                 {
                     PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserGroupID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CanAccess = table.Column<bool>(type: "bit", nullable: false),
-                    CanAdd = table.Column<bool>(type: "bit", nullable: false),
-                    CanDelete = table.Column<bool>(type: "bit", nullable: false)
+                    ControlID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ValidationName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebPageSecurity", x => new { x.PageID, x.UserGroupID });
+                    table.PrimaryKey("PK_WebControlValidation", x => new { x.PageID, x.ControlID, x.ValidationName });
                     table.ForeignKey(
-                        name: "FK_WebPageSecurity_UserGroup_UserGroupID",
-                        column: x => x.UserGroupID,
-                        principalTable: "UserGroup",
-                        principalColumn: "UserGroupID",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_WebControlValidation_Validation_ValidationName",
+                        column: x => x.ValidationName,
+                        principalTable: "Validation",
+                        principalColumn: "ValidationName",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WebControlValidation_WebControl_PageID_ControlID",
+                        columns: x => new { x.PageID, x.ControlID },
+                        principalTable: "WebControl",
+                        principalColumns: new[] { "PageID", "ControlID" },
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,20 +453,24 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_SecurityTable_SecurityTableID_ControlName",
+                table: "SecurityTable",
+                columns: new[] { "SecurityTableID", "ControlName" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SecurityTable_UserGroupID",
                 table: "SecurityTable",
                 column: "UserGroupID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Theme_ThemeName",
-                table: "Theme",
-                column: "ThemeName",
-                unique: true);
+                name: "IX_SecurityTable_WebControlPageID_WebControlControlID",
+                table: "SecurityTable",
+                columns: new[] { "WebControlPageID", "WebControlControlID" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Translation_LanguageCode",
+                name: "IX_Translation_WebControlPageID_WebControlControlID",
                 table: "Translation",
-                column: "LanguageCode");
+                columns: new[] { "WebControlPageID", "WebControlControlID" });
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -475,6 +537,11 @@ namespace Sloth.Infrastructure.Migrations
                 column: "UserGroupID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WebControlValidation_ValidationName",
+                table: "WebControlValidation",
+                column: "ValidationName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WebPageSecurity_UserGroupID",
                 table: "WebPageSecurity",
                 column: "UserGroupID");
@@ -511,10 +578,10 @@ namespace Sloth.Infrastructure.Migrations
                 name: "UserToken");
 
             migrationBuilder.DropTable(
-                name: "WebControl");
+                name: "WebControlSecurity");
 
             migrationBuilder.DropTable(
-                name: "WebControlSecurity");
+                name: "WebControlValidation");
 
             migrationBuilder.DropTable(
                 name: "WebPageSecurity");
@@ -523,7 +590,10 @@ namespace Sloth.Infrastructure.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "WebPage");
+                name: "Validation");
+
+            migrationBuilder.DropTable(
+                name: "WebControl");
 
             migrationBuilder.DropTable(
                 name: "Language");
@@ -533,6 +603,9 @@ namespace Sloth.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserGroup");
+
+            migrationBuilder.DropTable(
+                name: "WebPage");
 
             migrationBuilder.DropTable(
                 name: "UserRole");

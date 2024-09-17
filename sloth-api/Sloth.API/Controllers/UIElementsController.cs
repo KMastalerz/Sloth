@@ -1,6 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sloth.Application.Services.UIElements;
+using Sloth.Domain.Entities;
 
 namespace Sloth.API.Controllers;
 
@@ -9,9 +10,9 @@ namespace Sloth.API.Controllers;
 public class UIElementsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [Authorize]
-    public ActionResult<string> TestAuth()
+    public async Task<ActionResult<WebPage?>> GetWebPage(GetWebPageQuery query)
     {
-        return Ok("Authorized");
+        var result = await mediator.Send(query);
+        return Ok(result);
     }
 }

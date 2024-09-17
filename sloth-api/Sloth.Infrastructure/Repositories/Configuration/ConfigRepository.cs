@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Constants;
 using Sloth.Domain.Entities;
+using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories.Configuration;
 using Sloth.Infrastructure.DatabaseContext;
 

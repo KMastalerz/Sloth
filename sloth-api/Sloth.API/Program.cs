@@ -35,6 +35,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Use extension to get only needed endpoints for login etc. 
+// TO DO: If microsoft ever changes the option to setup, dtop extension and switch to MS solution.
 app.MapGroup("api/auth")
     .MapIdentityApiFilterable<User>(new());
 

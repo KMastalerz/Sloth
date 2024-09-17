@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Entities;
+using System.Reflection.Emit;
 
 namespace Sloth.Infrastructure.DatabaseContext;
 internal class SlothDbContext(DbContextOptions<SlothDbContext> options): IdentityDbContext<User>(options)
@@ -19,17 +20,16 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
     internal DbSet<SystemOption> SystemOption { get; set; }
     internal DbSet<UserGroup> UserGroup { get; set; }
     internal DbSet<WebPageSecurity> WebControlSecurity { get; set; }
-    internal DbSet<WebPageSecurity> WebControlValidation { get; set; }
     internal DbSet<WebPageSecurity> WebPageSecurity { get; set; }
 
     #endregion
 
-    #region [Interface]
-
+    #region [UIElements]
     internal DbSet<Language> Language { get; set; }
-    internal DbSet<Theme> Theme { get; set; }
+    internal DbSet<Validation> Validation { get; set; }
     internal DbSet<Translation> Translation { get; set; }
     internal DbSet<WebControl> WebControl { get; set; }
+    internal DbSet<WebControlValidation> WebControlValidation { get; set; }
     internal DbSet<WebPage> WebPage { get; set; }
 
     #endregion
@@ -38,10 +38,172 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
     {
         base.OnModelCreating(builder);
 
+        #region[UIElements]
+        // WebPage Configuration
+
+        builder.Entity<WebPage>(entity =>
+        {
+            entity.HasKey(e => e.PageID);
+
+            entity.Property(e => e.Title).IsRequired();
+            entity.Property(e => e.SecurityTableID).IsRequired(false);
+            entity.Property(e => e.Description).IsRequired(false);
+
+            // Relationships
+            entity.HasMany(e => e.SecurityTables)
+                  .WithOne()
+                  .HasForeignKey(st => st.SecurityTableID);
+
+            entity.HasMany(e => e.WebControls)
+                  .WithOne()
+                  .HasForeignKey(wc => wc.PageID);
+
+            entity.HasMany(e => e.WebPageSecurities)
+                  .WithOne()
+                  .HasForeignKey(wps => wps.PageID);
+        });
+
+        // WebControl Configuration
+        builder.Entity<WebControl>(entity =>
+        {
+            entity.HasKey(e => new { e.PageID, e.ControlID });
+
+            entity.Property(e => e.ControlType).IsRequired();
+            entity.Property(e => e.ControlLabel).IsRequired();
+            entity.Property(e => e.ControlPlaceholder).IsRequired();
+            entity.Property(e => e.Route).IsRequired(false);
+            entity.Property(e => e.RoutePageID).IsRequired(false);
+            entity.Property(e => e.SecurityTableID).IsRequired(false);
+
+            // Relationships
+            entity.HasMany(e => e.WebControlSecurities)
+                  .WithOne()
+                  .HasForeignKey(wcs => new { wcs.PageID, wcs.ControlID });
+
+            // Linking Validations with WebControl through WebControlValidation
+            entity.HasMany(e => e.Validations)
+                  .WithMany(v => v.WebControls)
+                  .UsingEntity<WebControlValidation>(
+                      j => j.HasOne<Validation>().WithMany().HasForeignKey(wcv => wcv.ValidationName),
+                      j => j.HasOne<WebControl>().WithMany().HasForeignKey(wcv => new { wcv.PageID, wcv.ControlID }),
+                      j => j.HasKey(wcv => new { wcv.PageID, wcv.ControlID, wcv.ValidationName })
+                  );
+        });
+
+        // WebControlValidation Configuration
+        builder.Entity<WebControlValidation>(entity =>
+        {
+            entity.HasKey(e => new { e.PageID, e.ControlID, e.ValidationName });
+        });
+
+        // Validation Configuration
+        builder.Entity<Validation>(entity =>
+        {
+            entity.HasKey(e => e.ValidationName);
+        });
+
+        // Translation Configuration
+        builder.Entity<Translation>(entity =>
+        {
+            entity.HasKey(e => new { e.ENUText, e.LanguageCode });
+        });
+
+        // Language Configuration
+        builder.Entity<Language>(entity =>
+        {
+            entity.HasKey(e => e.LanguageCode);
+        });
+        #endregion
+
         #region [Security]
 
-        // Map other Identity tables to custom ones
-        builder.Entity<User>().ToTable("User");
+        // SystemOption entity 
+        builder.Entity<SystemOption>(entity=>
+        {
+            entity.HasKey(e => e.OptionID);
+        });
+
+        // User entity
+        builder.Entity<User>(entity =>
+        {
+            entity.ToTable("User");
+
+            entity.HasOne(u => u.Theme)
+                  .WithMany()
+                  .HasForeignKey(u => u.ThemeID)
+                  .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(u => u.Language)
+                  .WithMany()
+                  .HasForeignKey(u => u.LanguageCode)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(u => u.UserGroup)
+                  .WithMany()
+                  .HasForeignKey(u => u.UserGroupID)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // UserGroup entity
+        builder.Entity<UserGroup>(entity =>
+        {
+            entity.HasKey(ug => ug.UserGroupID);
+
+            entity.HasOne<UserRole>()
+                  .WithMany()
+                  .HasForeignKey(ug => ug.UserRoleID)
+                  .OnDelete(DeleteBehavior.Restrict); // Prevent deletion of UserRole if linked UserGroups exist
+        });
+
+        // WebPageSecurity entity
+        builder.Entity<WebPageSecurity>(entity =>
+        {
+            entity.HasKey(wp => new { wp.PageID, wp.UserGroupID });
+
+            entity.HasOne<UserGroup>()
+                  .WithMany()
+                  .HasForeignKey(wp => wp.UserGroupID)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.Property(e => e.CanAccess).HasDefaultValue(true);
+            entity.Property(e => e.CanAdd).HasDefaultValue(true);
+            entity.Property(e => e.CanDelete).HasDefaultValue(true);
+        });
+
+        // WebControlSecurity entity
+        builder.Entity<WebControlSecurity>(entity =>
+        {
+            entity.HasKey(wc => new { wc.PageID, wc.ControlID, wc.UserGroupID });
+
+            entity.HasOne<UserGroup>()
+                  .WithMany()
+                  .HasForeignKey(wc => wc.UserGroupID)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // SecurityTable entity
+        builder.Entity<SecurityTable>(entity =>
+        {
+            entity.HasKey(st => new { st.SecurityTableID, st.UserGroupID });
+
+            entity.HasOne<UserGroup>()
+                  .WithMany()
+                  .HasForeignKey(st => st.UserGroupID)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasIndex(e => new { e.SecurityTableID, e.ControlName });
+            entity.Property(e => e.IsHidden).HasDefaultValue(false);
+            entity.Property(e => e.IsReadOnly).HasDefaultValue(false);
+            entity.Property(e => e.IsDisabled).HasDefaultValue(false);
+        });
+
+        // EndpointConfiguration entity
+        builder.Entity<EndpointConfiguration>(entity =>
+        {
+            entity.HasKey(e => e.EndpointID);
+        });
+
+        // Name overrites only
         builder.Entity<IdentityRole>().ToTable("UserRole"); // Map to your custom table
         builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim");
         builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");
@@ -49,120 +211,12 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
         builder.Entity<IdentityRoleClaim<string>>().ToTable("UserRoleClaimLink");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
 
-
         builder.Entity<UserClaim>().ToTable("UserClaim");
         builder.Entity<UserLogin>().ToTable("UserLogin");
         builder.Entity<UserRoleLink>().ToTable("UserRoleLink");
         builder.Entity<UserRoleClaimLink>().ToTable("UserRoleClaimLink");
         builder.Entity<UserToken>().ToTable("UserToken");
 
-        // User and Theme (one-to-one or many-to-one, optional relationship)
-        builder.Entity<User>()
-            .HasOne(u => u.Theme)
-            .WithMany()  // Assuming Theme is shared by multiple users
-            .HasForeignKey(u => u.ThemeID)
-            .OnDelete(DeleteBehavior.SetNull);  // Set ThemeID to null if Theme is deleted
-
-        // User and Language (many-to-one relationship)
-        builder.Entity<User>()
-            .HasOne(u => u.Language)
-            .WithMany()  // One language can be linked to many users
-            .HasForeignKey(u => u.LanguageCode)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of Language if Users exist
-
-        // User and UserGroup (many-to-one relationship)
-        builder.Entity<User>()
-            .HasOne(u => u.UserGroup)
-            .WithMany()  // One UserGroup can have many users
-            .HasForeignKey(u => u.UserGroupID)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of UserGroup if Users exist
-
-        builder.Entity<UserGroup>()
-            .HasKey(ug => ug.UserGroupID);
-
-        // UserGroup and UserRole (many-to-one relationship)
-        builder.Entity<UserGroup>()
-            .HasOne<UserRole>()  // A UserGroup is linked to one UserRole
-            .WithMany()  // Assuming UserRole is linked to multiple UserGroups
-            .HasForeignKey(ug => ug.UserRoleID)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of UserRole if linked UserGroups exist
-
-        builder.Entity<WebPageSecurity>()
-            .HasKey(wp => new { wp.PageID, wp.UserGroupID });
-
-        // WebPageSecurity and UserGroup (many-to-one relationship)
-        builder.Entity<WebPageSecurity>()
-            .HasOne<UserGroup>()  // WebPageSecurity references a single UserGroup
-            .WithMany()  // One UserGroup can be linked to multiple WebPageSecurity
-            .HasForeignKey(wps => wps.UserGroupID)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of UserGroup if linked WebPageSecurity exists
-
-        builder.Entity<WebControlSecurity>()
-            .HasKey(wc => new { wc.PageID, wc.ControlID, wc.UserGroupID });
-
-        // WebControlSecurity and UserGroup (many-to-one relationship)
-        builder.Entity<WebControlSecurity>()
-            .HasOne<UserGroup>()  // WebControlSecurity references a single UserGroup
-            .WithMany()  // One UserGroup can be linked to multiple WebControlSecurity entries
-            .HasForeignKey(wcs => wcs.UserGroupID)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of UserGroup if linked WebControlSecurity exists
-
-        builder.Entity<SecurityTable>()
-            .HasKey(st => new {st.SecurityTableID, st.UserGroupID});
-
-        // SecurityTable and UserGroup (many-to-one relationship)
-        builder.Entity<SecurityTable>()
-            .HasOne<UserGroup>()  // SecurityTable references a single UserGroup
-            .WithMany()  // One UserGroup can be linked to multiple SecurityTable entries
-            .HasForeignKey(st => st.UserGroupID)
-            .OnDelete(DeleteBehavior.Restrict);  // Prevent deletion of UserGroup if linked SecurityTable exists
-
-        builder.Entity<EndpointConfiguration>()
-            .HasKey(e => e.EndpointID);
-
-        #endregion
-
-        #region [Interface] 
-
-        builder.Entity<WebPage>()
-            .HasKey(wc => wc.PageID)
-            .IsClustered();
-
-        // WebPage and WebControl (one-to-many relationship)
-        builder.Entity<WebControl>()
-            .HasOne<WebPage>()
-            .WithMany() // One WebPage can be linked to multiple WebControl entries
-            .HasForeignKey(wc => wc.PageID)
-            .OnDelete(DeleteBehavior.Cascade);  // Cascade delete WebControls when WebPage is deleted
-
-        builder.Entity<WebControl>()
-            .HasKey(wc => new { wc.PageID, wc.ControlID })
-            .IsClustered(); 
-
-        builder.Entity<Language>()
-            .HasKey(l => l.LanguageCode);
-
-        builder.Entity<Language>()
-            .HasMany<Translation>()  // One Language has many Translations
-            .WithOne()  // Each Translation references one Language
-            .HasForeignKey(t => t.LanguageCode)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.Entity<Translation>()
-            .HasKey(l => l.ENUText)
-            .IsClustered(); 
-
-        builder.Entity<SystemOption>()
-            .HasKey(so => so.OptionID)
-            .IsClustered();
-
-        builder.Entity<Theme>()
-            .HasKey(so => so.ThemeID)
-            .IsClustered();
-
-        builder.Entity<Theme>()
-            .HasIndex(t => t.ThemeName)
-            .IsUnique();
 
         #endregion
     }
