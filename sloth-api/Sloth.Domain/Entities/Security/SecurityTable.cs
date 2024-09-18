@@ -8,11 +8,11 @@ public class SecurityTable
     /// <summary>
     /// There has to exist such column in table
     /// </summary>
-    public string ControlName { get; set; } = default!;
+    public string ControlID { get; set; } = default!;
     /// <summary>
-    /// references UserGroup
+    /// references UserRole
     /// </summary>
-    public string UserGroupID { get; set; } = default!;
+    public string UserGroup { get; set; } = default!;
     public bool IsHidden { get; set; } = false; 
     public bool IsReadOnly { get; set; } = false;
     public bool IsDisabled { get; set; } = false;

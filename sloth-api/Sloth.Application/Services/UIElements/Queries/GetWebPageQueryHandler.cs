@@ -1,38 +1,50 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Sloth.Application.UserIdentity;
+using Sloth.Domain.Constants;
+using Sloth.Application.DTO;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;
+using AutoMapper;
 
 namespace Sloth.Application.Services.UIElements;
-public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUserContext userContext, IUIElementsRepository uIElementsRepository) : IRequestHandler<GetWebPageQuery, WebPage?>
+public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUserContext userContext, IUIElementsRepository uIElementsRepository, IMapper mapper) : IRequestHandler<GetWebPageQuery, GetWebPageDTO?>
 {
-    public async Task<WebPage?> Handle(GetWebPageQuery request, CancellationToken cancellationToken)
+    public async Task<GetWebPageDTO?> Handle(GetWebPageQuery request, CancellationToken cancellationToken)
     {
         var currentUser = userContext.GetCurrentUser();
-        logger.LogInformation("{UserName} tries to access page {PageID}", currentUser!.UserName, request.PageID);
 
-        var webPage = await uIElementsRepository.GetWebPageAsync(request.PageID) ?? 
+        logger.LogInformation("User: {UserName} is trying to access the page {PageID}", currentUser!.UserName, request.PageID);
+
+        if (currentUser?.UserGroup is null)
+            throw new NotFoundException(nameof(UserClaim), SlothClaims.UserGroup);
+
+        var webPage = await uIElementsRepository.GetWebPageAsync(request.PageID, currentUser.UserGroup) ??
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
-        return webPage;
-        //get page access for user
+        var webControls = await uIElementsRepository.ListWebControlAsync(request.PageID, currentUser.UserGroup) ?? [];
 
-        //get page controls 
+        var secTables = await uIElementsRepository.ListControlSecurityAsync(request.PageID, currentUser.UserGroup, webPage.SecurityTableID) ?? [];
 
-        //get security table
+        // Join the two lists on a common property (Id)
+        var joinedList = from wc in webControls
+                         join st in secTables on wc.ControlID equals st.ControlID into secGroup
+                         from st in secGroup.DefaultIfEmpty()
+                         select new { wc, st };
 
-        //check security 
+        // use mapper on joined list to map to DTO
+        var dtoControls = joinedList.Select(jl => {
+            var dto = mapper.Map<GetWebControlDTO>(jl.wc);
+            mapper.Map(jl.st, dto);
+            return dto;
+        }).ToList();
 
-        //translate 
+        // TO DO: Add translation to the controls
 
-        //check page access 
+        var dto = mapper.Map<GetWebPageDTO>(webPage);
+        dto.WebControls = dtoControls;
 
-        //check user access 
-
-        //if user has no access throw error
-
-        //if user has access return object
+        return dto;
     }
 }

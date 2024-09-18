@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "sysadmin",
+    "NormalizedName": "SYSADMIN",
+    "DisplayName": "System Admin"
+  },
+  {
+    "Name": "client",
+    "NormalizedName": "CLIENT",
+    "DisplayName": "Client"
+  },
+  {
+    "Name": "devse",
+    "NormalizedName": "DEVSE",
+    "DisplayName": "Software Engineer"
+  },
+  {
+    "Name": "qae",
+    "NormalizedName": "QAE",
+    "DisplayName": "QA Engineer"
+  },
+  {
+    "Name": "supe",
+    "NormalizedName": "SUPE",
+    "DisplayName": "Support Engineer"
+  }
+]

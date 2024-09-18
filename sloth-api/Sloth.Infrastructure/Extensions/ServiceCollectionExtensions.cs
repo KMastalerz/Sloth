@@ -16,6 +16,8 @@ public static class ServiceCollectionExtensions
 {
     public static void AddInfractructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
+
         var connectionString = configuration.GetConnectionString("Sloth");
 
         services.AddDbContext<SlothDbContext>(options => 
@@ -29,6 +31,8 @@ public static class ServiceCollectionExtensions
         services.AddIdentityApiEndpoints<User>()
             .AddRoles<UserRole>()
             .AddEntityFrameworkStores<SlothDbContext>();
+
+        services.AddAutoMapper(applicationAssembly);
 
         // Build Config Repository
         services.AddScoped<IConfigRepository, ConfigRepository>();

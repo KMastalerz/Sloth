@@ -61,7 +61,9 @@ public static class WebApplicationBuilderExtensions
             var appConfig = serviceProvider.GetRequiredService<AppConfig>();
             // Convert and set password complexity options
             var passwordOptions = appConfig.PasswordComplexity.TryConvert(new PasswordOptions());
-            options.Password = passwordOptions;
+
+            if(passwordOptions is not null)
+                options.Password = passwordOptions;
 
             options.User.RequireUniqueEmail = true;
         });

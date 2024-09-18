@@ -1,24 +1,21 @@
 @Sloth.API_HostAddress = https://localhost:7180
-@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBRE1JTiIsImp0aSI6ImViNjYyNDUyLWQ4YWYtNGQ5Ni05Y2IyLWE2YmI2MzlhMTM1MSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiOTlmZTg2ODgtZGRmZC00OGQ3LWFiZDctYjljZGJiNzI3YTEzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW5AdGVzdC5jb20iLCJleHAiOjE3MjYzNzExMDUsImlzcyI6IlRlc3QiLCJhdWQiOiJUZXN0In0.u5y6TcoJbtO5Y1pVMGRoS44GUds1ba_BZJKXIOIdrEs
-
-POST {{Sloth.API_HostAddress}}/api/auth/RegisterUser
-Content-Type: application/json
-
-{
-  //RegisterUserCommand
-}
-
-###
-
-GET {{Sloth.API_HostAddress}}/api/uielements/TestAuth
-Authorization: Bearer {{Token}}
-###
+@Token = CfDJ8O8IacqVoftHkBu-cS-u6S2dUCJufbuCuR6rr9viW8EUgIANcJTreHb-5jSlbz1vePx0H4kBjn01FdyBYWswJvgTgSdVj-v11ewjrgr79QR4CwdgLLiHJq3IA-a3qb2X2AqRXnkPYzotRJ_n41vKw8e0QfT3LBHq4pLFalfiwa7D33JyO8yQq6JyNRc9tTz6wy8J9Wq0QWoQ-4nwE1LUBUVvYPkPJLSe7TfwwfuqbAF8zujQ0KBTQAOc-xjyTc1zIXhvTmLxqSHCReBhyjLYs_Y6t0Zl2o8OJWaV9hlShTCwKbXgZfQqcvqn_HOhrZVTWCzWTmUeagHpYg8Q66w4yj-tz9K96fzJieU4HkM1Ra0rqadGhqBWVVp44oRmMfFRUFM33IsHOUc-dISqYmTNWTaRvlRe5rtmmKEha2pk-tlZ55EPDLtk0nnljhl2oQ6RBJSoRlr8adAC05eBpXG9J55TP5OsQVKgUHRllAPkjbvyY8mDEj_q2jJa582C_sqFLLcYiRsu3bPuRkCBP1JkGOpkGqQfJIpx-xobbeA64CvhjwSBRuzxrxS_AVMzDPusVeolr8B_s4v6thkeVVNRAHMZNnFuXlY-H1PH-wIiirCj3eJaZqRMSgnk6EpkgmqTRvbN2C-LugT_sITL4kzGWv8oY5UeYmJTwfdpMU7SFot30AQRwu8w6SaFYIJ4xG0tT2UMEtXfBC8cN9F5bloUtdFgOr5MS0eMtfrf9ELMB4csk45_ITsLxKud0JdW2BJ98lCTbH9r9pkshiyCgOEF4GR3cp64DKxG18eA3wb2Ch0LSLnQyFuHKwVm55voTJsrolEpaWtOfAM6PMXHXFiCOzA
 
 POST {{Sloth.API_HostAddress}}/api/auth/login
 Content-Type: application/json
 {
-  "login": "KRZMAS",
+  "email": "kmastalerz@test.com",
   "password": "master"
 }
 
 ###
+
+GET {{Sloth.API_HostAddress}}/api/uielements/GetWebPage
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+  "PageID": "MainPage"
+}
+###
+

@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20240917180240_Init")]
+    [Migration("20240918204851_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -28,7 +28,8 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserRoleID");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -65,7 +66,8 @@ namespace Sloth.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("RoleClaimID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -82,13 +84,14 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserRoleID");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoleClaimLink", (string)null);
+                    b.ToTable("RoleClaimLink", (string)null);
 
                     b.HasDiscriminator().HasValue("IdentityRoleClaim<string>");
 
@@ -99,7 +102,8 @@ namespace Sloth.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("UserClaimID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -116,7 +120,8 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserID");
 
                     b.HasKey("Id");
 
@@ -147,7 +152,8 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserID");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -163,10 +169,12 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserID");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserRoleID");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -176,6 +184,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserRoleLink", (string)null);
 
@@ -187,7 +198,8 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserID");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -244,11 +256,10 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserGroupID")
+                    b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ControlName")
-                        .IsRequired()
+                    b.Property<string>("UserGroup")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDisabled")
@@ -266,19 +277,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("WebControlControlID")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("SecurityTableID", "ControlID", "UserGroup");
 
-                    b.Property<string>("WebControlPageID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SecurityTableID", "UserGroupID");
-
-                    b.HasIndex("UserGroupID");
-
-                    b.HasIndex("SecurityTableID", "ControlName");
-
-                    b.HasIndex("WebControlPageID", "WebControlControlID");
+                    b.HasIndex("SecurityTableID", "ControlID");
 
                     b.ToTable("SecurityTable");
                 });
@@ -369,15 +370,7 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebControlControlID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("WebControlPageID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ENUText", "LanguageCode");
-
-                    b.HasIndex("WebControlPageID", "WebControlControlID");
 
                     b.ToTable("Translation");
                 });
@@ -385,7 +378,8 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserID");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -406,7 +400,6 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LanguageCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
@@ -445,10 +438,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserGroupID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -470,8 +459,6 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.HasIndex("ThemeID");
 
-                    b.HasIndex("UserGroupID");
-
                     b.ToTable("User", (string)null);
                 });
 
@@ -484,13 +471,7 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserRoleID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("UserGroupID");
-
-                    b.HasIndex("UserRoleID");
 
                     b.ToTable("UserGroup");
                 });
@@ -529,6 +510,9 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MetaData")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Route")
                         .HasColumnType("nvarchar(max)");
 
@@ -543,33 +527,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.ToTable("WebControl");
                 });
 
-            modelBuilder.Entity("Sloth.Domain.Entities.WebControlSecurity", b =>
-                {
-                    b.Property<string>("PageID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ControlID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserGroupID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool?>("IsDisabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsHidden")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsReadOnly")
-                        .HasColumnType("bit");
-
-                    b.HasKey("PageID", "ControlID", "UserGroupID");
-
-                    b.HasIndex("UserGroupID");
-
-                    b.ToTable("WebControlSecurity");
-                });
-
             modelBuilder.Entity("Sloth.Domain.Entities.WebControlValidation", b =>
                 {
                     b.Property<string>("PageID")
@@ -579,11 +536,10 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ValidationName")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PageID", "ControlID", "ValidationName");
-
-                    b.HasIndex("ValidationName");
+                    b.HasKey("PageID", "ControlID");
 
                     b.ToTable("WebControlValidation");
                 });
@@ -613,7 +569,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PageID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserGroupID")
+                    b.Property<string>("UserGroup")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("CanAccess")
@@ -631,9 +587,7 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.HasKey("PageID", "UserGroupID");
-
-                    b.HasIndex("UserGroupID");
+                    b.HasKey("PageID", "UserGroup");
 
                     b.ToTable("WebPageSecurity");
                 });
@@ -652,13 +606,13 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
-            modelBuilder.Entity("Sloth.Domain.Entities.UserRoleClaimLink", b =>
+            modelBuilder.Entity("Sloth.Domain.Entities.RoleClaimLink", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>");
 
-                    b.ToTable("UserRoleClaimLink", (string)null);
+                    b.ToTable("RoleClaimLink", (string)null);
 
-                    b.HasDiscriminator().HasValue("UserRoleClaimLink");
+                    b.HasDiscriminator().HasValue("RoleClaimLink");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.UserClaim", b =>
@@ -682,6 +636,9 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.UserRoleLink", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
+
+                    b.HasIndex("UserId", "RoleId")
+                        .IsUnique();
 
                     b.ToTable("UserRoleLink", (string)null);
 
@@ -733,8 +690,8 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Sloth.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne()
+                        .HasForeignKey("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -751,96 +708,36 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.SecurityTable", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
-                        .WithMany("SecurityTables")
+                        .WithMany()
                         .HasForeignKey("SecurityTableID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Sloth.Domain.Entities.UserGroup", null)
-                        .WithMany()
-                        .HasForeignKey("UserGroupID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Sloth.Domain.Entities.WebControl", null)
-                        .WithMany("SecurityTables")
-                        .HasForeignKey("WebControlPageID", "WebControlControlID");
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.Translation", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.WebControl", null)
-                        .WithMany("Translations")
-                        .HasForeignKey("WebControlPageID", "WebControlControlID");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Sloth.Domain.Entities.Language", "Language")
+                    b.HasOne("Sloth.Domain.Entities.Language", null)
                         .WithMany()
                         .HasForeignKey("LanguageCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Sloth.Domain.Entities.Theme", "Theme")
+                    b.HasOne("Sloth.Domain.Entities.Theme", null)
                         .WithMany()
                         .HasForeignKey("ThemeID")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Sloth.Domain.Entities.UserGroup", "UserGroup")
-                        .WithMany()
-                        .HasForeignKey("UserGroupID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Theme");
-
-                    b.Navigation("UserGroup");
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.UserGroup", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.UserRole", null)
-                        .WithMany()
-                        .HasForeignKey("UserRoleID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
-                        .WithMany("WebControls")
-                        .HasForeignKey("PageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebControlSecurity", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.UserGroup", null)
                         .WithMany()
-                        .HasForeignKey("UserGroupID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Sloth.Domain.Entities.WebControl", null)
-                        .WithMany("WebControlSecurities")
-                        .HasForeignKey("PageID", "ControlID")
+                        .HasForeignKey("PageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControlValidation", b =>
                 {
-                    b.HasOne("Sloth.Domain.Entities.Validation", null)
-                        .WithMany()
-                        .HasForeignKey("ValidationName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Sloth.Domain.Entities.WebControl", null)
                         .WithMany()
                         .HasForeignKey("PageID", "ControlID")
@@ -851,34 +748,19 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.WebPageSecurity", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
-                        .WithMany("WebPageSecurities")
+                        .WithMany()
                         .HasForeignKey("PageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("Sloth.Domain.Entities.UserGroup", null)
+            modelBuilder.Entity("Sloth.Domain.Entities.UserRoleLink", b =>
+                {
+                    b.HasOne("Sloth.Domain.Entities.UserRole", null)
                         .WithMany()
-                        .HasForeignKey("UserGroupID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
-                {
-                    b.Navigation("SecurityTables");
-
-                    b.Navigation("Translations");
-
-                    b.Navigation("WebControlSecurities");
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebPage", b =>
-                {
-                    b.Navigation("SecurityTables");
-
-                    b.Navigation("WebControls");
-
-                    b.Navigation("WebPageSecurities");
                 });
 #pragma warning restore 612, 618
         }

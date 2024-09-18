@@ -1,0 +1,22 @@
+[
+  //{
+  //  "PageID": "",
+  //  "Title": "",
+  //  "SecurityTableID": null,
+  //  "Description": null,
+  //  "UserGroup": "",
+  //  "CanAccess": true,
+  //  "CanAdd": true,
+  //  "CanDelete": true
+  //}
+  {
+    "PageID": "MainPage",
+    "Title": "Sloth",
+    "SecurityTableID": null,
+    "Description": "Main Page of Sloth",
+    "UserGroup": "DEFAULT",
+    "CanAccess": true,
+    "CanAdd": true,
+    "CanDelete": true
+  }
+]

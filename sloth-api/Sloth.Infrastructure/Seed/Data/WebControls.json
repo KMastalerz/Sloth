@@ -1,0 +1,112 @@
+[
+  //{
+  //  "PageID": "",
+  //  "ControlID": "",
+  //  "SecurityTableID": null,
+  //  "ControlType": "",
+  //  "ControlLabel": "",
+  //  "ControlPlaceholder": "",
+  //  "Route": null,
+  //  "RoutePageID": null,
+  //  "MetaData": null
+  //}
+  {
+    "PageID": "MainPage",
+    "ControlID": "Dashboard",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Dashboard",
+    "ControlPlaceholder": "Dashboard",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"bar_chart_4_bars\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"main\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Bugs",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Bugs",
+    "ControlPlaceholder": "Bugs",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"bug_report\",\"CounterFunc\":\"getBugCount\",\"WarningCount\":50,\"ErrorCount\":100,\"Group\":\"main\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Projects",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Projects",
+    "ControlPlaceholder": "Projects",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"tactic\",\"CounterFunc\":\"getProjectCount\",\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"main\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Tasks",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Tasks",
+    "ControlPlaceholder": "Tasks",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"task\",\"CounterFunc\":\"getTaskCount\",\"WarningCount\":10,\"ErrorCount\":20,\"Group\":\"main\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Messages",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Messages",
+    "ControlPlaceholder": "Messages",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"mail\",\"CounterFunc\":\"getUnreadMessageCount\",\"WarningCount\":30,\"ErrorCount\":90,\"Group\":\"user\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Timesheet",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Timesheet",
+    "ControlPlaceholder": "Timesheet",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"calendar_month\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"user\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Setttings",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Setttings",
+    "ControlPlaceholder": "Setttings",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"settings\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"user\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Releases",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Releases",
+    "ControlPlaceholder": "Releases",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"rocket_launch\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"info\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Documentation",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Documentation",
+    "ControlPlaceholder": "Documentation",
+    "Route": null,
+    "RoutePageID": null,
+    "MetaData": "{\"Icon\":\"book_5\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"info\"}"
+  }
+]

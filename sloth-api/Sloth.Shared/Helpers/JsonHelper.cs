@@ -3,7 +3,7 @@
 namespace Sloth.Shared.Helpers;
 public static class JsonHelper
 {
-    public static T TryConvert<T>(this string jsonString, T defaultObject) where T : class, new()
+    public static T? TryConvert<T>(this string jsonString, T? defaultObject) where T : class, new()
     {
         try
         {

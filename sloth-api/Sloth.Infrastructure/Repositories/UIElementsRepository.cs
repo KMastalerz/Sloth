@@ -1,36 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Entities;
+using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;
 using Sloth.Infrastructure.DatabaseContext;
 
 namespace Sloth.Infrastructure.Repositories;
 internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepository
 {
-    public async Task<WebPage?> GetWebPageAsync(string PageID)
+    public async Task<WebPage?> GetWebPageAsync(string PageID, string UserGroup)
     {
-        var webPage = await dbContext.WebPage
-            .Include(wp => wp.WebControls)
-                .ThenInclude(wc => wc.WebControlSecurities) // Include WebControlSecurities for each WebControl
-            .Include(wp => wp.WebControls)
-                .ThenInclude(wc => wc.Validations) // Include Validations for each WebControl through WebControlValidation
-            .Include(wp => wp.SecurityTables) // Include related SecurityTables
-            .Include(wp => wp.WebPageSecurities) // Include related WebPageSecurities
-            .FirstOrDefaultAsync(wp => wp.PageID == PageID); // Fetch the specific WebPage by PageID
+        // Check if user can access this page, as WebPage has to co-exist with WebPageSecurity this is a valid check
+        if (!dbContext.WebPageSecurity.Any(p => p.CanAccess == true && p.UserGroup == UserGroup)) 
+            throw new MissingAccessException(nameof(WebPage), PageID);
 
-        // Fetch Translations where ENUText matches ControlLabel or ControlPlaceholder
-        if (webPage != null)
-        {
-            foreach (var webControl in webPage.WebControls)
-            {
-                var translations = await dbContext.Translation
-                    .Where(t => t.ENUText == webControl.ControlLabel || t.ENUText == webControl.ControlPlaceholder)
-                    .ToListAsync();
-
-                // Assign fetched translations to WebControl's Translations property
-                webControl.Translations = translations;
-            }
-        }
-
+        var webPage = await dbContext.WebPage.FindAsync(PageID);
         return webPage;
+    }
+
+    public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string PageID, string UserGroup)
+    {
+        var webControls = await dbContext.WebControl.Where(p => p.PageID == PageID).ToListAsync();
+        return webControls;
+    }
+
+    public async Task<IEnumerable<SecurityTable>?> ListControlSecurityAsync(string PageID, string UserGroup, string? PageSecurityTableID)
+    {
+        var secTables = await dbContext.SecurityTable.Where(
+            p => 
+            p.UserGroup == UserGroup &&
+            dbContext.WebControl.Any(
+                wc => 
+                wc.PageID == PageID &&
+                wc.ControlID == p.ControlID &&
+                wc.SecurityTableID != null ? wc.SecurityTableID == p.SecurityTableID : PageSecurityTableID != null ? PageSecurityTableID == p.SecurityTableID : false)).ToListAsync();
+
+        return secTables;
     }
 }

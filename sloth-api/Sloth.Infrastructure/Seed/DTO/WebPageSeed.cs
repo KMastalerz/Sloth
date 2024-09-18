@@ -1,13 +1,10 @@
-﻿namespace Sloth.Domain.Entities;
-public class WebPageSecurity
+﻿namespace Sloth.Infrastructure.Seed;
+internal class WebPageSeed
 {
-    /// <summary>
-    /// references WebPage
-    /// </summary>
     public string PageID { get; set; } = default!;
-    /// <summary>
-    /// references UserRole
-    /// </summary>
+    public string Title { get; set; } = default!;
+    public string? SecurityTableID { get; set; }
+    public string? Description { get; set; }
     public string UserGroup { get; set; } = default!;
     public bool CanAccess { get; set; } = true;
     public bool CanAdd { get; set; } = true;

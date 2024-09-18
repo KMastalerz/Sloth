@@ -1,0 +1,20 @@
+[
+  {
+    "OptionID": "PasswordComplexity",
+    "OptionName": "Password Complexity",
+    "OptionValue": "{\"RequiredLength\":10,\"RequiredUniqueChars\":2,\"RequireNonAlphanumeric\":false,\"RequireLowercase\":true,\"RequireUppercase\":true,\"RequireDigit\":false}",
+    "Description": "This options allow to set values, that will determine the password complexity."
+  },
+  {
+    "OptionID": "RefreshTokenLifetime",
+    "OptionName": "Refresh Token Lifetime",
+    "OptionValue": "720",
+    "Description": "Describes minutes, that Refresh Token is valid for."
+  },
+  {
+    "OptionID": "TokenLifetime",
+    "OptionName": "Token Lifetime",
+    "OptionValue": "120",
+    "Description": "Describes minutes, that Bearer Token is valid for."
+  }
+]

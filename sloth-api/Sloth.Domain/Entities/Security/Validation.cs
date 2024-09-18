@@ -4,6 +4,4 @@ public class Validation
 {
     public string ValidationName { get; set; } = default!;
     public string ValidationDescription { get; set; } = default!;
-
-    public ICollection<WebControl>? WebControls { get; set; }
 }
