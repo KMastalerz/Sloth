@@ -1,0 +1,39 @@
+.sl-s-icon {
+    width: $icon-size-s;
+    height: $icon-size-s;
+}
+
+.sl-m-icon {
+    width: $icon-size-m;
+    height: $icon-size-m;
+}
+
+.sl-l-icon {
+    width: $icon-size-l;
+    height: $icon-size-l;
+}
+
+.gl-xxs-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-xs * 0.8;
+}
+
+.gl-xs-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-xs;
+}
+
+.gl-s-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-s;
+}
+
+.gl-m-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-m;
+}
+
+.gl-l-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-l;
+}

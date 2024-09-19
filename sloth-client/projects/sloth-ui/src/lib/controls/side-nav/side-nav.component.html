@@ -1,26 +1,31 @@
-<a #navLink class="sl-nav-link" 
+<a #navLink class="sl-grid-3-c sl-x-pad-xs sl-link" 
             [class]="{
                 'sl-count-info': type() === 'info',
                 'sl-count-warning': type() === 'warn',
                 'sl-count-error': type() === 'err',
                 'sl-nav-collapsed': collapsed()
-            }">
+            }"
+            [matTooltip]="tooltip()"
+            [matTooltipDisabled]="!collapsed()"
+            matTooltipPosition="left">
     <span   [class]="{
                 'sl-badge-warning': type() === 'warn',
-                'sl-badge-error': type() === 'err'
+                'sl-badge-error': type() === 'err',
+                'gl-xxs-icon': !collapsed(),
+                'gl-xs-icon': collapsed()
             }" 
-            class="sl-nav-icon"
             [matBadge]="count()" 
-            [matBadgeHidden]="hideBagde()"
-            [matTooltip]="text()"
-            matTooltipPosition="left"
-            >
+            [matBadgeHidden]="!collapsed()">
         {{ icon() }}
     </span>
 
-    <span class="sl-nav-text">{{ text() }}</span>
+    <span class="sl-nav-text">{{ label() }}</span>
 
-    @if(hideBagde()) {
-        <p class="sl-nav-counter"> {{ count() }}</p>
+    @if(!collapsed()) {
+        <p class="sl-tag sl-ctrl-pad-xs" [class]="{
+            'sl-info-color': type() === 'info',
+            'sl-warn-color': type() === 'warn',
+            'sl-err-color': type() === 'err'
+        }"> {{ count() }}</p>
     }
 </a>

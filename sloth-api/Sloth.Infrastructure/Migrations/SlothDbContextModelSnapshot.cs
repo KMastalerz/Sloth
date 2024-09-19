@@ -495,12 +495,16 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ControlLabel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlPlaceholder")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ControlTooltip")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlType")

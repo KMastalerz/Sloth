@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20240918204851_Init")]
+    [Migration("20240919121556_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -498,12 +498,16 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ControlLabel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlPlaceholder")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ControlTooltip")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlType")

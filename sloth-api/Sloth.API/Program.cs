@@ -23,6 +23,12 @@ var app = builder.Build();
 // Run seeder to inject initial values
 await app.RunSeed();
 
+app.UseCors(builder =>
+    builder.WithOrigins("http://localhost:4200")
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials());
+
 app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())

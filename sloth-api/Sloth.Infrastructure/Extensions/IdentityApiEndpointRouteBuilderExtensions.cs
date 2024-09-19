@@ -92,17 +92,17 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             ([FromBody] LoginRequest login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies, [FromServices] IServiceProvider sp) =>
             {
                 var signInManager = sp.GetRequiredService<SignInManager<User>>();
-                var userManager = sp.GetRequiredService<UserManager<User>>();
+                //var userManager = sp.GetRequiredService<UserManager<User>>();
 
                 var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
                 var isPersistent = (useCookies == true) && (useSessionCookies != true);
                 signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
-                var user = await userManager.FindByEmailAsync(login.Email) ??
-                    await userManager.FindByNameAsync(login.Email) ?? 
-                    throw new NotFoundException(nameof(User), login.Email);
+                //var user = await userManager.FindByEmailAsync(login.Email) ??
+                //    await userManager.FindByNameAsync(login.Email) ?? 
+                //    throw new NotFoundException(nameof(User), login.Email);
 
-                var result = await signInManager.PasswordSignInAsync(user, login.Password, isPersistent, lockoutOnFailure: true);
+                var result = await signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent, lockoutOnFailure: true);
 
                 if (result.RequiresTwoFactor)
                 {

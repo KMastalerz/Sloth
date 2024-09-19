@@ -1,0 +1,36 @@
+/* Spacing (gap, padding, margin) */
+$space-xs: 0.4rem;
+$space-s: 0.8rem;
+$space-m: 1.2rem;
+$space-l: 1.6rem;
+$space-xl: 2.0rem;
+
+/* Font Sizes */
+$font-size-xs: 0.6rem;
+$font-size-s: 0.8rem;
+$font-size-m: 1.2rem;
+$font-size-l: 1.4rem;
+$font-size-xl: 1.8rem;
+
+/* Icon Sizes */
+$icon-size-xs: 2.0rem;
+$icon-size-s: 2.4rem;
+$icon-size-m: 3.2rem;
+$icon-size-l: 3.6rem;
+$icon-size-xl: 4.0rem;
+
+/* Border Radius */
+$border-radius-s: 0.2rem;
+$border-radius-m: 0.6rem;
+$border-radius-l: 1.2rem;
+$border-radius-pill: 4rem;
+
+/* Box Shadow */
+$sl-box-shadow: 0.1rem 0.1rem 0.5rem var(--sl-neutral-400);
+$sl-box-shadow-primary: 0.1rem 0.1rem 0.5rem var(--sl-primary-shade-10);
+
+$sl-font: "Work Sans", sans-serif;
+$sl-icon-font: "Material Symbols Outlined";
+
+$sl-nav-expanded: 18rem;
+$sl-nav-collapsed: 4.6rem;

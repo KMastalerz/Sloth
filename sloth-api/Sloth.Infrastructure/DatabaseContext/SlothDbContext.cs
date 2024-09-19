@@ -67,8 +67,9 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
             entity.HasKey(e => new { e.PageID, e.ControlID });
 
             entity.Property(e => e.ControlType).IsRequired();
-            entity.Property(e => e.ControlLabel).IsRequired();
-            entity.Property(e => e.ControlPlaceholder).IsRequired();
+            entity.Property(e => e.ControlLabel).IsRequired(false);
+            entity.Property(e => e.ControlPlaceholder).IsRequired(false);
+            entity.Property(e => e.ControlTooltip).IsRequired(false);
             entity.Property(e => e.Route).IsRequired(false);
             entity.Property(e => e.RoutePageID).IsRequired(false);
             entity.Property(e => e.SecurityTableID).IsRequired(false);

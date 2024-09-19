@@ -1,0 +1,18 @@
+.sl-info-color {
+    background: var(--sl-info-light);
+    color: var(--sl-on-info);
+}
+
+.sl-warn-color {
+    background-color: var(--sl-warning-light);
+    color: var(--sl-on-info);
+}
+
+.sl-err-color {
+    background-color: var(--sl-error-light);
+    color: var(--sl-on-info);
+}
+
+.sl-shadow {
+    box-shadow: $sl-box-shadow;
+}

@@ -16,21 +16,9 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
 {
     public async Task Seed()
     {
-        bool userForcedSeed = configuration.GetValue<bool>(SeedConfig.UseForcedSeed);
-        if(userForcedSeed)
+        bool seedPages = configuration.GetValue<bool>(SeedConfig.SeedPages);
+        if(seedPages)
         {
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [SystemOption]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [UserRoleLink]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [UserClaim]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [User]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [UserRole]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [Language]");
-            await dbContext.SaveChangesAsync();
             await dbContext.Database.ExecuteSqlRawAsync("delete from [WebPage]");
             await dbContext.SaveChangesAsync();
             await dbContext.Database.ExecuteSqlRawAsync("delete from [WebControl]");

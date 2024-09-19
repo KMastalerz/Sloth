@@ -1,0 +1,10 @@
+<button class="sl-toggle-icon" (click)="onToggle()"> 
+    <span [class]="{
+        'gl-xxs-icon': size() === 'xxs',
+        'gl-xs-icon': size() === 'xs',
+        'gl-s-icon': size() === 's',
+        'gl-m-icon': size() === 'm',
+        'gl-l-icon': size() === 'l',
+        'gl-xl-icon': size() === 'xl',
+    }">{{ icon() }}</span>
+</button>

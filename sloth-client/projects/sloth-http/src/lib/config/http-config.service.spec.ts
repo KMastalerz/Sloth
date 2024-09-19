@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SlothHttpService } from './sloth-http.service';
+import { HttpConfigService } from './http-config.service';
 
-describe('SlothHttpService', () => {
-  let service: SlothHttpService;
+describe('HttpConfigService', () => {
+  let service: HttpConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SlothHttpService);
+    service = TestBed.inject(HttpConfigService);
   });
 
   it('should be created', () => {

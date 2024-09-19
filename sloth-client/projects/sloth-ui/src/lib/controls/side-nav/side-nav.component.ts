@@ -1,41 +1,23 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, input, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { BaseControl } from '../../base/base-control/base-control.component';
 
 @Component({
   selector: 'sl-side-nav',
   standalone: true,
   imports: [MatTooltipModule, MatBadgeModule],
   templateUrl: './side-nav.component.html',
-  styleUrl: './side-nav.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './side-nav.component.scss'
 })
-export class SideNavComponent {
+export class SideNavComponent extends BaseControl {
   collapsed = input.required<boolean>();
-  text = input.required<string>();
-  icon = input.required<string>();
-
-  displayCounter = input<boolean>(false);
-  count = input<number>(0);
-
-  warningCount = input<number | null>(null);
-  errorCount = input<number | null>(null);
-  route = input<string | null>(null);
-
-  type = computed<'info' | 'warn' | 'err'>(() => {
-
-    if(this.errorCount()) {
-      if (this.count() >= this.errorCount()!) 
-        return 'err'
-    }
-
-    if(this.warningCount()) {
-      if (this.count() >= this.warningCount()!)
-         return 'warn'
-    }
-
-    return 'info';
-  });
-
-  hideBagde = computed(()=> this.count() && this.count() > 0 && !this.collapsed());
+  icon = computed<string>(() => this.metaData().Icon);
+  label = computed<string>(() => this.config().ControlLabel!);
+  tooltip = computed<string>(() => this.config().ControlTooltip!);
+  //temp 
+  count = signal<number>(0);
+  type = signal<string>('info');
+  
 }

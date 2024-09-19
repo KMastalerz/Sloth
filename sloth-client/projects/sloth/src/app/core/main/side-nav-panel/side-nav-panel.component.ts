@@ -1,27 +1,34 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
-import { SideNavComponent, SideNavConfig } from '@sloth-ui';
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { WebControl } from '@sloth-http';
+
+import { ControlType, NavGroup, SideNavComponent, SlothIcons, ToggleIconComponent } from '@sloth-ui';
+import { ListUtilityService } from '@sloth-util';
 
 @Component({
   selector: 'sl-side-nav-panel',
   standalone: true,
-  imports: [SideNavComponent],
+  imports: [SideNavComponent, ToggleIconComponent],
   templateUrl: './side-nav-panel.component.html',
-  styleUrl: './side-nav-panel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './side-nav-panel.component.scss'
 })
 export class SideNavPanelComponent {
-  mainNavigations = input<SideNavConfig[]>([])
-  userNavigations = input<SideNavConfig[]>([])
-  settingsNavigations = input<SideNavConfig[]>([])
+  listUtil = inject(ListUtilityService);
+  controls = input.required<WebControl[]>();
+  logoIcon = signal<string>(SlothIcons.SlothIcon);
+
+  protected toggleControl = computed<WebControl>(() => this.controls().find(c => c.ControlID == 'Toggle' && c.ControlType === ControlType.ToggleIcon)!);
+
+  protected mainNavigation = computed<WebControl[]>(() => this.controls().filter(c => JSON.parse(c.MetaData!).Group === NavGroup.Main && c.ControlType === ControlType.SideNav));
+  protected userNavigation = computed<WebControl[]>(() => this.controls().filter(c => JSON.parse(c.MetaData!).Group === NavGroup.User && c.ControlType === ControlType.SideNav));
+  protected infoNavigation = computed<WebControl[]>(() => this.controls().filter(c => JSON.parse(c.MetaData!).Group === NavGroup.Info && c.ControlType === ControlType.SideNav));
+  
+  protected hasMainNavigation = computed<boolean>(()=> !this.listUtil.IsEmpty(this.mainNavigation()));
+  protected hasUserNavigations = computed<boolean>(()=> !this.listUtil.IsEmpty(this.userNavigation()));
+  protected hasInfoNavigations = computed<boolean>(()=> !this.listUtil.IsEmpty(this.infoNavigation()));
 
   protected collapsed = signal<boolean>(false);
-  protected toggleIcon = computed<'chevron_right' | 'chevron_left'>(()=> this.collapsed() ? 'chevron_right' : 'chevron_left')
-  protected hasMainNavigation = computed<boolean>(()=> this.mainNavigations() && this.mainNavigations().length > 0);
-  protected hasUserNavigations = computed<boolean>(()=> this.userNavigations() && this.userNavigations().length > 0);
-  protected hasSettingsNavigations = computed<boolean>(()=> this.settingsNavigations() && this.settingsNavigations().length > 0);
 
   protected onToggleExpander() {
     this.collapsed.set(!this.collapsed());
   }
-  
 }

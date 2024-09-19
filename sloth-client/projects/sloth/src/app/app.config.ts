@@ -1,8 +1,9 @@
 import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { routes } from './app.routes';
+import { authInterceptor } from '@sloth-http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -10,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding(), withRouterConfig({
       paramsInheritanceStrategy:'always',
     }) ),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
   ]
 };

@@ -233,10 +233,12 @@ namespace Sloth.Infrastructure.Migrations
                     ControlID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ControlType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ControlLabel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ControlPlaceholder = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ControlLabel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ControlPlaceholder = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ControlTooltip = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Route = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoutePageID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

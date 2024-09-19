@@ -26,3 +26,9 @@ public static class SlothClaims
     public const string UserGroup = "UserGroup";
 }
 
+
+public static class WebPages
+{
+    public const string MainPage = "MainPage";
+    public const string Login = "Login";
+}

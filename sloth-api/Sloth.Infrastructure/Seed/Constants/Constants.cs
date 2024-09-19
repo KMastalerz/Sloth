@@ -21,5 +21,5 @@ internal static class SeedPath
 
 internal static class SeedConfig
 {
-    public const string UseForcedSeed = "UseForcedSeed";
+    public const string SeedPages = "SeedPages";
 }

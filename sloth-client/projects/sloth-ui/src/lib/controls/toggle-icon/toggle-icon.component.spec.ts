@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlothHttpComponent } from './sloth-http.component';
+import { ToggleIconComponent } from './toggle-icon.component';
 
-describe('SlothHttpComponent', () => {
-  let component: SlothHttpComponent;
-  let fixture: ComponentFixture<SlothHttpComponent>;
+describe('ToggleIconComponent', () => {
+  let component: ToggleIconComponent;
+  let fixture: ComponentFixture<ToggleIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SlothHttpComponent]
+      imports: [ToggleIconComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SlothHttpComponent);
+    fixture = TestBed.createComponent(ToggleIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,11 +2,20 @@
  * Public API Surface of sloth-ui
  */
 
+// base
+export * from './lib/base/base-control/base-control.component';
+export * from './lib/base/base-page/base-page.component';
+
 // constants
 export * from './lib/icons/sloth.icon';
+export * from './lib/constants/controls-type.constants';
+export * from './lib/constants/icon.constants';
+export * from './lib/constants/nav-group.constant';
 
-// constols 
+// controls 
 export * from './lib/controls/side-nav/side-nav.component';
+export * from './lib/controls/toggle-icon/toggle-icon.component';
 
-// models
-export * from './lib/models/side-nav.model'
+// models 
+export * from './lib/models/meta-data.model';
+export * from './lib/models/side-nav.model';

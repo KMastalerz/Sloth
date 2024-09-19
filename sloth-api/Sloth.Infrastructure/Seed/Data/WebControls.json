@@ -6,20 +6,50 @@
   //  "ControlType": "",
   //  "ControlLabel": "",
   //  "ControlPlaceholder": "",
+  //  "ControlTooltip" : "",
   //  "Route": null,
   //  "RoutePageID": null,
+  //  "Action": null,
   //  "MetaData": null
   //}
+  {
+    "PageID": "MainPage",
+    "ControlID": "Toggle",
+    "SecurityTableID": null,
+    "ControlType": "ToggleIcon",
+    "ControlLabel": null,
+    "ControlPlaceholder": null,
+    "ControlTooltip": null,
+    "Route": null,
+    "RoutePageID": null,
+    "Action": null,
+    "MetaData": "{\"OnTrue\":\"chevron_left\",\"OnFalse\":\"chevron_right\",\"Size\":\"xxs\"}"
+  },
   {
     "PageID": "MainPage",
     "ControlID": "Dashboard",
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Dashboard",
-    "ControlPlaceholder": "Dashboard",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Dashboard",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"bar_chart_4_bars\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"main\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"bar_chart_4_bars\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
+  },
+  {
+    "PageID": "MainPage",
+    "ControlID": "Kanban",
+    "SecurityTableID": null,
+    "ControlType": "SideNav",
+    "ControlLabel": "Kanban",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Kanban",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": null,
+    "MetaData": "{\"Icon\":\"view_kanban\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -27,10 +57,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Bugs",
-    "ControlPlaceholder": "Bugs",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Bugs",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"bug_report\",\"CounterFunc\":\"getBugCount\",\"WarningCount\":50,\"ErrorCount\":100,\"Group\":\"main\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"bug_report\",\"CounterFunc\":\"getBugCount\",\"WarningCount\":50,\"ErrorCount\":100,\"Group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -38,10 +70,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Projects",
-    "ControlPlaceholder": "Projects",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Projects",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"tactic\",\"CounterFunc\":\"getProjectCount\",\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"main\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"tactic\",\"CounterFunc\":\"getProjectCount\",\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -49,10 +83,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Tasks",
-    "ControlPlaceholder": "Tasks",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Tasks",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"task\",\"CounterFunc\":\"getTaskCount\",\"WarningCount\":10,\"ErrorCount\":20,\"Group\":\"main\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"task\",\"CounterFunc\":\"getTaskCount\",\"WarningCount\":10,\"ErrorCount\":20,\"Group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -60,10 +96,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Messages",
-    "ControlPlaceholder": "Messages",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Messages",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"mail\",\"CounterFunc\":\"getUnreadMessageCount\",\"WarningCount\":30,\"ErrorCount\":90,\"Group\":\"user\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"mail\",\"CounterFunc\":\"getUnreadMessageCount\",\"WarningCount\":30,\"ErrorCount\":90,\"Group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -71,10 +109,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Timesheet",
-    "ControlPlaceholder": "Timesheet",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Timesheet",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"calendar_month\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"user\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"calendar_month\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -82,10 +122,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Setttings",
-    "ControlPlaceholder": "Setttings",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Setttings",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"settings\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"user\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"settings\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -93,10 +135,12 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Releases",
-    "ControlPlaceholder": "Releases",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Releases",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"rocket_launch\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"info\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"rocket_launch\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Info\"}"
   },
   {
     "PageID": "MainPage",
@@ -104,9 +148,11 @@
     "SecurityTableID": null,
     "ControlType": "SideNav",
     "ControlLabel": "Documentation",
-    "ControlPlaceholder": "Documentation",
+    "ControlPlaceholder": null,
+    "ControlTooltip": "Documentation",
     "Route": null,
     "RoutePageID": null,
-    "MetaData": "{\"Icon\":\"book_5\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"info\"}"
+    "Action": null,
+    "MetaData": "{\"Icon\":\"book_5\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Info\"}"
   }
 ]

@@ -8,13 +8,13 @@
   {
     "OptionID": "RefreshTokenLifetime",
     "OptionName": "Refresh Token Lifetime",
-    "OptionValue": "720",
+    "OptionValue": "3600",
     "Description": "Describes minutes, that Refresh Token is valid for."
   },
   {
     "OptionID": "TokenLifetime",
     "OptionName": "Token Lifetime",
-    "OptionValue": "120",
+    "OptionValue": "7200",
     "Description": "Describes minutes, that Bearer Token is valid for."
   }
 ]

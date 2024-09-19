@@ -1,10 +1,13 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input} from '@angular/core';
+
+import { WebControl } from '@sloth-http';
 
 @Component({
-  selector: 'sl-base-control',
-  standalone: true,
-  template: ``
+  template: '',
 })
-export class BaseControlComponent {
-  config = input.required<any>()
+export class BaseControl {
+  config = input.required<WebControl>()
+  metaData = computed<any>(
+    () => this.config().MetaData ? JSON.parse(<string>this.config().MetaData) : undefined
+  );
 }

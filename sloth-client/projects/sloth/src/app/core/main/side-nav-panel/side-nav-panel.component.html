@@ -1,53 +1,41 @@
-<nav class="sl-side-nav" [class]="{
+<div class="sl-side-nav" [class]="{
     'sl-side-nav-expanded': !collapsed(),
     'sl-side-nav-collapsed': collapsed(),
 }">
-    <button class="sl-side-nav-toggle" (click)="onToggleExpander()"> 
-        <span>{{ toggleIcon() }}</span>
-    </button>
-
-    @if(hasMainNavigation()) {
-        @if(!collapsed()){
-            <span>Main</span>
+    <sl-toggle-icon class="sl-toggle-side-nav sl-shadow" [config]="toggleControl()" (onClick)="onToggleExpander()"></sl-toggle-icon>
+    <!-- add application logo here  -->
+    <nav>
+        @if(hasMainNavigation()) {
+            @if(!collapsed()){
+                <span>Main</span>
+            }
+            @for(nav of mainNavigation(); track $index) {
+                <sl-side-nav 
+                [collapsed]="collapsed()"
+                [config]="nav"/>
+            }
         }
-        @for(nav of mainNavigations(); track $index) {
-            <sl-side-nav 
-            [collapsed]="collapsed()"
-            [icon]="nav.icon"
-            [text]="nav.text"
-            [count]="nav.count ?? 0"
-            [warningCount]="nav.warningCount ?? null"
-            [errorCount]="nav.errorCount ?? null"/>
-        }
-    }
-
-    @if(hasUserNavigations()) {
-        @if(!collapsed()){
-            <span>User</span>
-        }
-        @for(nav of userNavigations(); track $index) {
-            <sl-side-nav 
-            [collapsed]="collapsed()"
-            [icon]="nav.icon"
-            [text]="nav.text"
-            [count]="nav.count ?? 0"
-            [warningCount]="nav.warningCount ?? null"
-            [errorCount]="nav.errorCount ?? null"/>
-        }
-    }
     
-    @if(hasSettingsNavigations()) {
-        @if(!collapsed()){
-            <span>Settings</span>
+        @if(hasUserNavigations()) {
+            @if(!collapsed()){
+                <span>User</span>
+            }
+            @for(nav of userNavigation(); track $index) {
+                <sl-side-nav 
+                [collapsed]="collapsed()"
+                [config]="nav"/>
+            }
         }
-        @for(nav of settingsNavigations(); track $index) {
-            <sl-side-nav
-            [collapsed]="collapsed()"
-            [icon]="nav.icon"
-            [text]="nav.text"
-            [count]="nav.count ?? 0"
-            [warningCount]="nav.warningCount ?? null"
-            [errorCount]="nav.errorCount ?? null"/>
+        
+        @if(hasInfoNavigations()) {
+            @if(!collapsed()){
+                <span>Settings</span>
+            }
+            @for(nav of infoNavigation(); track $index) {
+                <sl-side-nav 
+                [collapsed]="collapsed()"
+                [config]="nav"/>
+            }
         }
-    }
-</nav>
+    </nav>
+</div>

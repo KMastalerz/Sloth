@@ -1,0 +1,24 @@
+.sl-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-m;
+    align-items: center;
+}
+
+.sl-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: $space-m;
+    align-items: center;
+}
+
+.sl-grid-3-c {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: $space-m;
+    align-items: center;
+}
+
+.sl-m-text {
+    font-size: $font-size-m;
+}
