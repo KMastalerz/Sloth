@@ -6,7 +6,7 @@
 
 .sl-link:hover,
 .sl-link:active {
-    background-color: var(--sl-neutral-200);
+    background-color: var(--sl-neutral-20);
 }
 
 .sl-tag {
@@ -15,65 +15,38 @@
     font-weight: 500;
 }
 
-.sl-toggle-icon {
+.sl-button {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.sl-toggle-side-nav {
-    position: absolute;
-    background-color: var(--sl-neutral-100);
     border-radius: $border-radius-s;
-    z-index: 9999;
-    top: $space-m;
-    right: $space-s * -1;
 }
 
-.sl-badge {
-    
-}
-
-
-
-
-
+// overrite angular material badge
 .mat-badge-content {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $font-size-xs !important;
-    padding: $space-xs $space-xs !important;
+    align-self: center;
+    justify-self: center;
+    font-size: $font-size-s !important;
+    padding: 0.2rem 0.4rem !important;
     min-width: 1.4rem  !important;
     min-height: 1.4rem  !important;
+    height: 1.4rem  !important;
 }
 
-.sl-count-info {
-
+.sl-badge-neutral {
     .mat-badge-content {
         background-color: var(--sl-info-light);
     }
 }
 
-.sl-count-warning {
-
+.sl-badge-warning {
     .mat-badge-content {
-        background-color: var(--sl-warning-light);
+        background-color: var(--sl-primary-light);
     }
 }
 
-.sl-count-error {
-
-    .mat-badge-content {
-        background-color: var(--sl-error-light);
-    }
-}
-
-.sl-nav-collapsed {
-    .sl-nav-text{
-        visibility: collapse;
-    }
-    .sl-nav-counter{
-        visibility: collapse;
-    }
+.sl-image-pill {
+    display: block;
+    border-radius: $border-radius-pill;
 }

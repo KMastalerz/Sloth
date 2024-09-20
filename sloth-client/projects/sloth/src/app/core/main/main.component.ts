@@ -1,6 +1,6 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { SideNavPanelComponent } from "./side-nav-panel/side-nav-panel.component";
-import { BasePage, SideNavModel } from '@sloth-ui';
+import { BasePage } from '@sloth-ui';
 
 @Component({
   selector: 'sl-main',
@@ -10,3 +10,4 @@ import { BasePage, SideNavModel } from '@sloth-ui';
   styleUrl: './main.component.scss'
 })
 export class MainComponent extends BasePage {}
+

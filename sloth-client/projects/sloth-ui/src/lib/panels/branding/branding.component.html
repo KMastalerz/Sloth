@@ -1,0 +1,8 @@
+<div class="sl-flex sl-flex-centered-column sl-x-pap-s sl-gap-s">
+    <div>
+        <img class="sl-image-pill sl-image-64 sl-bgcolor-neutral sl-x-pad-s" [src]="imgPath()" [alt]="imgAlt()" />
+    </div>
+    @if(shoTitle()){
+        <h1 class="sl-text-xl sl-text-semi-bold">{{title()}}</h1>
+    }
+</div>

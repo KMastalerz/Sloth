@@ -12,10 +12,7 @@ public static class WebApplicationBuilderExtensions
     public static void AddPresentation(this WebApplicationBuilder builder)
     { 
         builder.Services.AddAuthentication();
-        builder.Services.AddControllers().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.PropertyNamingPolicy = null; // Keeps the original casing
-        });
+        builder.Services.AddControllers();
 
         builder.Services.AddSwaggerGen(c =>
         {

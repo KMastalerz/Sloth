@@ -8,5 +8,5 @@ import { WebControl, WebPage } from '@sloth-http';
 })
 export class BasePage {
   page = input.required<WebPage>();
-  controls = computed<WebControl[]>(()=> this.page().WebControls ?? []);
+  controls = computed<WebControl[]>(()=> this.page().webControls ?? []);
 }

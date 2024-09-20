@@ -1,13 +1,11 @@
 import { ResolveFn } from "@angular/router";
 import { inject } from "@angular/core";
 
-import { UIService } from "@sloth-http";
-
-import { WebPage } from "../../../sloth-http/src/lib/models/ui-service/page.model";
+import { UIService, WebPage } from "@sloth-http";
 
 export  const getMainPage: ResolveFn<WebPage | null> = async (activedRoute, routeState) => {
     const services = inject(UIService);
-
-    return await services.getMainWebPage() ?? null;
+    const results = await services.getMainWebPage();
+    return results ?? null;
 }
  

@@ -1,14 +1,14 @@
 export interface WebControl {
-    ControlID: string;
-    ControlType: string;
-    ControlLabel?: string | null;
-    ControlPlaceholder?: string | null;
-    ControlTooltip?: string | null;
-    Route?: string | null;
-    RoutePageID?: string | null;
-    Action?: string | null;
-    MetaData?: string | null;
-    IsHidden: boolean;
-    IsReadOnly: boolean;
-    IsDiabled: boolean;
+    controlID: string;
+    controlType: string;
+    controlLabel?: string | null;
+    controlPlaceholder?: string | null;
+    controlTooltip?: string | null;
+    route?: string | null;
+    routePageID?: string | null;
+    action?: string | null;
+    metaData?: string | null;
+    isHidden: boolean;
+    isReadOnly: boolean;
+    isDiabled: boolean;
 }

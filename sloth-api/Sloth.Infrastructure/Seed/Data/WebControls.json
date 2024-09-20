@@ -23,7 +23,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"OnTrue\":\"chevron_left\",\"OnFalse\":\"chevron_right\",\"Size\":\"xxs\"}"
+    "MetaData": "{\"onTrue\":\"chevron_left\",\"onFalse\":\"chevron_right\",\"size\":\"m\"}"
   },
   {
     "PageID": "MainPage",
@@ -36,7 +36,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"bar_chart_4_bars\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -49,7 +49,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"view_kanban\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -62,7 +62,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"bug_report\",\"CounterFunc\":\"getBugCount\",\"WarningCount\":50,\"ErrorCount\":100,\"Group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100,\"group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -75,7 +75,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"tactic\",\"CounterFunc\":\"getProjectCount\",\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -88,7 +88,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"task\",\"CounterFunc\":\"getTaskCount\",\"WarningCount\":10,\"ErrorCount\":20,\"Group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20,\"group\":\"Main\"}"
   },
   {
     "PageID": "MainPage",
@@ -101,7 +101,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"mail\",\"CounterFunc\":\"getUnreadMessageCount\",\"WarningCount\":30,\"ErrorCount\":90,\"Group\":\"User\"}"
+    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90,\"group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -114,7 +114,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"calendar_month\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"User\"}"
+    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -127,7 +127,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"settings\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"User\"}"
+    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"User\"}"
   },
   {
     "PageID": "MainPage",
@@ -140,7 +140,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"rocket_launch\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Info\"}"
+    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Info\"}"
   },
   {
     "PageID": "MainPage",
@@ -153,6 +153,6 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"Icon\":\"book_5\",\"CounterFunc\":null,\"WarningCount\":null,\"ErrorCount\":null,\"Group\":\"Info\"}"
+    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Info\"}"
   }
 ]

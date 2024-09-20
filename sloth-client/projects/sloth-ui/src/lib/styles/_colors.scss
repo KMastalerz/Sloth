@@ -3,16 +3,118 @@
     color: var(--sl-on-info);
 }
 
-.sl-warn-color {
+.sl-warning-color {
     background-color: var(--sl-warning-light);
     color: var(--sl-on-info);
 }
 
-.sl-err-color {
+.sl-error-color {
     background-color: var(--sl-error-light);
     color: var(--sl-on-info);
 }
 
-.sl-shadow {
+.sl-badge-neutral {
+    .mat-badge-content {
+        background-color: var(--sl-info-light);
+    }
+}
+
+.sl-badge-warning {
+    .mat-badge-content {
+        background-color: var(--sl-warning-light);
+    }
+}
+
+.sl-badge-error {
+    .mat-badge-content {
+        background-color: var(--sl-error-light);
+    }
+}
+
+.sl-ctrl-shadow {
+    box-shadow: $sl-ctrl-shadow;
+}
+
+.sl-ctrl-shadow:hover {
     box-shadow: $sl-box-shadow;
+}
+
+.sl-color-neutral {
+    color: var(--sl-neutral)
+}
+
+.sl-color-neutral10 {
+    color: var(--sl-neutral-10)
+}
+
+.sl-color-neutral20 {
+    color: var(--sl-neutral-20)
+}
+
+.sl-color-neutral30 {
+    color: var(--sl-neutral-30)
+}
+
+.sl-color-neutral40 {
+    color: var(--sl-neutral-40)
+}
+
+.sl-color-neutral50 {
+    color: var(--sl-neutral-50)
+}
+
+.sl-color-neutral60 {
+    color: var(--sl-neutral-60)
+}
+
+.sl-color-neutral70 {
+    color: var(--sl-neutral-70)
+}
+
+.sl-color-neutral80 {
+    color: var(--sl-neutral-80)
+}
+
+.sl-color-neutral90 {
+    color: var(--sl-neutral-90)
+}
+
+.sl-bgcolor-neutral {
+    background-color: var(--sl-neutral)
+}
+
+.sl-bgcolor-neutral10 {
+    background-color: var(--sl-neutral-10)
+}
+
+.sl-bgcolor-neutral20 {
+    background-color: var(--sl-neutral-20)
+}
+
+.sl-bgcolor-neutral30 {
+    background-color: var(--sl-neutral-30)
+}
+
+.sl-bgcolor-neutral40 {
+    background-color: var(--sl-neutral-40)
+}
+
+.sl-bgcolor-neutral50 {
+    background-color: var(--sl-neutral-50)
+}
+
+.sl-bgcolor-neutral60 {
+    background-color: var(--sl-neutral-60)
+}
+
+.sl-bgcolor-neutral70 {
+    background-color: var(--sl-neutral-70)
+}
+
+.sl-bgcolor-neutral80 {
+    background-color: var(--sl-neutral-80)
+}
+
+.sl-bgcolor-neutral90 {
+    background-color: var(--sl-neutral-90)
 }

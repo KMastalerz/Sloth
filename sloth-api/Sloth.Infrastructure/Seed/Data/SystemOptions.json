@@ -16,5 +16,11 @@
     "OptionName": "Token Lifetime",
     "OptionValue": "7200",
     "Description": "Describes minutes, that Bearer Token is valid for."
+  },
+  {
+    "OptionID": "ApplicatioName",
+    "OptionName": "Application Name",
+    "OptionValue": "Sloth",
+    "Description": "This will serve as application name in various places across application"
   }
 ]

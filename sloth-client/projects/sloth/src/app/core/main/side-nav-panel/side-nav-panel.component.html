@@ -1,14 +1,15 @@
-<div class="sl-side-nav" [class]="{
+<div class="sl-side-nav-panel sl-bgcolor-neutral10 sl-inout-xs" [class]="{
     'sl-side-nav-expanded': !collapsed(),
     'sl-side-nav-collapsed': collapsed(),
 }">
-    <sl-toggle-icon class="sl-toggle-side-nav sl-shadow" [config]="toggleControl()" (onClick)="onToggleExpander()"></sl-toggle-icon>
+    <sl-branding class="sl-b-margin-m" title="Sloth" imgPath="assets/icon.png" [shoTitle]="!collapsed()"/>
+    <sl-toggle-icon class="sl-absolute sl-top-right sl-move-right-50-top-50 sl-ctrl-shadow" [config]="toggleControl()" (onClick)="onToggleExpander()"/>
     <!-- add application logo here  -->
-    <nav>
+    <nav class="sl-flex-column sl-gap-xxs">
         @if(hasMainNavigation()) {
-            @if(!collapsed()){
-                <span>Main</span>
-            }
+            @if(!collapsed()) {
+                <span class="sl-l-margin-xs sl-text-s sl-text-bold sl-upper-text sl-color-neutral50">{{mainNavGroup()}}</span>
+            }   
             @for(nav of mainNavigation(); track $index) {
                 <sl-side-nav 
                 [collapsed]="collapsed()"
@@ -17,9 +18,9 @@
         }
     
         @if(hasUserNavigations()) {
-            @if(!collapsed()){
-                <span>User</span>
-            }
+            @if(!collapsed()) {
+                <span class="sl-l-margin-xs sl-text-s sl-text-bold sl-upper-text sl-color-neutral50">{{userNavGroup()}}</span>
+            }   
             @for(nav of userNavigation(); track $index) {
                 <sl-side-nav 
                 [collapsed]="collapsed()"
@@ -28,9 +29,9 @@
         }
         
         @if(hasInfoNavigations()) {
-            @if(!collapsed()){
-                <span>Settings</span>
-            }
+            @if(!collapsed()) {
+                <span class="sl-l-margin-xs sl-text-s sl-text-bold sl-upper-text sl-color-neutral50">{{infoNavGroup()}}</span>
+            }   
             @for(nav of infoNavigation(); track $index) {
                 <sl-side-nav 
                 [collapsed]="collapsed()"

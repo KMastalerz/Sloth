@@ -8,6 +8,6 @@ import { WebControl } from '@sloth-http';
 export class BaseControl {
   config = input.required<WebControl>()
   metaData = computed<any>(
-    () => this.config().MetaData ? JSON.parse(<string>this.config().MetaData) : undefined
+    () => this.config().metaData ? JSON.parse(<string>this.config().metaData) : undefined
   );
 }

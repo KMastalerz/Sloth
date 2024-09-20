@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(), 
     provideRouter(routes, withComponentInputBinding(), withRouterConfig({
       paramsInheritanceStrategy:'always',
-    }) ),
+    })),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
   ]

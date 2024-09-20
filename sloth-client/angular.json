@@ -30,7 +30,9 @@
               {
                 "glob": "**/*",
                 "input": "projects/sloth/public"
-              }
+         
+              },
+              "projects/sloth/src/assets"
             ],
             "styles": [
               "projects/sloth/src/styles.scss"

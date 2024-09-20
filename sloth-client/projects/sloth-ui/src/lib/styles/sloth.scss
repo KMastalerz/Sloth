@@ -69,27 +69,30 @@ $material-icons-font-display: block !default;
     --sl-neutral-saturation: 0%;
     --sl-neutral-lightness: 95%;
 
-    --sl-neutral-000: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), var(--sl-neutral-lightness));
-    --sl-neutral-100: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 85%);
-    --sl-neutral-200: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 75%);
-    --sl-neutral-300: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 65%);
-    --sl-neutral-400: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 55%);
-    --sl-neutral-500: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 45%);
-    --sl-neutral-600: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 35%);
-    --sl-neutral-700: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 25%);
-    --sl-neutral-800: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 15%);
-    --sl-neutral-900: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 5%);
+    --sl-neutral: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), var(--sl-neutral-lightness));
+    --sl-neutral-10: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 85%);
+    --sl-neutral-20: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 75%);
+    --sl-neutral-30: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 65%);
+    --sl-neutral-40: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 55%);
+    --sl-neutral-50: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 45%);
+    --sl-neutral-60: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 35%);
+    --sl-neutral-70: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 25%);
+    --sl-neutral-80: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 15%);
+    --sl-neutral-90: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 5%);
 
-    --sl-on-primary: var(--sl-neutral-000);
-    --sl-on-error: var(--sl-neutral-000);
-    --sl-on-info: var(--sl-neutral-000); 
+    --sl-on-primary: var(--sl-neutral);
+    --sl-on-error: var(--sl-neutral);
+    --sl-on-info: var(--sl-neutral); 
 }
 
 @import "variable";
+@import "animation";
 @import "reset";
 @import "size";
 @import "colors";
-@import "padding";
-@import "grid";
+@import "spacing";
+@import "position";
+@import "formatters";
+@import "display";
 @import "control";
 @import "panel";

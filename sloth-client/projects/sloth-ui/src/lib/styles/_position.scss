@@ -1,0 +1,21 @@
+.sl-absolute {
+    position: absolute;
+    z-index: 9999;
+}
+
+.sl-top-right {
+    top: 0;
+    right: 0;
+}
+
+.sl-move-right-50-top-50 {
+    transform: translateX(50%) translateY(50%);
+}
+
+.sl-move-right-50-top-100 {
+    transform: translateX(50%) translateY(100%);
+}
+
+.sl-allign-content-center {
+    align-content: center !important;
+}

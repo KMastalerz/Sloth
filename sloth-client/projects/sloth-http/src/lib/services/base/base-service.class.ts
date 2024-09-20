@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { throwError } from "rxjs";
 import { HttpConfigService } from "../../config/http-config.service";
 
 export abstract class BaseService {

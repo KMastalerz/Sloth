@@ -18,4 +18,6 @@ export * from './lib/controls/toggle-icon/toggle-icon.component';
 
 // models 
 export * from './lib/models/meta-data.model';
-export * from './lib/models/side-nav.model';
+
+// panels
+export * from './lib/panels/branding/branding.component';

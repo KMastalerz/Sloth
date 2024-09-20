@@ -37,3 +37,52 @@
     font-family: $sl-icon-font;
     font-size: $icon-size-l;
 }
+
+.sl-text-xs {
+    font-size: $font-size-xs;
+}
+
+.sl-text-s {
+    font-size: $font-size-s;
+}
+
+.sl-text-m {
+    font-size: $font-size-m;
+}
+
+.sl-text-l {
+    font-size: $font-size-l;
+}
+
+.sl-text-xl {
+    font-size: $font-size-xl;
+}
+
+.sl-text-thin {
+    font-size: 200;
+}
+
+.sl-text-semi-bold {
+    font-weight: 400;
+}
+
+.sl-text-bold {
+    font-weight: 600;
+}
+
+.sl-square-button-s {
+    width: $ctrl-size-s;
+    height: $ctrl-size-s;
+}
+
+.sl-square-button-m {
+    width: $ctrl-size-m;
+    height: $ctrl-size-m;
+}
+
+.sl-image-64 {
+    max-width: $branding-icon-size;
+    max-height: $branding-icon-size;
+    width: 100%;    
+    height: 100%;     
+}

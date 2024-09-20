@@ -1,13 +1,13 @@
 export interface SideNavMetadata {
-    Icon: string;
-    CounterFunc?: string | null;
-    WarningCount?: string | null;
-    ErrorCount?: string | null;
-    Group: string;
+    icon: string;
+    counterFunc?: string | null;
+    warningCount?: string | null;
+    errorCount?: string | null;
+    group: string;
 }
 
 export interface ToggleIconMetadata {
-    OnTrue: string;
-    OnFalse: string;
-    Size: string;
+    onTrue: string;
+    onFalse: string;
+    size: string;
 }

@@ -1,13 +1,10 @@
-.sl-side-nav {
+.sl-side-nav-panel {
     position: relative;
     display: flex;
     flex-direction: column;
 
     gap: $space-xs;
-    
-    background-color: var(--sl-neutral-100);
-    padding: $space-xs;
-    margin: $space-xs;
+
     border-radius: $border-radius-m;
     height: 100%;
 
@@ -22,25 +19,4 @@
     width: $sl-nav-collapsed;
 }
 
-.sl-side-nav > span {
-    text-transform: uppercase;
-    font-size: $font-size-s;
-    font-weight: 600;
-    opacity: 0.4;
-    margin-top: $space-m;
-    margin-left: $space-xs;
-}
-
-.sl-side-nav > button {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    background-color: var(--sl-neutral-100);
-    border-radius: $border-radius-s;
-    padding: $space-xs;
-    box-shadow: $sl-box-shadow;
-    z-index: 9999;
-    top: $space-m;
-    right: $space-s * -1;
-}
 
