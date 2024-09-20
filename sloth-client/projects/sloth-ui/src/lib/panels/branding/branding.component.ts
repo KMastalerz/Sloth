@@ -12,5 +12,4 @@ export class BrandingComponent {
   imgPath = input.required<string>();
   shoTitle = input.required<boolean>();
   imgAlt = computed(() => `${this.title} logo`);
-
 }

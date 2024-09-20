@@ -1,6 +1,8 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { HttpConfigService } from "../../config/http-config.service";
+import { ServiceReturnValue } from "../../models/base/service-return.model";
+import { catchError, lastValueFrom, map, throwError } from "rxjs";
 
 export abstract class BaseService {
     constructor(_controller: string){
@@ -12,19 +14,48 @@ export abstract class BaseService {
     private httpConfig = inject(HttpConfigService);
     private getUrl = (action: string) => `${this.httpConfig.apiUrl}/${this.controller}/${action}`;
 
-    protected async get<T>(action: string, query?: any): Promise<T | undefined> {
-        // Check if the controller is null, undefined, or an empty string
-        if (!this.controller || this.controller.trim() === '') {
-            return Promise.reject('Controller is not defined or is empty');
-        }
-        
+    protected async get<T>(action: string, query?: any): Promise<ServiceReturnValue<T>> {        
         var url = this.getUrl(action);
-        // Handle the case where query parameters are provided
-        if(query) {
-            const params = new HttpParams({ fromObject: query });
-            return this.httpClient.get<T>(url, { params }).toPromise();
-        } else {
-            return this.httpClient.get<T>(url).toPromise();
+        try {
+            const result = await lastValueFrom(
+                this.httpClient.get<T>(url, {
+                    params: query ? new HttpParams({ fromObject: query }) : undefined, 
+                    observe: 'response' // Get full HttpResponse
+                }).pipe(
+                    // Map the response in case of success
+                    map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
+    
+                    // Catch and handle the error
+                    catchError((error: HttpErrorResponse) => {
+                        const mappedError = this.mapError<T>(error);
+                        // Re-throw the error to propagate it as a rejected promise
+                        return throwError(() => mappedError);
+                    })
+                ));
+            return result;
+        }
+        catch (error) {
+            // Return the error as a ServiceReturnValue
+            return error as ServiceReturnValue<T>;
+        }
+    }
+
+
+    private mapResponse<T>(response: HttpResponse<T>): ServiceReturnValue<T> {
+        return {
+            data: response.body as T,
+            responseCode: response.status,
+            error: '',
+            success: true
+        }
+    }
+
+    private mapError<T>(error: HttpErrorResponse): ServiceReturnValue<T> {
+        return {
+            data: null as any,
+            responseCode: error.status || 500,
+            error: error.message || 'An unknown error occurred',
+            success: false
         }
     }
 }

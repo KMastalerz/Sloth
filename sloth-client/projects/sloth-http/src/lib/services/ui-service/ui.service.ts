@@ -6,6 +6,7 @@ import { SlothControllers } from '../../constants/controller.constants';
 import { UIElementsActions } from '../../constants/action.constants';
 import { GetWebPageQuery } from '../../queries/ui-service/get-web-page.query';
 import { WebPage } from '../../models/ui-service/page.model';
+import { ServiceReturnValue } from '../../models/base/service-return.model';
 
 
 @Injectable({
@@ -16,19 +17,16 @@ export class UIService extends BaseService {
     super(SlothControllers.UIElements);
   }
 
-  async getWebPage(pageID: string): Promise<WebPage | undefined> {
+  async getWebPage(pageID: string): Promise<ServiceReturnValue<WebPage>> {
     const command = {PageID: pageID} as GetWebPageQuery;
-    const res = await this.get<WebPage>(UIElementsActions.GetWebPage, command);
-    return res;
+    return await this.get<WebPage>(UIElementsActions.GetWebPage, command);
   }
 
-  async getMainWebPage(): Promise<WebPage | undefined> {
-    const res = await this.get<WebPage>(UIElementsActions.GetMainWebPage);
-    return res;
+  async getMainWebPage(): Promise<ServiceReturnValue<WebPage>> {
+    return await this.get<WebPage>(UIElementsActions.GetMainWebPage);
   }
 
-  async getLoginWebPage(): Promise<WebPage | undefined> {
-    const res = await this.get<WebPage>(UIElementsActions.GetLoginWebPage);
-    return res;
+  async getLoginWebPage(): Promise<ServiceReturnValue<WebPage>> {
+    return await this.get<WebPage>(UIElementsActions.GetLoginWebPage);
   }
 }
