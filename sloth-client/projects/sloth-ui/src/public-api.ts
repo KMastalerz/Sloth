@@ -13,6 +13,9 @@ export * from './lib/constants/icon.constants';
 export * from './lib/constants/nav-group.constant';
 
 // controls 
+export * from './lib/controls/button/button.component';
+export * from './lib/controls/input/input.component';
+export * from './lib/controls/password/password.component';
 export * from './lib/controls/side-nav/side-nav.component';
 export * from './lib/controls/toggle-icon/toggle-icon.component';
 

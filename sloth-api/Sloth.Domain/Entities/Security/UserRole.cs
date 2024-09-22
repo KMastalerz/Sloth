@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Sloth.Domain.Entities;
-
-/// <summary>
-/// This class extends IdentityRole, provided by Identity package
-/// </summary>
-public class UserRole : IdentityRole
+﻿namespace Sloth.Domain.Entities;
+public class UserRole
 {
-    public string DisplayName { get; set; } = default!;
+    public Guid RoleID { get; set; } = new Guid();
+    public string RoleName { get; set; } = default!;
     public string? Description { get; set; }
 }

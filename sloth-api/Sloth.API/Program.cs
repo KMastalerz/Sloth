@@ -1,28 +1,35 @@
 using Serilog;
 using Sloth.API.Extensions;
+using Sloth.API.Middlewares;
 using Sloth.Application.Extensions;
-using Sloth.Domain.Entities;
 using Sloth.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Has to be before as database connection is needed
+builder.ReadConfiguration();
+
+// Needed before adding other layers as it defines the configuration of the application
+var configuration = builder.Services.InitializeInfrastucture(builder.Configuration);
+
+// Declare configured authentication 
+builder.Services.AddConfiguredAuthentication(configuration);
+
+// Register API Layer
 builder.AddPresentation();
-
-// Add Other Layers
+// Register Application Layer
 builder.Services.AddApplication();
-
-builder.Services.AddInfractructure(builder.Configuration);
-
-// Builds configuration based on DB objects, needs to happen after AddInfractructure(), as it relies on DbContext.
-await builder.Services.ConfigureAppConfig();
-builder.SetTokenConfig();
-builder.SetIdentityConfig();
+// Register Infrastructure Layer
+builder.Services.AddInfractructure();
 
 var app = builder.Build();
 
 // Run seeder to inject initial values
 await app.RunSeed();
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
+// TO DO: Add table that will define allowed origins
 app.UseCors(builder =>
     builder.WithOrigins("http://localhost:4200")
            .AllowAnyMethod()
@@ -39,11 +46,6 @@ if (app.Environment.IsDevelopment())
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
-
-// Use extension to get only needed endpoints for login etc. 
-// TO DO: If microsoft ever changes the option to setup, dtop extension and switch to MS solution.
-app.MapGroup("api/auth")
-    .MapIdentityApiFilterable<User>(new());
 
 app.UseAuthorization();
 

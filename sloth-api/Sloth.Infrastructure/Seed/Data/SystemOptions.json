@@ -1,7 +1,7 @@
 [
   {
-    "OptionID": "PasswordComplexity",
-    "OptionName": "Password Complexity",
+    "OptionID": "PasswordOptions",
+    "OptionName": "PPasswordOptions",
     "OptionValue": "{\"RequiredLength\":10,\"RequiredUniqueChars\":2,\"RequireNonAlphanumeric\":false,\"RequireLowercase\":true,\"RequireUppercase\":true,\"RequireDigit\":false}",
     "Description": "This options allow to set values, that will determine the password complexity."
   },
@@ -18,7 +18,25 @@
     "Description": "Describes minutes, that Bearer Token is valid for."
   },
   {
-    "OptionID": "ApplicatioName",
+    "OptionID": "TokenIssuer",
+    "OptionName": "Token Issuer",
+    "OptionValue": "http://localhost:4200",
+    "Description": "Describes issuer of application. (Usually address of services or page)"
+  },
+  {
+    "OptionID": "AuthTokenKey",
+    "OptionName": "Authentication Token Key",
+    "OptionValue": "PRIVATE_KEY_DONT_SHARE_PRIVATE_KEY_DONT_SHARE",
+    "Description": "Sets key used to generate authentication Tokens"
+  },
+  {
+    "OptionID": "RefreshTokenKey",
+    "OptionName": "Refresh Token Key",
+    "OptionValue": "PRIVATE_KEY_DONT_SHARE_PRIVATE_KEY_DONT_SHARE",
+    "Description": "Sets key used to generate refresh Tokens"
+  },
+  {
+    "OptionID": "ApplicationName",
     "OptionName": "Application Name",
     "OptionValue": "Sloth",
     "Description": "This will serve as application name in various places across application"

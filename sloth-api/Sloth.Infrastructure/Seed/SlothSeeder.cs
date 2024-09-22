@@ -1,42 +1,30 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Sloth.Domain.Constants;
 using Sloth.Domain.Entities;
 using Sloth.Infrastructure.DatabaseContext;
 using Sloth.Shared.Helpers;
 
 namespace Sloth.Infrastructure.Seed;
 
-// TO DO: All data has to be seed from json, not static like right now. Including System Options
-internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext, IMapper mapper, IConfiguration configuration) : ISlothSeeder
+internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext, IMapper mapper) : ISlothSeeder
 {
     public async Task Seed()
     {
-        bool seedPages = configuration.GetValue<bool>(SeedConfig.SeedPages);
-        if(seedPages)
-        {
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [WebPage]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [WebControl]");
-            await dbContext.SaveChangesAsync();
-            await dbContext.Database.ExecuteSqlRawAsync("delete from [WebPageSecurity]");
-            await dbContext.SaveChangesAsync();
-        }
+        // TO DO: Add SeedConfig handlers
+        // bool seedPages = configuration.GetValue<bool>(SeedConfig.SeedPages);
 
         if (await dbContext.Database.CanConnectAsync())
         {
-            // needed to perform transactional insert
-            var strategy = dbContext.Database.CreateExecutionStrategy();
+            // var strategy = dbContext.Database.CreateExecutionStrategy();
             await SeedLanguage();
             await SeedSystemOptions();
-            await SeedUserRoles();
-            await SeedUser(strategy);
             await SeedWebPages();
             await SeedWebControls();
+            await SeedRoles();
+            await SeedGroup();
+            await SeedUser();
         }
     }
 
@@ -46,9 +34,11 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
 
         if (languageSeed is not null)
         {
-            if (!dbContext.Language.Any(l => l.LanguageCode == languageSeed.LanguageCode))
+            var language = mapper.Map<Language>(languageSeed);
+
+            // check if language already exists in database
+            if (!dbContext.Language.Any(l => l.LanguageCode == language.LanguageCode))
             {
-                var language = mapper.Map<Language>(languageSeed);
                 await dbContext.Language.AddAsync(language);
                 await dbContext.SaveChangesAsync();
                 logger.LogInformation("Added {object}: {Value} to database", nameof(Language), language.LanguageName);
@@ -60,145 +50,53 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         var systemOptionsSeed = GetData<List<SystemOptionSeed>>(SeedFile.SystemOptions);
 
-        // set systemOptionsFiltered to be list that does not exsit in database 
-        var systemOptionsFiltered = systemOptionsSeed?.Where(so => !dbContext.SystemOption.Any(dbso => dbso.OptionID == so.OptionID));
-
-        if (systemOptionsFiltered is not null && systemOptionsFiltered.Any())
+        if (systemOptionsSeed is not null && systemOptionsSeed.Any())
         {
-            var systemOptions = mapper.Map<IEnumerable<SystemOption>?>(systemOptionsFiltered);
+            var systemOptions = mapper.Map<IEnumerable<SystemOption>?>(systemOptionsSeed);
 
-            if(systemOptions is not null)
+            // filter systemOptionsSeed by those that do not exist in database
+            systemOptions = systemOptions!.Where(so => !dbContext.SystemOption.Any(dbso => dbso.OptionID == so.OptionID));
+
+            if (systemOptions.Any())
             {
+                var count = systemOptions.Count();
                 await dbContext.SystemOption.AddRangeAsync(systemOptions);
                 await dbContext.SaveChangesAsync();
-                logger.LogInformation("Added {Count} {object} to database", systemOptions.Count(), nameof(SystemOption));
+                logger.LogInformation("Added {Count} {object} to database", count, nameof(SystemOption));
             }
         }
-    }
-
-    private async Task SeedUserRoles()
-    {
-        var userRolesSeed = GetData<List<UserRoleSeed>>(SeedFile.UserRoles);
-
-        // set userRolesFiltered to be list that does not exsit in database
-        var userRolesFiltered = userRolesSeed?.Where(ur => !dbContext.Roles.Any(dbur => dbur.Name == ur.Name));
-
-        if (userRolesFiltered is not null && userRolesFiltered.Any())
-        {
-            var userRoles = mapper.Map<IEnumerable<UserRole>?>(userRolesFiltered);
-
-            if (userRoles is not null)
-            {
-                await dbContext.Roles.AddRangeAsync(userRoles);
-                await dbContext.SaveChangesAsync();
-                logger.LogInformation("Added {Count} {object} to database", userRoles.Count(), nameof(UserRole));
-            }
-        }
-    }
-
-    private async Task SeedUser(IExecutionStrategy strategy)
-    {
-
-        var userSeed = GetData<UserSeed>(SeedFile.User);
-
-        if (userSeed is null) return;
-
-        if (!dbContext.Users.Any(u => u.UserName == userSeed.UserName))
-        {
-            await strategy.ExecuteAsync(async () =>
-            {
-                using var transaction = await dbContext.Database.BeginTransactionAsync();
-
-                try
-                {
-                    var userRole = await dbContext.Roles.FirstOrDefaultAsync(r => r.Name == userSeed.RoleName);
-                    if (userRole is null)
-                    {
-                        logger.LogWarning("Not added {object} to database, property {property} missing in {object}.", nameof(User), nameof(userSeed.RoleName), nameof(UserRole));
-                        return;
-                    }
-
-                    var user = mapper.Map<User>(userSeed);
-
-                    #region [Password Hashing]
-                    if (userSeed.Password is null)
-                    {
-                        logger.LogWarning("Not added {object} to database, missing {property}", nameof(User), nameof(userSeed.Password));
-                        return;
-                    }
-
-                    var passwordHasher = new PasswordHasher<User>();
-
-                    user.PasswordHash = passwordHasher.HashPassword(user, userSeed.Password);
-                    user.NormalizedEmail = user.Email!.ToUpper();
-                    user.NormalizedUserName = user.UserName!.ToUpper();
-
-                    await dbContext.Users.AddAsync(user);
-                    await dbContext.SaveChangesAsync();
-                    #endregion
-
-                    #region[UserRoleLink]
-                    var userRoleLink = new UserRoleLink
-                    {
-                        UserId = user.Id,
-                        RoleId = userRole.Id
-                    };
-
-                    await dbContext.UserRoles.AddAsync(userRoleLink);
-
-                    await dbContext.SaveChangesAsync();
-                    #endregion
-
-                    #region[UserClaim]
-
-                    if(userSeed.UserGroup is not null)
-                    {
-                        var userClaim = new UserClaim
-                        {
-                            UserId = user.Id,
-                            ClaimType = SlothClaims.UserGroup,
-                            ClaimValue = userSeed.UserGroup
-                        };
-                        await dbContext.UserClaims.AddAsync(userClaim);
-                        await dbContext.SaveChangesAsync();
-                    }
-
-                    #endregion
-
-                    await transaction.CommitAsync();
-                    logger.LogInformation("Added {object}: {Value} to database", nameof(User), user.NormalizedUserName);
-                }
-                catch
-                {
-                    logger.LogError("Failed to add {object} to database, due to an error during seeding", nameof(User));
-                    await transaction.RollbackAsync();
-                }
-            }); // end strategy.ExecuteAsync
-        }
-
     }
 
     private async Task SeedWebPages()
     {
         var webPageSeed = GetData<List<WebPageSeed>>(SeedFile.WebPages);
 
-        if (webPageSeed is not null)
+        if (webPageSeed is not null && webPageSeed.Any())
         {
-            var webPages = mapper.Map<IEnumerable<WebPage>?>(webPageSeed);
-            var webPageSecurities = mapper.Map<IEnumerable<WebPageSecurity>?>(webPageSeed);
+            var webPages = mapper.Map<IEnumerable<WebPage>>(webPageSeed);
+            var webPageSecurities = mapper.Map<IEnumerable<WebPageSecurity>>(webPageSeed);
 
-            if (webPages is not null)
+            // filter webPages by those that do not exist in database
+            webPages = webPages!.Where(wp => !dbContext.WebPage.Any(dbwp => dbwp.PageID == wp.PageID));
+
+            // filter webPageSecurities by those that do not exist in database
+            webPageSecurities = webPageSecurities!.Where(wps => !dbContext.WebPageSecurity.Any(dbwps => dbwps.PageID == wps.PageID));
+            webPageSecurities = webPageSecurities!.Where(wps => wps.UserGroup is not null);
+
+            if (webPages.Any())
             {
+                var count = webPages.Count();
                 await dbContext.WebPage.AddRangeAsync(webPages);
                 await dbContext.SaveChangesAsync();
-                logger.LogInformation("Added {Count} {object} to database", webPages.Count(), nameof(WebPage));
+                logger.LogInformation("Added {Count} {object} to database", count, nameof(WebPage));
             }
 
-            if (webPageSecurities is not null)
+            if (webPageSecurities.Any())
             {
+                var count = webPageSecurities.Count();
                 await dbContext.WebPageSecurity.AddRangeAsync(webPageSecurities);
                 await dbContext.SaveChangesAsync();
-                logger.LogInformation("Added {Count} {object} to database", webPageSecurities.Count(), nameof(WebPageSecurity));
+                logger.LogInformation("Added {Count} {object} to database", count, nameof(WebPageSecurity));
             }
         }
     }
@@ -207,15 +105,88 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         var webControlSeed = GetData<List<WebControlSeed>>(SeedFile.WebControls);
 
-        if (webControlSeed is not null)
+        if (webControlSeed is not null && webControlSeed.Any())
         {
-            var webControls = mapper.Map<IEnumerable<WebControl>?>(webControlSeed);
+            var webControls = mapper.Map<IEnumerable<WebControl>>(webControlSeed);
 
-            if (webControls is not null)
+            // filter webControls by those that do not exist in database
+            webControls = webControls!.Where(wc => !dbContext.WebControl.Any(dbwc => dbwc.PageID == wc.PageID && dbwc.ControlID == wc.ControlID));
+
+            if (webControls.Any())
             {
+                var count = webControls.Count();
                 await dbContext.WebControl.AddRangeAsync(webControls);
                 await dbContext.SaveChangesAsync();
-                logger.LogInformation("Added {Count} {object} to database", webControls.Count(), nameof(WebControl));
+                logger.LogInformation("Added {Count} {object} to database", count, nameof(WebControl));
+            }
+        }
+    }
+
+    private async Task SeedRoles()
+    {
+        var userRolesSeed = GetData<List<UserRoleSeed>>(SeedFile.UserRoles);
+
+        if (userRolesSeed is not null && userRolesSeed.Any())
+        {
+            var userRoles = mapper.Map<IEnumerable<UserRole>>(userRolesSeed);
+
+            // filter userRolesSeed by those that do not exist in database
+            userRoles = userRoles!.Where(ur => !dbContext.UserRole.Any(dbur => dbur.RoleName == ur.RoleName));
+
+            if (userRoles.Any())
+            {
+                var count = userRoles.Count();
+                await dbContext.UserRole.AddRangeAsync(userRoles);
+                await dbContext.SaveChangesAsync();
+                logger.LogInformation("Added {Count} {object} to database", count, nameof(UserRole));
+            }
+        }
+    }
+
+    private async Task SeedGroup()
+    {
+        var userGroupSeed = GetData<UserGroupSeed>(SeedFile.UserGroup);
+
+        if (userGroupSeed is not null)
+        {
+            var userGroup = mapper.Map<UserGroup>(userGroupSeed);
+
+            // check if userGroup already exists in database
+            if (!dbContext.UserGroup.Any(ug => ug.GroupName == userGroup.GroupName))
+            {
+                await dbContext.UserGroup.AddAsync(userGroup);
+                await dbContext.SaveChangesAsync();
+                logger.LogInformation("Added {object}: {Value} to database", nameof(UserGroup), userGroup.GroupName);
+            }
+        }
+    }
+
+    private async Task SeedUser()
+    {
+        var userSeed = GetData<UserSeed>(SeedFile.User);
+
+        if (userSeed is not null)
+        {
+            var user = mapper.Map<User>(userSeed);
+
+            // get user role && group from database
+            var userRole = await dbContext.UserRole.SingleOrDefaultAsync(ur => ur.RoleName == userSeed.RoleName);
+            var userGroup = await dbContext.UserGroup.SingleOrDefaultAsync(ug => ug.GroupName == userSeed.GroupName);
+
+            if (userRole is null || userGroup is null) return;
+
+            // assign user role and group
+            user.RoleID = userRole.RoleID;
+            user.GroupID = userGroup.GroupID;
+
+            // check if user already exists in database
+            if (!dbContext.User.Any(u => u.UserName == user.UserName))
+            {
+                var passwordHasher = new PasswordHasher<User>();
+                user.PasswordHash = passwordHasher.HashPassword(user, userSeed.Password);
+                await dbContext.User.AddAsync(user);
+                await dbContext.SaveChangesAsync();
+                logger.LogInformation("Added {object}: {Value} to database", nameof(User), user.UserName);
             }
         }
     }
@@ -232,17 +203,20 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
             case SeedFile.SystemOptions:
                 fileName = SeedPath.SystemOptions;
                 break;
-            case SeedFile.User:
-                fileName = SeedPath.User;
-                break;
-            case SeedFile.UserRoles:
-                fileName = SeedPath.UserRoles;
-                break;
             case SeedFile.WebControls:
                 fileName = SeedPath.WebControls;
                 break;
             case SeedFile.WebPages:
                 fileName = SeedPath.WebPages;
+                break;
+            case SeedFile.User:
+                fileName = SeedPath.User;
+                break;
+            case SeedFile.UserGroup:
+                fileName = SeedPath.UserGroup;
+                break;
+            case SeedFile.UserRoles:
+                fileName = SeedPath.UserRoles;
                 break;
             default:
                 fileName = null;
@@ -252,7 +226,7 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
         // Guard 1: if relative path not found, return default
         if (fileName is null) return default;
 
-        var relativePath = Path.Combine("..", "Sloth.Infrastructure/Seed/Data", fileName);
+        var relativePath = Path.Combine("..", SeedPath.Base, fileName);
         var fullPath = Path.GetFullPath(relativePath);
 
         // Guard 2: if file not found, return default

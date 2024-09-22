@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sloth.Domain\Sloth.Domain.csproj" />
+    <ProjectReference Include="..\Sloth.Shared\Sloth.Shared.csproj" />
   </ItemGroup>
 
 </Project>

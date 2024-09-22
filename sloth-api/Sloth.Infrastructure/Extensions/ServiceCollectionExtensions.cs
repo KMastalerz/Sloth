@@ -1,103 +1,78 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Sloth.Domain.Constants;
 using Sloth.Domain.Entities;
+using Sloth.Domain.Services;
 using Sloth.Domain.Repositories;
-using Sloth.Domain.Repositories.Configuration;
 using Sloth.Infrastructure.DatabaseContext;
-using Sloth.Infrastructure.DTO;
+using Sloth.Infrastructure.Services;
 using Sloth.Infrastructure.Repositories;
-using Sloth.Infrastructure.Repositories.Configuration;
 using Sloth.Infrastructure.Seed;
+using System.Text;
 
 namespace Sloth.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static void AddInfractructure(this IServiceCollection services, IConfiguration configuration)
+    public static IConfigurationService InitializeInfrastucture(this IServiceCollection services, IConfiguration configuration)
     {
         var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
-        var connectionString = configuration.GetConnectionString("Sloth");
+        var connectionString = configuration.GetConnectionString(ConfigurationKeys.ConnectionString);
 
-        services.AddDbContext<SlothDbContext>(options => 
-            options.UseSqlServer(connectionString, 
-                options => options.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null))
+        services.AddDbContext<SlothDbContext>(options =>
+            options.UseSqlServer(connectionString)
             .EnableSensitiveDataLogging());
 
-        services.AddIdentityApiEndpoints<User>()
-            .AddRoles<UserRole>()
-            .AddEntityFrameworkStores<SlothDbContext>();
+        // Register singleton configuration service
+        var configurationService = new ConfigurationService(services, configuration);
+        services.AddSingleton<IConfigurationService>(configurationService);
+
+        return configurationService;
+    }
+    public static void AddInfractructure(this IServiceCollection services)
+    {
+        var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         services.AddAutoMapper(applicationAssembly);
 
-        // Build Config Repository
-        services.AddScoped<IConfigRepository, ConfigRepository>();
+        // Register services
+        services.AddScoped<ISecurityService, SecurityService>();
 
-        // Seed Repositories
+        // Register password hasher
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+        // Register seeder
         services.AddScoped<ISlothSeeder, SlothSeeder>();
 
-        // Domain Repositories
+        // Register domain repositories
+        services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+        services.AddScoped<ISecurityRepository, SecurityRepository>();
         services.AddScoped<IUIElementsRepository, UIElementsRepository>();
-
     }
 
-    public static async Task ConfigureAppConfig(this IServiceCollection services)
+    public static void AddConfiguredAuthentication(this IServiceCollection services, IConfigurationService configurationService)
     {
-        // Create a temporary service provider to retrieve DbContext and ConfigRepository
-        using (var tempServiceProvider = services.BuildServiceProvider())
+        var secConfig = configurationService.SecurityConfig;
+
+        services.AddAuthentication(option =>
         {
-            using (var scope = tempServiceProvider.CreateScope())
+            // Setup authentication options
+            option.DefaultAuthenticateScheme = AuthScheme.Bearer;
+            option.DefaultScheme = AuthScheme.Bearer;
+            option.DefaultChallengeScheme = AuthScheme.Bearer;
+        }).AddJwtBearer(config =>
+        {
+            config.RequireHttpsMetadata = false;
+            config.SaveToken = true;
+            config.TokenValidationParameters = new TokenValidationParameters
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<SlothDbContext>();
-
-                if (await dbContext.Database.CanConnectAsync())
-                {
-                    var configRepository = scope.ServiceProvider.GetRequiredService<IConfigRepository>();
-                    var sysOptions = await configRepository.ListConfigSystemOptionAsync(); // You can make this async if needed
-
-                    var tokenLifetime = DefualtConfigSystemOptions.TokenLifetime;
-                    var refreshTokenLifetime = DefualtConfigSystemOptions.RefreshTokenLifetime;
-
-                    int.TryParse(sysOptions?.FirstOrDefault(o => o.OptionID == ConfigSystemOptions.TokenLifetime)?.OptionValue, out tokenLifetime);
-                    int.TryParse(sysOptions?.FirstOrDefault(o => o.OptionID == ConfigSystemOptions.RefreshTokenLifetime)?.OptionValue, out refreshTokenLifetime);
-
-                    var passwordComplexity = sysOptions?.FirstOrDefault(o => o.OptionID == ConfigSystemOptions.PasswordComplexity)?.OptionValue ?? DefualtConfigSystemOptions.PasswordComplexity;
-
-                    var activeEndpoints = await configRepository.ListConfigEndpointAsync();
-
-                    var appConfig = new AppConfig
-                    {
-                        TokenLifetime = tokenLifetime,
-                        RefreshTokenLifetime = refreshTokenLifetime,
-                        PasswordComplexity = passwordComplexity,
-                        ActiveEndpoints = activeEndpoints ?? new List<string>()
-                    };
-
-                    // Register AppConfig globally in the DI container as a singleton
-                    services.AddSingleton(appConfig);
-                }
-                else
-                {
-                    // Log the issue (optional, add a logger if needed)
-                    Console.WriteLine("Database does not exist or is inaccessible. Skipping AppConfig setup.");
-
-                    // Use default AppConfig values as fallback
-                    var appConfig = new AppConfig
-                    {
-                        TokenLifetime = DefualtConfigSystemOptions.TokenLifetime,
-                        RefreshTokenLifetime = DefualtConfigSystemOptions.RefreshTokenLifetime,
-                        PasswordComplexity = DefualtConfigSystemOptions.PasswordComplexity,
-                        ActiveEndpoints = new List<string>() // Default empty list
-                    };
-
-                    // Register AppConfig globally in the DI container as a singleton
-                    services.AddSingleton(appConfig);
-                }
-            }
-        }
+                ValidIssuer = secConfig.TokenIssuer,
+                ValidAudience = secConfig.TokenIssuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secConfig.TokenKey))
+            };
+        });
     }
 }

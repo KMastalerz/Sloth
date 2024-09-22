@@ -154,5 +154,70 @@
     "RoutePageID": null,
     "Action": null,
     "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Info\"}"
+  },
+  {
+    "PageID": "LoginPage",
+    "ControlID": "UserName",
+    "SecurityTableID": null,
+    "ControlType": "TextInput",
+    "ControlLabel": "User Name",
+    "ControlPlaceholder": "User Name",
+    "ControlTooltip": "",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": null,
+    "MetaData": "{\"icon\":\"account_circle\",\"type\":\"outlined\"}"
+  },
+  {
+    "PageID": "LoginPage",
+    "ControlID": "Password",
+    "SecurityTableID": null,
+    "ControlType": "Password",
+    "ControlLabel": "Password",
+    "ControlPlaceholder": "Password",
+    "ControlTooltip": "",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": null,
+    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\",\"type\":\"outlined\"}"
+  },
+  {
+    "PageID": "LoginPage",
+    "ControlID": "Login",
+    "SecurityTableID": null,
+    "ControlType": "Button",
+    "ControlLabel": "Login",
+    "ControlPlaceholder": "",
+    "ControlTooltip": "",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": "login",
+    "MetaData": null
+  },
+  {
+    "PageID": "LoginPage",
+    "ControlID": "ForgotPassword",
+    "SecurityTableID": null,
+    "ControlType": "Link",
+    "ControlLabel": "ForgotPassword",
+    "ControlPlaceholder": "",
+    "ControlTooltip": "",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": "ForgotPassword",
+    "MetaData": null
+  },
+  {
+    "PageID": "LoginPage",
+    "ControlID": "Register",
+    "SecurityTableID": null,
+    "ControlType": "Link",
+    "ControlLabel": "Register",
+    "ControlPlaceholder": "",
+    "ControlTooltip": "",
+    "Route": null,
+    "RoutePageID": null,
+    "Action": "Register",
+    "MetaData": null
   }
 ]

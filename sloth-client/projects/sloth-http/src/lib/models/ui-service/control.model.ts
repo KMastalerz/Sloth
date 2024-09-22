@@ -10,5 +10,5 @@ export interface WebControl {
     metaData?: string | null;
     isHidden: boolean;
     isReadOnly: boolean;
-    isDiabled: boolean;
+    isDisabled: boolean;
 }

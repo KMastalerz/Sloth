@@ -1,27 +1,22 @@
 [
   {
-    "Name": "sysadmin",
-    "NormalizedName": "SYSADMIN",
-    "DisplayName": "System Admin"
+    "RoleName": "SYSADMIN",
+    "Description": "System Admin"
   },
   {
-    "Name": "client",
-    "NormalizedName": "CLIENT",
-    "DisplayName": "Client"
+    "RoleName": "CLIENT",
+    "Description": "Client"
   },
   {
-    "Name": "devse",
-    "NormalizedName": "DEVSE",
-    "DisplayName": "Software Engineer"
+    "RoleName": "DEVSE",
+    "Description": "Software Engineer"
   },
   {
-    "Name": "qae",
-    "NormalizedName": "QAE",
-    "DisplayName": "QA Engineer"
+    "RoleName": "QAE",
+    "Description": "QA Engineer"
   },
   {
-    "Name": "supe",
-    "NormalizedName": "SUPE",
-    "DisplayName": "Support Engineer"
+    "RoleName": "SUPE",
+    "Description": "Support Engineer"
   }
 ]

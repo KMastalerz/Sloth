@@ -13,11 +13,6 @@ import { BaseControl } from '../../base/base-control/base-control.component';
 })
 export class SideNavComponent extends BaseControl {
   collapsed = input.required<boolean>();
-  icon = computed<string>(() => this.metaData().icon);
-  label = computed<string>(() => this.config().controlLabel!);
-  tooltip = computed<string>(() => this.config().controlTooltip!);
-  private errorCount = computed<number | null>(() => this.metaData().errorCount);
-  private warningCount = computed<number | null>(() => this.metaData().warningCount);
   //temp 
   count = signal<number | null>(null);
   type = computed<string>(() => {

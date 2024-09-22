@@ -1,3 +1,11 @@
+.sl-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: var(--sl-primary);
+}
+
 .sl-side-nav-panel {
     position: relative;
     display: flex;

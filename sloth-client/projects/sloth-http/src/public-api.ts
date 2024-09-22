@@ -4,6 +4,7 @@
 
 //services
 export * from './lib/config/http-config.service'
+export * from './lib/services/auth/auth.service';
 export * from './lib/services/ui-service/ui.service';
 
 //models

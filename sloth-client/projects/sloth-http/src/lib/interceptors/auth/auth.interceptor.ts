@@ -1,14 +1,70 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { CookieKeys, StorageService, StorageType } from '@sloth-util';
+
+import { AuthService } from '../../services/auth/auth.service';
+import { catchError, switchMap, throwError } from 'rxjs';
+import { AccessTokenResponse } from '../../models/auth/access-token-response.model';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = "CfDJ8O8IacqVoftHkBu-cS-u6S1smaWlf-929rDxgDLipceLvy1M7aeiZewqDj3rWL06PooVBNB5x0AhYiH44iafXc5FDfn_cM_07CqYyioeg9i-CS_0QPVY9oinpYhoMAWyvbdREkA_0_93OwfhOhdAJHJxkJu7Q1Onzq_JGaVZjhn0F7cYALBE1vF-5xCKiLdtzHEmhPBIDMouD6qWKnl4Adki5vjriN-UU8UST2KerJZHhRoIw4W-Vl-2JZ1Zq784WOzg7WuLAaLIAr5m2XQv6TG09u9FlPmEXcdnTe02CdvNpk3KA6vVurqOqkWJZwaKr-YuX2uwuiekMuurDTzqOJWJ3xMZLYGVaGHfbRQ9ll_ekCsg7cDsdQSeeMLhiyTnqEh56zivxKItuPL0wntJAssOHC0LZs6O7WP1qbUiR8eGLDlMC8mLa-RuhJlB5Il2NjCFVJopB-SNWUjpBm_CUtBg5ZMfVJ7ePZQywcuCTuCf6z_YD6dPIAv3ErgR62FEjyEW8-jZ8Uau99Ksqtp2nhzFBPyGENZmF8jhXhKzsK4r_Di2JYd4XuBRsxlBT_beY-esLYh-88BGdLgk_i7iF55IyHG6h1DfnWpbgFFrCtxb3U9VsnbxeEJx9Q4RbOr2vw0JcIYA-QnHVG3j3VPTcyiolWlsrD7woXwRYgdJD0ZE1e8Sci_7q20v0NKTGd1lokG4WFXIW3vcGulm2ishFmqG3IQA6houxWla93UFRFaofgN-aM1FMAuYYih7rZ5l7VfA5V7nyR-YBWTjY8hBZ3YXHt58fearQ_aRxjl7rMAMtj0-xRAK9RTA1JKSjzL4BJLQ5X3dSLPV8_hfiN-BPpc"
+  const storageService = inject(StorageService);
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  // Get token from storage
+  const token = storageService.getItem(CookieKeys.AuthToken, StorageType.COOKIE);
+  
   // Clone the request and add the Authorization header
   const clonedRequest = req.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`
     }
   });
+  
+  // Proceed with the cloned request
+  return next(clonedRequest).pipe(
+    catchError((error: HttpErrorResponse) => {
+      // If token not found, navigate to login page
+      if (!token) {
+        router.navigate(['auth']);
+        return throwError(() => new Error('Token not found'));
+      }
 
-  // Forward the cloned request instead of the original one
-  return next(clonedRequest);
+      // Handle token expiration (status 401)
+      if (error.status === 401 && error.error.message === 'TokenExpired') {
+        const refreshToken = storageService.getItem(CookieKeys.RefreshToken, StorageType.COOKIE);
+
+        // If no refresh token, navigate to login
+        if (!refreshToken) {
+          router.navigate(['auth']);
+          return throwError(() => new Error('Refresh token not found'));
+        }
+
+        // Call API to refresh token
+        return authService.refreshToken(refreshToken).pipe(
+          switchMap((response: AccessTokenResponse) => {
+            // Store new tokens
+            storageService.setItem(CookieKeys.AuthToken, response.accessToken, StorageType.COOKIE);
+            storageService.setItem(CookieKeys.RefreshToken, response.refreshToken, StorageType.COOKIE);
+
+            // Retry the original request with the new token
+            const retryRequest = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${response.accessToken}`,
+              },
+            });
+            return next(retryRequest);
+          }),
+          catchError(() => {
+            // If refresh fails, redirect to login
+            router.navigate(['auth']);
+            return throwError(() => new Error('Refresh token failed'));
+          })
+        );
+      }
+      // If any other error occurs, propagate it
+      return throwError(() => error);
+    })
+  );
 };

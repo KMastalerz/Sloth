@@ -1,19 +1,11 @@
 @Sloth.API_HostAddress = https://localhost:7180
-@Token = CfDJ8O8IacqVoftHkBu-cS-u6S1smaWlf-929rDxgDLipceLvy1M7aeiZewqDj3rWL06PooVBNB5x0AhYiH44iafXc5FDfn_cM_07CqYyioeg9i-CS_0QPVY9oinpYhoMAWyvbdREkA_0_93OwfhOhdAJHJxkJu7Q1Onzq_JGaVZjhn0F7cYALBE1vF-5xCKiLdtzHEmhPBIDMouD6qWKnl4Adki5vjriN-UU8UST2KerJZHhRoIw4W-Vl-2JZ1Zq784WOzg7WuLAaLIAr5m2XQv6TG09u9FlPmEXcdnTe02CdvNpk3KA6vVurqOqkWJZwaKr-YuX2uwuiekMuurDTzqOJWJ3xMZLYGVaGHfbRQ9ll_ekCsg7cDsdQSeeMLhiyTnqEh56zivxKItuPL0wntJAssOHC0LZs6O7WP1qbUiR8eGLDlMC8mLa-RuhJlB5Il2NjCFVJopB-SNWUjpBm_CUtBg5ZMfVJ7ePZQywcuCTuCf6z_YD6dPIAv3ErgR62FEjyEW8-jZ8Uau99Ksqtp2nhzFBPyGENZmF8jhXhKzsK4r_Di2JYd4XuBRsxlBT_beY-esLYh-88BGdLgk_i7iF55IyHG6h1DfnWpbgFFrCtxb3U9VsnbxeEJx9Q4RbOr2vw0JcIYA-QnHVG3j3VPTcyiolWlsrD7woXwRYgdJD0ZE1e8Sci_7q20v0NKTGd1lokG4WFXIW3vcGulm2ishFmqG3IQA6houxWla93UFRFaofgN-aM1FMAuYYih7rZ5l7VfA5V7nyR-YBWTjY8hBZ3YXHt58fearQ_aRxjl7rMAMtj0-xRAK9RTA1JKSjzL4BJLQ5X3dSLPV8_hfiN-BPpc
+@Token = CfDJ8O8IacqVoftHkBu-cS-u6S27sB9AZdxf1sy7IFPLoAku_VViSED08gVuDuu-OL9pNrD3hDUhPORPdXCz1D63ICqN4TeCr2SFmvVqnQDCnttE2b_rGGTxn80fQg3DCcRGXhucgIzOCBDd5xrum6YiAc4SRtjgMzDwq5PE4ycQpHW5WYNbS2FcXItxN1oCmcKXUChNRai5GTgPV6HyyZi90Hy3fLVNCPGhw9znxRKRinhs3gn0cZwSrIchz-orK7mLrBp7TmqQxZHnVDKK9Oe271bYY632vjNQPpiq1zpRFiopDDqLgpapap9HapY-56vHsXWx533wwH94GtQeCYvyWzXiy0xx0vHp3HEUBPyLcbhXO7iuh3FNNVpzDeeP6-mdlEHyzQ-P2_5J_uDZy3obbdcps94VX_wjJsb_KUeMJIvqQ9uZt-GaHkTMfkAwRbLOcCgWMhgmp-bLOg1gVFeVR-piy3e2CMHx_AIIAIJ6gBZ3HX-SSXSzLgKoHJMZ9gZD7gw8JvxmhkcDO9Dm4JAeWh_wVDD-3ZWuyQD9g8byZIThg1OQ18ut0-tb9DWw1p43VEoMrtz8GWy69o5p99ZacVImN0dZKabnusbe_0a-nNsQ_vvRzJCQdEknbOkDzm0PlHRYptpXhtYqY_92RJZGGMliLTg0SPm2p1QbhEWYBDCpV6V3iB7mZk9u6HPSKHeWvEf10nryxkbYFidpBC7IvhvAzjyIpqoe-TM3bFeCXaAH7tP0dUihk2PLT--x8Ax4VdBnqdTAVeV9yGUyNJXLZYAn07CS_B9GvK1UVBgjPEyM4dCggC0GXvEPIZ5iOhhIRflYgRmn6KlZ9DYIZl1JZ-I
 
-POST {{Sloth.API_HostAddress}}/api/auth/login
+
+POST {{Sloth.API_HostAddress}}/api/auth/Login
 Content-Type: application/json
 {
-  "email": "kmastalerz@test.com",
-  "password": "master"
-}
-
-###
-
-POST {{Sloth.API_HostAddress}}/api/auth/login
-Content-Type: application/json
-{
-  "email": "KRZMAS",
+  "login": "KRZMAS",
   "password": "master"
 }
 
@@ -30,3 +22,21 @@ Authorization: Bearer {{Token}}
 
 GET {{Sloth.API_HostAddress}}/api/uielements/GetMainWebPage
 Authorization: Bearer {{Token}}
+
+POST {{Sloth.API_HostAddress}}/api/auth/Register
+Content-Type: application/json
+
+{
+  //RegisterCommand
+}
+
+###
+
+POST {{Sloth.API_HostAddress}}/api/auth/Login
+Content-Type: application/json
+
+{
+  //LoginCommand
+}
+
+###

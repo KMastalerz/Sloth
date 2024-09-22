@@ -16,8 +16,12 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
         var webPage = await dbContext.WebPage.FindAsync(PageID);
         return webPage;
     }
+    public async Task<WebPage?> GetLoginWebPageAsync(string PageID)
+    {
+        return await dbContext.WebPage.FindAsync(PageID);
+    }
 
-    public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string PageID, string UserGroup)
+    public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string PageID)
     {
         var webControls = await dbContext.WebControl.Where(p => p.PageID == PageID).ToListAsync();
         return webControls;

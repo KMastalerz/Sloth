@@ -18,5 +18,11 @@
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true
+  },
+  {
+    "PageID": "LoginPage",
+    "Title": "Login",
+    "SecurityTableID": null,
+    "Description": "Login Page for Sloth"
   }
 ]

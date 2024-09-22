@@ -19,3 +19,9 @@
 .sl-allign-content-center {
     align-content: center !important;
 }
+
+.sl-center-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -13,12 +13,6 @@ import { BaseControl } from '../../base/base-control/base-control.component';
 export class ToggleIconComponent extends BaseControl {
   onClick = output<boolean>();
   value = signal<boolean>(true);
-
-  trueIcon = computed<string>(() => this.metaData().onTrue);
-  falseIcon = computed<string>(() => this.metaData().onFalse);
-  size = computed<string>(() => this.metaData().size);
-  icon = computed<string>(() => this.value() ? this.trueIcon() : this.falseIcon());
-
   protected onToggle() {
     this.value.set(!this.value());
     this.onClick.emit(this.value());

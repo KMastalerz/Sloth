@@ -1,9 +1,9 @@
 {
-  "UserName": "krzmas",
+  "UserName": "KRZMAS",
   "FirstName": "krzysztof",
   "LastName": "mastalerz",
-  "Email": "kmastalerz@test.com",
-  "RoleName": "SYSADMIN",
+  "Email": "krzysztof.mastalerz@example.com",
   "Password": "master",
-  "UserGroup": "DEFAULT"
+  "GroupName": "DEFAULT",
+  "RoleName": "SYSADMIN"
 }

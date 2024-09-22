@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Entities;
 
 namespace Sloth.Infrastructure.DatabaseContext;
-internal class SlothDbContext(DbContextOptions<SlothDbContext> options): IdentityDbContext<User>(options)
+internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbContext(options)
 {
     /* !!! Important Note !!!
      * Team, User, Statuses, Priorities & Types cannot be removed when mapped to Job. They can be modified or deactivated. 
@@ -15,8 +13,14 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
      */
     #region [Security]
     internal DbSet<EndpointConfiguration> EndpointConfiguration { get; set; }
+    internal DbSet<FailedAttempt> FailedAttempt { get; set; }
+    internal DbSet<LockedPassword> LockedPassword { get; set; }
+    internal DbSet<LockedUser> LockedUser { get; set; }
     internal DbSet<SecurityTable> SecurityTable { get; set; }
     internal DbSet<SystemOption> SystemOption { get; set; }
+    internal DbSet<User> User { get; set; }
+    internal DbSet<UserGroup> UserGroup { get; set; }
+    internal DbSet<UserRole> UserRole { get; set; }
     internal DbSet<WebPageSecurity> WebPageSecurity { get; set; }
 
     #endregion
@@ -24,7 +28,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
     #region [UIElements]
     internal DbSet<Language> Language { get; set; }
     internal DbSet<Translation> Translation { get; set; }
-    internal DbSet<UserGroup> UserGroup { get; set; }
     internal DbSet<Validation> Validation { get; set; }
     internal DbSet<WebControl> WebControl { get; set; }
     internal DbSet<WebControlValidation> WebControlValidation { get; set; }
@@ -107,18 +110,16 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
 
         #region [Security]
 
-        // SystemOption entity 
+        // SystemOption Configuration 
         builder.Entity<SystemOption>(entity=>
         {
             entity.HasKey(e => e.OptionID);
         });
 
-        // User entity
+        // User Configuration
         builder.Entity<User>(entity =>
         {
-            entity.ToTable("User");
-
-            entity.Property(e => e.Id).HasColumnName("UserID");
+            entity.HasKey(e => e.UserID);
 
             entity.HasOne<Theme>()
                   .WithMany()
@@ -128,27 +129,44 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
             entity.HasOne<Language>()
                   .WithMany()
                   .HasForeignKey(u => u.LanguageCode)
+                  .OnDelete(DeleteBehavior.SetNull);  
+
+            entity.HasOne(u => u.Role)
+                  .WithMany()
+                  .HasForeignKey(u => u.RoleID)
                   .OnDelete(DeleteBehavior.SetNull);
 
-            entity.HasOne<UserRoleLink>()               
-                  .WithOne()                            
-                  .HasForeignKey<UserRoleLink>(url => url.UserId) 
-                  .OnDelete(DeleteBehavior.Cascade);    
-        });
-
-        // UserRoleLink entity 
-        builder.Entity<UserRoleLink>(entity =>
-        {
-            entity.HasOne<UserRole>()
+            entity.HasOne(u => u.Group)
                   .WithMany()
-                  .HasForeignKey(url => url.RoleId)
-                  .OnDelete(DeleteBehavior.Cascade);
+                  .HasForeignKey(u => u.GroupID)
+                  .OnDelete(DeleteBehavior.SetNull);
 
-            // Adding unique constraint to ensure a user can only have one role
-            entity.HasIndex(url => new { url.UserId, url.RoleId }).IsUnique();
+            entity.HasMany<LockedPassword>()
+                  .WithOne()
+                  .HasForeignKey(lp => lp.UserID);
+
+            entity.HasMany<LockedUser>()
+                  .WithOne()
+                  .HasForeignKey(lp => lp.UserID);
+
+            entity.HasMany<FailedAttempt>()
+                  .WithOne()
+                  .HasForeignKey(lp => lp.UserID);
         });
 
-        // WebPageSecurity entity
+        // Role Configuration 
+        builder.Entity<UserRole>(entity =>
+        {
+            entity.HasKey(e => e.RoleID);
+        });
+
+        // Group Configuration 
+        builder.Entity<UserGroup>(entity =>
+        {
+            entity.HasKey(e => e.GroupID);
+        });
+
+        // WebPageSecurity Configuration
         builder.Entity<WebPageSecurity>(entity =>
         {
             entity.HasKey(wp => new { wp.PageID, wp.UserGroup });
@@ -158,7 +176,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
             entity.Property(e => e.CanDelete).HasDefaultValue(true);
         });
 
-        // SecurityTable entity
+        // SecurityTable Configuration
         builder.Entity<SecurityTable>(entity =>
         {
             entity.HasKey(st => new { st.SecurityTableID, st.ControlID, st.UserGroup });
@@ -168,69 +186,44 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): Identit
             entity.Property(e => e.IsDisabled).HasDefaultValue(false);
         });
 
-        // EndpointConfiguration entity
+        // EndpointConfiguration Configuration
         builder.Entity<EndpointConfiguration>(entity =>
         {
             entity.HasKey(e => e.EndpointID);
         });
 
-        // UserRole entity
-        builder.Entity<IdentityRole>(entity =>
+        // LockedPassword Configuration
+        builder.Entity<LockedPassword>(entity =>
         {
-            entity.ToTable("UserRole"); 
+            entity.HasKey(e => new { e.UserID, e.PasswordHash});
 
-            entity.Property(e => e.Id).HasColumnName("UserRoleID");
+            entity.HasOne<User>()
+                  .WithMany()
+                  .HasForeignKey(e => e.UserID)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // UserClaim entity
-        builder.Entity<IdentityUserClaim<string>>(entity =>
+        // LockedUser Configuration
+        builder.Entity<LockedUser>(entity =>
         {
-            entity.ToTable("UserClaim");
+            entity.HasKey(e => e.UserID);
 
-            entity.Property(e => e.Id).HasColumnName("UserClaimID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.HasOne<User>()
+                  .WithMany()
+                  .HasForeignKey(e => e.UserID)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // UserLogin entity
-        builder.Entity<IdentityUserLogin<string>>(entity =>
+        // FailedAttempt Configuration
+        builder.Entity<FailedAttempt>(entity =>
         {
-            entity.ToTable("UserLogin");
+            entity.HasKey(e => e.UserID);
 
-            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.HasOne<User>()
+                  .WithMany()
+                  .HasForeignKey(e => e.UserID)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
-
-        // UserRoleLink entity
-        builder.Entity<IdentityUserRole<string>>(entity =>
-        {
-            entity.ToTable("UserRoleLink");
-
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.RoleId).HasColumnName("UserRoleID");
-        });
-
-        // RoleClaimLink entity
-        builder.Entity<IdentityRoleClaim<string>>(entity =>
-
-        {
-            entity.ToTable("RoleClaimLink");
-
-            entity.Property(e => e.RoleId).HasColumnName("UserRoleID");
-            entity.Property(e => e.Id).HasColumnName("RoleClaimID");
-        });
-
-        // UserToken entity
-        builder.Entity<IdentityUserToken<string>>(entity =>
-        {
-            entity.ToTable("UserToken");
-
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-        });
-
-        builder.Entity<UserClaim>().ToTable("UserClaim");
-        builder.Entity<UserLogin>().ToTable("UserLogin");
-        builder.Entity<UserRoleLink>().ToTable("UserRoleLink");
-        builder.Entity<RoleClaimLink>().ToTable("RoleClaimLink");
-        builder.Entity<UserToken>().ToTable("UserToken");
 
         #endregion
     }
