@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import "@angular/material/prebuilt-themes/azure-blue.css";
 @include mat.core();
 
 $material-icons-font-path: './' !default;
@@ -83,14 +84,15 @@ $material-icons-font-display: block !default;
     --sl-on-info: var(--sl-neutral); 
 }
 
-@import "variable";
-@import "animation";
-@import "reset";
-@import "size";
+@import "variables";
+@import "borders";
+@import "animations";
+@import "resets";
+@import "sizes";
 @import "colors";
-@import "spacing";
-@import "position";
+@import "spacings";
+@import "positions";
 @import "formatters";
 @import "display";
-@import "control";
-@import "panel";
+@import "controls";
+@import "panels";

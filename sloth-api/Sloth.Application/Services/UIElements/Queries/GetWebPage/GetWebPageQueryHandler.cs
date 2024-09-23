@@ -16,7 +16,7 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
     {
         var currentUser = userContext.GetCurrentUser();
 
-        logger.LogInformation("User: {UserName} is trying to access the page {PageID}", currentUser!.UserName, request.PageID);
+        logger.LogInformation("User: {UserID} is trying to access the page {PageID}", currentUser!.UserID, request.PageID);
 
         if (currentUser?.UserGroup is null)
             throw new NotFoundException(nameof(Claim), SlothClaimTypes.Group);

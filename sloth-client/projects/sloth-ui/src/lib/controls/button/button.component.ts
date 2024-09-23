@@ -8,9 +8,9 @@ import { BaseControl } from '../../base/base-control/base-control.component';
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent extends BaseControl {
-  protected onClick() {
+  protected async onClick(): Promise<void> {
     if(this.parent() && this.action() && this.action() in this.parent()) {
-      this.parent()[this.action()]();
+      await this.parent()[this.action()]();
     }
   }
 }

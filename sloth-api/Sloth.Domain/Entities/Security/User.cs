@@ -11,9 +11,6 @@ public class User
     public string LastName { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string PasswordHash { get; set; } = default!;
-    public string? PreviousKey { get; set; }
-    public string? CurrentKey { get; set; }
-    public DateTime? KeyExpiration { get; set; }
     public string? UserImageUrl { get; set;}
     /// <summary>
     /// this flag will define what language does use see in application

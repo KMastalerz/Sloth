@@ -1,19 +1,17 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, switchMap, throwError } from 'rxjs';
 
-import { CookieKeys, StorageService, StorageType } from '@sloth-util';
+import { AccessTokenResponse, AuthStateService} from '@sloth-util';
 
 import { AuthService } from '../../services/auth/auth.service';
-import { catchError, switchMap, throwError } from 'rxjs';
-import { AccessTokenResponse } from '../../models/auth/access-token-response.model';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const storageService = inject(StorageService);
+  const authStateService = inject(AuthStateService);
   const authService = inject(AuthService);
   const router = inject(Router);
-  // Get token from storage
-  const token = storageService.getItem(CookieKeys.AuthToken, StorageType.COOKIE);
+  const token = authStateService.token;
   
   // Clone the request and add the Authorization header
   const clonedRequest = req.clone({
@@ -28,25 +26,28 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       // If token not found, navigate to login page
       if (!token) {
         router.navigate(['auth']);
-        return throwError(() => new Error('Token not found'));
+        return throwError(() => {
+          console.error('Token not found');
+        });
       }
 
       // Handle token expiration (status 401)
       if (error.status === 401 && error.error.message === 'TokenExpired') {
-        const refreshToken = storageService.getItem(CookieKeys.RefreshToken, StorageType.COOKIE);
+        const refreshToken = authStateService.refreshToken;
+        const userName = authStateService.userName;
 
         // If no refresh token, navigate to login
-        if (!refreshToken) {
+        if (!refreshToken || !userName) {
           router.navigate(['auth']);
-          return throwError(() => new Error('Refresh token not found'));
+          return throwError(() => {
+            console.error('Token or UserName not found');
+          });
         }
-
         // Call API to refresh token
-        return authService.refreshToken(refreshToken).pipe(
+        return authService.refreshToken({refreshToken, userName}).pipe(
           switchMap((response: AccessTokenResponse) => {
             // Store new tokens
-            storageService.setItem(CookieKeys.AuthToken, response.accessToken, StorageType.COOKIE);
-            storageService.setItem(CookieKeys.RefreshToken, response.refreshToken, StorageType.COOKIE);
+            authStateService.casheAccessTokenResponse(response);
 
             // Retry the original request with the new token
             const retryRequest = req.clone({
@@ -59,7 +60,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           catchError(() => {
             // If refresh fails, redirect to login
             router.navigate(['auth']);
-            return throwError(() => new Error('Refresh token failed'));
+            return throwError(() => {
+              console.error('Token not found');
+            });
           })
         );
       }
@@ -68,3 +71,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
+
+
+
+
+
+
+  

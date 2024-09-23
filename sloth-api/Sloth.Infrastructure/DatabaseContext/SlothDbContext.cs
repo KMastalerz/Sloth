@@ -14,8 +14,10 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
     #region [Security]
     internal DbSet<EndpointConfiguration> EndpointConfiguration { get; set; }
     internal DbSet<FailedAttempt> FailedAttempt { get; set; }
+    internal DbSet<CookieKey> CookieKey { get; set; }
     internal DbSet<LockedPassword> LockedPassword { get; set; }
     internal DbSet<LockedUser> LockedUser { get; set; }
+    internal DbSet<RefreshToken> RefreshToken { get; set; }
     internal DbSet<SecurityTable> SecurityTable { get; set; }
     internal DbSet<SystemOption> SystemOption { get; set; }
     internal DbSet<User> User { get; set; }
@@ -152,6 +154,14 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
             entity.HasMany<FailedAttempt>()
                   .WithOne()
                   .HasForeignKey(lp => lp.UserID);
+
+            entity.HasMany<RefreshToken>()
+                  .WithOne()
+                  .HasForeignKey(lp => lp.UserID);
+
+            entity.HasMany<CookieKey>()
+                  .WithOne()
+                  .HasForeignKey(lp => lp.UserID);
         });
 
         // Role Configuration 
@@ -218,6 +228,28 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
         builder.Entity<FailedAttempt>(entity =>
         {
             entity.HasKey(e => e.UserID);
+
+            entity.HasOne<User>()
+                  .WithMany()
+                  .HasForeignKey(e => e.UserID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // RefreshToken Configuration
+        builder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => new {e.UserID, e.Token, e.ExpirationDate});
+
+            entity.HasOne<User>()
+                  .WithMany()
+                  .HasForeignKey(e => e.UserID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // CookieKey Configuration
+        builder.Entity<CookieKey>(entity =>
+        {
+            entity.HasKey(e => new { e.UserID, e.Key, e.ExpirationDate });
 
             entity.HasOne<User>()
                   .WithMany()

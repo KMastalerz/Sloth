@@ -32,23 +32,24 @@ public class LoginCommandHandler(
         if (checkPassword != PasswordVerificationResult.Success)
             throw new InvalidLoginException();
 
-        var secConfig = configurationService.SecurityConfig;
+        // TO DO: Check if Password is expired
 
         // Create Reponse 
         var result = new AccessTokenResponse()
         {
             TokenType = AuthScheme.Bearer,
             AccessToken = securityService.GenerateToken(user),
-            ExpiresIn = TimeSpan.FromMinutes(secConfig!.TokenLifetime),
+            ExpiresAt = DateTime.Now.AddMinutes(configurationService.SecurityConfig!.TokenLifetime),
             RefreshToken = securityService.GenerateRefreshToken(user),
+            RefreshExpiresAt = DateTime.Now.AddMinutes(configurationService.SecurityConfig!.RefreshTokenLifetime),
             User = mapper.Map<AccessUser>(user)
         };
 
-        // TO DO: Check if Password is expired
+        // Store Refresh Token
+        await securityRepository.AddRefreshTokenAsync(result.RefreshToken, user.UserID, result.RefreshExpiresAt);
 
-        // TO DO: Add 2FA
+        logger.LogInformation("User {UserID} Logged In", user.UserID);
+
         return result;
-
-        //throw new NotImplementedException();
     }
 }

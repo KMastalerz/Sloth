@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20240922125746_Init")]
+    [Migration("20240923181433_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -24,6 +24,22 @@ namespace Sloth.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Sloth.Domain.Entities.CookieKey", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserID", "Key", "ExpirationDate");
+
+                    b.ToTable("CookieKey");
+                });
 
             modelBuilder.Entity("Sloth.Domain.Entities.EndpointConfiguration", b =>
                 {
@@ -92,6 +108,22 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("LockedUser");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserID", "Token", "ExpirationDate");
+
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.SecurityTable", b =>
@@ -224,9 +256,6 @@ namespace Sloth.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CurrentKey")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -238,9 +267,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<Guid?>("GroupID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("KeyExpiration")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("LanguageCode")
                         .HasColumnType("nvarchar(450)");
 
@@ -250,9 +276,6 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreviousKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("RoleID")
@@ -437,6 +460,15 @@ namespace Sloth.Infrastructure.Migrations
                     b.ToTable("WebPageSecurity");
                 });
 
+            modelBuilder.Entity("Sloth.Domain.Entities.CookieKey", b =>
+                {
+                    b.HasOne("Sloth.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Sloth.Domain.Entities.FailedAttempt", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.User", null)
@@ -456,6 +488,15 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.LockedUser", b =>
+                {
+                    b.HasOne("Sloth.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.User", null)
                         .WithMany()

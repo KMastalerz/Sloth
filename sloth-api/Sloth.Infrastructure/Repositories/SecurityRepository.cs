@@ -42,9 +42,36 @@ internal class SecurityRepository(SlothDbContext dbContext) : ISecurityRepositor
         return await dbContext.UserGroup.SingleOrDefaultAsync(g => g.GroupID == groupID);
     }
 
+    public async Task AddRefreshTokenAsync(string refreshToken, Guid userID, DateTime expirationDate)
+    {
+
+        await dbContext.RefreshToken.AddAsync(new RefreshToken()
+        {
+            UserID = userID,
+            Token = refreshToken,
+            ExpirationDate = expirationDate
+        });
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task AddUserAsync(User user)
     {
         await dbContext.User.AddAsync(user);
+        await dbContext.SaveChangesAsync();
+    }
+
+    public async Task<RefreshToken?> GetRefreshTokenAsync(Guid userID, string refreshToken)
+    {
+        return await dbContext.RefreshToken.Where(rt =>
+            rt.UserID == userID &&
+            rt.ExpirationDate > DateTime.Now &&
+            rt.Token == refreshToken 
+        ).FirstOrDefaultAsync();
+    }
+
+    public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
+    {
+        dbContext.RefreshToken.Remove(refreshToken);
         await dbContext.SaveChangesAsync();
     }
 }

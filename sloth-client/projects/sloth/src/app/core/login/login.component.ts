@@ -1,19 +1,24 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, WebControl } from '@sloth-http';
-import { BasePage, ButtonComponent, ControlType, InputComponent, PasswordComponent } from '@sloth-ui';
-import { CookieKeys, StorageService, StorageType } from '@sloth-util';
+import { BasePage, BrandingComponent, ButtonComponent, ControlType, InputComponent, PasswordComponent } from '@sloth-ui';
+import { AuthStateService } from '@sloth-util';
 
 @Component({
   selector: 'sl-login',
   standalone: true,
-  imports: [InputComponent, PasswordComponent, ButtonComponent],
+  imports: [InputComponent, PasswordComponent, ButtonComponent, BrandingComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent extends BasePage {
+  constructor(){
+    super();
+    // when accessed destroy the token
+    this.authStateService.clearAccessTokenResponse();
+  }
   private authService = inject(AuthService);
-  private storageService = inject(StorageService);
+  private authStateService = inject(AuthStateService);
   private router = inject(Router);
 
   userControl = computed<WebControl>(() => this.controls().find(c => c.controlID == 'UserName' && c.controlType === ControlType.TextInput)!);
@@ -28,16 +33,16 @@ export class LoginComponent extends BasePage {
       login: this.userName(),
       password: this.password()
     };
-
-    const result = await this.authService.login(command);
+    
+    const result = await this.authService.loginAsync(command);
+    
     if (result.success) {
-      // cashe tokens
-      this.storageService.setItem(CookieKeys.AuthToken, result.data.accessToken, StorageType.COOKIE);
-      this.storageService.setItem(CookieKeys.RefreshToken, result.data.refreshToken, StorageType.COOKIE);
-      // redirect to home
+      // Cache token
+      this.authStateService.casheAccessTokenResponse(result.data);
+      // Redirect to home
       this.router.navigate(['sloth']);
     } else {
-      // Show error message
+      // TO DO: Show error message
     }
   }
 }

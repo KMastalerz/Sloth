@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { compress, decompress } from 'lz-string';
+import { compressToBase64, decompressFromBase64  } from 'lz-string';
 import { AES, enc } from 'crypto-js';
 import { StorageType } from '../../constants/storage-type.constants';
 
@@ -9,7 +9,7 @@ import { StorageType } from '../../constants/storage-type.constants';
 })
 export class StorageService {
   private cookieService = inject(CookieService)
-  private encryptionToken: string = '';
+  private encryptionToken: string = '123sod123asdkj123';
   // Set encryption key after login
   setEncryptionToken(token: string) {
     this.encryptionToken = token;
@@ -20,14 +20,14 @@ export class StorageService {
     // Encrypt the data
     const encryptedData = AES.encrypt(data, this.encryptionToken).toString();
     // Compress the encrypted data
-    return compress(encryptedData);
+    return compressToBase64(encryptedData);
   }
 
   // Helper to decrypt and decompress data
   private decrypt(data: string): string {
     try {
       // Decompress the encrypted data
-      const decompressedData = decompress(data);
+      const decompressedData = decompressFromBase64(data);
       if (!decompressedData) return '';
       // Decrypt the decompressed data
       const bytes = AES.decrypt(decompressedData, this.encryptionToken);

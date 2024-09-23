@@ -1,7 +1,10 @@
 <div class="sl-container sl-center-content">
-    <form>
+    <form class="sl-flex sl-flex-column sl-gap-s sl-bgcolor-neutral sl-x-pad-ul sl-rounder-border-l">
+        <sl-branding class="sl-b-margin-m" title="Sloth" imgPath="assets/icon.png" [showTitle]="true"/>
         <sl-input [parent]="this" [config]="userControl()" [(value)]="userName"/>
+        <p>Forgot?</p>
         <sl-password [parent]="this" [config]="passwordControl()" [(value)]="password"/>
         <sl-button [parent]="this" [config]="loginButton()"/>
+        <p>Not a member? Register now...</p>
     </form>
 </div>

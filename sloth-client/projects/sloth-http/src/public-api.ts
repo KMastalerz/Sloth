@@ -8,8 +8,9 @@ export * from './lib/services/auth/auth.service';
 export * from './lib/services/ui-service/ui.service';
 
 //models
-export * from './lib/models/ui-service/page.model';
 export * from './lib/models/ui-service/control.model';
+export * from './lib/models/ui-service/page.model';
+export * from './lib/models/auth/auth.model';
 
 //commands
 export * from './lib/queries/ui-service/get-web-page.query';

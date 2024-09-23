@@ -145,7 +145,7 @@ export abstract class BaseService {
         var url = this.getUrl(action);
         return this.httpClient.get<T>(url, {
             params: query ? new HttpParams({ fromObject: query }) : undefined
-        })
+        });
     }
 
     protected postRaw<T>(action: string, query: any): Observable<T> {

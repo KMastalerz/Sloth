@@ -1,20 +1,33 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { StorageService, StorageType } from '@sloth-util';
+import { AuthService } from '@sloth-http';
+import { AuthStateService } from '@sloth-util';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const storageService = inject(StorageService);
+  const authStateService = inject(AuthStateService);
+  const authService = inject(AuthService);
   const router = inject(Router);
-
-  // Check if user is authenticated by looking for an auth token
-  const authToken = storageService.getItem('AuthToken', StorageType.COOKIE);
   
-  if (!authToken) {
-    // If token is not present, redirect to login
-    router.navigate(['auth']);
-    return false;
-  }
-
+  if (!authStateService.isLoggedIn) {
+    // if refresh token is not present, redirect to login
+    const refreshToken = authStateService.refreshToken;
+    const userName = authStateService.userName;
+    if (!refreshToken || !userName) {
+      router.navigate(['auth']);
+      return false;
+    }
+    // If token is present, refresh it
+    authService.refreshToken({refreshToken, userName}).subscribe({
+      next: (result) => {
+        authStateService.casheAccessTokenResponse(result);
+        return true;
+      },
+      error: () => {
+        router.navigate(['auth']);
+        return false;
+      }
+    });
+  } 
   // If token is present, allow access
   return true;
 };

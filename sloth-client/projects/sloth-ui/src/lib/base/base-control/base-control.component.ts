@@ -27,6 +27,8 @@ export class BaseControl {
   isHidden = computed<boolean>(() => this.config()?.isHidden || false);
   isReadOnly = computed<boolean>(() => this.config()?.isReadOnly || false);
   label = computed<string>(() => this.config()?.controlLabel || '');
+  onFalse = computed<string>(() => this.metaData().onFalse || '');
+  onTrue = computed<string>(() => this.metaData().onTrue || '');
   placeholder = computed<string>(() => this.config()?.controlPlaceholder || '');
   route = computed<string>(() => this.config()?.route || '');
   routePageID = computed<string>(() => this.config()?.routePageID || '');

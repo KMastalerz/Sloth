@@ -10,5 +10,6 @@ internal class WebControlSeed
     public string? ControlTooltip { get; set; } = null;
     public string? Route { get; set; } = null;
     public string? RoutePageID { get; set; } = null;
+    public string? Action { get; set; } = null;
     public string? MetaData { get; set; } = null;
 }

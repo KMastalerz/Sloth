@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Sloth.Domain.Entities;
 using Sloth.Infrastructure.DatabaseContext;
@@ -8,15 +9,23 @@ using Sloth.Shared.Helpers;
 
 namespace Sloth.Infrastructure.Seed;
 
-internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext, IMapper mapper) : ISlothSeeder
+internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext, IMapper mapper, IConfiguration configuration) : ISlothSeeder
 {
     public async Task Seed()
     {
-        // TO DO: Add SeedConfig handlers
-        // bool seedPages = configuration.GetValue<bool>(SeedConfig.SeedPages);
-
         if (await dbContext.Database.CanConnectAsync())
         {
+            var seedOptions = new SeederOptions();
+            configuration.GetSection(SeedConfig.SeederOptions).Bind(seedOptions);
+
+            if (seedOptions is not null)
+            {
+                if (seedOptions.ReplaceWebPages)
+                {
+                    await ClearWebPages();
+                }
+            }
+
             // var strategy = dbContext.Database.CreateExecutionStrategy();
             await SeedLanguage();
             await SeedSystemOptions();
@@ -189,6 +198,14 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
                 logger.LogInformation("Added {object}: {Value} to database", nameof(User), user.UserName);
             }
         }
+    }
+
+    private async Task ClearWebPages()
+    {
+
+        var webPages = await dbContext.WebPage.ToListAsync();
+        dbContext.WebPage.RemoveRange(webPages);
+        await dbContext.SaveChangesAsync();
     }
 
     private T? GetData<T>(string dataType) where T : class, new()

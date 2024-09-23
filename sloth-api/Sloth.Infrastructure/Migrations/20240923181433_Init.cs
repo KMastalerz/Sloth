@@ -146,9 +146,6 @@ namespace Sloth.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PreviousKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CurrentKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    KeyExpiration = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LanguageCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ThemeID = table.Column<int>(type: "int", nullable: true),
@@ -255,6 +252,25 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CookieKey",
+                columns: table => new
+                {
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CookieKey", x => new { x.UserID, x.Key, x.ExpirationDate });
+                    table.ForeignKey(
+                        name: "FK_CookieKey_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FailedAttempt",
                 columns: table => new
                 {
@@ -310,6 +326,25 @@ namespace Sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => new { x.UserID, x.Token, x.ExpirationDate });
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WebControlValidation",
                 columns: table => new
                 {
@@ -358,6 +393,9 @@ namespace Sloth.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CookieKey");
+
+            migrationBuilder.DropTable(
                 name: "EndpointConfiguration");
 
             migrationBuilder.DropTable(
@@ -368,6 +406,9 @@ namespace Sloth.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LockedUser");
+
+            migrationBuilder.DropTable(
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "SecurityTable");

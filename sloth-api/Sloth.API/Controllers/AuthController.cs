@@ -18,13 +18,19 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Created();
     }
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<AccessTokenResponse>> Login(LoginCommand command)
     {
         var result = await mediator.Send(command);
         return Ok(result);
     }
-
-    //TO DO: Add Refresh Token 
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<AccessTokenResponse>> RefreshToken(RefreshTokenCommand command)
+    {
+        var result = await mediator.Send(command);
+        return Ok(result);
+    }
 
     //TO DO: Add Forgot Password
 

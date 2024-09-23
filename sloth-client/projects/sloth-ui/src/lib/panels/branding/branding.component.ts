@@ -10,6 +10,6 @@ import { Component, computed, input } from '@angular/core';
 export class BrandingComponent {
   title = input.required<string>();
   imgPath = input.required<string>();
-  shoTitle = input.required<boolean>();
+  showTitle = input.required<boolean>();
   imgAlt = computed(() => `${this.title} logo`);
 }

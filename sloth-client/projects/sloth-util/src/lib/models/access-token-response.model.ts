@@ -2,7 +2,8 @@ export interface AccessTokenResponse {
     tokenType: string;
     accessToken: string;
     refreshToken: string;
-    expiresIn: number; 
+    expiresAt: Date; 
+    refreshExpiresAt: Date;
     user: AccessUser;
 }
 
