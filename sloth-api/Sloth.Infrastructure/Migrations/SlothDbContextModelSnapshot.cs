@@ -149,6 +149,11 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("IsRequired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.HasKey("SecurityTableID", "ControlID", "UserGroup");
 
                     b.HasIndex("SecurityTableID", "ControlID");
@@ -356,6 +361,12 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PageID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PanelID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SectionID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
@@ -387,7 +398,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PageID", "ControlID");
+                    b.HasKey("PageID", "PanelID", "SectionID", "ControlID");
 
                     b.ToTable("WebControl");
                 });
@@ -400,11 +411,21 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PanelID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SectionID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ValidationName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PageID", "ControlID");
+
+                    b.HasIndex("PageID", "PanelID", "SectionID", "ControlID");
 
                     b.ToTable("WebControlValidation");
                 });
@@ -455,6 +476,54 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasKey("PageID", "UserGroup");
 
                     b.ToTable("WebPageSecurity");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
+                {
+                    b.Property<string>("PageID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PanelID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PanelLabel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PanelType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PageID", "PanelID");
+
+                    b.ToTable("WebPanel");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
+                {
+                    b.Property<string>("PageID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PanelID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SectionID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SectionLabel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SectionType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PageID", "PanelID", "SectionID");
+
+                    b.ToTable("WebSection");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.CookieKey", b =>
@@ -540,9 +609,9 @@ namespace Sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
-                    b.HasOne("Sloth.Domain.Entities.WebPage", null)
+                    b.HasOne("Sloth.Domain.Entities.WebSection", null)
                         .WithMany()
-                        .HasForeignKey("PageID")
+                        .HasForeignKey("PageID", "PanelID", "SectionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -551,7 +620,7 @@ namespace Sloth.Infrastructure.Migrations
                 {
                     b.HasOne("Sloth.Domain.Entities.WebControl", null)
                         .WithMany()
-                        .HasForeignKey("PageID", "ControlID")
+                        .HasForeignKey("PageID", "PanelID", "SectionID", "ControlID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -561,6 +630,24 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
                         .WithMany()
                         .HasForeignKey("PageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
+                {
+                    b.HasOne("Sloth.Domain.Entities.WebPage", null)
+                        .WithMany()
+                        .HasForeignKey("PageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
+                {
+                    b.HasOne("Sloth.Domain.Entities.WebPanel", null)
+                        .WithMany()
+                        .HasForeignKey("PageID", "PanelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

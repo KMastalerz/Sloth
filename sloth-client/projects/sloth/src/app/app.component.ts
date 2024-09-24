@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { HttpConfigService } from '@sloth-http';
 import { environment } from '../environments/environment';
+import { DynamicRegistrationService } from '@sloth-ui';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title = 'sloth';
   configService = inject(HttpConfigService)
+  regService = inject(DynamicRegistrationService);
   constructor() {
     this.configService.apiUrl = environment.apiUrl;
+    this.regService.registerElements();
   }
 }

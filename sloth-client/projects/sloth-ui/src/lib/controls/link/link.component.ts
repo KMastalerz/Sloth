@@ -4,6 +4,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { BaseControl } from '../../base/base-control/base-control.component';
+import { IControl } from '../../base/base.interface';
 
 @Component({
   selector: 'sl-link',
@@ -12,17 +13,8 @@ import { BaseControl } from '../../base/base-control/base-control.component';
   templateUrl: './link.component.html',
   styleUrl: './link.component.scss'
 })
-export class LinkComponent extends BaseControl {
-  collapsed = input.required<boolean>();
-  //temp 
-  count = signal<number | null>(null);
-  type = computed<string>(() => {
-    if (this.count() === null) {
-      return 'primary';
-    } else if (this.count() === 0) {
-      return 'warn';
-    } else {
-      return 'accent';
-    }
-  });
+export class LinkComponent extends BaseControl implements IControl {
+  setMetadata(): void {
+    throw new Error('Method not implemented.');
+  }
 }

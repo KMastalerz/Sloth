@@ -2,6 +2,8 @@
 internal class WebControlSeed
 {
     public string PageID { get; set; } = default!;
+    public string PanelID { get; set; } = default!;
+    public string SectionID { get; set; } = default!;
     public string ControlID { get; set; } = default!;
     public string? SecurityTableID { get; set; }
     public string ControlType { get; set; } = default!;

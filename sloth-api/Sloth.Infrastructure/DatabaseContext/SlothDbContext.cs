@@ -4,13 +4,6 @@ using Sloth.Domain.Entities;
 namespace Sloth.Infrastructure.DatabaseContext;
 internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbContext(options)
 {
-    /* !!! Important Note !!!
-     * Team, User, Statuses, Priorities & Types cannot be removed when mapped to Job. They can be modified or deactivated. 
-     * This is important, since Job entries rely havily on those objects when are beeing used.
-     * 
-     * When Product, Client or Service is removed all job related tables that it referenced will be removed, 
-     * but they still can be deactivated.
-     */
     #region [Security]
     internal DbSet<EndpointConfiguration> EndpointConfiguration { get; set; }
     internal DbSet<FailedAttempt> FailedAttempt { get; set; }
@@ -34,7 +27,8 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
     internal DbSet<WebControl> WebControl { get; set; }
     internal DbSet<WebControlValidation> WebControlValidation { get; set; }
     internal DbSet<WebPage> WebPage { get; set; }
-
+    internal DbSet<WebPanel> WebPanel { get; set; }
+    internal DbSet<WebSection> WebSection { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -43,7 +37,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
 
         #region[UIElements]
         // WebPage Configuration
-
         builder.Entity<WebPage>(entity =>
         {
             entity.HasKey(e => e.PageID);
@@ -57,31 +50,50 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
                   .WithOne()
                   .HasForeignKey(st => st.SecurityTableID);
 
-            entity.HasMany<WebControl>()
+            entity.HasMany<WebPanel>()
                   .WithOne()
-                  .HasForeignKey(wc => wc.PageID);
+                  .HasForeignKey(wp => wp.PageID);
 
             entity.HasMany<WebPageSecurity>()
                   .WithOne()
                   .HasForeignKey(wps => wps.PageID);
         });
 
+        // WebPanel Configuration
+        builder.Entity<WebPanel>(entity =>
+        {
+            entity.HasKey(e => new { e.PageID, e.PanelID });
+
+            entity.HasOne<WebPage>()
+                  .WithMany()
+                  .HasForeignKey(wc => wc.PageID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // WebPanelSection Configuration
+        builder.Entity<WebSection>(entity =>
+        {
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID });
+
+            entity.HasOne<WebPanel>()
+                  .WithMany()
+                  .HasForeignKey(wc => new { wc.PageID, wc.PanelID })
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
         // WebControl Configuration
         builder.Entity<WebControl>(entity =>
         {
-            entity.HasKey(e => new { e.PageID, e.ControlID });
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID, e.ControlID });
 
-            entity.Property(e => e.ControlType).IsRequired();
-            entity.Property(e => e.ControlLabel).IsRequired(false);
-            entity.Property(e => e.ControlPlaceholder).IsRequired(false);
-            entity.Property(e => e.ControlTooltip).IsRequired(false);
-            entity.Property(e => e.Route).IsRequired(false);
-            entity.Property(e => e.RoutePageID).IsRequired(false);
-            entity.Property(e => e.SecurityTableID).IsRequired(false);
+            entity.HasOne<WebSection>()
+                    .WithMany()
+                    .HasForeignKey(wc => new { wc.PageID, wc.PanelID, wc.SectionID })
+                    .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasMany<WebControlValidation>()
                   .WithOne()
-                  .HasForeignKey(wcv => new { wcv.PageID, wcv.ControlID })
+                  .HasForeignKey(wcv => new { wcv.PageID, wcv.PanelID, wcv.SectionID,  wcv.ControlID })
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -194,6 +206,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
             entity.Property(e => e.IsHidden).HasDefaultValue(false);
             entity.Property(e => e.IsReadOnly).HasDefaultValue(false);
             entity.Property(e => e.IsDisabled).HasDefaultValue(false);
+            entity.Property(e => e.IsRequired).HasDefaultValue(false);
         });
 
         // EndpointConfiguration Configuration

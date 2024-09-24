@@ -1,6 +1,8 @@
 ﻿namespace Sloth.Application.DTO;
 public class GetWebControl
 {
+    public string PanelID { get; set; } = default!;
+    public string SectionID { get; set; } = default!;
     public string ControlID { get; set; } = default!;
     public string ControlType { get; set; } = default!;
     public string? ControlLabel { get; set; }
@@ -13,4 +15,5 @@ public class GetWebControl
     public bool IsHidden { get; set; } = false;
     public bool IsReadOnly { get; set; } = false;
     public bool IsDisabled { get; set; } = false;
+    public bool IsRequired { get; set; } = false;
 }

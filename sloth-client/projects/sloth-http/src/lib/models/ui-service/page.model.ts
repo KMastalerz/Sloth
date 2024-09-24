@@ -1,7 +1,35 @@
-import { WebControl } from "./control.model";
 
 export interface WebPage {
     pageID: string;
     title: string;
+    webPanels?: WebPanel[];
+}
+
+export interface WebPanel {
+    panelID: string;
+    panelLabel: string;
+    webSections?: WebSection[];
+}
+
+export interface WebSection {
+    sectionID: string;
+    sectionType: string;
+    sectionLabel: string;
     webControls?: WebControl[];
 }
+
+export interface WebControl {
+    controlID: string;
+    controlType: string;
+    controlLabel?: string | null;
+    controlPlaceholder?: string | null;
+    controlTooltip?: string | null;
+    route?: string | null;
+    routePageID?: string | null;
+    action?: string | null;
+    metaData?: string | null;
+    isHidden: boolean;
+    isReadOnly: boolean;
+    isDisabled: boolean;
+}
+

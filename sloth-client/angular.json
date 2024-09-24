@@ -178,23 +178,23 @@
         }
       }
     },
-    "@sloth-util": {
+    "@sloth-shared": {
       "projectType": "library",
-      "root": "projects/sloth-util",
-      "sourceRoot": "projects/sloth-util/src",
+      "root": "projects/sloth-shared",
+      "sourceRoot": "projects/sloth-shared/src",
       "prefix": "sl",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/sloth-util/ng-package.json"
+            "project": "projects/sloth-shared/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/sloth-util/tsconfig.lib.prod.json"
+              "tsConfig": "projects/sloth-shared/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/sloth-util/tsconfig.lib.json"
+              "tsConfig": "projects/sloth-shared/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -202,7 +202,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/sloth-util/tsconfig.spec.json",
+            "tsConfig": "projects/sloth-shared/tsconfig.spec.json",
             "polyfills": []
           }
         }

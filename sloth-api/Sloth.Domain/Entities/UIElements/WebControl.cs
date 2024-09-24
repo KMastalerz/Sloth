@@ -5,6 +5,14 @@ public class WebControl
     /// references WebPage
     /// </summary>
     public string PageID { get; set; } = default!;
+    /// <summary>
+    /// references WebPanel
+    /// </summary>
+    public string PanelID { get; set; } = default!;
+    /// <summary>
+    /// references WebSection
+    /// </summary>
+    public string SectionID { get; set; } = default!;
     public string ControlID { get; set; } = default!;
     /// <summary>
     /// references SecurityTable, If added and not overriten it will take flags from table security. 

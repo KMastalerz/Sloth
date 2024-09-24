@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@sloth-http';
-import { AuthStateService } from '@sloth-util';
+import { AuthStateService } from '@sloth-shared';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authStateService = inject(AuthStateService);

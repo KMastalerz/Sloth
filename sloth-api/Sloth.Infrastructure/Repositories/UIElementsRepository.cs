@@ -1,43 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sloth.Domain.Entities;
-using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;
 using Sloth.Infrastructure.DatabaseContext;
 
 namespace Sloth.Infrastructure.Repositories;
 internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepository
 {
-    public async Task<WebPage?> GetWebPageAsync(string PageID, string UserGroup)
+    public async Task<WebPage?> GetWebPageAsync(string pageID)
     {
-        // Check if user can access this page, as WebPage has to co-exist with WebPageSecurity this is a valid check
-        if (!dbContext.WebPageSecurity.Any(p => p.CanAccess == true && p.UserGroup == UserGroup)) 
-            throw new MissingAccessException(nameof(WebPage), PageID);
-
-        var webPage = await dbContext.WebPage.FindAsync(PageID);
-        return webPage;
+        return await dbContext.WebPage.FindAsync(pageID);
     }
-    public async Task<WebPage?> GetLoginWebPageAsync(string PageID)
+    public async Task<IEnumerable<WebPanel>?> ListWebPanelAsync(string pageID)
     {
-        return await dbContext.WebPage.FindAsync(PageID);
+        return await dbContext.WebPanel.Where(wp => wp.PageID == pageID).ToListAsync();
     }
-
-    public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string PageID)
+    public async Task<IEnumerable<WebSection>?> ListWebSectionAsync(string pageID)
     {
-        var webControls = await dbContext.WebControl.Where(p => p.PageID == PageID).ToListAsync();
-        return webControls;
+        return await dbContext.WebSection.Where(wp => wp.PageID == pageID).ToListAsync();
+    }
+    public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string pageID)
+    {
+        return await dbContext.WebControl.Where(p => p.PageID == pageID).ToListAsync();;
     }
 
-    public async Task<IEnumerable<SecurityTable>?> ListControlSecurityAsync(string PageID, string UserGroup, string? PageSecurityTableID)
-    {
-        var secTables = await dbContext.SecurityTable.Where(
-            p => 
-            p.UserGroup == UserGroup &&
-            dbContext.WebControl.Any(
-                wc => 
-                wc.PageID == PageID &&
-                wc.ControlID == p.ControlID &&
-                wc.SecurityTableID != null ? wc.SecurityTableID == p.SecurityTableID : PageSecurityTableID != null ? PageSecurityTableID == p.SecurityTableID : false)).ToListAsync();
-
-        return secTables;
-    }
 }

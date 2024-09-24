@@ -1,12 +1,16 @@
-import { Component, computed, input } from '@angular/core';
-import { WebControl, WebPage } from '@sloth-http';
+import { Component, input, OnInit } from '@angular/core';
+import { WebPage } from '@sloth-shared';
 
 @Component({
   selector: 'sl-base-page',
   standalone: true,
   template: ``
 })
-export class BasePage {
+export class BasePage implements OnInit {
   page = input.required<WebPage>();
-  controls = computed<WebControl[]>(()=> this.page().webControls ?? []);
+  test = input<boolean>();
+  ngOnInit(): void {
+    console.log(`[BasePaPage] initialized with page ${this.page().pageID}`);
+    
+  }
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { SideNavPanelComponent } from "./side-nav-panel/side-nav-panel.component";
-import { BasePage } from '@sloth-ui';
+import { BasePage, SideNavPanelComponent } from '@sloth-ui';
 
 @Component({
   selector: 'sl-main',

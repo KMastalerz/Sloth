@@ -12,4 +12,6 @@ public interface ISecurityRepository
     Task AddRefreshTokenAsync(string refreshToken, Guid userID, DateTime expirationDate);
     Task<RefreshToken?> GetRefreshTokenAsync(Guid userID, string refreshToken);
     Task RemoveRefreshTokenAsync(RefreshToken refreshToken);
+    Task<WebPageSecurity?> GetWebPageSecurityAsync(string pageID, string userGroup);
+    Task<IEnumerable<SecurityTable>?> ListControlSecurityAsync(string userRole, IEnumerable<string>? securityTables);
 }

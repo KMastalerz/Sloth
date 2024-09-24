@@ -23,4 +23,10 @@ export * from './lib/controls/toggle-icon/toggle-icon.component';
 export * from './lib/models/meta-data.model';
 
 // panels
-export * from './lib/panels/branding/branding.component';
+export * from './lib/panels/branding-panel/branding-panel.component';
+export * from './lib/panels/login-panel/login-panel.component';
+export * from './lib/panels/side-nav-panel/side-nav-panel.component';
+
+// dynamic directories
+export * from './lib/directories/dynamic-directory/dynamic-directory.service';
+export * from './lib/directories/dynamic-registration/dynamic-registration.service';

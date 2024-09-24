@@ -1,0 +1,74 @@
+[
+  //{
+  //  "PageID": "",
+  //  "PanelID": "",
+  //  "SectionID": "",
+  //  "SecurityTableID": null,
+  //  "SectionType": null,
+  //  "SectionLabel": null
+  //}
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": "Main"
+  },
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "User",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": "User"
+  },
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Info",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": "Info"
+  },
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Toggle",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": null
+  },
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Buttons",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": null
+  },
+  {
+    "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Inputs",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": null
+  },
+  {
+    "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Buttons",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": null
+  },
+  {
+    "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Links",
+    "SecurityTableID": null,
+    "SectionType": null,
+    "SectionLabel": null
+  }
+]

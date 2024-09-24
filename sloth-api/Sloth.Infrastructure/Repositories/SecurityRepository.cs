@@ -10,12 +10,10 @@ internal class SecurityRepository(SlothDbContext dbContext) : ISecurityRepositor
     {
         return await dbContext.User.Where(u => u.Email == email || u.UserName == email).AnyAsync();
     }
-
     public async Task<bool> ValidateUserNameAsync(string userName)
     {
         return await dbContext.User.Where(u => u.UserName == userName || u.Email == userName).AnyAsync();
     }
-
     public async Task<User?> GetUserAsync(string login)
     {
         var user = await dbContext.User.SingleOrDefaultAsync(u => u.UserName == login || u.Email == login);
@@ -31,17 +29,14 @@ internal class SecurityRepository(SlothDbContext dbContext) : ISecurityRepositor
 
         return user;
     }
-
     public async Task<UserRole?> GetUserRoleAsync(Guid roleID)
     {
         return await dbContext.UserRole.SingleOrDefaultAsync(r => r.RoleID == roleID);
     }
-
     public async Task<UserGroup?> GetUserGroupAsync(Guid groupID)
     {
         return await dbContext.UserGroup.SingleOrDefaultAsync(g => g.GroupID == groupID);
     }
-
     public async Task AddRefreshTokenAsync(string refreshToken, Guid userID, DateTime expirationDate)
     {
 
@@ -53,13 +48,11 @@ internal class SecurityRepository(SlothDbContext dbContext) : ISecurityRepositor
         });
         await dbContext.SaveChangesAsync();
     }
-
     public async Task AddUserAsync(User user)
     {
         await dbContext.User.AddAsync(user);
         await dbContext.SaveChangesAsync();
     }
-
     public async Task<RefreshToken?> GetRefreshTokenAsync(Guid userID, string refreshToken)
     {
         return await dbContext.RefreshToken.Where(rt =>
@@ -68,10 +61,24 @@ internal class SecurityRepository(SlothDbContext dbContext) : ISecurityRepositor
             rt.Token == refreshToken 
         ).FirstOrDefaultAsync();
     }
-
     public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
     {
         dbContext.RefreshToken.Remove(refreshToken);
         await dbContext.SaveChangesAsync();
+    }
+    public async Task<WebPageSecurity?> GetWebPageSecurityAsync(string pageID, string userGroup)
+    {
+        return await dbContext.WebPageSecurity.SingleOrDefaultAsync(wps => wps.PageID == pageID && wps.UserGroup == userGroup);
+    }
+    public async Task<IEnumerable<SecurityTable>?> ListControlSecurityAsync(string userGroup, IEnumerable<string>? securityTables)
+    {
+        if (securityTables == null || !securityTables.Any())
+        {
+            return Enumerable.Empty<SecurityTable>();
+        }
+
+        var secTables = await dbContext.SecurityTable.Where(st => st.UserGroup == userGroup && securityTables.Contains(st.SecurityTableID)).ToListAsync();
+
+        return secTables;
     }
 }

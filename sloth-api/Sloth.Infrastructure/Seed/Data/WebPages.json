@@ -23,6 +23,10 @@
     "PageID": "LoginPage",
     "Title": "Login",
     "SecurityTableID": null,
-    "Description": "Login Page for Sloth"
+    "Description": "Login Page for Sloth",
+    "UserGroup": "DEFAULT",
+    "CanAccess": true,
+    "CanAdd": true,
+    "CanDelete": true
   }
 ]

@@ -26,8 +26,8 @@
       "@sloth-styles": [
         "./dist/sloth-styles"
       ],
-      "@sloth-util": [
-        "./dist/sloth-util"
+      "@sloth-shared": [
+        "./dist/sloth-shared"
       ]
     },
     "target": "ES2022",

@@ -16,4 +16,5 @@ public class SecurityTable
     public bool IsHidden { get; set; } = false; 
     public bool IsReadOnly { get; set; } = false;
     public bool IsDisabled { get; set; } = false;
+    public bool IsRequired { get; set; } = false;
 }

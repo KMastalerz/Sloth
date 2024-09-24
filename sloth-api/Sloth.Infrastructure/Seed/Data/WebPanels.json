@@ -1,0 +1,22 @@
+[
+  //{
+  //  "PageID": "",
+  //  "PanelID": "",
+  //  "SecurityTableID": null,
+  //  "PanelLabel": null
+  //}
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "PanelType":  "SideNav",
+    "SecurityTableID": null,
+    "PanelLabel": "Main"
+  },
+  {
+    "PageID": "LoginPage",
+    "PanelID": "Login",
+    "PanelType": "Login",
+    "SecurityTableID": null,
+    "PanelLabel": null
+  }
+]

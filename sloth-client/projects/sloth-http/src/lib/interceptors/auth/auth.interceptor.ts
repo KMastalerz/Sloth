@@ -3,9 +3,9 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, switchMap, throwError } from 'rxjs';
 
-import { AccessTokenResponse, AuthStateService} from '@sloth-util';
-
 import { AuthService } from '../../services/auth/auth.service';
+import { AuthStateService } from '../../services/auth-state/auth-state.service';
+import { AccessTokenResponse } from '../../models/auth/access-token-response.model';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authStateService = inject(AuthStateService);

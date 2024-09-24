@@ -1,6 +1,8 @@
 [
   //{
   //  "PageID": "",
+  //  "PanelID": "",
+  //  "SectionID": null,
   //  "ControlID": "",
   //  "SecurityTableID": null,
   //  "ControlType": "",
@@ -14,6 +16,8 @@
   //}
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Toggle",
     "ControlID": "Toggle",
     "SecurityTableID": null,
     "ControlType": "ToggleIcon",
@@ -27,6 +31,8 @@
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
     "ControlID": "Dashboard",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -36,10 +42,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
     "ControlID": "Kanban",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -49,10 +57,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
     "ControlID": "Bugs",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -62,10 +72,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100,\"group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
     "ControlID": "Projects",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -75,10 +87,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null,\"group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Main",
     "ControlID": "Tasks",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -88,10 +102,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20,\"group\":\"Main\"}"
+    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "User",
     "ControlID": "Messages",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -101,10 +117,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90,\"group\":\"User\"}"
+    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "User",
     "ControlID": "Timesheet",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -114,10 +132,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"User\"}"
+    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "User",
     "ControlID": "Setttings",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -127,10 +147,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"User\"}"
+    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Info",
     "ControlID": "Releases",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -140,10 +162,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Info\"}"
+    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Info",
     "ControlID": "Documentation",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -153,23 +177,27 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Info\"}"
+    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Inputs",
     "ControlID": "UserName",
     "SecurityTableID": null,
-    "ControlType": "TextInput",
+    "ControlType": "Input",
     "ControlLabel": "User Name",
     "ControlPlaceholder": "User Name",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"account_circle\",\"type\":\"outlined\"}"
+    "MetaData": "{\"icon\":\"account_circle\"}"
   },
   {
     "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Inputs",
     "ControlID": "Password",
     "SecurityTableID": null,
     "ControlType": "Password",
@@ -179,10 +207,12 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\",\"type\":\"outlined\"}"
+    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\"}"
   },
   {
     "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Buttons",
     "ControlID": "Login",
     "SecurityTableID": null,
     "ControlType": "Button",
@@ -196,6 +226,8 @@
   },
   {
     "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Links",
     "ControlID": "ForgotPassword",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -209,6 +241,8 @@
   },
   {
     "PageID": "LoginPage",
+    "PanelID": "Login",
+    "SectionID": "Links",
     "ControlID": "Register",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -219,18 +253,5 @@
     "RoutePageID": null,
     "Action": "Register",
     "MetaData": null
-  },
-  {
-    "PageID": "MainPage",
-    "ControlID": "Logout",
-    "SecurityTableID": null,
-    "ControlType": "Link",
-    "ControlLabel": "Logout",
-    "ControlPlaceholder": null,
-    "ControlTooltip": "Logout",
-    "Route": "auth",
-    "RoutePageID": null,
-    "Action": "logout",
-    "MetaData": "{\"icon\":\"logout\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null,\"group\":\"Logout\"}"
   }
 ]

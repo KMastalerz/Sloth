@@ -1,5 +1,6 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseControl } from '../../base/base-control/base-control.component';
+import { IControl } from '../../base/base.interface';
 @Component({
   selector: 'sl-button',
   standalone: true,
@@ -7,10 +8,8 @@ import { BaseControl } from '../../base/base-control/base-control.component';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent extends BaseControl {
-  protected async onClick(): Promise<void> {
-    if(this.parent() && this.action() && this.action() in this.parent()) {
-      await this.parent()[this.action()]();
-    }
+export class ButtonComponent extends BaseControl implements IControl {
+  setMetadata(): void {
+    throw new Error('Method not implemented.');
   }
 }

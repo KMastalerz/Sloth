@@ -1,9 +1,12 @@
-﻿namespace Sloth.Domain.Constants;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Sloth.Domain.Constants;
 
 public static class AuthScheme
 {
     public static string Bearer = "Bearer";
 }
+
 public static class Config
 {
     /// <summary>
@@ -31,7 +34,6 @@ public static class ConfigurationKeys
     public const string DefaultConfiguration = "DefaultConfiguration";
 }
 
-
 public static class Endpoints
 {
     public const string UIElements = "UIElements";
@@ -42,10 +44,18 @@ public static class SlothClaimTypes
     public const string Group = "Group";
 }
 
-
 public static class WebPages
 {
     public const string MainPage = "MainPage";
     public const string LoginPage = "LoginPage";
+}
+
+public static class WebSecurity
+{
+    public const string Default = "Default";
+
+    public static readonly IEnumerable<string> PublicPages = [
+        "LoginPage"
+    ];
 }
 

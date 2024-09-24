@@ -1,6 +1,7 @@
 import { Component, computed, output, signal } from '@angular/core';
 
 import { BaseControl } from '../../base/base-control/base-control.component';
+import { IControl } from '../../base/base.interface';
 
 
 @Component({
@@ -10,12 +11,8 @@ import { BaseControl } from '../../base/base-control/base-control.component';
   templateUrl: './toggle-icon.component.html',
   styleUrl: './toggle-icon.component.scss'
 })
-export class ToggleIconComponent extends BaseControl {
-  onClick = output<boolean>();
-  value = signal<boolean>(true);
-  toggleIcon = computed<string>(()=> this.value() ? this.onTrue() : this.onFalse());
-  protected onToggle() {
-    this.value.set(!this.value());
-    this.onClick.emit(this.value());
+export class ToggleIconComponent extends BaseControl implements IControl {
+  setMetadata(): void {
+    throw new Error('Method not implemented.');
   }
 }
