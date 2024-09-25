@@ -1,18 +1,22 @@
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 
-import { BaseControl } from '../../base/base-control/base-control.component';
-import { IControl } from '../../base/base.interface';
+import { BaseControl } from '../../engine/base/base-control/base-control.component';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'sl-toggle-icon',
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   templateUrl: './toggle-icon.component.html',
   styleUrl: './toggle-icon.component.scss'
 })
-export class ToggleIconComponent extends BaseControl implements IControl {
-  setMetadata(): void {
-    throw new Error('Method not implemented.');
+export class ToggleIconComponent extends BaseControl implements OnInit {
+  toggleIcon = computed<string>(() => this.value() ? this.metaData().onFalse : this.metaData().onTrue);
+  size = computed<string>(() => this.metaData().size);
+
+  onToggle() {
+    this.value.set(!this.value());
+    this.actionEvent.emit(this.value());
   }
 }

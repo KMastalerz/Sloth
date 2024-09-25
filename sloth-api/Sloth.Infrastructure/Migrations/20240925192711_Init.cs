@@ -129,7 +129,8 @@ namespace Sloth.Infrastructure.Migrations
                     PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Panels = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -233,7 +234,8 @@ namespace Sloth.Infrastructure.Migrations
                     PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PanelType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PanelLabel = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PanelLabel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sections = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -348,7 +350,8 @@ namespace Sloth.Infrastructure.Migrations
                     SectionID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SectionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SectionLabel = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SectionLabel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Controls = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { dynamicFormResolver } from './dynamic-form.resolver';
+import { dynamicFormSyncResolver } from './dynamic-form-sync.resolver';
 
-describe('dynamicFormResolver', () => {
+describe('dynamicFormSyncResolver', () => {
   const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => dynamicFormResolver(...resolverParameters));
+      TestBed.runInInjectionContext(() => dynamicFormSyncResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

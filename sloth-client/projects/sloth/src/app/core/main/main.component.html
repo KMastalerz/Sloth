@@ -1,0 +1,4 @@
+@for(panel of pageConfig().webPanels; track $index) {
+    <ng-container slDynamicPanel [panelID]="panel.panelID" 
+                                 [formSync]="formSync()"></ng-container>
+}

@@ -182,7 +182,7 @@
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Inputs",
+    "SectionID": "Login",
     "ControlID": "UserName",
     "SecurityTableID": null,
     "ControlType": "Input",
@@ -197,7 +197,7 @@
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Inputs",
+    "SectionID": "Login",
     "ControlID": "Password",
     "SecurityTableID": null,
     "ControlType": "Password",
@@ -212,7 +212,7 @@
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Buttons",
+    "SectionID": "Login",
     "ControlID": "Login",
     "SecurityTableID": null,
     "ControlType": "Button",
@@ -227,7 +227,7 @@
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Links",
+    "SectionID": "Login",
     "ControlID": "ForgotPassword",
     "SecurityTableID": null,
     "ControlType": "Link",
@@ -242,7 +242,7 @@
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Links",
+    "SectionID": "Login",
     "ControlID": "Register",
     "SecurityTableID": null,
     "ControlType": "Link",

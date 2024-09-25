@@ -1,10 +1,7 @@
-/*
- * Public API Surface of sloth-ui
- */
-
 // base
-export * from './lib/base/base-control/base-control.component';
-export * from './lib/base/base-page/base-page.component';
+export * from './lib/engine/base/base-control/base-control.component';
+export * from './lib/engine/base/base-panel/base-panel.component';
+export * from './lib/engine/base/base-page/base-page.component';
 
 // constants
 export * from './lib/icons/sloth.icon';
@@ -19,6 +16,14 @@ export * from './lib/controls/link/link.component';
 export * from './lib/controls/password/password.component';
 export * from './lib/controls/toggle-icon/toggle-icon.component';
 
+// directives
+export * from './lib/engine/directives/dynamic-panel/dynamic-panel.directive';
+export * from './lib/engine/directives/dynamic-control/dynamic-control.directive';
+
+// directories
+export * from './lib/engine/directories/dynamic-directory/dynamic-directory.service';
+export * from './lib/engine/directories/dynamic-registration/dynamic-registration.service';
+
 // models 
 export * from './lib/models/meta-data.model';
 
@@ -27,6 +32,5 @@ export * from './lib/panels/branding-panel/branding-panel.component';
 export * from './lib/panels/login-panel/login-panel.component';
 export * from './lib/panels/side-nav-panel/side-nav-panel.component';
 
-// dynamic directories
-export * from './lib/directories/dynamic-directory/dynamic-directory.service';
-export * from './lib/directories/dynamic-registration/dynamic-registration.service';
+// resolvers
+export * from './lib/engine/resolver/dynamic-form-sync.resolver';

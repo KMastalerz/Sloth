@@ -438,6 +438,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Panels")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
@@ -493,6 +496,9 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Sections")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
@@ -511,6 +517,9 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("SectionID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Controls")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SectionLabel")
                         .HasColumnType("nvarchar(max)");

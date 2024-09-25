@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseControl } from '../../base/base-control/base-control.component';
-import { IControl } from '../../base/base.interface';
+import { BaseControl } from '../../engine/base/base-control/base-control.component';
+
 @Component({
   selector: 'sl-button',
   standalone: true,
@@ -8,8 +8,12 @@ import { IControl } from '../../base/base.interface';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent extends BaseControl implements IControl {
-  setMetadata(): void {
-    throw new Error('Method not implemented.');
+export class ButtonComponent extends BaseControl {
+  async onClick(): Promise<void> {
+    if(this.action()) { // Check if action is defined
+      if(this.formSync().pageRef[this.action()!]){ // Check if action exists on the page
+        await this.formSync().pageRef[this.action()!](); // Call the action
+      }
+    }
   }
 }

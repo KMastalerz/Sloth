@@ -1,7 +1,6 @@
-import { Component, model } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BaseControl } from '../../base/base-control/base-control.component';
-import { IControl } from '../../base/base.interface';
+import { BaseControl } from '../../engine/base/base-control/base-control.component';
 
 @Component({
   selector: 'sl-input',
@@ -10,9 +9,7 @@ import { IControl } from '../../base/base.interface';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
-export class InputComponent extends BaseControl implements IControl {
-  setMetadata(): void {
-    throw new Error('Method not implemented.');
-  }
+export class InputComponent extends BaseControl {
+  icon = computed(()=>this.metaData()?.icon);
 }
 

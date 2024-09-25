@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BasePage, SideNavPanelComponent } from '@sloth-ui';
+import { BasePage, DynamicPanelDirective } from '@sloth-ui';
 
 @Component({
   selector: 'sl-main',
   standalone: true,
-  imports: [SideNavPanelComponent],
+  imports: [DynamicPanelDirective],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })

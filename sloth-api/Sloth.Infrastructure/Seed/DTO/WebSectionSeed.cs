@@ -7,4 +7,5 @@ internal class WebSectionSeed
     public string? SecurityTableID { get; set; } = null;
     public string SectionType { get; set; } = default!;
     public string? SectionLabel { get; set; } = null;
+    public string? Controls { get; set; } = null;
 }

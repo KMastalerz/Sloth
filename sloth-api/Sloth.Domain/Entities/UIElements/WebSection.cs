@@ -8,6 +8,7 @@ public class WebSection
     // Array | Form => defaults to Form
     public string? SectionType { get; set; } = null;
     public string? SectionLabel { get; set; } = null;
+    public string? Controls { get; set; }
 }
 
 

@@ -3,20 +3,23 @@
   //  "PageID": "",
   //  "PanelID": "",
   //  "SecurityTableID": null,
-  //  "PanelLabel": null
+  //  "PanelLabel": null,
+  //  "Sections": null
   //}
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
-    "PanelType":  "SideNav",
+    "PanelType": "SideNav",
     "SecurityTableID": null,
-    "PanelLabel": "Main"
+    "PanelLabel": "Main",
+    "Sections": null
   },
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
     "PanelType": "Login",
     "SecurityTableID": null,
-    "PanelLabel": null
+    "PanelLabel": null,
+    "Sections": null
   }
 ]

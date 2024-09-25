@@ -85,14 +85,22 @@ $material-icons-font-display: block !default;
 }
 
 @import "variables";
-@import "borders";
-@import "animations";
 @import "resets";
-@import "sizes";
+
+@import "animations";
+@import "borders";
 @import "colors";
-@import "spacings";
-@import "positions";
-@import "formatters";
-@import "display";
 @import "controls";
+@import "display";
+@import "formatters";
 @import "panels";
+@import "positions";
+@import "sizes";
+@import "spacings";
+
+
+
+
+
+
+

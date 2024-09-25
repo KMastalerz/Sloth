@@ -1,3 +1,13 @@
+export interface InputMetadata {
+    icon?: string;
+}
+
+export interface PasswordMetadata {
+    icon?: string;
+    iconShow?: string;
+    iconHide?: string;
+}
+
 export interface SideNavMetadata {
     icon: string;
     counterFunc?: string | null;

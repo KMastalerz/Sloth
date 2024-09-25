@@ -1,1 +1,5 @@
-<p>login-panel works!</p>
+<div class="sl-centered-form">
+    @for(control of formSync().getPanelControls(config().panelID); track $index) {
+        <ng-container slDynamicControl  [controlID]="control.controlID" [formSync]="formSync()"></ng-container> 
+    }
+</div>

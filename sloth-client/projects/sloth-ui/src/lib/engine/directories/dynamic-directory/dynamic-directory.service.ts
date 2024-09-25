@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class DynamicDirectoryService {
   private controls: Map<string, any> = new Map<string, any>();
   private panels: Map<string, any> = new Map<string, any>();
+  private panelTypes: Map<string, string> = new Map<string, string>();
   private routes: Map<string, string> = new Map<string, string>();
 
   registerControl(controlType: string, control: any) {
@@ -14,6 +15,10 @@ export class DynamicDirectoryService {
 
   registerPanel(panelType: string, panel: any) {
     this.panels.set(panelType, panel);
+  }
+
+  registerPanelType(panelType: string, type: string) {
+    this.panelTypes.set(panelType, type);
   }
   
   registerRoute(route: string, pageID: any) {
@@ -26,6 +31,10 @@ export class DynamicDirectoryService {
 
   getPanel(panelType: string) {
     return this.panels.get(panelType);
+  }
+
+  getPanelType(panelType: string) {
+    return this.panelTypes.get(panelType);
   }
 
   getPageID(route: string) {

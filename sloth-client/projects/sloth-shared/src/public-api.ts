@@ -7,3 +7,4 @@ export * from './lib/services/storage/storage.service';
 
 //constants
 export * from './lib/constants/storage-type.constants';
+export * from './lib/constants/ui.constants';

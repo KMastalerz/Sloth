@@ -7,4 +7,5 @@ public class WebPage
     public string Title { get; set; } = default!;
     public string? SecurityTableID { get; set; }
     public string? Description { get; set; }
+    public string? Panels { get; set; }
 }

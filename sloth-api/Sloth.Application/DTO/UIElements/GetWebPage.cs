@@ -3,5 +3,6 @@ public class GetWebPage
 {
     public string PageID { get; set; } = default!;
     public string Title { get; set; } = default!;
+    public List<string>? Panels { get; set; } = null;
     public List<GetWebPanel> WebPanels { get; set; } = [];
 }

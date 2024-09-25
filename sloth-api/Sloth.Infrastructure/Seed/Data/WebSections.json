@@ -5,7 +5,8 @@
   //  "SectionID": "",
   //  "SecurityTableID": null,
   //  "SectionType": null,
-  //  "SectionLabel": null
+  //  "SectionLabel": null,
+  //  "Controls": null
   //}
   {
     "PageID": "MainPage",
@@ -13,7 +14,8 @@
     "SectionID": "Main",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": "Main"
+    "SectionLabel": "Main",
+    "Controls": null
   },
   {
     "PageID": "MainPage",
@@ -21,7 +23,8 @@
     "SectionID": "User",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": "User"
+    "SectionLabel": "User",
+    "Controls": null
   },
   {
     "PageID": "MainPage",
@@ -29,7 +32,8 @@
     "SectionID": "Info",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": "Info"
+    "SectionLabel": "Info",
+    "Controls": null
   },
   {
     "PageID": "MainPage",
@@ -37,7 +41,8 @@
     "SectionID": "Toggle",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": null
+    "SectionLabel": null,
+    "Controls": null
   },
   {
     "PageID": "MainPage",
@@ -45,30 +50,16 @@
     "SectionID": "Buttons",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": null
+    "SectionLabel": null,
+    "Controls": null
   },
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "SectionID": "Inputs",
+    "SectionID": "Login",
     "SecurityTableID": null,
     "SectionType": null,
-    "SectionLabel": null
-  },
-  {
-    "PageID": "LoginPage",
-    "PanelID": "Login",
-    "SectionID": "Buttons",
-    "SecurityTableID": null,
-    "SectionType": null,
-    "SectionLabel": null
-  },
-  {
-    "PageID": "LoginPage",
-    "PanelID": "Login",
-    "SectionID": "Links",
-    "SecurityTableID": null,
-    "SectionType": null,
-    "SectionLabel": null
+    "SectionLabel": null,
+    "Controls": "[\"UserName\",\"ForgotPassword\",\"Password\",\"Login\",\"Register\"]"
   }
 ]
