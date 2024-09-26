@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideNavSectionComponent } from './side-nav-section.component';
+import { SimpleSectionComponent } from './simple-section.component';
 
-describe('SideNavSectionComponent', () => {
-  let component: SideNavSectionComponent;
-  let fixture: ComponentFixture<SideNavSectionComponent>;
+describe('SimpleSectionComponent', () => {
+  let component: SimpleSectionComponent;
+  let fixture: ComponentFixture<SimpleSectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SideNavSectionComponent]
+      imports: [SimpleSectionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SideNavSectionComponent);
+    fixture = TestBed.createComponent(SimpleSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

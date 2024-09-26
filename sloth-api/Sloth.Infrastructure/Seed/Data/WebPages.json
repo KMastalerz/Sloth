@@ -6,6 +6,8 @@
   //  "Description": null,
   //  "UserGroup": "",
   //  "Panels": null,
+  //  "Style": null,
+  //  "Class": null
   //  "CanAccess": true,
   //  "CanAdd": true,
   //  "CanDelete": true
@@ -17,6 +19,8 @@
     "Description": "Main Page of Sloth",
     "UserGroup": "DEFAULT",
     "Panels": null,
+    "Style": null,
+    "Class": null,
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true
@@ -28,6 +32,8 @@
     "Description": "Login Page for Sloth",
     "UserGroup": "DEFAULT",
     "Panels": null,
+    "Style": null,
+    "Class": null,
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true

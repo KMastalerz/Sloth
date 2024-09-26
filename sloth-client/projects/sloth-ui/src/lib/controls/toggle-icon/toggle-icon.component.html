@@ -1,10 +1,10 @@
-<button [ngClass]="class()" class="sl-button sl-bgcolor-neutral20 sl-square-button-m" (click)="onToggle()"> 
+<button [ngClass]="class()" class="sl-button sl-bgcolor-neutral20 sl-square-button-m" (click)="onClick()"> 
     <span [class]="{
-        'gl-xxs-icon': size() === 'xxs',
-        'gl-xs-icon': size() === 'xs',
-        'gl-s-icon': size() === 's',
-        'gl-m-icon': size() === 'm',
-        'gl-l-icon': size() === 'l',
-        'gl-xl-icon': size() === 'xl',
+        'gl-xxs-icon': size() === 'ultra-small',
+        'gl-xs-icon': size() === 'extra-small',
+        'gl-s-icon': size() === 'small',
+        'gl-m-icon': size() === 'medium',
+        'gl-l-icon': size() === 'large',
+        'gl-xl-icon': size() === 'extra-large',
     }">{{ toggleIcon() }}</span>
 </button>

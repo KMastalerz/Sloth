@@ -1,5 +1,6 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { WebControl, WebPage, WebPanel, WebSection } from "@sloth-http";
+import { PageRef, PanelRef, SectionRef } from "../models/page-reference.model";
 
 export class DynamicFormSync {
     panelMap: Map<string, WebPanel> = new Map<string, WebPanel>();
@@ -9,7 +10,7 @@ export class DynamicFormSync {
     controlFormMap: Map<string, FormControl> = new Map<string, FormControl>();
     pageForm: FormGroup = new FormGroup({});
     pageConfig: WebPage = {} as WebPage;
-    pageRef: any;
+    pageRef: PageRef = {} as PageRef;
 
     getControlForm(controlID: string): FormControl {
         return this.controlFormMap.get(controlID)!;
@@ -23,31 +24,36 @@ export class DynamicFormSync {
         return this.controlMap.get(controlID)!;
     }
 
+    getSection(sectionID: string): WebSection {
+        return this.sectionMap.get(sectionID)!;
+    }
+
     getPanel(panelID: string): WebPanel {
         return this.panelMap.get(panelID)!;
     }
 
-    getPanelControls(panelID: string): WebControl[] {
-        const controls: WebControl[] = [];
+    getPanelSections(panelID: string): WebSection[] {
+        const sections: WebSection[] = [];
         const panel = this.panelMap.get(panelID);
         if(!panel) throw console.error('[DynamicFormSync] Panel not found');
-        
-        const sectionsOrdered = panel!.webSections ?? 
-            panel!.webSections ? panel!.webSections.map(sec => sec.sectionID) : null;
 
+        const sectionsOrdered = panel!.webSections ??
+            panel!.webSections ? panel!.webSections.map(sec => sec.sectionID) : null;
+        
         sectionsOrdered?.forEach(sec => {
             const section = this.sectionMap.get(sec);
-            if(section) {
-                const sectionControls = this.getSectionControls(section)
-                controls.push(...sectionControls);
-            };
+            if(section) sections.push(section);
         });
 
-        return controls;
+        return sections;
     }
 
-    getSectionControls(section: WebSection): WebControl[] {
+    getSectionControls(sectionID: string): WebControl[] {
         const controls: WebControl[] = [];
+
+        const section = this.sectionMap.get(sectionID);
+        if(!section) throw console.error('[DynamicFormSync] Section not found');
+
         const controlsOrdered = section.controls ?? 
             section.webControls ? section.webControls?.map(ctrl => ctrl.controlID) : null;
 
@@ -57,5 +63,13 @@ export class DynamicFormSync {
         });
 
         return controls;
+    }
+
+    getPanelRef(panelID: string): PanelRef | undefined {
+        return this.pageRef.panels.find((panel: PanelRef) => panel.panelID === panelID);
+    }
+
+    getSectionRef(panelID: string, sectionID: string): SectionRef | undefined {
+        return this.getPanelRef(panelID)?.sections.find((sec: SectionRef) => sec.sectionID === sectionID);
     }
 }

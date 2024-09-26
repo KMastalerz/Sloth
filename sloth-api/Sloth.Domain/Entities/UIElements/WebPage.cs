@@ -8,4 +8,6 @@ public class WebPage
     public string? SecurityTableID { get; set; }
     public string? Description { get; set; }
     public string? Panels { get; set; }
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
 }

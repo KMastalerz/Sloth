@@ -7,59 +7,73 @@
   //  "SectionType": null,
   //  "SectionLabel": null,
   //  "Controls": null
+  //  "Style": null,
+  //  "Class": null
   //}
+  {
+    "PageID": "MainPage",
+    "PanelID": "SideNav",
+    "SectionID": "Branding",
+    "SecurityTableID": null,
+    "SectionType": "Branding",
+    "SectionLabel": null,
+    "Controls": null,
+    "Style": null,
+    "Class": null
+  },
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
     "SectionID": "Main",
     "SecurityTableID": null,
-    "SectionType": null,
+    "SectionType": "Simple",
     "SectionLabel": "Main",
-    "Controls": null
+    "Controls": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
     "SectionID": "User",
     "SecurityTableID": null,
-    "SectionType": null,
+    "SectionType": "Simple",
     "SectionLabel": "User",
-    "Controls": null
+    "Controls": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
     "SectionID": "Info",
     "SecurityTableID": null,
-    "SectionType": null,
+    "SectionType": "Simple",
     "SectionLabel": "Info",
-    "Controls": null
-  },
-  {
-    "PageID": "MainPage",
-    "PanelID": "SideNav",
-    "SectionID": "Toggle",
-    "SecurityTableID": null,
-    "SectionType": null,
-    "SectionLabel": null,
-    "Controls": null
+    "Controls": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
     "SectionID": "Buttons",
     "SecurityTableID": null,
-    "SectionType": null,
+    "SectionType": "Simple",
     "SectionLabel": null,
-    "Controls": null
+    "Controls": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
     "SectionID": "Login",
     "SecurityTableID": null,
-    "SectionType": null,
+    "SectionType": "Simple",
     "SectionLabel": null,
-    "Controls": "[\"UserName\",\"ForgotPassword\",\"Password\",\"Login\",\"Register\"]"
+    "Controls": "[\"UserName\",\"ForgotPassword\",\"Password\",\"Login\",\"Register\"]",
+    "Style": null,
+    "Class": null
   }
 ]

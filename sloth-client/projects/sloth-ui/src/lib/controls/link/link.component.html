@@ -1,12 +1,12 @@
-<p>sloth-link</p>
-<!-- <a #navLink class="sl-x-pad-s sl-link on-hover-pop" 
+
+<a #navLink class="sl-x-pad-s sl-link on-hover-pop" 
             [class]="{
                 'sl-grid-3-c': !collapsed(),
                 'sl-flex': collapsed(),
                 'sl-ctrl-centered': collapsed()
             }"
             [matTooltip]="tooltip()"
-            [matTooltipDisabled]="!collapsed()"
+            [matTooltipDisabled]="!collapsed() || !tooltip()"
             matTooltipPosition="left"
             [routerLink]="['../', route()]">
     <span   class="gl-l-icon pop"
@@ -15,7 +15,7 @@
                 'sl-badge-error': type() === 'err'
             }" 
             [matBadge]="count()" 
-            [matBadgeHidden]="!collapsed()">
+            [matBadgeHidden]="!collapsed() || !count()">
         {{ icon() }}
     </span>
 
@@ -30,4 +30,4 @@
             }"> {{ count() }}</p>
         }
     }
-</a> -->
+</a>

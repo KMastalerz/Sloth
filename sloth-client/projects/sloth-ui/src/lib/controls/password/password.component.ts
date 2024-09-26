@@ -1,6 +1,7 @@
-import { Component, computed } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BaseControl } from '../../engine/base/base-control/base-control.component';
+import { IBaseControl } from '../../engine/base/base-control.interface';
 
 @Component({
   selector: 'sl-password',
@@ -9,7 +10,13 @@ import { BaseControl } from '../../engine/base/base-control/base-control.compone
   templateUrl: './password.component.html',
   styleUrl: './password.component.scss'
 })
-export class PasswordComponent extends BaseControl {
-  icon = computed(()=>this.metaData()?.icon);
+export class PasswordComponent extends BaseControl implements IBaseControl {
+  setMetadata(): void {
+    if (this.metaData()){
+      this.icon.set(this.metaData().icon ?? 'eye');
+    }
+  }
+  
+  icon = model<string | undefined>(undefined);
 }
 

@@ -1,4 +1,4 @@
-import { Component, computed, input, model, OnInit, output, signal } from '@angular/core';
+import { Component, model, OnInit, signal } from '@angular/core';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
@@ -11,19 +11,21 @@ import { DynamicFormSync } from '../../dynamic-form-sync';
   template: ''
 })
 export class BaseControl implements ControlValueAccessor, OnInit {
-  class = model.required<string>();
-  config = model.required<WebControl>();
-  formSync = model.required<DynamicFormSync>();
-  formControl = model.required<FormControl>();
-  //specific properties for any contols
+  //base properties of WebControl, passed from DynamicControlDirective
+  config = model<WebControl>();
+  formSync = model<DynamicFormSync>();
+  formControl = model<FormControl>();
   metaData = model<any>();
-  //actionEvent = propagate output signal
-  actionEvent = output<any>();
 
+  collapsed = signal<boolean>(false);
+  
   //base properties of WebControl
-  action = computed(()=>this.config().action);
-  label = computed(()=>this.config().controlLabel);
-  placeholder = computed(()=>this.config().controlPlaceholder);
+  action = model<string | undefined>(undefined);
+  class = model<string | undefined>(undefined);
+  label = model<string | undefined>(undefined);
+  placeholder = model<string | undefined>(undefined);
+  route = model<string | undefined>(undefined);
+  tooltip = model<string | undefined>(undefined);
 
   value = model<string | number | boolean | Date | null | undefined>();
   
@@ -33,12 +35,23 @@ export class BaseControl implements ControlValueAccessor, OnInit {
     });
   }
 
+  setConfig(): void {
+    if(this.config()) {
+      this.action.set(this.config()!.action ?? undefined);
+      this.class.set(this.config()!.class ?? undefined);
+      this.label.set(this.config()!.controlLabel ?? undefined);
+      this.placeholder.set(this.config()!.controlPlaceholder ?? undefined);
+      this.route.set(this.config()!.route ?? undefined);
+      this.tooltip.set(this.config()!.controlTooltip ?? undefined);
+    }
+  }
+
   writeValue(obj: any): void {
-    this.formControl().setValue(obj);  // Make sure this is setting a valid primitive
+    this.formControl()?.setValue(obj);  // Make sure this is setting a valid primitive
   }
 
   registerOnChange(fn: any): void {
-    this.formControl().valueChanges.subscribe(fn);
+    this.formControl()?.valueChanges.subscribe(fn);
   }
   
   registerOnTouched(fn: any): void {}

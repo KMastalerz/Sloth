@@ -21,3 +21,15 @@ export interface ToggleIconMetadata {
     onFalse: string;
     size: string;
 }
+
+export interface ButtonMetadata {
+
+}
+
+export interface LinkMetadata {
+    type: string;
+    icon: string;
+    counterFunc?: string;
+    warningCount?: number;
+    errorCount?: number;
+}

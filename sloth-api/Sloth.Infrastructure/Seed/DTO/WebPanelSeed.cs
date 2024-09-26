@@ -7,4 +7,6 @@ internal class WebPanelSeed
     public string? SecurityTableID { get; set; } = null;
     public string? PanelLabel { get; set; } = null;
     public string? Sections { get; set; } = null;
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
 }

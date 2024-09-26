@@ -130,7 +130,9 @@ namespace Sloth.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Panels = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Panels = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Style = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,7 +237,9 @@ namespace Sloth.Infrastructure.Migrations
                     PanelType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PanelLabel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sections = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Sections = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Style = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,7 +355,9 @@ namespace Sloth.Infrastructure.Migrations
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SectionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SectionLabel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Controls = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Controls = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Style = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,7 +386,9 @@ namespace Sloth.Infrastructure.Migrations
                     Route = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoutePageID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Style = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

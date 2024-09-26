@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20240925192711_Init")]
+    [Migration("20240926095225_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -376,6 +376,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Action")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ControlLabel")
                         .HasColumnType("nvarchar(max)");
 
@@ -399,6 +402,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PageID", "PanelID", "SectionID", "ControlID");
@@ -438,6 +444,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PageID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -445,6 +454,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -492,6 +504,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PanelID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PanelLabel")
                         .HasColumnType("nvarchar(max)");
 
@@ -503,6 +518,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PageID", "PanelID");
@@ -521,6 +539,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("SectionID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Controls")
                         .HasColumnType("nvarchar(max)");
 
@@ -531,6 +552,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PageID", "PanelID", "SectionID");

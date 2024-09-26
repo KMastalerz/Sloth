@@ -32,4 +32,6 @@ public class WebControl
     /// JSON object, that defines the control's properties
     /// </summary>
     public string? MetaData { get; set; } = null;
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
 }

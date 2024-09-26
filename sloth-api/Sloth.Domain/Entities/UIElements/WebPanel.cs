@@ -8,4 +8,6 @@ public class WebPanel
     public string? SecurityTableID { get; set; } = null;
     public string? PanelLabel { get; set; } = null;
     public string? Sections { get; set; }
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
 }

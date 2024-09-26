@@ -14,4 +14,6 @@ internal class WebControlSeed
     public string? RoutePageID { get; set; } = null;
     public string? Action { get; set; } = null;
     public string? MetaData { get; set; } = null;
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
 }

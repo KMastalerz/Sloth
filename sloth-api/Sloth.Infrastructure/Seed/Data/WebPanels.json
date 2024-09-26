@@ -5,6 +5,8 @@
   //  "SecurityTableID": null,
   //  "PanelLabel": null,
   //  "Sections": null
+  //  "Style": null,
+  //  "Class": null
   //}
   {
     "PageID": "MainPage",
@@ -12,14 +14,18 @@
     "PanelType": "SideNav",
     "SecurityTableID": null,
     "PanelLabel": "Main",
-    "Sections": null
+    "Sections": "[\"Main\", \"Info\", \"User\", \"Buttons\"]",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
     "PanelID": "Login",
-    "PanelType": "Login",
+    "PanelType": "Simple",
     "SecurityTableID": null,
     "PanelLabel": null,
-    "Sections": null
+    "Sections": null,
+    "Style": null,
+    "Class": null
   }
 ]

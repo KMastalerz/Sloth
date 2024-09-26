@@ -12,23 +12,10 @@
   //  "Route": null,
   //  "RoutePageID": null,
   //  "Action": null,
-  //  "MetaData": null
-  //}
-  {
-    "PageID": "MainPage",
-    "PanelID": "SideNav",
-    "SectionID": "Toggle",
-    "ControlID": "Toggle",
-    "SecurityTableID": null,
-    "ControlType": "ToggleIcon",
-    "ControlLabel": null,
-    "ControlPlaceholder": null,
-    "ControlTooltip": null,
-    "Route": null,
-    "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"onTrue\":\"chevron_left\",\"onFalse\":\"chevron_right\",\"size\":\"m\"}"
-  },
+  //  "MetaData": null,
+  //  "Style": null,
+  //  "Class": null
+  //},
   {
     "PageID": "MainPage",
     "PanelID": "SideNav",
@@ -42,7 +29,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -57,7 +46,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -72,7 +63,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}"
+    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -87,7 +80,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -102,7 +97,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}"
+    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -117,7 +114,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}"
+    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -132,7 +131,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -147,7 +148,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -162,7 +165,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "MainPage",
@@ -177,7 +182,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
+    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
@@ -192,7 +199,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"account_circle\"}"
+    "MetaData": "{\"icon\":\"account_circle\"}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
@@ -207,7 +216,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\"}"
+    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\"}",
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
@@ -222,7 +233,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": "login",
-    "MetaData": null
+    "MetaData": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
@@ -237,7 +250,9 @@
     "Route": null,
     "RoutePageID": null,
     "Action": "ForgotPassword",
-    "MetaData": null
+    "MetaData": null,
+    "Style": null,
+    "Class": null
   },
   {
     "PageID": "LoginPage",
@@ -252,6 +267,8 @@
     "Route": null,
     "RoutePageID": null,
     "Action": "Register",
-    "MetaData": null
+    "MetaData": null,
+    "Style": null,
+    "Class": null
   }
 ]

@@ -3,15 +3,12 @@
     'sl-side-nav-expanded': !collapsed(),
     'sl-side-nav-collapsed': collapsed(),
 }">
-    <sl-branding class="sl-b-margin-m" title="Sloth" imgPath="assets/icon.png" [showTitle]="!collapsed()"/>
-
-    <ng-container slDynamicControl [controlID]="'Toggle'" 
-                                   [formSync]="formSync()" 
-                                   [class]="'sl-absolute sl-top-right sl-move-right-50-top-50 sl-ctrl-shadow'" 
-                                   (actionEvent)="onToggle()" 
-                                   [value]="false"></ng-container>
-
-    <nav class="sl-flex-column sl-gap-xxs">
-        
-    </nav>
+    <sl-toggle-icon [class]="'sl-absolute sl-top-right sl-move-right-50-top-50 sl-ctrl-shadow'"
+                    onFalse="chevron_left"
+                    onTrue="chevron_right"
+                    (onToggle)="onToggle()"></sl-toggle-icon>
+    @for(section of sections(); track $index) {
+        <ng-container slDynamicSection  [sectionID]="section.sectionID"
+                                        [formSync]="formSync()"></ng-container>
+    }
 </div>

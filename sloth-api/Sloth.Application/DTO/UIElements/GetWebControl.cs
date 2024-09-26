@@ -12,6 +12,8 @@ public class GetWebControl
     public string? RoutePageID { get; set; } = null;
     public string? Action { get; set; } = null;
     public string? MetaData { get; set; } = null;
+    public string? Class { get; set; } = null;
+    public string? Style { get; set; } = null;
     public bool IsHidden { get; set; } = false;
     public bool IsReadOnly { get; set; } = false;
     public bool IsDisabled { get; set; } = false;

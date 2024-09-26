@@ -1,0 +1,4 @@
+@for(section of sections(); track $index) {
+    <ng-container slDynamicSection  [sectionID]="section.sectionID" 
+                                    [formSync]="formSync()"></ng-container> 
+}

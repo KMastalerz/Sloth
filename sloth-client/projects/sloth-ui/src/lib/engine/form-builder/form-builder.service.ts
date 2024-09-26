@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { WebControl, WebPage, WebPanel } from '@sloth-http';
-import { PanelFormType } from '@sloth-shared';
 
 import { DynamicFormSync } from '../../engine/dynamic-form-sync';
 import { DynamicDirectoryService } from '../directories/dynamic-directory/dynamic-directory.service';
+import { PanelFormType } from '../../constants/ui.constants';
 
 @Injectable({
   providedIn: 'root'
