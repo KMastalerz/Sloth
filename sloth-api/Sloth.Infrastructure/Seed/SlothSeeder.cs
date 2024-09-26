@@ -28,8 +28,6 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
 
             await SeedSystemOptions();
             await SeedWebPages();
-            await SeedWebPanels();
-            await SeedWebSections();
             await SeedWebControls();
             await SeedLanguage();
             await SeedRoles();
@@ -129,62 +127,6 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
         catch (Exception ex)
         {
             logger.LogError("Error {Exception} during seeding {object}", ex.Message, nameof(WebPage));
-        }
-    }
-
-    private async Task SeedWebPanels()
-    {
-        try
-        {
-            var webPanelSeed = GetData<List<WebPanelSeed>>(SeedFile.WebPanels);
-
-            if (webPanelSeed is not null && webPanelSeed.Any())
-            {
-                var webPanels = mapper.Map<IEnumerable<WebPanel>>(webPanelSeed);
-
-                // filter webControls by those that do not exist in database
-                webPanels = webPanels!.Where(wc => !dbContext.WebPanel.Any(dbwc => dbwc.PageID == wc.PageID && dbwc.PanelID == wc.PanelID));
-
-                if (webPanels.Any())
-                {
-                    var count = webPanels.Count();
-                    await dbContext.WebPanel.AddRangeAsync(webPanels);
-                    await dbContext.SaveChangesAsync();
-                    logger.LogInformation("Added {Count} {object} to database", count, nameof(WebPanel));
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.LogError("Error {Exception} during seeding {object}", ex.Message, nameof(WebPanel));
-        }
-    }
-
-    private async Task SeedWebSections()
-    {
-        try
-        {
-            var webSectionsSeed = GetData<List<WebSectionSeed>>(SeedFile.WebSections);
-
-            if (webSectionsSeed is not null && webSectionsSeed.Any())
-            {
-                var webSections = mapper.Map<IEnumerable<WebSection>>(webSectionsSeed);
-
-                // filter webControls by those that do not exist in database
-                webSections = webSections!.Where(wc => !dbContext.WebControl.Any(dbwc => dbwc.PageID == wc.PageID && dbwc.PanelID == wc.PanelID && dbwc.SectionID == wc.SectionID));
-
-                if (webSections.Any())
-                {
-                    var count = webSections.Count();
-                    await dbContext.WebSection.AddRangeAsync(webSections);
-                    await dbContext.SaveChangesAsync();
-                    logger.LogInformation("Added {Count} {object} to database", count, nameof(WebSection));
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.LogError("Error {Exception} during seeding {object}", ex.Message, nameof(WebSection));
         }
     }
 
@@ -337,12 +279,6 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
                 break;
             case SeedFile.WebPages:
                 fileName = SeedPath.WebPages;
-                break;
-            case SeedFile.WebPanels:
-                fileName = SeedPath.WebPanels;
-                break;
-            case SeedFile.WebSections:
-                fileName = SeedPath.WebSections;
                 break;
             case SeedFile.User:
                 fileName = SeedPath.User;

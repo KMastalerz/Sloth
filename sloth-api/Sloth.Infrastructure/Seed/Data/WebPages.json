@@ -5,9 +5,6 @@
   //  "SecurityTableID": null,
   //  "Description": null,
   //  "UserGroup": "",
-  //  "Panels": null,
-  //  "Style": null,
-  //  "Class": null
   //  "CanAccess": true,
   //  "CanAdd": true,
   //  "CanDelete": true
@@ -18,9 +15,6 @@
     "SecurityTableID": null,
     "Description": "Main Page of Sloth",
     "UserGroup": "DEFAULT",
-    "Panels": null,
-    "Style": null,
-    "Class": null,
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true
@@ -31,9 +25,6 @@
     "SecurityTableID": null,
     "Description": "Login Page for Sloth",
     "UserGroup": "DEFAULT",
-    "Panels": null,
-    "Style": null,
-    "Class": null,
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true

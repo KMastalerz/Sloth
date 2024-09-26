@@ -1,0 +1,10 @@
+.sl-branding-icon {
+    display: block;
+    width: 100%;    
+    height: 100%;     
+    margin: $space-s;
+    padding: $space-s;
+    background-color: var(--sl-neutral);
+    max-width: $branding-icon-size;
+    max-height: $branding-icon-size;
+}

@@ -1,65 +1,89 @@
-.sl-link {
-    border-radius: $border-radius-m;
-    font-weight: 300;
-    cursor: pointer;
+.sl-image {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.sl-link:hover,
-.sl-link:active {
-    background-color: var(--sl-neutral-20);
+.sl-image-pill {
+    border-radius: $border-radius-pill;
 }
 
-.sl-tag {
-    border-radius: $border-radius-m;
-    font-size: $font-size-s;
-    font-weight: 500;
+.sl-icon-small {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-s;
 }
 
-.sl-button {
+.sl-icon-medium {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-m;
+}
+
+.sl-icon-large {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-l;
+}
+
+.sl-toggle-collapse {
+    position: absolute;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-radius: $border-radius-s;
-   
+    align-items: center;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(50%);
+    transform: translateX(50%) translateY(100%);
+    width: $ctrl-size-m;
+    height: $ctrl-size-m;
+    background-color: var(--sl-neutral-20);
+    cursor: pointer;
 }
 
 .sl-control {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--sl-neutral-40);
+    gap: $space-m;
     border-radius: $border-radius-m;
-    font-size: $font-size-m;
-    font-weight: 500;
-    width: fit-content;
-    background-color: var(--sl-on-primary);
 }
 
-// overrite angular material badge
-.mat-badge-content {
+.sl-control-stretched {
     display: flex;
-    align-self: center;
-    justify-self: center;
-    font-size: $font-size-s !important;
-    padding: 0.2rem 0.4rem !important;
-    min-width: 1.4rem  !important;
-    min-height: 1.4rem  !important;
-    height: 1.4rem  !important;
+    align-items: center;
+    justify-content: stretch;
+    font-size: $font-size-l;
+    padding: $space-xs;
+    gap: $space-m;
+    border-radius: $border-radius-m;
 }
 
-.sl-badge-neutral {
-    .mat-badge-content {
-        background-color: var(--sl-info-light);
-    }
+.sl-control-stretched:hover {
+    background-color: var(--sl-neutral-20);
 }
 
-.sl-badge-warning {
-    .mat-badge-content {
-        background-color: var(--sl-primary-light);
-    }
+
+.sl-tag {
+    padding: $space-xxs $space-xs;
+    border-radius: $border-radius-m;
+    font-size: $font-size-s;
+    font-weight: 700;
 }
 
-.sl-image-pill {
-    display: block;
-    border-radius: $border-radius-pill;
+.sl-tag-info {
+    background: var(--sl-info-light);
+    color: var(--sl-on-info);
 }
+
+.sl-tag-warning {
+    background-color: var(--sl-warning-light);
+    color: var(--sl-on-info);
+}
+
+.sl-tag-error {
+    background-color: var(--sl-error-light);
+    color: var(--sl-on-info);
+}
+
+
+
+

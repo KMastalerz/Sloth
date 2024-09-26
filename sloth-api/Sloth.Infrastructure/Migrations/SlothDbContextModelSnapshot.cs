@@ -361,20 +361,8 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PageID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PanelID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SectionID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlLabel")
                         .HasColumnType("nvarchar(max)");
@@ -385,11 +373,10 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("ControlTooltip")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ControlType")
-                        .IsRequired()
+                    b.Property<string>("MetaData")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaData")
+                    b.Property<string>("PanelID")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Route")
@@ -398,13 +385,13 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("RoutePageID")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SectionID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PageID", "PanelID", "SectionID", "ControlID");
+                    b.HasKey("PageID", "ControlID");
 
                     b.ToTable("WebControl");
                 });
@@ -419,19 +406,17 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("PanelID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SectionID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ValidationName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PageID", "ControlID");
-
-                    b.HasIndex("PageID", "PanelID", "SectionID", "ControlID");
 
                     b.ToTable("WebControlValidation");
                 });
@@ -441,19 +426,10 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PageID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Panels")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityTableID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -491,72 +467,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasKey("PageID", "UserGroup");
 
                     b.ToTable("WebPageSecurity");
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
-                {
-                    b.Property<string>("PageID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PanelID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PanelLabel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PanelType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sections")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityTableID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PageID", "PanelID");
-
-                    b.ToTable("WebPanel");
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
-                {
-                    b.Property<string>("PageID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PanelID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SectionID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Controls")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SectionLabel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SectionType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityTableID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PageID", "PanelID", "SectionID");
-
-                    b.ToTable("WebSection");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.CookieKey", b =>
@@ -642,9 +552,9 @@ namespace Sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
-                    b.HasOne("Sloth.Domain.Entities.WebSection", null)
+                    b.HasOne("Sloth.Domain.Entities.WebPage", null)
                         .WithMany()
-                        .HasForeignKey("PageID", "PanelID", "SectionID")
+                        .HasForeignKey("PageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -653,7 +563,7 @@ namespace Sloth.Infrastructure.Migrations
                 {
                     b.HasOne("Sloth.Domain.Entities.WebControl", null)
                         .WithMany()
-                        .HasForeignKey("PageID", "PanelID", "SectionID", "ControlID")
+                        .HasForeignKey("PageID", "ControlID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -663,24 +573,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
                         .WithMany()
                         .HasForeignKey("PageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.WebPage", null)
-                        .WithMany()
-                        .HasForeignKey("PageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.WebPanel", null)
-                        .WithMany()
-                        .HasForeignKey("PageID", "PanelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

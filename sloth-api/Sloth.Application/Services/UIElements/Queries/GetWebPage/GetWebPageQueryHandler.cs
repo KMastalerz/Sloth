@@ -35,68 +35,41 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
         var webPage = await uIElementsRepository.GetWebPageAsync(request.PageID) ??
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
-        var webPanels = await uIElementsRepository.ListWebPanelAsync(request.PageID) ??
-            throw new NotFoundException(nameof(List<WebPanel>), request.PageID); 
-
-        var webSection = await uIElementsRepository.ListWebSectionAsync(request.PageID) ??
-            throw new NotFoundException(nameof(List<WebSection>), request.PageID); 
 
         var webControls = await uIElementsRepository.ListWebControlAsync(request.PageID) ??
             throw new NotFoundException(nameof(List<WebControl>), request.PageID);
 
-        var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct()
-            .Union(webPanels.Where(wp => wp.SecurityTableID is not null).Select(wp => wp.SecurityTableID).Distinct())
-            .Union(webSection.Where(wp => wp.SecurityTableID is not null).Select(ws => ws.SecurityTableID).Distinct());
+        // Build list of needed security tables
+        var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct();
 
         if(webPage.SecurityTableID is not null)
             neededSecTables.Union([webPage.SecurityTableID]);
-        
+
+        // Get security tables
         var secTables = await securityRepository.ListControlSecurityAsync(WebSecurity.Default, neededSecTables as IEnumerable<string>) ?? [];
 
+        var wcDict = webControls.ToDictionary(wc => wc.ControlID, wc => wc.SecurityTableID);
+
         var dto = mapper.Map<GetWebPage>(webPage);
+        dto.WebControls = mapper.Map<IEnumerable<GetWebControl>>(webControls).ToList();
 
-        dto.WebPanels = mapper.Map<IEnumerable<GetWebPanel>>(webPanels).ToList();
-
-        dto.WebPanels.ToList().ForEach(
-            wp => wp.WebSections = mapper.Map<IEnumerable<GetWebSection>>(webSection.Where(ws => ws.PanelID == wp.PanelID)).ToList());
-
-        dto.WebPanels.ToList().ForEach(
-            wp => wp.WebSections.ToList().ForEach(
-                ws => ws.WebControls = mapper.Map<IEnumerable<GetWebControl>>(webControls.Where(wc => wc.SectionID == ws.SectionID && wc.PanelID == wp.PanelID)).ToList()));
-
-        // Create dictionaries for faster lookups
-        var wpDict = webPanels.ToDictionary(w => w.PanelID, w => w.SecurityTableID);
-        var wsDict = webSection.ToDictionary(w => new { w.SectionID, w.PanelID }, w => w.SecurityTableID);
-        var wcDict = webControls.ToDictionary(w => new { w.ControlID, w.SectionID, w.PanelID }, w => w.SecurityTableID);
-
-        dto.WebPanels.ForEach(wp =>
+        dto.WebControls.ForEach(wc =>
         {
-            wp.WebSections.ForEach(ws =>
+            var wcSecTable = wcDict.TryGetValue(wc.ControlID, out var wcSec) ? wcSec : null;
+            var searchedSecTable = wcSecTable ?? webPage.SecurityTableID;
+
+            if(searchedSecTable is not null)
             {
-                ws.WebControls.ForEach(wc =>
+                var secTable = secTables.FirstOrDefault(st => st.SecurityTableID == searchedSecTable && st.ControlID == wc.ControlID);
+
+                if (secTable is not null)
                 {
-                    // Look up security table IDs using dictionaries for fast access
-                    var wcSecTable = wcDict.TryGetValue(new { wc.ControlID, wc.SectionID, wc.PanelID }, out var wcSec) ? wcSec: null;
-                    var wsSecTable = wsDict.TryGetValue(new { ws.SectionID, wp.PanelID }, out var wsSec) ? wsSec: null;
-                    var wpSecTable = wpDict.TryGetValue(wp.PanelID, out var wpSec) ? wpSec: null;
-
-                    // Determine the effective security table ID
-                    var searchedSecTable = wcSecTable ?? wsSecTable ?? wpSecTable ?? webPage.SecurityTableID;
-
-                    if (searchedSecTable is not null)
-                    {
-                        var secTable = secTables.FirstOrDefault(st => st.SecurityTableID == searchedSecTable && st.ControlID == wc.ControlID);
-
-                        if (secTable is not null)
-                        {
-                            wc.IsDisabled = secTable.IsDisabled;
-                            wc.IsReadOnly = secTable.IsReadOnly;
-                            wc.IsRequired = secTable.IsRequired;
-                            wc.IsHidden = secTable.IsHidden;
-                        }
-                    }
-                });
-            });
+                    wc.IsDisabled = secTable.IsDisabled;
+                    wc.IsReadOnly = secTable.IsReadOnly;
+                    wc.IsRequired = secTable.IsRequired;
+                    wc.IsHidden = secTable.IsHidden;
+                }
+            }
         });
 
         // TO DO: Add Validators 

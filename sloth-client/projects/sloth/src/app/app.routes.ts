@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { MainComponent } from './core/main/main.component';
-import { LoginComponent } from './core/login/login.component';
-import { authGuard } from './guards/auth/auth.guard';
-import { dynamicFormSyncResolver } from '@sloth-ui';
+import { MainComponent } from './core/pages/main/main.component';
+import { LoginComponent } from './core/pages/login/login.component';
+import { pageResolver } from './core/resolvers/page/page.resolver';
+import { authGuard } from './core/guards/auth/auth.guard';
 
 export const routes: Routes = [
     {   
         path: '', 
-        redirectTo: 'auth', 
+        redirectTo: 'sloth', 
         pathMatch: 'full'
     },
     {   
@@ -15,14 +15,14 @@ export const routes: Routes = [
         component: MainComponent,
         canActivate: [authGuard],  
         resolve: {
-            formSync: dynamicFormSyncResolver
+            pageSync: pageResolver
         }
     },
     {   
         path: 'auth', 
         component: LoginComponent,
         resolve: {
-            formSync: dynamicFormSyncResolver
+            pageSync: pageResolver
         }
     },
 ];

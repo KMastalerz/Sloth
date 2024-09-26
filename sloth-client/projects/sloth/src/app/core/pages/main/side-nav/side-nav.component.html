@@ -1,0 +1,41 @@
+<div class="sl-side-nav" [expanded]="!collapsed()" [collapsed]="collapsed()">
+    <button class="sl-absolute sl-toggle-collapse sl-button" (click)="onCollapseToggle()">
+        <span class="sl-icon-medium">{{ icon() }}</span>
+    </button>
+
+    <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
+    
+    @if(mainSection()) {
+        @if(!collapsed()){
+            <span>{{mainSectionHeader()}}</span>
+        }
+        @for(section of mainSection(); track $index) {
+            <sl-side-nav-link   [config]="section" 
+                                [pageSync]="pageSync()"
+                                [collapsed]="collapsed()"/>
+        }
+    }
+
+    @if(infoSection()) {
+        @if(!collapsed()){
+            <span>{{infoSectionHeader()}}</span>
+        }
+        @for(section of infoSection(); track $index) {
+            <sl-side-nav-link   [config]="section" 
+                                [pageSync]="pageSync()"
+                                [collapsed]="collapsed()"/>
+        }
+    }
+
+    @if(userSection()) {
+        @if(!collapsed()){
+            <span>{{userSectionHeader()}}</span>
+        }
+        @for(section of userSection(); track $index) {
+            <sl-side-nav-link   [config]="section" 
+                                [pageSync]="pageSync()"
+                                [collapsed]="collapsed()"/>
+        }
+    }
+
+</div>

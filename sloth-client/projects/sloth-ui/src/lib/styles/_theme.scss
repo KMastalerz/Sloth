@@ -1,0 +1,76 @@
+:root {
+    /* Primary Color Encoding*/
+    --sl-primary-hue: 230.85;
+    --sl-primary-saturation: 48.36%;
+    --sl-primary-lightness: 47.84%;
+    --sl-primary: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), var(--sl-primary-lightness));
+
+    /* Primary Tints */
+    --sl-primary-tint-90: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 90%);
+    --sl-primary-tint-80: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 80%);
+    --sl-primary-tint-70: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 70%);
+    --sl-primary-tint-60: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 60%);
+
+    /* Primary Shades */
+    --sl-primary-shade-40: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 40%);
+    --sl-primary-shade-30: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 30%);
+    --sl-primary-shade-20: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 20%);
+    --sl-primary-shade-10: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 10%);
+    
+    /* Secondary Color Encoding*/
+    --sl-secondary-hue: 140.85;
+    --sl-secondary-saturation: 48.36%;
+    --sl-secondary-lightness: 47.84%;
+    --sl-secondary: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), var(--sl-secondary-lightness));
+
+    /* Secondary Tints */
+    --sl-secondary-tint-90: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 90%);
+    --sl-secondary-tint-80: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 80%);
+    --sl-secondary-tint-70: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 70%);
+    --sl-secondary-tint-60: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 60%);
+
+    /* Secondary Shades */
+    --sl-secondary-shade-40: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 40%);
+    --sl-secondary-shade-30: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 30%);
+    --sl-secondary-shade-20: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 20%);
+    --sl-secondary-shade-10: hsl(var(--sl-secondary-hue), var(--sl-secondary-saturation), 10%);
+
+    /* Error color */
+    --sl-error: #b41c2b;
+    --sl-error-light: #CB606B;
+    --sl-error-dark: #6C111A;
+
+    /* Warning color */
+    --sl-warning: #cc8800;
+    --sl-warning-light: #DBAC4D;
+    --sl-warning-dark: #7A5200;
+
+    /* Info color */
+    --sl-info: #388cfa;
+    --sl-info-light: #74AFFC;
+    --sl-info-dark: #225496;
+
+    /* Success color */
+    --sl-success: #009f42;
+    --sl-success-light: #4DBC7B;
+    --sl-success-dark: #005F28;
+    
+    --sl-neutral-hue: 0;
+    --sl-neutral-saturation: 0%;
+    --sl-neutral-lightness: 96.86%;
+
+    --sl-neutral: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), var(--sl-neutral-lightness));
+    --sl-neutral-10: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 85%);
+    --sl-neutral-20: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 75%);
+    --sl-neutral-30: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 65%);
+    --sl-neutral-40: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 55%);
+    --sl-neutral-50: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 45%);
+    --sl-neutral-60: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 35%);
+    --sl-neutral-70: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 25%);
+    --sl-neutral-80: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 15%);
+    --sl-neutral-90: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 5%);
+
+    --sl-on-primary: var(--sl-neutral);
+    --sl-on-error: var(--sl-neutral);
+    --sl-on-info: var(--sl-neutral); 
+}

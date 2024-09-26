@@ -5,29 +5,6 @@ export interface WebPage {
     panels?: string[];
     class?: string;
     style?: string;
-    webPanels?: WebPanel[];
-}
-
-export interface WebPanel {
-    pageiD: string;
-    panelID: string;
-    panelType: string;
-    panelLabel: string;
-    sections?: string[];
-    class?: string;
-    style?: string;
-    webSections?: WebSection[];
-}
-
-export interface WebSection {
-    pageiD: string;
-    panelID: string;
-    sectionID: string;
-    sectionType: string;
-    sectionLabel: string;
-    controls?: string[];
-    class?: string;
-    style?: string;
     webControls?: WebControl[];
 }
 
@@ -36,7 +13,6 @@ export interface WebControl {
     panelID: string;
     sectionID: string;
     controlID: string;
-    controlType: string;
     controlLabel?: string | null;
     controlPlaceholder?: string | null;
     controlTooltip?: string | null;

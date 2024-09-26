@@ -1,5 +1,5 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
-import { BaseSection } from '../../engine/base/base-section/base-section.component';
+import { Component, computed, input, signal } from '@angular/core';
+
 
 @Component({
   selector: 'sl-branding-section',
@@ -8,12 +8,9 @@ import { BaseSection } from '../../engine/base/base-section/base-section.compone
   templateUrl: './branding-section.component.html',
   styleUrl: './branding-section.component.scss'
 })
-export class BrandingSectionComponent extends BaseSection implements OnInit {
+export class BrandingSectionComponent {
   title = signal<string>('Sloth');
   imgPath = signal<string>('assets/icon.png');
   imgAlt = computed(() => `${this.title} logo`);
-
-  ngOnInit(): void {
-
-  }
+  collapsed = input<boolean>(false);
 }

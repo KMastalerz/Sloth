@@ -1,0 +1,19 @@
+.sl-button {
+    border-radius: $border-radius-m;
+    box-shadow: $sl-ctrl-shadow;
+}
+
+.sl-button:hover {
+    box-shadow: $sl-box-shadow;
+}
+
+.sl-link {
+    border-radius: $border-radius-m;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.sl-link:hover,
+.sl-link:active {
+    background-color: var(--sl-neutral-20);
+}

@@ -1,38 +1,38 @@
 /* Spacing (gap, padding, margin) */
-$space-xxs: 0.1rem;
-$space-xs: 0.4rem;
-$space-s: 0.8rem;
-$space-m: 1.2rem;
-$space-l: 1.6rem;
-$space-xl: 2.0rem;
+$space-xxs: 0.4rem;  // 4px
+$space-xs: 0.8rem;   // 8px
+$space-s: 1.6rem;    // 16px
+$space-m: 2.4rem;    // 24px
+$space-l: 3.2rem;    // 32px
+$space-xl: 4.0rem;   // 40px
 
 /* Font Sizes */
-$font-size-xxs: 0.4rem;
-$font-size-xs: 0.6rem;
-$font-size-s: 0.8rem;
-$font-size-m: 1.0rem;
-$font-size-l: 1.2rem;
-$font-size-xl: 1.6rem;
+$font-size-xxs: 0.8rem;   // 8px
+$font-size-xs: 1.2rem;    // 12px
+$font-size-s: 1.4rem;     // 14px
+$font-size-m: 1.6rem;     // 16px
+$font-size-l: 2.0rem;     // 20px
+$font-size-xl: 2.4rem;    // 24px
 
 /* Icon Sizes */
-$icon-size-xxs: 0.4rem;
-$icon-size-xs: 0.8rem;
-$icon-size-s: 1.0rem;
-$icon-size-m: 1.4rem;
-$icon-size-l: 1.8rem;
-$icon-size-xl: 2.4rem;
+$icon-size-xxs: 1.2rem;   // 12px
+$icon-size-xs: 1.6rem;    // 16px
+$icon-size-s: 2.4rem;     // 24px
+$icon-size-m: 3.2rem;     // 32px
+$icon-size-l: 4.0rem;     // 40px
+$icon-size-xl: 4.8rem;    // 48px
 
 /* Control Sizes */
-$ctrl-size-s: 1.4rem;
-$ctrl-size-m: 1.8rem;
+$ctrl-size-s: 3.2rem;    // 32px
+$ctrl-size-m: 4.0rem;    // 40px
 
-$branding-icon-size: 6.4rem;
+$branding-icon-size: 8.0rem; // 80px
 
 /* Border Radius */
-$border-radius-s: 0.2rem;
-$border-radius-m: 0.6rem;
-$border-radius-l: 1.2rem;
-$border-radius-pill: 4rem;
+$border-radius-s: 0.4rem;  // 4px
+$border-radius-m: 0.8rem;  // 8px
+$border-radius-l: 1.6rem;  // 16px
+$border-radius-pill: 50%;  // remains the same for pill shapes
 
 /* Box Shadow */
 $sl-box-shadow: 0.1rem 0.1rem 0.5rem var(--sl-neutral-40);
@@ -44,5 +44,5 @@ $sl-ctrl-shadow: 0.1rem 0.1rem 0.5rem var(--sl-neutral-20);
 $sl-font: "Work Sans", sans-serif;
 $sl-icon-font: "Material Symbols Outlined";
 
-$sl-nav-expanded: 18rem;
-$sl-nav-collapsed: 4.6rem;
+$sl-nav-expanded: 29.4rem;
+$sl-nav-collapsed: 9.8rem;

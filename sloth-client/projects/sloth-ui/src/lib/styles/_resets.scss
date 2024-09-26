@@ -9,6 +9,8 @@
 html {
     overflow-x: hidden;
     scroll-behavior: smooth;
+    box-sizing: border-box;
+    font-size: 62.5%;
 }
 
 body {
@@ -36,6 +38,7 @@ html, body {
 a {
     all: unset;
     text-decoration: none;
+    cursor: pointer;
 }
 
 button {
@@ -45,4 +48,19 @@ button {
 
 input {
     all: unset;
+}
+
+// overrite angular material badge
+.mat-badge-content {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    font-size: $font-size-xs !important;
+    padding: $space-xxs $space-xs !important;
+    font-weight: 700 !important;
+}
+
+mat-tooltip-component .mdc-tooltip__surface {
+    font-size: $font-size-s;
+    padding: $space-xs $space-s;
 }

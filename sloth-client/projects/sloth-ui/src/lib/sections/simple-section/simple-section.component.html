@@ -1,7 +1,0 @@
-@if(label() && controls() && !collapsed()) {
-    <div> {{ label() }}</div>
-}
-@for(control of controls(); track $index) {
-    <ng-container slDynamicControl  [controlID]="control.controlID"
-                                    [formSync]="formSync()"></ng-container> 
-}

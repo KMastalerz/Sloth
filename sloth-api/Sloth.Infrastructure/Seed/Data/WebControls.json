@@ -5,16 +5,12 @@
   //  "SectionID": null,
   //  "ControlID": "",
   //  "SecurityTableID": null,
-  //  "ControlType": "",
   //  "ControlLabel": "",
   //  "ControlPlaceholder": "",
   //  "ControlTooltip" : "",
   //  "Route": null,
   //  "RoutePageID": null,
-  //  "Action": null,
   //  "MetaData": null,
-  //  "Style": null,
-  //  "Class": null
   //},
   {
     "PageID": "MainPage",
@@ -22,16 +18,12 @@
     "SectionID": "Main",
     "ControlID": "Dashboard",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Dashboard",
     "ControlPlaceholder": null,
     "ControlTooltip": "Dashboard",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -39,16 +31,12 @@
     "SectionID": "Main",
     "ControlID": "Kanban",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Kanban",
     "ControlPlaceholder": null,
     "ControlTooltip": "Kanban",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -56,16 +44,12 @@
     "SectionID": "Main",
     "ControlID": "Bugs",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Bugs",
     "ControlPlaceholder": null,
     "ControlTooltip": "Bugs",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}"
   },
   {
     "PageID": "MainPage",
@@ -73,16 +57,12 @@
     "SectionID": "Main",
     "ControlID": "Projects",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Projects",
     "ControlPlaceholder": null,
     "ControlTooltip": "Projects",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -90,16 +70,12 @@
     "SectionID": "Main",
     "ControlID": "Tasks",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Tasks",
     "ControlPlaceholder": null,
     "ControlTooltip": "Tasks",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}"
   },
   {
     "PageID": "MainPage",
@@ -107,16 +83,12 @@
     "SectionID": "User",
     "ControlID": "Messages",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Messages",
     "ControlPlaceholder": null,
     "ControlTooltip": "Messages",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}"
   },
   {
     "PageID": "MainPage",
@@ -124,16 +96,12 @@
     "SectionID": "User",
     "ControlID": "Timesheet",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Timesheet",
     "ControlPlaceholder": null,
     "ControlTooltip": "Timesheet",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -141,16 +109,12 @@
     "SectionID": "User",
     "ControlID": "Setttings",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Setttings",
     "ControlPlaceholder": null,
     "ControlTooltip": "Setttings",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -158,16 +122,12 @@
     "SectionID": "Info",
     "ControlID": "Releases",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Releases",
     "ControlPlaceholder": null,
     "ControlTooltip": "Releases",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "MainPage",
@@ -175,16 +135,12 @@
     "SectionID": "Info",
     "ControlID": "Documentation",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Documentation",
     "ControlPlaceholder": null,
     "ControlTooltip": "Documentation",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}"
   },
   {
     "PageID": "LoginPage",
@@ -192,16 +148,12 @@
     "SectionID": "Login",
     "ControlID": "UserName",
     "SecurityTableID": null,
-    "ControlType": "Input",
     "ControlLabel": "User Name",
     "ControlPlaceholder": "User Name",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"account_circle\"}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"account_circle\"}"
   },
   {
     "PageID": "LoginPage",
@@ -209,16 +161,12 @@
     "SectionID": "Login",
     "ControlID": "Password",
     "SecurityTableID": null,
-    "ControlType": "Password",
     "ControlLabel": "Password",
     "ControlPlaceholder": "Password",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
-    "Action": null,
-    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\"}",
-    "Style": null,
-    "Class": null
+    "MetaData": "{\"icon\":\"key\",\"iconShow\":\"visibility\",\"iconHide\":\"visibility_off\"}"
   },
   {
     "PageID": "LoginPage",
@@ -226,16 +174,12 @@
     "SectionID": "Login",
     "ControlID": "Login",
     "SecurityTableID": null,
-    "ControlType": "Button",
     "ControlLabel": "Login",
     "ControlPlaceholder": "",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
-    "Action": "login",
-    "MetaData": null,
-    "Style": null,
-    "Class": null
+    "MetaData": null
   },
   {
     "PageID": "LoginPage",
@@ -243,16 +187,12 @@
     "SectionID": "Login",
     "ControlID": "ForgotPassword",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "ForgotPassword",
     "ControlPlaceholder": "",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
-    "Action": "ForgotPassword",
-    "MetaData": null,
-    "Style": null,
-    "Class": null
+    "MetaData": null
   },
   {
     "PageID": "LoginPage",
@@ -260,15 +200,11 @@
     "SectionID": "Login",
     "ControlID": "Register",
     "SecurityTableID": null,
-    "ControlType": "Link",
     "ControlLabel": "Register",
     "ControlPlaceholder": "",
     "ControlTooltip": "",
     "Route": null,
     "RoutePageID": null,
-    "Action": "Register",
-    "MetaData": null,
-    "Style": null,
-    "Class": null
+    "MetaData": null
   }
 ]
