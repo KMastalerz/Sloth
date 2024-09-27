@@ -1,13 +1,10 @@
+<div class="sl-side-nav-wrapper">
 <div class="sl-side-nav" [expanded]="!collapsed()" [collapsed]="collapsed()">
-    <button class="sl-absolute sl-toggle-collapse sl-button" (click)="onCollapseToggle()">
-        <span class="sl-icon-medium">{{ icon() }}</span>
-    </button>
-
     <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
     
     @if(mainSection()) {
         @if(!collapsed()){
-            <span>{{mainSectionHeader()}}</span>
+            <span class="sl-section-title">{{mainSectionHeader()}}</span>
         }
         @for(section of mainSection(); track $index) {
             <sl-side-nav-link   [config]="section" 
@@ -18,7 +15,7 @@
 
     @if(infoSection()) {
         @if(!collapsed()){
-            <span>{{infoSectionHeader()}}</span>
+            <span class="sl-section-title">{{infoSectionHeader()}}</span>
         }
         @for(section of infoSection(); track $index) {
             <sl-side-nav-link   [config]="section" 
@@ -29,7 +26,7 @@
 
     @if(userSection()) {
         @if(!collapsed()){
-            <span>{{userSectionHeader()}}</span>
+            <span class="sl-section-title">{{userSectionHeader()}}</span>
         }
         @for(section of userSection(); track $index) {
             <sl-side-nav-link   [config]="section" 
@@ -38,4 +35,8 @@
         }
     }
 
+</div>
+<button class="sl-side-nav-toggle" (click)="onCollapseToggle()">
+    <span class="sl-icon-medium">{{ icon() }}</span>
+</button>
 </div>

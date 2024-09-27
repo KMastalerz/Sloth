@@ -1,1 +1,8 @@
-<button></button>
+<button class="sl-button regular">
+    @if(icon()){
+        <span class="sl-icon-small">{{ icon() }}</span>
+    }
+    @if(label()){
+        <span class="sl-button-label">{{ label() }}</span>
+    }
+</button>

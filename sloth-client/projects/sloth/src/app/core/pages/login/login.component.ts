@@ -1,13 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, AuthStateService } from '@sloth-http';
-import { BasePage } from '@sloth-ui';
+import { LoginPageControls } from '@sloth-shared';
+import { BasePage, BrandingSectionComponent, ButtonComponent, InputComponent, PasswordComponent } from '@sloth-ui';
 
 @Component({
   selector: 'sl-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, InputComponent, PasswordComponent, ButtonComponent, BrandingSectionComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -16,18 +17,19 @@ export class LoginComponent extends BasePage {
   private authStateService = inject(AuthStateService);
   private router = inject(Router);
   
-  username = signal<string>('');
-  password = signal<string>('');
+  loginInput = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Login));
+  passwordInput = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Password));
+  processButton = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Process));
 
   override ngOnInit() {
     super.ngOnInit();
     console.log('LoginComponent initialized', this.pageSync());
-  }
+  } 
 
   async onClick(): Promise<void> {      
     const command = {
-      login: this.username(),
-      password: this.password()
+      login: 'KRZMAS',
+      password: 'master'
     };
     
     const result = await this.authService.loginAsync(command);

@@ -16,6 +16,6 @@ export class SideNavLinkComponent extends BaseControl {
   collapsed = input.required<boolean>();
 
   icon = computed(()=>this.metaData()?.icon ?? '');
-  type = input<string>('err');
-  count = input<number>();
+  type = input<string>('info');
+  count = input<number>(10);
 }

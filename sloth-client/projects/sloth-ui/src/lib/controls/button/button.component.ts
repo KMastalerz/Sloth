@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
+import { BaseControl } from '../../base/base-control/base-control.component';
 @Component({
   selector: 'sl-button',
   standalone: true,
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent {
+export class ButtonComponent extends BaseControl {
+  icon = computed(()=>this.metaData()?.icon ?? '');
 }

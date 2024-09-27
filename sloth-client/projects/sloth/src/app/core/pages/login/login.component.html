@@ -1,5 +1,8 @@
-<div style="display: flex; flex-direction: column;">
-    <input type="text" placeholder="Username" name="username" required [(ngModel)]="username">
-    <input type="password" placeholder="Password" name="password" required [(ngModel)]="password">
-    <button type="button" (click)="onClick()">Login</button>
+<div class="sl-page sl-center-content sl-background-primary-gradient">
+    <div class="sl-simple-form">
+        <sl-branding-section></sl-branding-section>
+        <sl-input [config]="loginInput()"></sl-input>
+        <sl-password [config]="passwordInput()"></sl-password>
+        <sl-button [config]="processButton()" (click)="onClick()"></sl-button>
+    </div>
 </div>

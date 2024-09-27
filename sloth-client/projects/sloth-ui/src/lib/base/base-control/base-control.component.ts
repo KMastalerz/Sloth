@@ -9,22 +9,24 @@ import { PageSync } from '../../page/page-sync';
 })
 export class BaseControl implements OnInit {
 
-  config = input.required<WebControl>();
-  pageSync = input.required<PageSync>();
+  config = input<WebControl>();
+  pageSync = input<PageSync>();
 
   metaData = signal<any>(undefined);
   tooltip = signal<string>('');  
   label = signal<string>('');  
+  placeholder = signal<string>('');
   route = signal<string>('');  
 
   ngOnInit(): void {
     if(this.config()) {
-      this.tooltip.set(this.config().controlTooltip ?? '');
-      this.label.set(this.config().controlLabel ?? '');
-      this.route.set(this.config().route ?? '');
+      this.tooltip.set(this.config()!.controlTooltip ?? '');
+      this.label.set(this.config()!.controlLabel ?? '');
+      this.route.set(this.config()!.route ?? '');
+      this.placeholder.set(this.config()!.controlPlaceholder ?? '');
   
-      if(this.config().metaData){
-        return this.metaData.set(JSON.parse(this.config().metaData!));
+      if(this.config()!.metaData){
+        return this.metaData.set(JSON.parse(this.config()!.metaData!));
       }
     }
   }

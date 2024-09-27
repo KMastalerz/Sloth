@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BaseControl } from '../../base/base-control/base-control.component';
 
@@ -11,5 +11,7 @@ import { BaseControl } from '../../base/base-control/base-control.component';
 })
 export class InputComponent extends BaseControl {
 
+  icon = computed(()=>this.metaData()?.icon ?? '');
+  
 }
 

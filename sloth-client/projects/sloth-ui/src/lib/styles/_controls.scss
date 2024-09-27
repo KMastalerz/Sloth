@@ -23,42 +23,64 @@
     font-size: $icon-size-l;
 }
 
-.sl-toggle-collapse {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    top: 0;
-    right: 0;
-    transform: translateX(50%) translateY(50%);
-    transform: translateX(50%) translateY(100%);
-    width: $ctrl-size-m;
-    height: $ctrl-size-m;
-    background-color: var(--sl-neutral-20);
+.sl-icon-button {
     cursor: pointer;
 }
 
 .sl-control {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: $space-m;
+    gap: $space-xs;
     border-radius: $border-radius-m;
+    border: 1px solid var(--sl-neutral-40);
+    padding: $space-xs $space-xs;
+    max-width: $standrad-control-max-width;
+    input {
+        flex-grow: 1;
+        flex-shrink: 0;
+    }
+    button {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+    }
+}
+
+
+sl-input:focus-within,
+sl-password:focus-within {
+    .sl-icon-small {
+        color: var(--sl-primary);
+        font-weight: 600;
+    }
+    .sl-control-label {
+        color: var(--sl-primary); 
+    }
+    .sl-control {
+        box-shadow: 0 0 $space-xs var(--sl-primary)
+    };
+}
+
+.sl-control-label {
+    text-transform: uppercase;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: var(--sl-neutral-60);
 }
 
 .sl-control-stretched {
     display: flex;
     align-items: center;
     justify-content: stretch;
-    font-size: $font-size-l;
+    font-size: $font-size-m * 1.1;
     padding: $space-xs;
     gap: $space-m;
     border-radius: $border-radius-m;
 }
 
 .sl-control-stretched:hover {
-    background-color: var(--sl-neutral-20);
+    background: var(--sl-primary-tint-60);
 }
 
 
@@ -83,6 +105,28 @@
     background-color: var(--sl-error-light);
     color: var(--sl-on-info);
 }
+
+.sl-side-nav-toggle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(50%);
+    transform: translateX(50%) translateY(100%);
+    width: $ctrl-size-m;
+    height: $ctrl-size-m;
+    background: linear-gradient(to right, transparent 50%, var(--sl-primary) 50%);
+    border-radius: $border-radius-m;
+    box-shadow: $sl-button-shadow;
+    cursor: pointer;
+    &:hover {
+        box-shadow: $sl-button-shadow-raised;
+    }
+}
+
 
 
 

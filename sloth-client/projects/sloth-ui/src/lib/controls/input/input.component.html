@@ -1,1 +1,7 @@
-<input type="text">
+@if(label()) {
+    <label class="sl-control-label">{{ label() }}</label>
+}
+<div class="sl-control">
+    <span class="sl-icon-small sl-control-icon"> {{ icon() }}</span>
+    <input type="text" [placeholder]="placeholder()">
+</div>

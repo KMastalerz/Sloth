@@ -50,6 +50,13 @@ input {
     all: unset;
 }
 
+input[type="password"]::-ms-reveal, /* For Edge */
+input[type="password"]::-ms-clear,   /* For Edge */
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+    appearance: none;
+}
+
 // overrite angular material badge
 .mat-badge-content {
     display: flex;

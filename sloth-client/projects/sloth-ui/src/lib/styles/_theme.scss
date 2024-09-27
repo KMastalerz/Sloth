@@ -17,6 +17,12 @@
     --sl-primary-shade-20: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 20%);
     --sl-primary-shade-10: hsl(var(--sl-primary-hue), var(--sl-primary-saturation), 10%);
     
+    --sl-primary-gradient: linear-gradient(
+        45deg, 
+        var(--sl-primary-shade-40) 0%,  
+        var(--sl-primary) 50%     
+    );
+
     /* Secondary Color Encoding*/
     --sl-secondary-hue: 140.85;
     --sl-secondary-saturation: 48.36%;
@@ -57,20 +63,20 @@
     
     --sl-neutral-hue: 0;
     --sl-neutral-saturation: 0%;
-    --sl-neutral-lightness: 96.86%;
+    --sl-neutral-lightness: 95%;
 
     --sl-neutral: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), var(--sl-neutral-lightness));
-    --sl-neutral-10: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 85%);
-    --sl-neutral-20: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 75%);
-    --sl-neutral-30: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 65%);
-    --sl-neutral-40: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 55%);
+    --sl-neutral-10: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 90%);
+    --sl-neutral-20: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 85%);
+    --sl-neutral-30: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 75%);
+    --sl-neutral-40: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 65%);
     --sl-neutral-50: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 45%);
     --sl-neutral-60: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 35%);
     --sl-neutral-70: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 25%);
     --sl-neutral-80: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 15%);
     --sl-neutral-90: hsl(var(--sl-neutral-hue), var(--sl-neutral-saturation), 5%);
 
-    --sl-on-primary: var(--sl-neutral);
+    --sl-on-primary: var(--sl-neutral-20);
     --sl-on-error: var(--sl-neutral);
     --sl-on-info: var(--sl-neutral); 
 }
