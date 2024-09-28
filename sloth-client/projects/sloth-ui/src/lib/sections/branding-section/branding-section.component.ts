@@ -1,6 +1,5 @@
 import { Component, computed, input, signal } from '@angular/core';
 
-
 @Component({
   selector: 'sl-branding-section',
   standalone: true,

@@ -7,7 +7,7 @@
     max-width: $standrad-control-max-width;
     box-shadow: $sl-button-shadow;
     span {
-        font-weight: 400;
+        font-weight: 500;
     }
 
     &:hover {
@@ -22,24 +22,23 @@
 }
 
 .sl-button.primary {
-    background-color: var(--sl-primary);
-    color: var(--sl-neutral);
+    background-color: $sl-primary;
+    color: $sl-on-primary;
 }
 
 .sl-button.secondary {
-    background-color: var(--sl-secondary);
-    color: var(--sl-neutral);
+    background-color: $sl-secondary;
+    color: $sl-on-secondary;
 }
 
 .sl-button.regular {
-    background-color: var(--sl-neutral-20);
-    color: var(--sl-neutral-80);
+    background-color: $sl-neutral-tint;
+    color: $sl-on-neutral-tint;
 }
 
 .sl-button.disabled {
-    background-color: var(--sl-neutral-20);
-    color: var(--sl-neutral-40);
-    cursor: not-allowed;
+    background-color: $sl-neutral-tint;
+    color: $sl-neutral-light-tint;
 }
 
 .sl-link {
@@ -50,5 +49,5 @@
 
 .sl-link:hover,
 .sl-link:active {
-    background-color: var(--sl-neutral-20);
+    background-color: var(--sl-on-background);
 }

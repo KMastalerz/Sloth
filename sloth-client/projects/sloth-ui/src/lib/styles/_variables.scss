@@ -37,14 +37,12 @@ $border-radius-l: 1.6rem;  // 16px
 $border-radius-pill: 50%;  // remains the same for pill shapes
 
 /* Box Shadow */
-$sl-box-shadow: 0.1rem 0.1rem 0.5rem var(--sl-neutral-40);
-$sl-box-shadow-primary: 0.1rem 0.1rem 0.5rem var(--sl-primary-shade-10);
 $sl-button-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.15), 0rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3);
 $sl-button-shadow-raised: 0rem 0.6rem 1.2rem rgba(0, 0, 0, 0.4), 0rem 0.4rem 0.6rem rgba(0, 0, 0, 0.4);
-$sl-button-shadow-active: 0 0 1rem var(--sl-neutral);
+$sl-button-shadow-active: 0 0 1rem $sl-background;
 
 /* Control Shadow */
-$sl-ctrl-shadow: 0.1rem 0.1rem 0.5rem var(--sl-neutral-20);
+$sl-ctrl-shadow: 0.1rem 0.1rem 0.5rem $sl-neutral;
 
 $sl-font: "Work Sans", sans-serif;
 $sl-icon-font: "Material Symbols Outlined";

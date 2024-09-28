@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ResolveFn } from '@angular/router';
+import { ResolveFn, Router } from '@angular/router';
 import { UIService } from '@sloth-http';
 import { DirectoryService } from '@sloth-shared';
 import { PageSync } from '@sloth-ui';
@@ -8,6 +8,7 @@ export const pageResolver: ResolveFn<PageSync> = async (route, state) => {
   const services = inject(UIService);
   const directory = inject(DirectoryService);
   const pageSync = new PageSync();
+  const router = inject(Router);
 
   const destination = route.routeConfig?.path;
   const page = directory.getPageID(destination!);
@@ -19,6 +20,7 @@ export const pageResolver: ResolveFn<PageSync> = async (route, state) => {
     pageSync.controlsConfig = webPage.webControls ?? [];
     return pageSync;
 } else {
+    router.navigate(['no-service']);
     throw console.error('[pageResolver] Error:' + results.error);
 }
 };

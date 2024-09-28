@@ -1,21 +1,17 @@
 .sl-badge-info {
     .mat-badge-content {
-        background-color: var(--sl-info-light);
+        background-color: $sl-info-light;
     }
 }
 
 .sl-badge-warning {
     .mat-badge-content {
-        background-color: var(--sl-warning-light);
+        background-color: $sl-warning-light;
     }
 }
 
 .sl-badge-error {
     .mat-badge-content {
-        background-color: var(--sl-error-light);
+        background-color: $sl-error-light;
     }
-}
-
-.sl-background-primary-gradient {
-    background: var(--sl-primary-gradient);
 }

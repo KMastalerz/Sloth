@@ -4,7 +4,6 @@ export * from './lib/list/list-utility.service';
 
 //services
 export * from './lib/services/directory/directory.service';
-export * from './lib/services/form-builder/form-builder.service';
 export * from './lib/services/storage/storage.service';
 
 //constants

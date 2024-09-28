@@ -1,16 +1,18 @@
-.sl-branding-section {
+.sl-branding-container {
+    color: $sl-neutral-light-shade;
     span {
         font-size: $font-size-xl;
+        font-weight: 500;
     }
 }
 
-.sl-branding-icon {
+.sl-branding-image {
     display: block;
     width: 100%;    
     height: 100%;     
     margin: $space-s;
     padding: $space-s;
-    background-color: var(--sl-on-primary);
+    background-color: $sl-background-light-tint;
     max-width: $branding-icon-size;
     max-height: $branding-icon-size;
 }

@@ -13,6 +13,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const token = authStateService.token;
   
+  // Avoid intercepting the request if navigating to an error page
+  if (router.url.includes('/no-service') || req.url.includes('/auth')) {
+    return next(req);
+  }
+
   // Clone the request and add the Authorization header
   const clonedRequest = req.clone({
     setHeaders: {

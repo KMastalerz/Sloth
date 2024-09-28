@@ -23,7 +23,6 @@ export class LoginComponent extends BasePage {
 
   override ngOnInit() {
     super.ngOnInit();
-    console.log('LoginComponent initialized', this.pageSync());
   } 
 
   async onClick(): Promise<void> {      

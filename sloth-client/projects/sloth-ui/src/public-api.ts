@@ -4,7 +4,6 @@ export * from './lib/base/base-page/base-page.component';
 export * from './lib/base/base-panel/base-panel.component';
 
 // constants
-export * from './lib/icons/sloth.icon';
 export * from './lib/constants/icon.constants';
 
 // controls 
