@@ -31,23 +31,32 @@
     display: flex;
     align-items: center;
     gap: $space-xs;
-    border-radius: $border-radius-m;
+    border-radius: $border-radius-s;
     border: 0.15rem solid $sl-primary-light-shade;
+    background: $sl-background;
     padding: $space-xs $space-xs;
     max-width: $standrad-control-max-width;
     color: $sl-neutral-shade;
+    font-weight: 400;
+
+    // Ensure input does not overflow and takes up remaining space correctly
     input {
         flex-grow: 1;
-        flex-shrink: 0;
+        flex-shrink: 1; /* Allows the input to shrink as needed */
+        flex-basis: 0; /* Ensures the input does not take more space than needed */
+        min-width: 0; /* Prevents input from overflowing its container */
+        border: none;
+        outline: none;
     }
+
+    // Button styling
     button {
-        flex-shrink: 0;
+        flex-shrink: 0; /* Prevents button from shrinking */
         display: flex;
-        align-items: center; 
+        align-items: center;
         justify-content: center;
     }
 }
-
 
 sl-input:focus-within,
 sl-password:focus-within {
@@ -59,7 +68,7 @@ sl-password:focus-within {
         color: $sl-primary; 
     }
     .sl-control {
-        box-shadow: 0 0 $space-xs $sl-primary-shade;
+        box-shadow: 0 0 0 0.2rem $sl-primary-light-tint;
     };
 }
 
@@ -70,28 +79,14 @@ sl-password:focus-within {
     color: $sl-neutral
 }
 
-.sl-control-stretched {
-    display: flex;
-    align-items: center;
-    justify-content: stretch;
-    font-size: $font-size-m * 1.1;
-    padding: $space-xs;
-    gap: $space-m;
-    border-radius: $border-radius-m;
-    span {
-        font-weight: 500;
-    }
+.sl-link {
+    border: none;
+    background: transparent;
 }
 
-.sl-control-stretched:hover {
+.sl-link:hover {
     background: $sl-background-light-shade;
 }
-
-.sl-control-stretched:active {
-    background: $sl-background-shade;
-    color: $sl-on-background-shade;
-}
-
 
 .sl-tag {
     padding: $space-xxs $space-xs;

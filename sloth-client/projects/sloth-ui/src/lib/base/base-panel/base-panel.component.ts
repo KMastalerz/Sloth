@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { PageSync } from '../../page/page-sync';
+import { PageSync } from '../../page-sync/page-sync';
 
 @Component({
   selector: 'sl-base-panel',

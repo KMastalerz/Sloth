@@ -18,8 +18,13 @@ export * from './lib/directives/collapse/collapse.directive';
 // models 
 export * from './lib/models/meta-data.model';
 
-// page
-export * from './lib/page/page-sync';
+// page-sync
+export * from './lib/page-sync/action';
+export * from './lib/page-sync/page-sync';
+
+// panels
+export * from './lib/panels/horizontal-panel/horizontal-panel.component';
+export * from './lib/panels/vertical-panel/vertical-panel.component';
 
 // sections
 export * from './lib/sections/branding-section/branding-section.component';

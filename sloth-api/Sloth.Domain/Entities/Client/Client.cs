@@ -4,7 +4,7 @@
 /// </summary>
 public class Client
 {
-    public int ClientID { get; set; }
+    public Guid ClientID { get; set; }
     public string ClientName { get; set; } = default!;
     public string? ClientImageURL { get; set; }
     public string? ClientDescription { get; set; }

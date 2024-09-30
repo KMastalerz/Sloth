@@ -46,8 +46,8 @@ public static class SlothClaimTypes
 
 public static class WebPages
 {
-    public const string MainPage = "MainPage";
-    public const string LoginPage = "LoginPage";
+    public const string Main = "Main";
+    public const string Auth = "Auth";
 }
 
 public static class WebSecurity
@@ -55,7 +55,7 @@ public static class WebSecurity
     public const string Default = "Default";
 
     public static readonly IEnumerable<string> PublicPages = [
-        "LoginPage"
+        "Auth"
     ];
 }
 

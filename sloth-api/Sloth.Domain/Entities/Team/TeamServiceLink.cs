@@ -7,9 +7,9 @@ public class TeamServiceLink
     /// <summary>
     /// references Team
     /// </summary>
-    public int TeamID { get; set; }
+    public Guid TeamID { get; set; }
     /// <summary>
     /// references Service
     /// </summary>
-    public int ServiceID { get; set; }
+    public Guid ServiceID { get; set; }
 }

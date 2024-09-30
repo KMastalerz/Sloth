@@ -1,6 +1,6 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { WebControl } from '@sloth-http';
-import { PageSync } from '../../page/page-sync';
+import { PageSync } from '../../page-sync/page-sync';
 
 @Component({
   selector: 'sl-base-control',
@@ -8,7 +8,6 @@ import { PageSync } from '../../page/page-sync';
   template:''
 })
 export class BaseControl implements OnInit {
-
   config = input<WebControl>();
   pageSync = input<PageSync>();
 

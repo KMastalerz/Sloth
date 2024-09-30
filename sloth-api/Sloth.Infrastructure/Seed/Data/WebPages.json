@@ -10,20 +10,40 @@
   //  "CanDelete": true
   //}
   {
-    "PageID": "MainPage",
-    "Title": "Sloth",
+    "PageID": "Main",
+    "Title": "Main",
     "SecurityTableID": null,
-    "Description": "Main Page of Sloth",
+    "Description": "Main page",
     "UserGroup": "DEFAULT",
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true
   },
   {
-    "PageID": "LoginPage",
+    "PageID": "Auth",
     "Title": "Login",
     "SecurityTableID": null,
-    "Description": "Login Page for Sloth",
+    "Description": "Login page",
+    "UserGroup": "DEFAULT",
+    "CanAccess": true,
+    "CanAdd": true,
+    "CanDelete": true
+  },
+  {
+    "PageID": "Product",
+    "Title": "Product",
+    "SecurityTableID": null,
+    "Description": "Base page for products",
+    "UserGroup": "DEFAULT",
+    "CanAccess": true,
+    "CanAdd": true,
+    "CanDelete": true
+  },
+  {
+    "PageID": "Product-Add",
+    "Title": "Product Add",
+    "SecurityTableID": null,
+    "Description": "Page to add new products",
     "UserGroup": "DEFAULT",
     "CanAccess": true,
     "CanAdd": true,

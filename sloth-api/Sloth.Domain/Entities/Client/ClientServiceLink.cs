@@ -7,9 +7,9 @@ public class ClientServiceLink
     /// <summary>
     /// references Client
     /// </summary>
-    public int ClientID { get; set; }
+    public Guid ClientID { get; set; }
     /// <summary>
     /// references Service
     /// </summary>
-    public int ServiceID { get; set; }
+    public Guid ServiceID { get; set; }
 }

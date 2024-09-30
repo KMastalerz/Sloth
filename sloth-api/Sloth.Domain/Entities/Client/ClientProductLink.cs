@@ -7,9 +7,9 @@ public class ClientProductLink
     /// <summary>
     /// references Client
     /// </summary>
-    public int ClientID { get; set; }
+    public Guid ClientID { get; set; }
     /// <summary>
     /// references Product
     /// </summary>
-    public int ProductID { get; set; }
+    public Guid ProductID { get; set; }
 }

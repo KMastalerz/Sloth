@@ -8,11 +8,11 @@
 /// </summary>
 public class ProductReleases
 {
-    public int ReleaseID { get; set; }
+    public Guid ReleaseID { get; set; }
     /// <summary>
     /// references Product
     /// </summary>
-    public int ProductID { get; set; }
+    public Guid ProductID { get; set; }
     public string ProductVersion { get; set; } = default!;
     public int? MajorVersion { get; set; }
     public int? MinorVersion { get; set; }

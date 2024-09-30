@@ -7,9 +7,9 @@ public class TeamProductLink
     /// <summary>
     /// references Team
     /// </summary>
-    public int TeamID { get; set; }
+    public Guid TeamID { get; set; }
     /// <summary>
     /// references Product
     /// </summary>
-    public int ProductID { get; set; }
+    public Guid ProductID { get; set; }
 }

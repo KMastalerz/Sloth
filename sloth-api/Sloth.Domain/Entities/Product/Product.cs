@@ -4,9 +4,10 @@
 /// </summary>
 public class Product
 {
-    public int ProductID { get; set; } 
+    public Guid ProductID { get; set; } 
     public string ProductName { get; set; } = default!;
+    public string ProductType { get; set; } = default!;
     public string? ProductImageUrl { get; set; }
-    public string ProductDescription { get; set; } = default!;
-
+    public string ShortDescription { get; set; } = default!;
+    public string Description { get; set; } = default!;
 }

@@ -7,9 +7,18 @@
             <span class="sl-section-title">{{mainSectionHeader()}}</span>
         }
         @for(section of mainSection(); track $index) {
-            <sl-side-nav-link   [config]="section" 
-                                [pageSync]="pageSync()"
-                                [collapsed]="collapsed()"/>
+            <sl-link    [config]="section" 
+                        [pageSync]="pageSync()"/>
+        }
+    }
+
+    @if(adminSection()) {
+        @if(!collapsed()){
+            <span class="sl-section-title">{{adminSectionHeader()}}</span>
+        }
+        @for(section of adminSection(); track $index) {
+            <sl-link    [config]="section" 
+                        [pageSync]="pageSync()"/>
         }
     }
 
@@ -18,9 +27,8 @@
             <span class="sl-section-title">{{infoSectionHeader()}}</span>
         }
         @for(section of infoSection(); track $index) {
-            <sl-side-nav-link   [config]="section" 
-                                [pageSync]="pageSync()"
-                                [collapsed]="collapsed()"/>
+            <sl-link    [config]="section" 
+                        [pageSync]="pageSync()"/>
         }
     }
 
@@ -29,9 +37,8 @@
             <span class="sl-section-title">{{userSectionHeader()}}</span>
         }
         @for(section of userSection(); track $index) {
-            <sl-side-nav-link   [config]="section" 
-                                [pageSync]="pageSync()"
-                                [collapsed]="collapsed()"/>
+            <sl-link    [config]="section" 
+                        [pageSync]="pageSync()"/>
         }
     }
 

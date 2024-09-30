@@ -1,3 +1,3 @@
 export interface GetWebPageQuery { 
-    PageID: string;
+    pageID: string;
 }

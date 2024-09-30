@@ -20,10 +20,10 @@ export class UIService extends BaseService {
     switch (pageID) {
       case 'main':
         return await this.getMainWebPageAsync();
-      case 'login':
+      case 'auth':
         return await this.getLoginWebPageAsync();
       default:
-        const command = {PageID: pageID} as GetWebPageQuery;
+        const command = {pageID: pageID} as GetWebPageQuery;
         return await this.get<WebPage>(UIElementsActions.GetWebPage, command);
     }
   }

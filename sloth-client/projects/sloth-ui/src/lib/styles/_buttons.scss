@@ -2,38 +2,37 @@
     display: flex;
     align-items: center;
     gap: $space-xs;
-    border-radius: $border-radius-m;
-    padding: $space-s $space-m;
+    border-radius: $border-radius-s;
+    padding: $space-xs $space-s;
     max-width: $standrad-control-max-width;
     box-shadow: $sl-button-shadow;
     span {
         font-weight: 500;
-    }
-
-    &:hover {
-        box-shadow: $sl-button-shadow-raised;
-    }
-
-    &:active {
-        box-shadow: $sl-button-shadow-active;
-        transform: translateY(0.2rem);
-        transition: box-shadow 0.1s ease, transform 0.1s ease;
     }
 }
 
 .sl-button.primary {
     background-color: $sl-primary;
     color: $sl-on-primary;
+    &:hover {
+        background-color: $sl-primary-light-tint;
+    }
 }
 
 .sl-button.secondary {
     background-color: $sl-secondary;
     color: $sl-on-secondary;
+    &:hover {
+        background-color: $sl-secondary-light-tint;
+    }
 }
 
 .sl-button.regular {
     background-color: $sl-neutral-tint;
     color: $sl-on-neutral-tint;
+    &:hover {
+        background-color: $sl-neutral-light-tint;
+    }
 }
 
 .sl-button.disabled {

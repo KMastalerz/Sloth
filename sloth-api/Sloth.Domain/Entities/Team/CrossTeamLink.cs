@@ -7,9 +7,9 @@ public class CrossTeamLink
     /// <summary>
     /// references Team
     /// </summary>
-    public int ParentTeamID { get; set; }
+    public Guid ParentTeamID { get; set; }
     /// <summary>
     /// references Team
     /// </summary>
-    public int ChildTeamID { get; set; }
+    public Guid ChildTeamID { get; set; }
 }

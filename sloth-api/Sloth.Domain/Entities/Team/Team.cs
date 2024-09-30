@@ -4,7 +4,7 @@
 /// </summary>
 public class Team
 {
-    public int TeamID { get; set; }
+    public Guid TeamID { get; set; }
     public string TeamName { get; set; } = default!;
     public string? TeamImageURL { get; set; }
     public string TeamDescription { get; set; } = default!;

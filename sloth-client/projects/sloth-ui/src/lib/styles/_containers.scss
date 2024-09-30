@@ -4,3 +4,28 @@
     justify-items: center;
     align-items: center;
 }
+
+.sl-flex-container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: $space-xs;
+}
+
+.sl-flex-container.row {
+    flex-direction: row;
+}
+
+.sl-flex-container.column {
+    flex-direction: column;
+}
+
+.sl-flex-container.column.left {
+    align-items: start;
+}
+
+.sl-container-full {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}

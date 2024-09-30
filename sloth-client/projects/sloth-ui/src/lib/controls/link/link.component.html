@@ -1,1 +1,33 @@
-<a href="#"></a>
+<a #navLink class="sl-control sl-link on-hover-pop" 
+            [matTooltip]="tooltip()"
+            [matTooltipDisabled]="!collapsed() || !tooltip()"
+            [matTooltipClass]="'my-mat-tooltip'"
+            matTooltipPosition="left"
+            [routerLink]="[route()]">
+   
+    <span   class="pop"
+            [class]="{
+                'sl-badge-info': checkResult() === 'info',
+                'sl-badge-warning': checkResult() === 'warn',
+                'sl-badge-error': checkResult() === 'err',
+                'sl-icon-small': !collapsed(),
+                'sl-icon-medium': collapsed()
+            }" 
+            [matBadge]="count()" 
+            [matBadgeHidden]="!collapsed() || !count()"
+            >
+        {{ icon() }}
+    </span>
+
+    @if(!collapsed()) {
+    <span>{{ label() }}</span>
+
+        @if(count()) {
+            <p class="sl-tag" [class]="{
+                'sl-tag-info': checkResult() === 'info',
+                'sl-tag-warning': checkResult() === 'warn',
+                'sl-tag-error': checkResult() === 'err'
+            }"> {{ count() }}</p>
+        }
+    }
+</a>

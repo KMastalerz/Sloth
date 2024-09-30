@@ -1,8 +1,8 @@
 :root {
     // Primary Color
-    --sl-primary-r: 56;
-    --sl-primary-g: 43;
-    --sl-primary-b: 240;
+    --sl-primary-r: 24;
+    --sl-primary-g: 104;
+    --sl-primary-b: 219;
 
     // Secondary Color
     --sl-secondary-r: 63;
@@ -77,34 +77,34 @@ $sl-on-primary-shade: rgb(
 // #region Secondary Colors with Shades and Tints
 $sl-secondary: rgb(var(--sl-secondary-r), var(--sl-secondary-g), var(--sl-secondary-b));
 $sl-secondary-light-tint: rgb(
-    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 3)), 
-    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 3)), 
-    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 3))
+    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 1)), 
+    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 1)), 
+    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 1))
 );
 $sl-secondary-tint: rgb(
-    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 6)), 
-    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 6)), 
-    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 6))
+    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 2)), 
+    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 2)), 
+    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 2))
 );
 $sl-secondary-strong-tint: rgb(
-    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 9)), 
-    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 9)), 
-    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 9))
+    calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 4)), 
+    calc(var(--sl-secondary-g) + ((255 - var(--sl-secondary-g)) / 10 * 4)), 
+    calc(var(--sl-secondary-b) + ((255 - var(--sl-secondary-b)) / 10 * 4))
 );
 $sl-secondary-light-shade: rgb(
-    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 3)), 
-    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 3)), 
-    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 3))
+    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 1)), 
+    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 1)), 
+    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 1))
 );
 $sl-secondary-shade: rgb(
-    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 6)), 
-    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 6)), 
-    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 6))
+    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 2)), 
+    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 2)), 
+    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 2))
 );
 $sl-secondary-strong-shade: rgb(
-    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 9)), 
-    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 9)), 
-    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 9))
+    calc(var(--sl-secondary-r) - (var(--sl-secondary-r) / 10 * 4)), 
+    calc(var(--sl-secondary-g) - (var(--sl-secondary-g) / 10 * 4)), 
+    calc(var(--sl-secondary-b) - (var(--sl-secondary-g) / 10 * 4))
 );
 $sl-on-secondary: rgb(
     calc(var(--sl-secondary-r) + ((255 - var(--sl-secondary-r)) / 10 * 9)), 
@@ -239,24 +239,24 @@ $sl-background-strong-tint: rgb(
     calc(var(--sl-background-b) + ((255 - var(--sl-background-b)) / 10 * 9))
 );
 $sl-background-light-shade: rgb(
-    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 3)), 
-    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 3)), 
-    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 3))
+    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 1)), 
+    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 1)), 
+    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 1))
 );
 $sl-background-shade: rgb(
-    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 6)), 
-    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 6)), 
-    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 6))
+    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 2)), 
+    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 2)), 
+    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 2))
 );
 $sl-background-strong-shade: rgb(
-    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 9)), 
-    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 9)), 
-    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 9))
+    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 4)), 
+    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 4)), 
+    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 4))
 );
 $sl-on-background: rgb(
-    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 9)), 
-    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 9)), 
-    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 9))
+    calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 8)), 
+    calc(var(--sl-background-g) - (var(--sl-background-g) / 10 * 8)), 
+    calc(var(--sl-background-b) - (var(--sl-background-g) / 10 * 8))
 );
 $sl-on-background-tint: rgb(
     calc(var(--sl-background-r) - (var(--sl-background-r) / 10 * 8)), 

@@ -8,6 +8,6 @@ public class ProductPlannedReleases
     /// <summary>
     /// references Product
     /// </summary>
-    public int ProductID { get; set; }
+    public Guid ProductID { get; set; }
     public DateOnly ReleaseDate { get; set; }
 }

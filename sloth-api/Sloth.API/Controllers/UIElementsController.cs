@@ -18,7 +18,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<GetWebPage>> GetLoginWebPage()
     {
-        var result = await mediator.Send(new GetWebPageQuery(WebPages.LoginPage));
+        var result = await mediator.Send(new GetWebPageQuery(WebPages.Auth));
         return Ok(result);
     }
     [HttpGet]
@@ -27,17 +27,17 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetWebPage>> GetMainWebPage()
     {
-        var result = await mediator.Send(new GetWebPageQuery(WebPages.MainPage));
+        var result = await mediator.Send(new GetWebPageQuery(WebPages.Main));
         return Ok(result);
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetWebPage>> GetWebPage(GetWebPageQuery query)
+    public async Task<ActionResult<GetWebPage>> GetWebPage([FromQuery] string pageID)
     {
         // This will prevent ByPassSecurity from being set to true
-        var result = await mediator.Send(new GetWebPageQuery(query.PageID));
+        var result = await mediator.Send(new GetWebPageQuery(pageID));
         return Ok(result);
     }
 }
