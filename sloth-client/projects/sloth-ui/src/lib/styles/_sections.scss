@@ -1,8 +1,9 @@
 .sl-branding-container {
     color: $sl-on-background;
     span {
-        font-size: $font-size-xl;
-        font-weight: 500;
+        font-family:"Dancing Script", cursive;
+        font-size: $branding-font-size;
+        font-weight: 700;
     }
 }
 

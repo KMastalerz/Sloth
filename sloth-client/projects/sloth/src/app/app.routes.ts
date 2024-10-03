@@ -4,8 +4,8 @@ import { AuthComponent } from './core/pages/auth/auth.component';
 import { pageResolver } from './core/resolvers/page/page.resolver';
 import { authGuard } from './core/guards/auth/auth.guard';
 import { NoServiceComponent } from './core/pages/no-service/no-service.component';
-import { ProductComponent } from './modules/product/product.component';
-import { productRoutes } from './modules/product/product.routes';
+import { projectRoutes } from './modules/project/project.routes';
+import { ProjectManagementComponent } from './modules/project/project-management.component';
 
 export const routes: Routes = [
     {   
@@ -33,12 +33,12 @@ export const routes: Routes = [
         },
         children: [
             {
-                path: 'product',
-                component: ProductComponent,
+                path: 'project-management',
+                component: ProjectManagementComponent,
                 resolve: {
                     pageSync: pageResolver
                 },
-                children: productRoutes
+                children: projectRoutes
             }
         ]
     },

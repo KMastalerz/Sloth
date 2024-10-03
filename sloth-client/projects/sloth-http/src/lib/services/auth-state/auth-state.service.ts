@@ -68,7 +68,7 @@ export class AuthStateService {
     this.storageService.removeItem(CookieKeys.ExpiresAt, StorageType.COOKIE);
     this.storageService.removeItem(CookieKeys.UserGroup, StorageType.COOKIE);
     this.storageService.removeItem(CookieKeys.UserRole, StorageType.COOKIE);
-    this.storageService.removeItem(CookieKeys.UserName, StorageType.COOKIE);
+    this.storageService.removeItem(CookieKeys.UserName, StorageType.COOKIE);    
   }
 }
 

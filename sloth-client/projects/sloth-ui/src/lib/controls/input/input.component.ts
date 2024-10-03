@@ -1,6 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BaseControl } from '../../base/base-control/base-control.component';
+import { FormControlComponent } from '../../base/form-control/form-control.component';
 
 @Component({
   selector: 'sl-input',
@@ -9,9 +9,8 @@ import { BaseControl } from '../../base/base-control/base-control.component';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
-export class InputComponent extends BaseControl {
-
+export class InputComponent extends FormControlComponent {
   icon = computed(()=>this.metaData()?.icon ?? '');
-  
+  isRequired = computed(()=>this.metaData()?.required ?? true);
 }
 

@@ -1,15 +1,15 @@
-.on-hover-transform-180 {
+.sl-on-hover-transform-180 {
     transition: transform 0.3s;
 }
 
-.on-hover-transform-180:hover {
+.sl-on-hover-transform-180:hover {
     transform: rotate(180deg);
 }
 
-.on-hover-pop > .pop {
+.sl-on-hover-pop > .sl-pop {
     transition: transform 0.1s;
 }
 
-.on-hover-pop:hover > .pop {
+.sl-on-hover-pop:hover > .sl-pop {
     transform: scale(1.2);
 }

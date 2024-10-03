@@ -1,7 +1,14 @@
+
 @if(label()) {
-    <label class="sl-control-label">{{ label() }}</label>
+    <div class="sl-control-label">
+        <label>{{ label() }}</label>
+        @if(isRequired()) {
+            <span class="sl-required-tag">required</span>
+        }
+    </div>
 }
 <div class="sl-control">
     <span class="sl-icon-small sl-control-icon"> {{ icon() }}</span>
-    <input type="text" [placeholder]="placeholder()">
+    <input type="text" [placeholder]="placeholder()" [(ngModel)]="value">
 </div>
+

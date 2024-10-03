@@ -23,10 +23,11 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
     #region [UIElements]
     internal DbSet<Language> Language { get; set; }
     internal DbSet<Translation> Translation { get; set; }
-    internal DbSet<Validation> Validation { get; set; }
     internal DbSet<WebControl> WebControl { get; set; }
-    internal DbSet<WebControlValidation> WebControlValidation { get; set; }
     internal DbSet<WebPage> WebPage { get; set; }
+    internal DbSet<WebPanel> WebPanel { get; set; }
+    internal DbSet<WebOption> WebOption { get; set; }
+    internal DbSet<WebSection> WebSection { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -53,32 +54,44 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
                   .HasForeignKey(wps => wps.PageID);
         });
 
-        // WebControl Configuration
-        builder.Entity<WebControl>(entity =>
+        // WebPanel Configuration
+        builder.Entity<WebPanel>(entity =>
         {
-            entity.HasKey(e => new { e.PageID, e.ControlID });
+            entity.HasKey(e => new { e.PageID, e.PanelID });
 
             entity.HasOne<WebPage>()
-                    .WithMany()
-                    .HasForeignKey(wc => new { wc.PageID })
-                    .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasMany<WebControlValidation>()
-                  .WithOne()
-                  .HasForeignKey(wcv => new { wcv.PageID, wcv.ControlID })
+                  .WithMany()
+                  .HasForeignKey(wp => wp.PageID)
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // WebControlValidation Configuration
-        builder.Entity<WebControlValidation>(entity =>
+        // WebSection Configuration
+        builder.Entity<WebSection>(entity =>
         {
-            entity.HasKey(e => new { e.PageID, e.ControlID });
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID });
+
+            entity.HasOne<WebPanel>()
+                  .WithMany()
+                  .HasForeignKey(wp => new { wp.PageID, wp.PanelID})
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Validation Configuration
-        builder.Entity<Validation>(entity =>
+        // WebControl Configuration
+        builder.Entity<WebControl>(entity =>
         {
-            entity.HasKey(e => e.ValidationName);
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID, e.ControlID });
+
+            entity.HasOne<WebSection>()
+                .WithMany()
+                .HasForeignKey(wc => new { wc.PageID, wc.PanelID, wc.SectionID })
+                .OnDelete(DeleteBehavior.Cascade);
+
+        });
+
+        // WebOption Configuration
+        builder.Entity<WebOption>(entity =>
+        {
+            entity.HasKey(e => new {e.Functionality, e.OptionKey});
         });
 
         // Translation Configuration

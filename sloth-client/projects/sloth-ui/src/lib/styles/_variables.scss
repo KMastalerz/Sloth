@@ -1,4 +1,6 @@
 /* Spacing (gap, padding, margin) */
+$space-us: 0.05rem;  // 1px
+$space-xxxs: 0.2rem;  // 2px
 $space-xxs: 0.4rem;  // 4px
 $space-xs: 0.8rem;   // 8px
 $space-s: 1.6rem;    // 16px
@@ -8,6 +10,7 @@ $space-xl: 4.0rem;   // 40px
 
 /* Font Sizes */
 $font-size-xxs: 0.8rem;   // 8px
+$font-size-px: 1.0rem;    // 10px
 $font-size-xs: 1.2rem;    // 12px
 $font-size-s: 1.4rem;     // 14px
 $font-size-m: 1.6rem;     // 16px
@@ -27,6 +30,7 @@ $ctrl-size-s: 3.2rem;    // 32px
 $ctrl-size-m: 4.0rem;    // 40px
 
 $branding-icon-size: 8.0rem; // 80px
+$branding-font-size: 4.4rem;    // 24px
 
 $standrad-control-max-width: 26.0rem; // 260px
 
@@ -47,5 +51,6 @@ $sl-ctrl-shadow: 0.1rem 0.1rem 0.5rem $sl-neutral;
 $sl-font: "Work Sans", sans-serif;
 $sl-icon-font: "Material Symbols Outlined";
 
-$sl-nav-expanded: 29.4rem;
-$sl-nav-collapsed: 9.8rem;
+$sl-nav-expanded: 26.4rem;
+$sl-nav-collapsed: 6.8rem;
+$sl-header-nav-height: 5.2rem;

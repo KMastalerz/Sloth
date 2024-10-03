@@ -1,0 +1,13 @@
+<div class="sl-dynamic-form" [class]="{
+        'sl-dynamic-form-column': orientation() === 'horizontal',
+        'sl-dynamic-form-row': orientation() === 'vertical',
+        'sl-dynamic-form-standard': background() === 'standard',
+        'sl-dynamic-form-primary': background() === 'primary'
+    }">
+    @for(panel of panels(); track $index) {
+        <ng-container slDynamicPanel [pageSync]="pageSync()" [config]="panel"></ng-container>
+    }
+    <div class="sl-container-full">
+        <router-outlet></router-outlet>
+    </div>
+</div>

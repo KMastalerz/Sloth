@@ -1,0 +1,42 @@
+[
+  {
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "PanelType": "sideNav",
+    "Sections": "main,admin,user,info",
+    "Title": null,
+    "MetaData": null
+  },
+  {
+    "PageID": "auth",
+    "PanelID": "login",
+    "PanelType": "form",
+    "Sections": "login",
+    "Title": null,
+    "MetaData": null
+  },
+  {
+    "PageID": "projectManagement",
+    "PanelID": "header",
+    "PanelType": "headerNav",
+    "Sections": "header",
+    "Title": null,
+    "MetaData": null
+  },
+  {
+    "PageID": "projectAdd",
+    "PanelID": "details",
+    "PanelType": "form",
+    "Sections": "details",
+    "Title": null,
+    "MetaData": null
+  },
+  {
+    "PageID": "projectOptions",
+    "PanelID": "options",
+    "PanelType": "gridForm",
+    "Sections": "type,technology",
+    "Title": null,
+    "MetaData": "{\"columns\":1}"
+  }
+]

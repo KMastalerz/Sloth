@@ -32,8 +32,7 @@
     align-items: center;
     gap: $space-xs;
     border-radius: $border-radius-s;
-    border: 0.15rem solid $sl-primary-light-shade;
-    background: $sl-background;
+    border: 0.15rem solid $sl-on-background;
     padding: $space-xs $space-xs;
     max-width: $standrad-control-max-width;
     color: $sl-neutral-shade;
@@ -64,30 +63,102 @@ sl-password:focus-within {
         color: $sl-primary;
         font-weight: 600;
     }
-    .sl-control-label {
+    label {
         color: $sl-primary; 
     }
     .sl-control {
+        border-color: $sl-primary-light-tint;
         box-shadow: 0 0 0 0.2rem $sl-primary-light-tint;
     };
 }
 
 .sl-control-label {
-    text-transform: uppercase;
-    font-size: $font-size-xs;
-    font-weight: 600;
-    color: $sl-neutral
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: calc($space-xxs * -1); 
+    label {
+        font-size: $font-size-xs;
+        font-weight: 500;
+        color: $sl-on-background;
+    }
 }
 
+.sl-required-tag {
+    margin-left: $space-xxs;
+    padding: $space-xxxs $space-xs;
+    border-radius: $border-radius-s;
+    background: $sl-error-light;
+    color: $sl-on-error;
+    font-size: $font-size-xs;
+    font-weight: 400;
+}
+
+// #region[link]
 .sl-link {
     border: none;
     background: transparent;
+    .sl-link-icon {
+        font-family: $sl-icon-font;
+        font-size: $icon-size-xs;
+    }
 }
 
-.sl-link:hover {
-    background: $sl-background-light-shade;
+.sl-link-side-nav {
+    .collapsed.sl-link-icon {
+        font-family: $sl-icon-font;
+        font-size: $icon-size-m;
+    }
+    .expanded.sl-link-icon {
+        font-family: $sl-icon-font;
+        font-size: $icon-size-s;
+    }
+    .sl-link-label {
+        font-weight: 400;
+    }
+    &:hover {
+        background: $sl-background-light-shade;
+    }
 }
 
+.sl-link-primary {
+    background: $sl-primary;
+    color: $sl-on-primary;
+    padding: $space-xs $space-s;
+    .sl-link-label {
+        font-weight: 500;
+        font-size: $font-size-xs;
+    }
+    &:hover {
+        background: $sl-primary-light-tint;;
+    }
+}
+
+.sl-link-secondary {
+    background: $sl-secondary;
+    color: $sl-on-secondary;
+    padding: $space-xs $space-s;
+    .sl-link-label {
+        font-weight: 500;
+        font-size: $font-size-xs;
+    }
+    &:hover {
+        background: $sl-secondary-light-tint;;
+    }
+}
+
+.sl-link-header {
+    padding: $space-xs $space-xs;
+    .sl-link-label {
+        font-weight: 400;
+        font-size: $font-size-xs;
+    }
+    &:hover {
+        background: $sl-background-shade;
+    }
+}
+
+// #endregion
 .sl-tag {
     padding: $space-xxs $space-xs;
     border-radius: $border-radius-m;

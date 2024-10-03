@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { BasePage } from '@sloth-ui';
 import { RouterOutlet } from '@angular/router';
+import { BasePage, DynamicRouterFormComponent} from '@sloth-ui';
 
 @Component({
   selector: 'sl-main',
   standalone: true,
-  imports: [SideNavComponent, RouterOutlet],
+  imports: [RouterOutlet, DynamicRouterFormComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
-export class MainComponent extends BasePage {
-  
-}
+export class MainComponent extends BasePage {}
 

@@ -36,8 +36,12 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
 
+        var webPanels = await uIElementsRepository.ListWebPanelAsync(request.PageID) ??
+            throw new NotFoundException(nameof(List<WebPanel>), request.PageID);
+
         var webControls = await uIElementsRepository.ListWebControlAsync(request.PageID) ??
             throw new NotFoundException(nameof(List<WebControl>), request.PageID);
+
 
         // Build list of needed security tables
         var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct();
@@ -51,25 +55,28 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
         var wcDict = webControls.ToDictionary(wc => wc.ControlID, wc => wc.SecurityTableID);
 
         var dto = mapper.Map<GetWebPage>(webPage);
-        dto.WebControls = mapper.Map<IEnumerable<GetWebControl>>(webControls).ToList();
-
-        dto.WebControls.ForEach(wc =>
+        dto.WebPanels = mapper.Map<IEnumerable<GetWebPanel>>(webPanels).ToList();
+        dto.WebPanels.ForEach(wp =>
         {
-            var wcSecTable = wcDict.TryGetValue(wc.ControlID, out var wcSec) ? wcSec : null;
-            var searchedSecTable = wcSecTable ?? webPage.SecurityTableID;
-
-            if(searchedSecTable is not null)
+            wp.WebControls = mapper.Map<IEnumerable<GetWebControl>>(webControls.Where(wc => wc.PanelID == wp.PanelID)).ToList();
+            wp.WebControls.ForEach(wc =>
             {
-                var secTable = secTables.FirstOrDefault(st => st.SecurityTableID == searchedSecTable && st.ControlID == wc.ControlID);
+                var wcSecTable = wcDict.TryGetValue(wc.ControlID, out var wcSec) ? wcSec : null;
+                var searchedSecTable = wcSecTable ?? webPage.SecurityTableID;
 
-                if (secTable is not null)
+                if (searchedSecTable is not null)
                 {
-                    wc.IsDisabled = secTable.IsDisabled;
-                    wc.IsReadOnly = secTable.IsReadOnly;
-                    wc.IsRequired = secTable.IsRequired;
-                    wc.IsHidden = secTable.IsHidden;
+                    var secTable = secTables.FirstOrDefault(st => st.SecurityTableID == searchedSecTable && st.ControlID == wc.ControlID);
+
+                    if (secTable is not null)
+                    {
+                        wc.IsDisabled = secTable.IsDisabled;
+                        wc.IsReadOnly = secTable.IsReadOnly;
+                        wc.IsRequired = secTable.IsRequired;
+                        wc.IsHidden = secTable.IsHidden;
+                    }
                 }
-            }
+            });
         });
 
         // TO DO: Add Validators 

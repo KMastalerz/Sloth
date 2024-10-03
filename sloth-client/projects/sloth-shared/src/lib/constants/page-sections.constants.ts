@@ -1,6 +1,6 @@
 export class MainPageSection {
-    static readonly Main = 'Main';
-    static readonly Info = 'Info';
-    static readonly User = 'User';
-    static readonly Admin = 'Admin';
+    static readonly Main = 'main';
+    static readonly Info = 'info';
+    static readonly User = 'user';
+    static readonly Admin = 'admin';
 }

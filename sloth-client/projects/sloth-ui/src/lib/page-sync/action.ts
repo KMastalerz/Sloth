@@ -4,9 +4,8 @@ export interface Action {
 }
 
 export enum ActionType {
-    Add,
-    Delete,
-    Update,
-    Process,
-    Collapse
+    Submit,
+    SubmitPanel,
+    SubmitControl,
+    CollapseLink
 }

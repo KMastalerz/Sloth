@@ -1,29 +1,34 @@
-import { Component, computed, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthService, AuthStateService } from '@sloth-http';
-import { LoginPageControls } from '@sloth-shared';
-import { BasePage, BrandingSectionComponent, ButtonComponent, InputComponent, PasswordComponent } from '@sloth-ui';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { AuthService, AuthStateService, LoginCommand } from '@sloth-http';
+import { Action, BasePage, BrandingSectionComponent, DynamicFormComponent } from '@sloth-ui';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'sl-auth',
   standalone: true,
-  imports: [FormsModule, InputComponent, PasswordComponent, ButtonComponent, BrandingSectionComponent],
+  imports: [DynamicFormComponent, BrandingSectionComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent extends BasePage {
+export class AuthComponent extends BasePage implements OnInit {
   private authService = inject(AuthService);
   private authStateService = inject(AuthStateService);
 
-  loginInput = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Login));
-  passwordInput = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Password));
-  processButton = computed(()=> this.pageSync()?.getControlByID(LoginPageControls.Process));
+  panelID = signal('login');
 
-  async onClick(): Promise<void> {      
-    const command = {
-      login: 'KRZMAS',
-      password: 'master'
-    };
+  ngOnInit(): void {
+    // when auth page entered kill token 
+    this.authStateService.clearAccessTokenResponse();
+
+    this.pageSync()?.toParent.pipe(untilDestroyed(this)).subscribe(action => {
+      if(action)
+        this.onAction(action);
+    });
+  }
+
+  async onAction(action: Action): Promise<void> {
+    const command = action.param.value as LoginCommand;
     
     const result = await this.authService.loginAsync(command);
     

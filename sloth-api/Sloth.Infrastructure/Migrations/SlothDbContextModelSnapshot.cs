@@ -342,20 +342,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.ToTable("UserRole");
                 });
 
-            modelBuilder.Entity("Sloth.Domain.Entities.Validation", b =>
-                {
-                    b.Property<string>("ValidationName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ValidationDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ValidationName");
-
-                    b.ToTable("Validation");
-                });
-
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
                     b.Property<string>("PageID")
@@ -363,6 +349,9 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ControlLabel")
                         .HasColumnType("nvarchar(max)");
@@ -373,11 +362,15 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("ControlTooltip")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ControlType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MetaData")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PanelID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Route")
                         .HasColumnType("nvarchar(max)");
@@ -391,34 +384,35 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Validation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PageID", "ControlID");
+
+                    b.HasIndex("PageID", "PanelID");
 
                     b.ToTable("WebControl");
                 });
 
-            modelBuilder.Entity("Sloth.Domain.Entities.WebControlValidation", b =>
+            modelBuilder.Entity("Sloth.Domain.Entities.WebOption", b =>
                 {
-                    b.Property<string>("PageID")
+                    b.Property<string>("Functionality")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ControlID")
+                    b.Property<string>("OptionKey")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PanelID")
+                    b.Property<string>("OptionDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SectionID")
+                    b.Property<string>("OptionValue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ValidationName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Functionality", "OptionKey");
 
-                    b.HasKey("PageID", "ControlID");
-
-                    b.ToTable("WebControlValidation");
+                    b.ToTable("WebOption");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebPage", b =>
@@ -427,6 +421,9 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaData")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
@@ -467,6 +464,35 @@ namespace Sloth.Infrastructure.Migrations
                     b.HasKey("PageID", "UserGroup");
 
                     b.ToTable("WebPageSecurity");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
+                {
+                    b.Property<string>("PageID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PanelID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Controls")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PanelType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sections")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PageID", "PanelID");
+
+                    b.ToTable("WebPanel");
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.CookieKey", b =>
@@ -552,6 +578,14 @@ namespace Sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
+                    b.HasOne("Sloth.Domain.Entities.WebPanel", null)
+                        .WithMany()
+                        .HasForeignKey("PageID", "PanelID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPageSecurity", b =>
+                {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
                         .WithMany()
                         .HasForeignKey("PageID")
@@ -559,16 +593,7 @@ namespace Sloth.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Sloth.Domain.Entities.WebControlValidation", b =>
-                {
-                    b.HasOne("Sloth.Domain.Entities.WebControl", null)
-                        .WithMany()
-                        .HasForeignKey("PageID", "ControlID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Sloth.Domain.Entities.WebPageSecurity", b =>
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
                         .WithMany()

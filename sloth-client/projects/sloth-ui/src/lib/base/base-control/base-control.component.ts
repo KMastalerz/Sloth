@@ -1,32 +1,23 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, computed, input, model } from '@angular/core';
 import { WebControl } from '@sloth-http';
-import { PageSync } from '../../page-sync/page-sync';
+import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
 
 @Component({
   selector: 'sl-base-control',
   standalone: true,
   template:''
 })
-export class BaseControl implements OnInit {
-  config = input<WebControl>();
-  pageSync = input<PageSync>();
+export class BaseControl  {
+  config = model.required<WebControl>();
+  pageSync = model.required<DynamicPageSync>();
 
-  metaData = signal<any>(undefined);
-  tooltip = signal<string>('');  
-  label = signal<string>('');  
-  placeholder = signal<string>('');
-  route = signal<string>('');  
+  controlID = computed<string>(() => this.config()?.controlID ?? '');
+  metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));
+  validation = computed<any>(() => JSON.parse(this.config()?.validation ?? '{}'));
 
-  ngOnInit(): void {
-    if(this.config()) {
-      this.tooltip.set(this.config()!.controlTooltip ?? '');
-      this.label.set(this.config()!.controlLabel ?? '');
-      this.route.set(this.config()!.route ?? '');
-      this.placeholder.set(this.config()!.controlPlaceholder ?? '');
-  
-      if(this.config()!.metaData){
-        return this.metaData.set(JSON.parse(this.config()!.metaData!));
-      }
-    }
-  }
+  action = computed<string>(() => this.config()?.action ?? '');
+  tooltip = computed<string>(() => this.config()?.controlTooltip ?? '');  
+  label = computed<string>(() => this.config()?.controlLabel ?? '');  
+  placeholder = computed<string>(() => this.config()?.controlPlaceholder ?? '');
+  route = computed<string>(() => this.config()?.route ?? '');  
 }

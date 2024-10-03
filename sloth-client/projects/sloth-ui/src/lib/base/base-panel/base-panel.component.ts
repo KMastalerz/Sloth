@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
-import { PageSync } from '../../page-sync/page-sync';
+import { Component, computed, model } from '@angular/core';
+import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
+import { WebPanel } from '@sloth-http';
 
 @Component({
   selector: 'sl-base-panel',
@@ -7,5 +8,7 @@ import { PageSync } from '../../page-sync/page-sync';
   template:''
 })
 export class BasePanel {
-  pageSync = input.required<PageSync>();
+  pageSync = model.required<DynamicPageSync>();
+  config = model.required<WebPanel>();
+  metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));
 }

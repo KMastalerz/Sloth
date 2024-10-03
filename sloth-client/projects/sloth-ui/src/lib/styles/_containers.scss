@@ -1,3 +1,59 @@
+.sl-dynamic-form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%; 
+}
+
+.sl-dynamic-form-column {
+    flex-direction: column;
+}
+
+.sl-dynamic-form-row {
+    flex-direction: row;
+}
+
+.sl-dynamic-form-centered {
+    justify-content: center;
+    align-items: center;
+}
+
+.sl-dybamic-form-left {
+    justify-content: start;
+    align-items: start;
+}
+
+.sl-dynamic-form-right {
+    justify-content: end;
+    align-items: end;
+}
+.sl-dynamic-form-top {
+    justify-content: start;
+    align-items: start;
+}
+
+.sl-dynamic-form-bottom {
+    justify-content: end;
+    align-items: end;
+}
+
+.sl-dynamic-form-standard {
+    background: $sl-background-tint;
+}
+
+.sl-dynamic-form-primary {
+    background: $sl-primary;
+}
+
+// TO DO: Check if below is valid
+
+.sl-center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .sl-flex-cenetered {
     display: flex;
     flex-direction: column;
@@ -25,7 +81,7 @@
 }
 
 .sl-container-full {
+    display: inline;
     width: 100%;
     height: 100%;
-    overflow: auto;
 }

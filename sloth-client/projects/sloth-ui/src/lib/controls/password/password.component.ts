@@ -1,18 +1,18 @@
 import { Component, computed, signal } from '@angular/core';
-import { BaseControl } from '../../base/base-control/base-control.component';
+import { FormsModule } from '@angular/forms';
 import { IconNames } from '../../constants/icon.constants';
+import { FormControlComponent } from '../../base/form-control/form-control.component';
 
 @Component({
   selector: 'sl-password',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './password.component.html',
   styleUrl: './password.component.scss'
 })
-export class PasswordComponent extends BaseControl{
+export class PasswordComponent extends FormControlComponent{
   protected show = signal<boolean>(false);
   protected type = computed(() => this.show()? 'text' : 'password');
-  icon = computed(()=>this.metaData()?.icon ?? '');
   showHide = computed(()=> this.show() ? IconNames.Hide : IconNames.Show);
 
   protected toggleVisibility(): void {

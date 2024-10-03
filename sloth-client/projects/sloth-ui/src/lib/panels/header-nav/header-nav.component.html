@@ -1,0 +1,5 @@
+<div class="sl-header-nav">
+    @for(control of config().webControls; track $index) {
+        <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
+    }
+</div>

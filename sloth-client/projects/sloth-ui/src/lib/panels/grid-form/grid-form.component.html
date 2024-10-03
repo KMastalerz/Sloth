@@ -1,0 +1,22 @@
+<div class="sl-grid-form" [style.gridTemplateColumns]="columns()">
+    @for(section of sections(); track $index) {
+        @for(control of getSectionGroupedControls(section); track $index) {
+            <ng-container>
+                <div class="sl-grid-form-cell">
+                  <ng-container >
+                    <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()">
+                    </ng-container>
+                  </ng-container>
+                </div>
+            </ng-container>
+        }
+        @for(control of getSectionNonGroupedControls(section); track $index) {
+            <ng-container>
+                <div class="sl-grid-form-cell">
+                    <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()">
+                    </ng-container>
+                </div>
+            </ng-container>
+        }
+    }
+</div>

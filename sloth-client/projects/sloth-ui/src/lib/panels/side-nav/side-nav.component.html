@@ -1,0 +1,18 @@
+<div class="sl-side-nav-container">
+    <div class="sl-side-nav-wrapper">
+        <button class="sl-side-nav-toggle" (click)="onCollapseToggle()">
+            <span class="sl-icon-medium">{{ icon() }}</span>
+        </button>
+        <div class="sl-side-nav" [expanded]="!collapsed()" [collapsed]="collapsed()">
+            <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
+            @for(section of sections(); track $index) {
+                @if(!collapsed()){
+                    <span class="sl-section-title">{{ section.title }}</span>
+                }
+                @for(control of section.webControls; track $index) {
+                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
+                }
+            }
+        </div>
+    </div>
+</div>
