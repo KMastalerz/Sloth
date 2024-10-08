@@ -1,0 +1,30 @@
+[
+  {
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "main",
+    "Label": "Main",
+    "Controls": "dashboard,kanban,bugs,projects,tasks"
+  },
+  {
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "user",
+    "Label": "User",
+    "Controls": "messages,timesheet,setttings,userAccount"
+  },
+  {
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "info",
+    "Label": "Info",
+    "Controls": "releases,documentation"
+  },
+  {
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "admin",
+    "Label": "Admin",
+    "Controls": "projectManagement,teamManagement,userManagement"
+  }
+]

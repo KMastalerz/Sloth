@@ -23,6 +23,8 @@ internal class SeedProfile : Profile
 
         CreateMap<WebPanel, WebPanelSeed>().ReverseMap();
 
+        CreateMap<WebSection, WebSectionSeed>().ReverseMap();
+
         CreateMap<WebControl, WebControlSeed>().ReverseMap();
     }
 }

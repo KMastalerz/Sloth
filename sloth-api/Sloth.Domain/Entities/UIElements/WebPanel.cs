@@ -9,6 +9,6 @@ public class WebPanel
     public string? Class { get; set; } = null;
     public string? Style { get; set; } = null;
     public string? SecurityTableID { get; set; } = null;
-    public string? Title { get; set; } = null;
+    public string? Label { get; set; } = null;
     public string? MetaData { get; set; } = null;
 }

@@ -3,7 +3,10 @@
         <button class="sl-side-nav-toggle" (click)="onCollapseToggle()">
             <span class="sl-icon-medium">{{ icon() }}</span>
         </button>
-        <div class="sl-side-nav" [expanded]="!collapsed()" [collapsed]="collapsed()">
+        <div class="sl-side-nav" [class]="{
+            'sl-collapsed': collapsed(),
+            'sl-expanded': !collapsed()
+        }">
             <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
             @for(section of sections(); track $index) {
                 @if(!collapsed()){

@@ -30,6 +30,7 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
             await SeedWebPages();
             await SeedWebPageSecurities();
             await SeedWebPanels();
+            await SeecWebSections();
             await SeedWebControls();
             await SeedLanguage();
             await SeedRoles();
@@ -173,6 +174,34 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
         catch (Exception ex)
         {
             logger.LogError("Error {Exception} during seeding {object}", ex.Message, nameof(WebPanel));
+        }
+    }
+
+    private async Task SeecWebSections()
+    {
+        try
+        {
+            var webSectionSeed = GetData<List<WebSectionSeed>>(SeedFile.WebSections);
+
+            if (webSectionSeed is not null && webSectionSeed.Any())
+            {
+                var webSections = mapper.Map<IEnumerable<WebSection>>(webSectionSeed);
+
+                // filter webSections by those that do not exist in database
+                webSections = webSections!.Where(ws => !dbContext.WebSection.Any(dbws => dbws.PageID == ws.PageID && dbws.PanelID == ws.PanelID && dbws.SectionID == ws.SectionID));
+
+                if (webSections.Any())
+                {
+                    var count = webSections.Count();
+                    await dbContext.WebSection.AddRangeAsync(webSections);
+                    await dbContext.SaveChangesAsync();
+                    logger.LogInformation("Added {Count} {object} to database", count, nameof(WebSection));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("Error {Exception} during seeding {object}", ex.Message, nameof(WebSection));
         }
     }
 
@@ -331,6 +360,9 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
                 break;
             case SeedFile.WebPanels:
                 fileName = SeedPath.WebPanels;
+                break;
+            case SeedFile.WebSections:
+                fileName = SeedPath.WebSections;
                 break;
             case SeedFile.User:
                 fileName = SeedPath.User;

@@ -1,7 +1,7 @@
 [
   {
     "PageID": "main",
-    "Title": "Main",
+    "Label": "Main",
     "SecurityTableID": null,
     "Description": "Main page",
     "Panels": "sideNav",
@@ -14,7 +14,7 @@
   },
   {
     "PageID": "auth",
-    "Title": "Login",
+    "Label": "Login",
     "SecurityTableID": null,
     "Description": "Login page",
     "Panels": "login",
@@ -27,7 +27,7 @@
   },
   {
     "PageID": "projectManagement",
-    "Title": "Project Management",
+    "Label": "Project Management",
     "SecurityTableID": null,
     "Description": "Base page to manage project configuration and add new ones",
     "Panels": "header",
@@ -40,7 +40,7 @@
   },
   {
     "PageID": "projectAdd",
-    "Title": "Project Add",
+    "Label": "Project Add",
     "SecurityTableID": null,
     "Description": "Page to add new projects",
     "Panels": "details",
@@ -53,7 +53,7 @@
   },
   {
     "PageID": "projectOptions",
-    "Title": "Project Options",
+    "Label": "Project Options",
     "SecurityTableID": null,
     "Description": "Here you can add, edit and delete project types etc.",
     "Panels": "options,removeTypes",

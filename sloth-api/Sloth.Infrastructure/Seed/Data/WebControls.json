@@ -220,7 +220,7 @@
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "admin",
-    "ControlID": "teamAdmin",
+    "ControlID": "teamManagement",
     "ControlType": "link",
     "InternalType": "sideNav",
     "Icon": "diversity_3",
@@ -238,7 +238,7 @@
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "admin",
-    "ControlID": "userAdmin",
+    "ControlID": "userManagement",
     "ControlType": "link",
     "InternalType": "sideNav",
     "Icon": "manage_accounts",
@@ -467,7 +467,7 @@
   // #region [Project Options]
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "type",
     "SectionID": "type",
     "ControlID": "projectType",
     "ControlType": "input",
@@ -485,7 +485,7 @@
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "type",
     "SectionID": "type",
     "ControlID": "typeDescription",
     "ControlType": "input",
@@ -503,7 +503,7 @@
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "type",
     "SectionID": "type",
     "ControlID": "addProjectType",
     "ControlType": "button",
@@ -521,7 +521,7 @@
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "technology",
     "SectionID": "technology",
     "ControlID": "technologyName",
     "ControlType": "input",
@@ -539,7 +539,7 @@
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "technology",
     "SectionID": "technology",
     "ControlID": "technologyIcon",
     "ControlType": "input",
@@ -557,7 +557,7 @@
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "technology",
     "SectionID": "technology",
     "ControlID": "addTechnology",
     "ControlType": "button",

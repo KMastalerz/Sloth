@@ -7,6 +7,7 @@ internal static class SeedFile
     public const string WebPages = "WebPages";
     public const string WebPageSecurities = "WebPageSecurities";
     public const string WebPanels = "WebPanels";
+    public const string WebSections = "WebSections";
     public const string User = "User";
     public const string UserGroup = "UserGroup";
     public const string UserRoles = "UserRoles";
@@ -21,6 +22,7 @@ internal static class SeedPath
     public const string WebPages = "WebPages.json";
     public const string WebPageSecurities = "WebPageSecurities.json";
     public const string WebPanels = "WebPanels.json";
+    public const string WebSections = "WebSections.json";
     public const string User = "User.json";
     public const string UserGroup = "UserGroup.json";
     public const string UserRoles = "UserRoles.json";

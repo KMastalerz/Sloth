@@ -38,6 +38,8 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
         var webPanels = await uIElementsRepository.ListWebPanelAsync(request.PageID) ??
             throw new NotFoundException(nameof(List<WebPanel>), request.PageID);
 
+        var webSections = await uIElementsRepository.ListWebSectionAsync(request.PageID) ?? [];
+
         var webControls = await uIElementsRepository.ListWebControlAsync(request.PageID) ??
             throw new NotFoundException(nameof(List<WebControl>), request.PageID);
 
@@ -110,6 +112,32 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
                 }
             });
         });
+
+        // Build the WebSections
+        dto.WebPanels.ForEach(wp =>
+        {
+            var orderedSections = wp.Sections?.Split(',');
+            if(orderedSections is not null)
+            {
+                wp.WebSections = orderedSections
+                    .Select(order => webSections.FirstOrDefault(ws => ws.SectionID == order.Trim() && ws.PanelID == wp.PanelID))
+                    .Where(ws => ws != null)
+                    .Select(ws => mapper.Map<GetWebSection>(ws))
+                    .ToList();
+            }
+
+            wp.WebSections.ForEach(ws =>
+            {
+                var controlsOrdered = ws.Controls.Split(',');
+
+                ws.WebControls = controlsOrdered
+                    .Select(order => webControls.FirstOrDefault(ws => ws.SectionID == ws.SectionID && ws.ControlID == order.Trim() && ws.PanelID == wp.PanelID))
+                    .Where(ws => ws != null)
+                    .Select(ws => mapper.Map<GetWebControl>(ws))
+                    .ToList();
+            });
+        });
+
 
         // TO DO: Add Translations
 

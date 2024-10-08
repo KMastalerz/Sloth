@@ -66,11 +66,11 @@
     }
 }
 
-.sl-side-nav.expanded {
+.sl-side-nav.sl-expanded {
     width: $sl-nav-expanded;
 }
 
-.sl-side-nav.collapsed {
+.sl-side-nav.sl-collapsed {
     width: $sl-nav-collapsed;
     align-items: center;
     padding: $space-s;

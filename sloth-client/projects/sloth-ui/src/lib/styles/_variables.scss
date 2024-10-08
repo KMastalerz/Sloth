@@ -18,7 +18,6 @@ $font-size-l: 2.0rem;     // 20px
 $font-size-xl: 2.4rem;    // 24px
 
 /* Icon Sizes */
-$icon-size-xxs: 1.2rem;   // 12px
 $icon-size-xs: 1.6rem;    // 16px
 $icon-size-s: 2.4rem;     // 24px
 $icon-size-m: 3.2rem;     // 32px
@@ -39,6 +38,11 @@ $border-radius-s: 0.4rem;  // 4px
 $border-radius-m: 0.8rem;  // 8px
 $border-radius-l: 1.6rem;  // 16px
 $border-radius-pill: 50%;  // remains the same for pill shapes
+
+/* Border Width */
+$border-width-s: 1px;  // 1px
+$border-width-m: 2px;  // 2px
+$border-width-l: 4px;  // 4px
 
 /* Box Shadow */
 $sl-button-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.15), 0rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3);

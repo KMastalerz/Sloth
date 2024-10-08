@@ -27,15 +27,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
     internal DbSet<WebPage> WebPage { get; set; }
     internal DbSet<WebPanel> WebPanel { get; set; }
     internal DbSet<WebOption> WebOption { get; set; }
-    #endregion
-
-    #region [Project] 
-    internal DbSet<Project> Project { get; set; }
-    internal DbSet<ProjectFunctionality> ProjectFunctionality { get; set; }
-    internal DbSet<ProjectReleases> ProjectReleases { get; set; }
-    internal DbSet<ProjectType> ProjectType { get; set; }
-    internal DbSet<ProjectTechnologyStack> ProjectTechnologyStack { get; set; }
-    internal DbSet<Technology> Technology { get; set; }
+    internal DbSet<WebSection> WebSection { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -47,10 +39,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
         builder.Entity<WebPage>(entity =>
         {
             entity.HasKey(e => e.PageID);
-
-            entity.Property(e => e.Title).IsRequired();
-            entity.Property(e => e.SecurityTableID).IsRequired(false);
-            entity.Property(e => e.Description).IsRequired(false);
 
             // Relationships
             entity.HasMany<SecurityTable>()
@@ -89,6 +77,17 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
         builder.Entity<WebOption>(entity =>
         {
             entity.HasKey(e => new {e.Functionality, e.OptionKey});
+        });
+
+        // WebSection Configuration
+        builder.Entity<WebSection>(entity =>
+        {
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID });
+
+            entity.HasOne<WebPanel>()
+                .WithMany()
+                .HasForeignKey(ws => new { ws.PageID, ws.PanelID })
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // Translation Configuration
@@ -254,54 +253,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
 
         #endregion
 
-        #region [Project]
+       
 
-        // Project Configuration
-        builder.Entity<Project>(entity =>
-        {
-            entity.HasKey(e => e.ProjectID);
-        });
-
-        // ProjectFunctionality Configuration
-        builder.Entity<ProjectFunctionality>(entity =>
-        {
-            entity.HasKey(e => e.FunctionalityID);
-        });
-
-        // ProjectReleases Configuration
-        builder.Entity<ProjectReleases>(entity =>
-        {
-            entity.HasKey(e => e.ReleaseID);
-        });
-
-        // ProjectType Configuration
-        builder.Entity<ProjectType>(entity =>
-        {
-            entity.HasKey(e => e.Type);
-        });
-
-        // ProjectTechnologyStack Configuration
-        builder.Entity<ProjectTechnologyStack>(entity =>
-        {
-            entity.HasKey(e => new { e.ProjectID, e.TechnologyID });
-
-            entity.HasOne<Project>()
-                  .WithMany()
-                  .HasForeignKey(e => e.ProjectID)
-                  .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne<Technology>()
-                  .WithMany()
-                  .HasForeignKey(e => e.TechnologyID)
-                  .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        // Technology Configuration
-        builder.Entity<Technology>(entity =>
-        {
-            entity.HasKey(e => e.TechnologyID);
-        });
-
-        #endregion
     }
 }

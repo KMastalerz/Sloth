@@ -2,7 +2,7 @@
 public class GetWebPage
 {
     public string PageID { get; set; } = default!;
-    public string Title { get; set; } = default!;
+    public string Label { get; set; } = default!;
     public string Panels { get; set; } = default!;
     public string? Orientation { get; set; } = null;
     public string? Background { get; set; } = null;

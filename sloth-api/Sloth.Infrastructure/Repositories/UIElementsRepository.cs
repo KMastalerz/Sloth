@@ -18,5 +18,8 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     {
         return await dbContext.WebPanel.Where(p => p.PageID == pageID).ToListAsync(); ;
     }
-
+    public async Task<IEnumerable<WebSection>?> ListWebSectionAsync(string pageID)
+    {
+        return await dbContext.WebSection.Where(p => p.PageID == pageID).ToListAsync(); ;
+    }
 }

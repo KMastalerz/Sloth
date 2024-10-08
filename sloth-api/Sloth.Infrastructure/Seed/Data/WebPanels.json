@@ -5,7 +5,7 @@
     "PanelType": "sideNav",
     "Sections": "main,admin,user,info",
     "Controls": "dashboard, kanban, bugs, projects, tasks, messages, timesheet, setttings, userAccount, releases, documentation, projectManagement, teamAdmin, userAdmin",
-    "Title": null,
+    "Label": null,
     "MetaData": null
   },
   {
@@ -14,7 +14,7 @@
     "PanelType": "form",
     "Sections": "login",
     "Controls": "login, password, process, forgotPassword",
-    "Title": null,
+    "Label": null,
     "MetaData": null
   },
   {
@@ -23,7 +23,7 @@
     "PanelType": "headerNav",
     "Sections": "header",
     "Controls": "projectList, projectOptions, projectAdd",
-    "Title": null,
+    "Label": null,
     "MetaData": null
   },
   {
@@ -32,25 +32,25 @@
     "PanelType": "form",
     "Sections": "details",
     "Controls": "projectName, projectType, shortDescription, description",
-    "Title": null,
+    "Label": null,
     "MetaData": null
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "type",
     "PanelType": "gridForm",
     "Sections": "type",
     "Controls": "projectType, typeDescription, addProjectType",
-    "Title": "Project Type",
+    "Label": "Project Type",
     "MetaData": "{\"groupedControls\":[\"projectType\", \"typeDescription\", \"addProjectType\"],\"columns\":1}"
   },
   {
     "PageID": "projectOptions",
-    "PanelID": "options",
+    "PanelID": "technology",
     "PanelType": "gridForm",
     "Sections": "technology",
     "Controls": "technologyName, technologyIcon, addTechnology",
-    "Title": "Project Technologies",
+    "Label": "Project Technologies",
     "MetaData": "{\"groupedControls\":[\"technologyName\", \"technologyIcon\", \"addTechnology\"],\"columns\":1}"
   },
   {
@@ -59,7 +59,7 @@
     "PanelType": "controlList",
     "Sections": "removeTypes",
     "Controls": "projectType, removeType",
-    "Title": "Remove Types",
+    "Label": "Remove Types",
     "MetaData": "{\"groupedControls\":[\"projectType, removeType\"]}"
   }
 ]
