@@ -1,7 +1,7 @@
 
 export interface WebPage {
     pageID: string;
-    title: string;
+    label: string;
     panels: string;
     orientation?: string | null;
     position?: string | null;
@@ -20,10 +20,22 @@ export interface WebPanel {
     controls: string;
     style?: string | null;
     class?: string | null;
-    title?: string;
+    label?: string;
+    metaData?: string;
+    webControls?: WebControl[];
+    webSections?: WebSection[];
+}
+
+export interface WebSection {
+    pageID: string;
+    panelID: string;
+    sectionID: string;
+    controls: string;
+    label?: string;
     metaData?: string;
     webControls?: WebControl[];
 }
+
 
 export interface WebControl {
     pageID: string;

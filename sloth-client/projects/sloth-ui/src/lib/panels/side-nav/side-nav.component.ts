@@ -1,5 +1,4 @@
 import { Component, computed, signal } from '@angular/core';
-import { CollapseDirective } from '../../directives/collapse/collapse.directive';
 import { IconNames } from '../../constants/icon.constants';
 import { ActionType } from '../../page-sync/action';
 import { BasePanel } from '../../base/base-panel/base-panel.component';
@@ -9,7 +8,7 @@ import { DynamicControlDirective } from '../../directives/dynamic-control/dynami
 @Component({
   selector: 'sl-side-nav',
   standalone: true,
-  imports: [CollapseDirective, BrandingSectionComponent, DynamicControlDirective],
+  imports: [BrandingSectionComponent, DynamicControlDirective],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss'
 })
@@ -18,6 +17,7 @@ export class SideNavComponent extends BasePanel {
   icon = computed(()=> this.collapsed() ? IconNames.ChevronRight : IconNames.ChevronLeft);
 
   protected onCollapseToggle(): void {
+    // Toggle the collapsed state and send the action to the parent
     this.collapsed.set(!this.collapsed());
     this.pageSync().toChild.next({ actionType: ActionType.CollapseLink, param: this.collapsed() });
   }

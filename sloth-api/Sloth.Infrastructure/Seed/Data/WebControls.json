@@ -260,7 +260,7 @@
   {
     "PageID": "auth",
     "PanelID": "login",
-    "SectionID": "login",
+    "SectionID": null,
     "ControlID": "login",
     "ControlType": "input",
     "InternalType": null,
@@ -278,7 +278,7 @@
   {
     "PageID": "auth",
     "PanelID": "login",
-    "SectionID": "login",
+    "SectionID": null,
     "ControlID": "password",
     "ControlType": "password",
     "InternalType": null,
@@ -296,7 +296,7 @@
   {
     "PageID": "auth",
     "PanelID": "login",
-    "SectionID": "login",
+    "SectionID": null,
     "ControlID": "process",
     "ControlType": "button",
     "InternalType": null,
@@ -307,14 +307,14 @@
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
-    "Action": "submitSection",
+    "Action": "submitPanel",
     "MetaData": null,
     "Validation": null
   },
   {
     "PageID": "auth",
     "PanelID": "login",
-    "SectionID": "login",
+    "SectionID": null,
     "ControlID": "forgotPassword",
     "ControlType": "link",
     "InternalType": "simpleLink",

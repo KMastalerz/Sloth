@@ -2,8 +2,8 @@
     @for(section of sections(); track $index) {
         <ng-container>
             <div class="sl-grid-form-item">
-                @if(section.title) {
-                    <div class="sl-grid-form-item-title">{{section.title}}</div>
+                @if(section.label) {
+                    <div class="sl-grid-form-item-title">{{section.label}}</div>
                     <hr class="sl-grid-form-item-title-break"/>
                 }
                 <div class="sl-grid-form-section">

@@ -123,6 +123,9 @@ export class DynamicPageSync {
         orderedControls.forEach(control => {
             const controlID = control.trim();
             const controlConfig = panel.webControls?.find(control => control.controlID === controlID)!;
+            if (!controlConfig) {
+                return;
+            }
             
            // Check if control holds FormControl or FormGroup
            if (this.listUtil.Contains(StaticWebObjects.FormGroupTypeControls, controlConfig.controlType) && controlConfig.childControls) {

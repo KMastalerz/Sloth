@@ -31,18 +31,9 @@ export class ButtonComponent extends BaseControl {
           panelID: this.config().panelID
         } as Action;
         break;
-      case 'submitSection':
-      case 'deleteSection':
-        param = this.pageSync()?.getSectionForm(this.config().panelID, this.config().sectionID, this.index());
-        action = {
-          actionType: this.action() === 'submitSection' ? ActionType.SubmitSection : ActionType.DeleteSection,
-          param: param.value,
-          sectionID: this.config().sectionID
-        } as Action;
-        break;
       case 'submitControl':
       case 'deleteControl':
-        param = this.pageSync()?.getFormControl(this.config().panelID, this.config().sectionID, this.config().controlID, this.index());
+        param = this.pageSync()?.getFormControl(this.config().panelID, this.config().controlID, this.index());
         action = {
           actionType: this.action() === 'submitControl' ? ActionType.SubmitControl : ActionType.DeleteControl,
           param: param.value,

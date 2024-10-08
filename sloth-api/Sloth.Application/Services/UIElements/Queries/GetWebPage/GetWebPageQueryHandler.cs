@@ -75,11 +75,11 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
             // Assuming `sections` in WebPanel contains the order
             var controlOrder = wp.Controls.Split(',');
 
-            // Map WebSections and order them based on `sectionOrder`
+            // Map WebControls and order them based on `sectionOrder`
             wp.WebControls = controlOrder
-                .Select(order => webControls.FirstOrDefault(ws => ws.SectionID == order.Trim() && ws.PanelID == wp.PanelID))
-                .Where(ws => ws != null)
-                .Select(ws => mapper.Map<GetWebControl>(ws))
+                .Select(order => webControls.FirstOrDefault(wc => wc.ControlID == order.Trim() && wc.PanelID == wp.PanelID))
+                .Where(wc => wc != null)
+                .Select(wc => mapper.Map<GetWebControl>(wc))
                 .ToList();
         });
 

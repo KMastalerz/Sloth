@@ -14,7 +14,10 @@
 
     @if(icon()) {
         <span   class="sl-link-icon"
-                [expanded]="!collapsed()" [collapsed]="collapsed()"
+                [class]="{
+                    'sl-expanded': !collapsed(),
+                    'sl-collapsed': collapsed()
+                }"
                 [class]="{
                     'sl-badge-info': checkResult() === 'info',
                     'sl-badge-warning': checkResult() === 'warning',
@@ -40,10 +43,5 @@
             }"> {{ count() }}</p>
         }
     }
-    <!-- <span class="sl-link-bookmark"></span> -->
 </a>
 }
-@else if(type() === 'simpleLink') {
-
-}
-

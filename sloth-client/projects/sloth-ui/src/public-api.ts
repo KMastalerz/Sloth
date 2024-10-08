@@ -13,7 +13,6 @@ export * from './lib/controls/link/link.component';
 export * from './lib/controls/password/password.component';
 
 // directives
-export * from './lib/directives/collapse/collapse.directive';
 export * from './lib/directives/dynamic-panel/dynamic-panel.directive';
 
 // directories

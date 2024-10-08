@@ -17,8 +17,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class LinkComponent extends BaseControl implements OnInit {
   collapsed = signal<boolean>(false);
 
-  icon = computed<string | undefined>(()=>this.metaData()?.icon ?? undefined);
-  type = computed<string | undefined>(()=>this.metaData()?.type ?? undefined);
+  icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
+  type = computed<string | undefined>(()=>this.config()?.internalType ?? undefined);
   color = computed<string | undefined>(()=>this.metaData()?.color ?? undefined);
 
   warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);
@@ -28,6 +28,8 @@ export class LinkComponent extends BaseControl implements OnInit {
   count = signal<number>(0);
 
   ngOnInit(): void {
+    console.log('LinkComponent ngOnInit', this.config());
+    
     //listen to collapsed update 
     this.pageSync()?.toChild.pipe(untilDestroyed(this)).subscribe(action => {
       if(action)

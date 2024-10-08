@@ -5,7 +5,6 @@ import { TextBoxComponent } from '../../controls/text-box/text-box.component';
 import { LinkComponent } from '../../controls/link/link.component';
 import { PasswordComponent } from '../../controls/password/password.component';
 
-import { ControlListComponent } from '../../panels/control-list/control-list.component';
 import { FormComponent } from '../../panels/form/form.component';
 import { FlexFormComponent } from '../../panels/flex-form/flex-form.component';
 import { GridFormComponent } from '../../panels/grid-form/grid-form.component';
@@ -42,7 +41,6 @@ export class DynamicDirectoryService {
     this.registerControl('link', LinkComponent)
     this.registerControl('password', PasswordComponent);
     
-    this.registerPanel('controlList', ControlListComponent);
     this.registerPanel('form', FormComponent);
     this.registerPanel('flexForm', FlexFormComponent);
     this.registerPanel('gridForm', GridFormComponent);

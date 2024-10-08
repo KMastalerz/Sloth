@@ -10,7 +10,7 @@
             <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
             @for(section of sections(); track $index) {
                 @if(!collapsed()){
-                    <span class="sl-section-title">{{ section.title }}</span>
+                    <span class="sl-section-title">{{ section.label }}</span>
                 }
                 @for(control of section.webControls; track $index) {
                     <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
