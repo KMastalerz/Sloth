@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridFormComponent } from './grid-form.component';
+import { ControlListComponent } from './control-list.component';
 
-describe('GridFormComponent', () => {
-  let component: GridFormComponent;
-  let fixture: ComponentFixture<GridFormComponent>;
+describe('ControlListComponent', () => {
+  let component: ControlListComponent;
+  let fixture: ComponentFixture<ControlListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GridFormComponent]
+      imports: [ControlListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GridFormComponent);
+    fixture = TestBed.createComponent(ControlListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,4 +21,3 @@ describe('GridFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-s

@@ -8,6 +8,21 @@
     border-radius: $border-radius-pill;
 }
 
+.sl-image-small {
+    width: $icon-size-s;
+    height: $icon-size-s;
+}
+
+.sl-image-medium {
+    width: $icon-size-m;
+    height: $icon-size-m;
+}
+
+.sl-image-large {
+    width: $icon-size-l;
+    height: $icon-size-l;
+}
+
 .sl-icon-small {
     font-family: $sl-icon-font;
     font-size: $icon-size-s;
@@ -34,7 +49,6 @@
     border-radius: $border-radius-s;
     border: 0.15rem solid $sl-on-background;
     padding: $space-xs $space-xs;
-    max-width: $standrad-control-max-width;
     color: $sl-neutral-shade;
     font-weight: 400;
 
@@ -55,6 +69,12 @@
         align-items: center;
         justify-content: center;
     }
+}
+
+sl-text-box,
+sl-input,
+sl-password {
+    width: $standrad-control-width;
 }
 
 sl-input:focus-within,
@@ -92,6 +112,12 @@ sl-password:focus-within {
     color: $sl-on-error;
     font-size: $font-size-xs;
     font-weight: 400;
+}
+
+.sl-text-box {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
 }
 
 // #region[link]
@@ -159,6 +185,7 @@ sl-password:focus-within {
 }
 
 // #endregion
+
 .sl-tag {
     padding: $space-xxs $space-xs;
     border-radius: $border-radius-m;
@@ -179,27 +206,6 @@ sl-password:focus-within {
 .sl-tag-error {
     background-color: $sl-error-light;
     color: $sl-on-error;
-}
-
-.sl-side-nav-toggle {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    top: 0;
-    right: 0;
-    transform: translateX(50%) translateY(50%);
-    transform: translateX(50%) translateY(100%);
-    width: $ctrl-size-m;
-    height: $ctrl-size-m;
-    background: linear-gradient(to right, transparent 50%, $sl-background 50%);
-    border-radius: $border-radius-m;
-    box-shadow: $sl-button-shadow;
-    cursor: pointer;
-    &:hover {
-        box-shadow: $sl-button-shadow-raised;
-    }
 }
 
 .sl-semi-bold-text {

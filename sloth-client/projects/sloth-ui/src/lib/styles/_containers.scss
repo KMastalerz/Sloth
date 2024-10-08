@@ -8,35 +8,53 @@
 
 .sl-dynamic-form-column {
     flex-direction: column;
+
+    .sl-center {
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .sl-left {
+        justify-content: flex-start;
+    }
+    
+    .sl-right {
+        justify-content: flex-end;
+    }
+    .sl-top {
+        align-items: flex-start;
+    }
+    
+    .sl-bottom {
+        align-items: flex-end;
+    }
 }
 
 .sl-dynamic-form-row {
     flex-direction: row;
+
+    .sl-center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sl-left {
+        align-items: flex-start;
+    }
+    
+    .sl-right {
+        align-items: flex-end;
+    }
+    .sl-top {
+        justify-content: flex-start;
+    }
+    
+    .sl-bottom {
+        justify-content: flex-end;
+    }
 }
 
-.sl-dynamic-form-centered {
-    justify-content: center;
-    align-items: center;
-}
 
-.sl-dybamic-form-left {
-    justify-content: start;
-    align-items: start;
-}
-
-.sl-dynamic-form-right {
-    justify-content: end;
-    align-items: end;
-}
-.sl-dynamic-form-top {
-    justify-content: start;
-    align-items: start;
-}
-
-.sl-dynamic-form-bottom {
-    justify-content: end;
-    align-items: end;
-}
 
 .sl-dynamic-form-standard {
     background: $sl-background-tint;
@@ -81,7 +99,6 @@
 }
 
 .sl-container-full {
-    display: inline;
     width: 100%;
     height: 100%;
 }

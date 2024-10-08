@@ -1,9 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService, AuthStateService, LoginCommand } from '@sloth-http';
-import { Action, BasePage, BrandingSectionComponent, DynamicFormComponent } from '@sloth-ui';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Action, BrandingSectionComponent, DynamicFormComponent, DynamicPageSync } from '@sloth-ui';
 
-@UntilDestroy()
 @Component({
   selector: 'sl-auth',
   standalone: true,
@@ -11,7 +10,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent extends BasePage implements OnInit {
+export class AuthComponent implements OnInit {
+  pageSync = input.required<DynamicPageSync>();
+  private router = inject(Router);
   private authService = inject(AuthService);
   private authStateService = inject(AuthStateService);
 
@@ -20,15 +21,10 @@ export class AuthComponent extends BasePage implements OnInit {
   ngOnInit(): void {
     // when auth page entered kill token 
     this.authStateService.clearAccessTokenResponse();
-
-    this.pageSync()?.toParent.pipe(untilDestroyed(this)).subscribe(action => {
-      if(action)
-        this.onAction(action);
-    });
   }
 
   async onAction(action: Action): Promise<void> {
-    const command = action.param.value as LoginCommand;
+    const command = action.param as LoginCommand;
     
     const result = await this.authService.loginAsync(command);
     

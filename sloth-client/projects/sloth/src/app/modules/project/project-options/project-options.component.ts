@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { DynamicFormComponent, PageSync } from '@sloth-ui';
+import { DynamicFormComponent, DynamicPageSync } from '@sloth-ui';
 
 @Component({
   selector: 'sl-project-options',
@@ -9,5 +9,14 @@ import { DynamicFormComponent, PageSync } from '@sloth-ui';
   styleUrl: './project-options.component.scss'
 })
 export class ProjectOptionsComponent {
-  pageSync = input.required<PageSync>();
+  pageSync = input.required<DynamicPageSync>();
+
+  ngOnInit() {  
+    console.log('ProjectOptionsComponent initialized', this.pageSync());
+    
+  }
+
+  onAction(action: any) {
+    console.log('ProjectOptionsComponent action', action);
+  }
 }

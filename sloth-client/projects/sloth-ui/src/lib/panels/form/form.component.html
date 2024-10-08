@@ -3,8 +3,10 @@
         @if(false) {
             <sl-branding-section></sl-branding-section>
         }
-        @for(control of config().webControls; track $index) {
-            <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
+        @for(section of sections(); track $index) {
+            @for(control of section.webControls; track $index) {
+                <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
+            }
         }
     </form>
 </div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridFormComponent } from './grid-form.component';
+import { FlexFormComponent } from './flex-form.component';
 
-describe('GridFormComponent', () => {
-  let component: GridFormComponent;
-  let fixture: ComponentFixture<GridFormComponent>;
+describe('FlexFormComponent', () => {
+  let component: FlexFormComponent;
+  let fixture: ComponentFixture<FlexFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GridFormComponent]
+      imports: [FlexFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GridFormComponent);
+    fixture = TestBed.createComponent(FlexFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

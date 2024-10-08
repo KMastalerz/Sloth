@@ -13,29 +13,47 @@ export class ButtonComponent extends BaseControl {
 
   onClick(): void {
     let action: Action | undefined;
-
+    let param: any;
     switch(this.action()) {
       case 'submit':
+      case 'delete':
         action = {
-          actionType: ActionType.Submit,
+          actionType: this.action() === 'submit' ? ActionType.Submit : ActionType.Delete,
           param: this.pageSync()?.pageForm
         } as Action;
         break;
       case 'submitPanel':
+      case 'deletePanel':
+        param = this.pageSync()?.getPanelForm(this.config().panelID);
         action = {
-          actionType: ActionType.SubmitPanel,
-          param: this.pageSync()?.getPanelFormByID(this.config()?.panelID!)
+          actionType: this.action() === 'submitPanel' ? ActionType.SubmitPanel : ActionType.DeletePanel,
+          param: param.value,
+          panelID: this.config().panelID
+        } as Action;
+        break;
+      case 'submitSection':
+      case 'deleteSection':
+        param = this.pageSync()?.getSectionForm(this.config().panelID, this.config().sectionID, this.index());
+        action = {
+          actionType: this.action() === 'submitSection' ? ActionType.SubmitSection : ActionType.DeleteSection,
+          param: param.value,
+          sectionID: this.config().sectionID
         } as Action;
         break;
       case 'submitControl':
-          action = {
-            actionType: ActionType.SubmitControl,
-            // param: this.pageSync()?.getControlByIDs(this.config()?.panelID!)
-          } as Action;
-          break;
+      case 'deleteControl':
+        param = this.pageSync()?.getFormControl(this.config().panelID, this.config().sectionID, this.config().controlID, this.index());
+        action = {
+          actionType: this.action() === 'submitControl' ? ActionType.SubmitControl : ActionType.DeleteControl,
+          param: param.value,
+          controlID: this.config().controlID
+        } as Action;
+        break;
       default:
         return;
     }
-    this.pageSync()!.toParent.next(action);
+    if(param?.valid) {
+      this.pageSync()!.toParent.next(action);
+    }
   }
 }

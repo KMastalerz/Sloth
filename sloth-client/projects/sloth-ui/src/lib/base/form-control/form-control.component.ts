@@ -24,7 +24,7 @@ export class FormControlComponent extends BaseControl implements ControlValueAcc
   setDisabledState?(isDisabled: boolean): void {}
 
   ngOnInit(): void {
-    this.formControl = this.pageSync()?.getFormControl(this.config()!);
+    this.formControl = this.pageSync()?.getFormControl(this.config().panelID, this.config().sectionID, this.config().controlID, this.index());
     this.value.subscribe(value => {
       this.writeValue(value);
     });

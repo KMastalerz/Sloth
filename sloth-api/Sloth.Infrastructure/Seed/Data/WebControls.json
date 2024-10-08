@@ -1,11 +1,13 @@
 [
-  // #region [Main Page]
+  // #region [Main]
   {
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "main",
     "ControlID": "dashboard",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "bar_chart_4_bars",
     "SecurityTableID": null,
     "ControlLabel": "Dashboard",
     "ControlPlaceholder": null,
@@ -13,7 +15,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"bar_chart_4_bars\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -22,6 +24,8 @@
     "SectionID": "main",
     "ControlID": "kanban",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "view_kanban",
     "SecurityTableID": null,
     "ControlLabel": "Kanban",
     "ControlPlaceholder": null,
@@ -29,7 +33,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"view_kanban\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -38,6 +42,8 @@
     "SectionID": "main",
     "ControlID": "bugs",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "bug_report",
     "SecurityTableID": null,
     "ControlLabel": "Bugs",
     "ControlPlaceholder": null,
@@ -45,7 +51,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"bug_report\",\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}",
+    "MetaData": "{\"counterFunc\":\"getBugCount\",\"warningCount\":50,\"errorCount\":100}",
     "Validation": null
   },
   {
@@ -54,6 +60,8 @@
     "SectionID": "main",
     "ControlID": "projects",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "tactic",
     "SecurityTableID": null,
     "ControlLabel": "Projects",
     "ControlPlaceholder": null,
@@ -61,7 +69,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"tactic\",\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":\"getProjectCount\",\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -70,6 +78,8 @@
     "SectionID": "main",
     "ControlID": "tasks",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "task",
     "SecurityTableID": null,
     "ControlLabel": "Tasks",
     "ControlPlaceholder": null,
@@ -77,7 +87,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"task\",\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}",
+    "MetaData": "{\"counterFunc\":\"getTaskCount\",\"warningCount\":10,\"errorCount\":20}",
     "Validation": null
   },
   {
@@ -86,6 +96,8 @@
     "SectionID": "user",
     "ControlID": "messages",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "mail",
     "SecurityTableID": null,
     "ControlLabel": "Messages",
     "ControlPlaceholder": null,
@@ -93,7 +105,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"mail\",\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}",
+    "MetaData": "{\"counterFunc\":\"getUnreadMessageCount\",\"warningCount\":30,\"errorCount\":90}",
     "Validation": null
   },
   {
@@ -102,6 +114,8 @@
     "SectionID": "user",
     "ControlID": "timesheet",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "calendar_month",
     "SecurityTableID": null,
     "ControlLabel": "Timesheet",
     "ControlPlaceholder": null,
@@ -109,7 +123,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"calendar_month\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -118,6 +132,8 @@
     "SectionID": "user",
     "ControlID": "setttings",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "settings",
     "SecurityTableID": null,
     "ControlLabel": "Setttings",
     "ControlPlaceholder": null,
@@ -125,16 +141,17 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"settings\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
-
   {
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "user",
     "ControlID": "userAccount",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "account_circle",
     "SecurityTableID": null,
     "ControlLabel": "My Account",
     "ControlPlaceholder": null,
@@ -142,7 +159,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"account_circle\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -151,6 +168,8 @@
     "SectionID": "info",
     "ControlID": "releases",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "rocket_launch",
     "SecurityTableID": null,
     "ControlLabel": "Releases",
     "ControlPlaceholder": null,
@@ -158,7 +177,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"rocket_launch\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -167,6 +186,8 @@
     "SectionID": "info",
     "ControlID": "documentation",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "book_5",
     "SecurityTableID": null,
     "ControlLabel": "Documentation",
     "ControlPlaceholder": null,
@@ -174,7 +195,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"book_5\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -183,6 +204,8 @@
     "SectionID": "admin",
     "ControlID": "projectManagement",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "box_edit",
     "SecurityTableID": null,
     "ControlLabel": "Projects",
     "ControlPlaceholder": null,
@@ -190,7 +213,7 @@
     "Route": "project-management",
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"box_edit\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -199,6 +222,8 @@
     "SectionID": "admin",
     "ControlID": "teamAdmin",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "diversity_3",
     "SecurityTableID": null,
     "ControlLabel": "Teams",
     "ControlPlaceholder": null,
@@ -206,7 +231,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"diversity_3\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
   {
@@ -215,6 +240,8 @@
     "SectionID": "admin",
     "ControlID": "userAdmin",
     "ControlType": "link",
+    "InternalType": "sideNav",
+    "Icon": "manage_accounts",
     "SecurityTableID": null,
     "ControlLabel": "Users",
     "ControlPlaceholder": null,
@@ -222,26 +249,30 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"sideNav\",\"icon\":\"manage_accounts\",\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
+    "MetaData": "{\"counterFunc\":null,\"warningCount\":null,\"errorCount\":null}",
     "Validation": null
   },
+
   // #endregion
 
-  // #region [Login Page]
+  // #region [Auth]
+
   {
     "PageID": "auth",
     "PanelID": "login",
     "SectionID": "login",
     "ControlID": "login",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": "account_circle",
     "SecurityTableID": null,
     "ControlLabel": null,
-    "ControlPlaceholder": "Login",
+    "ControlPlaceholder": "name@example.com",
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"icon\":\"account_circle\"}",
+    "MetaData": null,
     "Validation": null
   },
   {
@@ -250,9 +281,11 @@
     "SectionID": "login",
     "ControlID": "password",
     "ControlType": "password",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": null,
-    "ControlPlaceholder": "Password",
+    "ControlPlaceholder": "password",
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
@@ -266,13 +299,15 @@
     "SectionID": "login",
     "ControlID": "process",
     "ControlType": "button",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Login",
     "ControlPlaceholder": "",
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
-    "Action": "submitPanel",
+    "Action": "submitSection",
     "MetaData": null,
     "Validation": null
   },
@@ -282,6 +317,8 @@
     "SectionID": "login",
     "ControlID": "forgotPassword",
     "ControlType": "link",
+    "InternalType": "simpleLink",
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Forgot Password?",
     "ControlPlaceholder": "",
@@ -289,12 +326,12 @@
     "Route": "reset-password",
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"simpleLink\"}",
+    "MetaData": null,
     "Validation": null
   },
   // #endregion
 
-  // #region [Project Management Page]
+  // #region [Project Management]
 
   {
     "PageID": "projectManagement",
@@ -302,6 +339,8 @@
     "SectionID": "header",
     "ControlID": "projectList",
     "ControlType": "link",
+    "InternalType": "headerNav",
+    "Icon": "format_list_bulleted",
     "SecurityTableID": null,
     "ControlLabel": "Project List",
     "ControlPlaceholder": null,
@@ -309,7 +348,7 @@
     "Route": null,
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"headerNav\",\"icon\":\"format_list_bulleted\"}",
+    "MetaData": null,
     "Validation": null
   },
   {
@@ -318,6 +357,8 @@
     "SectionID": "header",
     "ControlID": "projectOptions",
     "ControlType": "link",
+    "InternalType": "headerNav",
+    "Icon": "discover_tune",
     "SecurityTableID": null,
     "ControlLabel": "Project Options",
     "ControlPlaceholder": null,
@@ -325,7 +366,7 @@
     "Route": "project-options",
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"headerNav\",\"icon\":\"discover_tune\"}",
+    "MetaData": null,
     "Validation": null
   },
   {
@@ -334,6 +375,8 @@
     "SectionID": "header",
     "ControlID": "projectAdd",
     "ControlType": "link",
+    "InternalType": "buttonNav",
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Add Project",
     "ControlPlaceholder": null,
@@ -341,7 +384,7 @@
     "Route": "project-add",
     "RoutePageID": null,
     "Action": null,
-    "MetaData": "{\"type\":\"buttonNav\",\"color\":\"secondary\"}",
+    "MetaData": "{\"color\":\"secondary\"}",
     "Validation": null
   },
   // #endregion
@@ -353,6 +396,8 @@
     "SectionID": "details",
     "ControlID": "projectName",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Project Name",
     "ControlPlaceholder": null,
@@ -369,6 +414,8 @@
     "SectionID": "details",
     "ControlID": "projectType",
     "ControlType": "select",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Project Type",
     "ControlPlaceholder": null,
@@ -385,6 +432,8 @@
     "SectionID": "details",
     "ControlID": "shortDescription",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Short Description",
     "ControlPlaceholder": null,
@@ -401,6 +450,8 @@
     "SectionID": "details",
     "ControlID": "description",
     "ControlType": "textArea",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Description",
     "ControlPlaceholder": null,
@@ -420,6 +471,8 @@
     "SectionID": "type",
     "ControlID": "projectType",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Project Type",
     "ControlPlaceholder": null,
@@ -434,17 +487,37 @@
     "PageID": "projectOptions",
     "PanelID": "options",
     "SectionID": "type",
-    "ControlID": "addProjectType",
-    "ControlType": "button",
+    "ControlID": "typeDescription",
+    "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
-    "ControlLabel": "Add",
+    "ControlLabel": "Type Description",
     "ControlPlaceholder": null,
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
-    "Action": "submitControl",
+    "Action": null,
     "MetaData": null,
-    "Validation": "{\"type\":\"circle\",\"size\":\"small\",\"icon\":\"add\",\"linkedControls\":\"projectName\"}"
+    "Validation": null
+  },
+  {
+    "PageID": "projectOptions",
+    "PanelID": "options",
+    "SectionID": "type",
+    "ControlID": "addProjectType",
+    "ControlType": "button",
+    "InternalType": null,
+    "Icon": "add",
+    "SecurityTableID": null,
+    "ControlLabel": "+",
+    "ControlPlaceholder": null,
+    "ControlTooltip": null,
+    "Route": null,
+    "RoutePageID": null,
+    "Action": "submitSection",
+    "MetaData": "{\"type\":\"circle\",\"size\":\"small\"}",
+    "Validation": null
   },
   {
     "PageID": "projectOptions",
@@ -452,6 +525,8 @@
     "SectionID": "technology",
     "ControlID": "technologyName",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Technology Name",
     "ControlPlaceholder": null,
@@ -468,6 +543,8 @@
     "SectionID": "technology",
     "ControlID": "technologyIcon",
     "ControlType": "input",
+    "InternalType": null,
+    "Icon": null,
     "SecurityTableID": null,
     "ControlLabel": "Technology Icon URL",
     "ControlPlaceholder": null,
@@ -484,15 +561,53 @@
     "SectionID": "technology",
     "ControlID": "addTechnology",
     "ControlType": "button",
+    "InternalType": null,
+    "Icon": "add",
     "SecurityTableID": null,
-    "ControlLabel": "Add",
+    "ControlLabel": "+",
     "ControlPlaceholder": null,
     "ControlTooltip": null,
     "Route": null,
     "RoutePageID": null,
-    "Action": "submitControl",
+    "Action": "submitSection",
+    "MetaData": "{\"type\":\"circle\",\"size\":\"small\"}",
+    "Validation": null
+  },
+  {
+    "PageID": "projectOptions",
+    "PanelID": "removeTypes",
+    "SectionID": "removeTypes",
+    "ControlID": "projectType",
+    "ControlType": "label",
+    "InternalType": null,
+    "Icon": null,
+    "SecurityTableID": null,
+    "ControlLabel": "Technology Icon URL",
+    "ControlPlaceholder": null,
+    "ControlTooltip": null,
+    "Route": null,
+    "RoutePageID": null,
+    "Action": null,
     "MetaData": null,
-    "Validation": "{\"type\":\"circle\",\"size\":\"small\",\"icon\":\"add\",\"linkedControls\":\"technologyName,technologyIcon\"}"
+    "Validation": null
+  },
+  {
+    "PageID": "projectOptions",
+    "PanelID": "removeTypes",
+    "SectionID": "removeTypes",
+    "ControlID": "removeType",
+    "ControlType": "button",
+    "InternalType": null,
+    "Icon": "delete",
+    "SecurityTableID": null,
+    "ControlLabel": "-",
+    "ControlPlaceholder": null,
+    "ControlTooltip": null,
+    "Route": null,
+    "RoutePageID": null,
+    "Action": "deleteSection",
+    "MetaData": "{\"type\":\"circle\",\"size\":\"small\"}",
+    "Validation": null
   }
   // #endregion
 ]

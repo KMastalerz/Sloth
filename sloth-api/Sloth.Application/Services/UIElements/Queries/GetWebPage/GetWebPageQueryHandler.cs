@@ -35,7 +35,6 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
         var webPage = await uIElementsRepository.GetWebPageAsync(request.PageID) ??
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
-
         var webPanels = await uIElementsRepository.ListWebPanelAsync(request.PageID) ??
             throw new NotFoundException(nameof(List<WebPanel>), request.PageID);
 
@@ -44,25 +43,58 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
 
 
         // Build list of needed security tables
-        var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct();
+        var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct()
+            .Union(webPanels.Where(wp => wp.SecurityTableID is not null).Select(wp => wp.SecurityTableID).Distinct());
 
-        if(webPage.SecurityTableID is not null)
+        if (webPage.SecurityTableID is not null)
             neededSecTables.Union([webPage.SecurityTableID]);
 
         // Get security tables
         var secTables = await securityRepository.ListControlSecurityAsync(WebSecurity.Default, neededSecTables as IEnumerable<string>) ?? [];
 
-        var wcDict = webControls.ToDictionary(wc => wc.ControlID, wc => wc.SecurityTableID);
-
         var dto = mapper.Map<GetWebPage>(webPage);
-        dto.WebPanels = mapper.Map<IEnumerable<GetWebPanel>>(webPanels).ToList();
+        // Map the raw panels to DTOs
+        var dtoPanels = mapper.Map<IEnumerable<GetWebPanel>>(webPanels).ToList();
+
+        // Split the panelsOrder to get the order array
+        var panelsOrder = dto.Panels.Split(',');
+
+        // Sort dtoPanels based on the order in panelsOrder and create a list of GetWebPanel
+        dto.WebPanels = panelsOrder
+            .Select(order => dtoPanels.FirstOrDefault(panel => panel.PanelID == order.Trim())) 
+            .Where(panel => panel != null)
+            .Cast<GetWebPanel>()
+            .ToList();
+
+
+        // For each WebPanel, map WebSections and respect the order
         dto.WebPanels.ForEach(wp =>
         {
-            wp.WebControls = mapper.Map<IEnumerable<GetWebControl>>(webControls.Where(wc => wc.PanelID == wp.PanelID)).ToList();
+            // Assuming `sections` in WebPanel contains the order
+            var controlOrder = wp.Controls.Split(',');
+
+            // Map WebSections and order them based on `sectionOrder`
+            wp.WebControls = controlOrder
+                .Select(order => webControls.FirstOrDefault(ws => ws.SectionID == order.Trim() && ws.PanelID == wp.PanelID))
+                .Where(ws => ws != null)
+                .Select(ws => mapper.Map<GetWebControl>(ws))
+                .ToList();
+        });
+
+        // Create dictionaries for faster lookups
+        var wpDict = webPanels.ToDictionary(w => w.PanelID, w => w.SecurityTableID);
+        var wcDict = webControls.ToDictionary(w => new { w.ControlID, w.SectionID, w.PanelID }, w => w.SecurityTableID);
+
+        dto.WebPanels.ForEach(wp =>
+        {
             wp.WebControls.ForEach(wc =>
             {
-                var wcSecTable = wcDict.TryGetValue(wc.ControlID, out var wcSec) ? wcSec : null;
-                var searchedSecTable = wcSecTable ?? webPage.SecurityTableID;
+                // Look up security table IDs using dictionaries for fast access
+                var wcSecTable = wcDict.TryGetValue(new { wc.ControlID, wc.SectionID, wc.PanelID }, out var wcSec) ? wcSec : null;
+                var wpSecTable = wpDict.TryGetValue(wp.PanelID, out var wpSec) ? wpSec : null;
+
+                // Determine the effective security table ID
+                var searchedSecTable = wcSecTable ?? wpSecTable ?? webPage.SecurityTableID;
 
                 if (searchedSecTable is not null)
                 {
@@ -78,8 +110,6 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
                 }
             });
         });
-
-        // TO DO: Add Validators 
 
         // TO DO: Add Translations
 

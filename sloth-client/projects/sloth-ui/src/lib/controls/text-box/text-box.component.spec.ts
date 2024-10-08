@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridFormComponent } from './grid-form.component';
+import { TextBoxComponent } from './text-box.component';
 
-describe('GridFormComponent', () => {
-  let component: GridFormComponent;
-  let fixture: ComponentFixture<GridFormComponent>;
+describe('TextBoxComponent', () => {
+  let component: TextBoxComponent;
+  let fixture: ComponentFixture<TextBoxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GridFormComponent]
+      imports: [TextBoxComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GridFormComponent);
+    fixture = TestBed.createComponent(TextBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -21,4 +21,3 @@ describe('GridFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-s

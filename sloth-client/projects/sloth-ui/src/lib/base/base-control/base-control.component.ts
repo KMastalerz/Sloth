@@ -10,6 +10,7 @@ import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
 export class BaseControl  {
   config = model.required<WebControl>();
   pageSync = model.required<DynamicPageSync>();
+  index = model.required<number | undefined>();
 
   controlID = computed<string>(() => this.config()?.controlID ?? '');
   metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));

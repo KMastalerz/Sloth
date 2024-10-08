@@ -1,22 +1,17 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { BasePanel } from '../../base/base-panel/base-panel.component';
 import { DynamicControlDirective } from '../../directives/dynamic-control/dynamic-control.directive';
 import { WebControl, WebSection } from '@sloth-http';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'sl-grid-form',
+  selector: 'sl-flex-form',
   standalone: true,
   imports: [DynamicControlDirective, FormsModule],
-  templateUrl: './grid-form.component.html',
-  styleUrl: './grid-form.component.scss'
+  templateUrl: './flex-form.component.html',
+  styleUrl: './flex-form.component.scss'
 })
-export class GridFormComponent extends BasePanel {
-  columns  = computed<string>(()=> {
-    const count = this.metaData()?.columns ?? 1;
-    return `repeat(${count}, minmax(calc(100% / ${count} - 1rem), 1fr))`
-  });
-  
+export class FlexFormComponent extends BasePanel {
   protected getSectionGroupedControls(section: WebSection): string[] | undefined {
     if(section.metaData) {
       const metaData = JSON.parse(section.metaData);
@@ -29,6 +24,6 @@ export class GridFormComponent extends BasePanel {
   };
 
   protected getControl(section: WebSection, controlID: string): WebControl {
-    return section.webControls?.find(c => c.controlID === controlID.trim()) as WebControl;
+    return section.webControls?.find(c => c.controlID === controlID) as WebControl;
   }
 }

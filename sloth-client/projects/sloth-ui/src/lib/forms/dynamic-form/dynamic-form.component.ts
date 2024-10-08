@@ -1,7 +1,9 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { DynamicPanelDirective } from '../../directives/dynamic-panel/dynamic-panel.directive';
 import { BasePage } from '../../base/base-page/base-page.component';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'sl-dynamic-form',
   standalone: true,

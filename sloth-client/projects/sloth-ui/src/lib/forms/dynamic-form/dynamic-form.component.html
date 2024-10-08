@@ -1,12 +1,13 @@
 <div class="sl-dynamic-form" [class]="{
-        'sl-dynamic-form-column': orientation() === 'horizontal',
-        'sl-dynamic-form-row': orientation() === 'vertical',
+        'sl-dynamic-form-column': orientation() === 'vertical',
+        'sl-dynamic-form-row': orientation() === 'horizontal',
         'sl-dynamic-form-standard': background() === 'standard',
         'sl-dynamic-form-primary': background() === 'primary',
-        'sl-dynamic-form-centered': position() === 'centered',
-        'sl-dynamic-form-left': position() === 'left',
-        'sl-dynamic-form-right': position() === 'right',
-        'sl-dynamic-form-bottom': position() === 'bottom'
+        'sl-center': position().includes('center'),
+        'sl-left': position().includes('left'),
+        'sl-right': position().includes('right'),
+        'sl-bottom': position().includes('bottom'),
+        'sl-top': position().includes('top')
     }">
     @for(panel of panels(); track $index) {
         <ng-container slDynamicPanel [pageSync]="pageSync()" [config]="panel"></ng-container>

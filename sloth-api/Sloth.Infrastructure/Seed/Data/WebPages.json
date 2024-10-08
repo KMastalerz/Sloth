@@ -5,11 +5,12 @@
     "SecurityTableID": null,
     "Description": "Main page",
     "Panels": "sideNav",
-    "MetaData": "{\"orientation\":\"horizontal\",\"position\":\"top\",\"background\":\"standard\"}",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
+    "Orientation": "horizontal",
+    "Background": "standard",
+    "Position": null,
+    "Class": null,
+    "Style": null,
+    "MetaData": null
   },
   {
     "PageID": "auth",
@@ -17,11 +18,12 @@
     "SecurityTableID": null,
     "Description": "Login page",
     "Panels": "login",
-    "MetaData": "{\"orientation\":\"vertical\",\"position\":\"centered\",\"background\":\"primary\"}",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
+    "Orientation": "vertical",
+    "Background": "primary",
+    "Position": "center",
+    "Class": null,
+    "Style": null,
+    "MetaData": null
   },
   {
     "PageID": "projectManagement",
@@ -29,11 +31,12 @@
     "SecurityTableID": null,
     "Description": "Base page to manage project configuration and add new ones",
     "Panels": "header",
-    "MetaData": "{\"orientation\":\"horizontal\",\"position\":\"left\",\"background\":\"standard\"}",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
+    "Orientation": "vertical",
+    "Background": "standard",
+    "Position": null,
+    "Class": null,
+    "Style": null,
+    "MetaData": null
   },
   {
     "PageID": "projectAdd",
@@ -41,22 +44,24 @@
     "SecurityTableID": null,
     "Description": "Page to add new projects",
     "Panels": "details",
-    "MetaData": "{\"orientation\":\"vertical\",\"position\":\"top\",\"background\":\"standard\"}",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
+    "Orientation": "vertical",
+    "Background": "standard",
+    "Position": "top-center",
+    "Class": null,
+    "Style": null,
+    "MetaData": null
   },
   {
     "PageID": "projectOptions",
     "Title": "Project Options",
     "SecurityTableID": null,
     "Description": "Here you can add, edit and delete project types etc.",
-    "Panels": "options",
-    "MetaData": "{\"orientation\":\"vertical\",\"position\":\"top\",\"background\":\"standard\"}",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
+    "Panels": "options,removeTypes",
+    "Orientation": "vertical",
+    "Background": "standard",
+    "Position": "top-center",
+    "Class": null,
+    "Style": null,
+    "MetaData": null
   }
 ]

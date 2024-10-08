@@ -27,7 +27,15 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
     internal DbSet<WebPage> WebPage { get; set; }
     internal DbSet<WebPanel> WebPanel { get; set; }
     internal DbSet<WebOption> WebOption { get; set; }
-    internal DbSet<WebSection> WebSection { get; set; }
+    #endregion
+
+    #region [Project] 
+    internal DbSet<Project> Project { get; set; }
+    internal DbSet<ProjectFunctionality> ProjectFunctionality { get; set; }
+    internal DbSet<ProjectReleases> ProjectReleases { get; set; }
+    internal DbSet<ProjectType> ProjectType { get; set; }
+    internal DbSet<ProjectTechnologyStack> ProjectTechnologyStack { get; set; }
+    internal DbSet<Technology> Technology { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -65,25 +73,14 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // WebSection Configuration
-        builder.Entity<WebSection>(entity =>
-        {
-            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID });
-
-            entity.HasOne<WebPanel>()
-                  .WithMany()
-                  .HasForeignKey(wp => new { wp.PageID, wp.PanelID})
-                  .OnDelete(DeleteBehavior.Cascade);
-        });
-
         // WebControl Configuration
         builder.Entity<WebControl>(entity =>
         {
-            entity.HasKey(e => new { e.PageID, e.PanelID, e.SectionID, e.ControlID });
+            entity.HasKey(e => new { e.PageID, e.PanelID, e.ControlID });
 
-            entity.HasOne<WebSection>()
+            entity.HasOne<WebPanel>()
                 .WithMany()
-                .HasForeignKey(wc => new { wc.PageID, wc.PanelID, wc.SectionID })
+                .HasForeignKey(wc => new { wc.PageID, wc.PanelID })
                 .OnDelete(DeleteBehavior.Cascade);
 
         });
@@ -253,6 +250,56 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
                   .WithMany()
                   .HasForeignKey(e => e.UserID)
                   .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        #endregion
+
+        #region [Project]
+
+        // Project Configuration
+        builder.Entity<Project>(entity =>
+        {
+            entity.HasKey(e => e.ProjectID);
+        });
+
+        // ProjectFunctionality Configuration
+        builder.Entity<ProjectFunctionality>(entity =>
+        {
+            entity.HasKey(e => e.FunctionalityID);
+        });
+
+        // ProjectReleases Configuration
+        builder.Entity<ProjectReleases>(entity =>
+        {
+            entity.HasKey(e => e.ReleaseID);
+        });
+
+        // ProjectType Configuration
+        builder.Entity<ProjectType>(entity =>
+        {
+            entity.HasKey(e => e.Type);
+        });
+
+        // ProjectTechnologyStack Configuration
+        builder.Entity<ProjectTechnologyStack>(entity =>
+        {
+            entity.HasKey(e => new { e.ProjectID, e.TechnologyID });
+
+            entity.HasOne<Project>()
+                  .WithMany()
+                  .HasForeignKey(e => e.ProjectID)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne<Technology>()
+                  .WithMany()
+                  .HasForeignKey(e => e.TechnologyID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Technology Configuration
+        builder.Entity<Technology>(entity =>
+        {
+            entity.HasKey(e => e.TechnologyID);
         });
 
         #endregion

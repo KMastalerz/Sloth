@@ -1,4 +1,4 @@
-import { Directive, inject, input, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, inject, input, ViewContainerRef } from '@angular/core';
 import { WebControl } from '@sloth-http';
 import { DynamicDirectoryService } from '../../directories/dynamic-directory/dynamic-directory.service';
 import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
@@ -13,6 +13,7 @@ export class DynamicControlDirective {
 
   pageSync = input.required<DynamicPageSync>();
   config = input.required<WebControl>();
+  index = input<number | undefined>(undefined);
 
   ngOnInit(): void {  
     const component = this.directory.getControl(this.config().controlType);
@@ -20,6 +21,7 @@ export class DynamicControlDirective {
       const componentRef: any = this.container.createComponent(component);
       componentRef.instance.config.set(this.config());
       componentRef.instance.pageSync.set(this.pageSync());
+      componentRef.instance.index.set(this.index());
     }
   }
 }

@@ -16,7 +16,6 @@ import { DynamicControlDirective } from '../../directives/dynamic-control/dynami
 export class SideNavComponent extends BasePanel {
   collapsed = signal<boolean>(false);
   icon = computed(()=> this.collapsed() ? IconNames.ChevronRight : IconNames.ChevronLeft);
-  sections = computed(()=> this.pageSync().getWebSectionsByID(this.config()?.panelID));
 
   protected onCollapseToggle(): void {
     this.collapsed.set(!this.collapsed());

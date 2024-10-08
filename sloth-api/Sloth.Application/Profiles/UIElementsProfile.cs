@@ -12,8 +12,6 @@ public class UIElementsProfile : Profile
 
         CreateMap<WebPanel, GetWebPanel>().ReverseMap();
 
-        CreateMap<WebSection, GetWebSection>().ReverseMap();
-
         CreateMap<WebControl, GetWebControl>().ReverseMap();
     }
 }

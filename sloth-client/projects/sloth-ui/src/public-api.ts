@@ -30,10 +30,5 @@ export * from './lib/forms/dynamic-form/dynamic-form.component';
 // models 
 export * from './lib/models/meta-data.model';
 
-// panels
-export * from './lib/panels/form/form.component';
-export * from './lib/panels/header-nav/header-nav.component';
-export * from './lib/panels/side-nav/side-nav.component';
-
 // sections
 export * from './lib/sections/branding-section/branding-section.component';

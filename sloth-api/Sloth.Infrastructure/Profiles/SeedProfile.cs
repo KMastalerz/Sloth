@@ -19,9 +19,7 @@ internal class SeedProfile : Profile
 
         CreateMap<WebPage, WebPageSeed>().ReverseMap();
 
-        CreateMap<WebPageSecurity, WebPageSeed>().ReverseMap();
-
-        CreateMap<WebSection, WebSectionSeed>().ReverseMap();
+        CreateMap<WebPageSecurity, WebPageSecuritySeed>().ReverseMap();
 
         CreateMap<WebPanel, WebPanelSeed>().ReverseMap();
 

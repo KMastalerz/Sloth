@@ -4,14 +4,13 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BaseControl } from '../../base/base-control/base-control.component';
 import { Action, ActionType } from '../../page-sync/action';
-import { CollapseDirective } from '../../directives/collapse/collapse.directive';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
   selector: 'sl-link',
   standalone: true,
-  imports: [RouterLink, MatTooltip, MatBadge, CollapseDirective],
+  imports: [RouterLink, MatTooltip, MatBadge],
   templateUrl: './link.component.html',
   styleUrl: './link.component.scss'
 })

@@ -1,8 +1,28 @@
 // #region[side-nav]
 
+.sl-side-nav-toggle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(50%);
+    transform: translateX(50%) translateY(100%);
+    width: $ctrl-size-m;
+    height: $ctrl-size-m;
+    background: linear-gradient(to right, transparent 50%, $sl-background 50%);
+    border-radius: $border-radius-m;
+    box-shadow: $sl-button-shadow;
+    cursor: pointer;
+    &:hover {
+        box-shadow: $sl-button-shadow-raised;
+    }
+}
+
 .sl-side-nav-container {
     z-index: 1000;
-    background: $sl-background-light-shade;
     position: absolute;
     width: fit-content;
     height: 100%;
@@ -20,6 +40,13 @@
     background: $sl-background;
     border-radius: 0 $border-radius-l $border-radius-l 0;
     border: 0.1rem solid $sl-background-shade;
+}
+
+.sl-side-nav-place-blocker{
+    display: block;
+    background: $sl-background-light-shade;
+    width: $sl-nav-collapsed;
+    height: 100%;
 }
 
 .sl-side-nav {
@@ -63,7 +90,7 @@
     height: $sl-header-nav-height;
     width: 100%;
     gap: $space-s;
-    padding-left: calc($sl-nav-collapsed + $space-l);
+    padding-left: $space-l;
     border-bottom: 0.1rem solid $sl-background-shade;
     background: $sl-background-light-shade;
     color: $sl-on-background;
@@ -86,12 +113,73 @@
 
 // #endregion
 
+// #region[flex-form]
+
+.sl-flex-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sl-flex-form-item {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: $space-s;
+    padding:  $space-s;
+}
+
+.sl-flex-form-section {
+    display: flex;
+    flex-direction: column; 
+    gap: $space-s;
+    justify-content: end;
+    padding: $space-s;
+}
+
+.sl-flex-form-cell {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    gap: $space-s;
+}
+
+.sl-flex-form-item-title
+{
+    font-size: $font-size-m;
+    font-weight: 400;
+}
+
+.sl-flex-form-item-title-break
+{
+    border: none; height: 0.2rem; background-color: $sl-neutral-tint;
+}
+
+// #endregion
+
 // #region[grid-form]
 
 .sl-grid-form {
     display: grid;
-    gap: $space-m;
-    margin: $space-m;
+    justify-content: space-between;
+}
+
+.sl-grid-form-item {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: $space-s;
+    padding:  $space-s;
+}
+
+.sl-grid-form-section {
+    display: flex;
+    flex-direction: column; 
+    gap: $space-s;
+    justify-content: end;
+    padding: $space-s;
 }
 
 .sl-grid-form-cell {
@@ -99,6 +187,56 @@
     flex-direction: row; 
     align-items: center;
     gap: $space-s;
+}
+
+.sl-grid-form-item-title
+{
+    font-size: $font-size-m;
+    font-weight: 400;
+}
+
+.sl-grid-form-item-title-break
+{
+    border: none; height: 0.2rem; background-color: $sl-neutral-tint;
+}
+
+// #endregion
+
+// #region[control-list]
+
+.sl-control-list {
+    display: flex;
+    gap: $space-s;
+    padding: $space-s;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.sl-control-list-section {
+    display: flex;
+    flex-direction: column; 
+    gap: $space-s;
+    justify-content: end;
+    padding: $space-s;
+}
+
+.sl-control-list-cell {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    gap: $space-s;
+}
+
+.sl-control-list-item-title
+{
+    font-size: $font-size-m;
+    font-weight: 400;
+}
+
+.sl-control-list-item-title-break
+{
+    border: none; height: 0.2rem; background-color: $sl-neutral-tint;
 }
 
 // #endregion

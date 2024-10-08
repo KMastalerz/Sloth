@@ -1,15 +1,15 @@
-<div class="sl-grid-form" [style.gridTemplateColumns]="columns()">
+<div class="sl-flex-form">
     @for(section of sections(); track $index) {
         <ng-container>
-            <div class="sl-grid-form-item">
+            <div class="sl-flex-form-item">
                 @if(section.title) {
-                    <div class="sl-grid-form-item-title">{{section.title}}</div>
-                    <hr class="sl-grid-form-item-title-break"/>
+                    <div class="sl-flex-form-item-title">{{section.title}}</div>
+                    <hr class="sl-flex-form-item-title-break"/>
                 }
-                <div class="sl-grid-form-section">
+                <div class="sl-flex-form-section">
                     @for(grouped of getSectionGroupedControls(section); track $index) {
                         <ng-container>
-                            <div class="sl-grid-form-cell">
+                            <div class="sl-flex-form-cell">
                             @for(control of grouped.split(','); track $index) {
                                 <ng-container >
                                     <ng-container slDynamicControl [config]="getControl(section, control)" [pageSync]="pageSync()">
