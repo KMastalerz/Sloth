@@ -9,7 +9,8 @@ namespace Sloth.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-[Authorize]
+// TODO: Authorize controller
+//[Authorize]
 public class UIElementsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

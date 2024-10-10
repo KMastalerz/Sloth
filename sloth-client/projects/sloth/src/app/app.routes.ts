@@ -27,7 +27,7 @@ export const routes: Routes = [
     {   
         path: 'main', 
         component: MainComponent,
-        canActivate: [authGuard],  
+        // canActivate: [authGuard],  
         resolve: {
             pageSync: pageResolver
         },

@@ -7,10 +7,13 @@ $material-icons-font-size: 24px !default;
 $material-icons-font-display: block !default;
 
 
-@import "functions";
 @import "theme";
 @import "variables";
 @import "resets";
 
+@import "borders";
 @import "controls";
-
+@import "panel-controls";
+@import "panels";
+@import "sections";
+@import "spacings";

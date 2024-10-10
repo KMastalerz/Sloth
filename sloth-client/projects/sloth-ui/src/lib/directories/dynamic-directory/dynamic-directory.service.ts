@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ButtonComponent } from '../../controls/button/button.component';
 import { InputComponent } from '../../controls/input/input.component';
-import { TextBoxComponent } from '../../controls/text-box/text-box.component';
 import { LinkComponent } from '../../controls/link/link.component';
 import { PasswordComponent } from '../../controls/password/password.component';
 
@@ -9,7 +8,6 @@ import { FormComponent } from '../../panels/form/form.component';
 import { FlexFormComponent } from '../../panels/flex-form/flex-form.component';
 import { GridFormComponent } from '../../panels/grid-form/grid-form.component';
 import { SideNavComponent } from '../../panels/side-nav/side-nav.component';
-import { HeaderNavComponent } from '../../panels/header-nav/header-nav.component';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +35,6 @@ export class DynamicDirectoryService {
   constructor() { 
     this.registerControl('button', ButtonComponent);
     this.registerControl('input', InputComponent);
-    this.registerControl('label', TextBoxComponent)
     this.registerControl('link', LinkComponent)
     this.registerControl('password', PasswordComponent);
     
@@ -45,6 +42,5 @@ export class DynamicDirectoryService {
     this.registerPanel('flexForm', FlexFormComponent);
     this.registerPanel('gridForm', GridFormComponent);
     this.registerPanel('sideNav', SideNavComponent);
-    this.registerPanel('headerNav', HeaderNavComponent)
   }
 }

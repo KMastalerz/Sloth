@@ -1,22 +1,19 @@
-<div class="sl-side-nav-container">
-    <div class="sl-side-nav-wrapper">
-        <button class="sl-side-nav-toggle" (click)="onCollapseToggle()">
-            <span class="sl-icon-medium">{{ icon() }}</span>
-        </button>
-        <div class="sl-side-nav" [class]="{
-            'sl-collapsed': collapsed(),
-            'sl-expanded': !collapsed()
-        }">
-            <sl-branding-section [collapsed]="collapsed()"></sl-branding-section>
-            @for(section of sections(); track $index) {
-                @if(!collapsed()){
-                    <span class="sl-section-title">{{ section.label }}</span>
-                }
-                @for(control of section.webControls; track $index) {
-                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
-                }
+<div class="sl-panel-absolute">
+    <button class="sl-side-nav-toggle sl-border-radius-xs">
+        <span>chevron_left</span>
+    </button>
+    <div class="sl-panel-base sl-gap-s sl-padding-s sl-border-radius-right-l">
+        <sl-branding-section [showTitle]="!collapsed()"></sl-branding-section>
+        @for(section of sections(); track $index) {
+            @if(!collapsed()){
+                <span class="sl-title-section">{{ section.label }}</span>
             }
-        </div>
+            @for(control of section.webControls; track $index) {
+                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
+            }
+        }
     </div>
 </div>
-<div class="sl-side-nav-place-blocker"></div>
+<div>
+
+</div>

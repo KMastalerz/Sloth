@@ -1,7 +1,0 @@
-<div class="sl-header-nav">
-    @for(section of sections(); track $index) {
-        @for(control of section.webControls; track $index) {
-            <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
-        }
-    }
-</div>

@@ -1,6 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
-import { IconNames } from '../../constants/icon.constants';
-import { ActionType } from '../../page-sync/action';
+import { Component, signal } from '@angular/core';
 import { BasePanel } from '../../base/base-panel/base-panel.component';
 import { BrandingSectionComponent } from '../../sections/branding-section/branding-section.component';
 import { DynamicControlDirective } from '../../directives/dynamic-control/dynamic-control.directive';
@@ -14,11 +12,4 @@ import { DynamicControlDirective } from '../../directives/dynamic-control/dynami
 })
 export class SideNavComponent extends BasePanel {
   collapsed = signal<boolean>(false);
-  icon = computed(()=> this.collapsed() ? IconNames.ChevronRight : IconNames.ChevronLeft);
-
-  protected onCollapseToggle(): void {
-    // Toggle the collapsed state and send the action to the parent
-    this.collapsed.set(!this.collapsed());
-    this.pageSync().toChild.next({ actionType: ActionType.CollapseLink, param: this.collapsed() });
-  }
 }

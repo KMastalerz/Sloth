@@ -16,9 +16,12 @@ export class BaseControl  {
   metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));
   validation = computed<any>(() => JSON.parse(this.config()?.validation ?? '{}'));
 
-  action = computed<string>(() => this.config()?.action ?? '');
-  tooltip = computed<string>(() => this.config()?.controlTooltip ?? '');  
-  label = computed<string>(() => this.config()?.controlLabel ?? '');  
-  placeholder = computed<string>(() => this.config()?.controlPlaceholder ?? '');
-  route = computed<string>(() => this.config()?.route ?? '');  
+  action = computed<string | undefined>(() => this.config()?.action ?? undefined);
+  icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
+  label = computed<string | undefined>(() => this.config()?.controlLabel ?? undefined);  
+  placeholder = computed<string | undefined>(() => this.config()?.controlPlaceholder ?? undefined);
+  route = computed<string | undefined>(() => this.config()?.route ?? undefined);  
+  tooltip = computed<string | undefined>(() => this.config()?.controlTooltip ?? undefined);  
+  type = computed<string | undefined>(()=>this.config()?.internalType ?? undefined);
 }
+

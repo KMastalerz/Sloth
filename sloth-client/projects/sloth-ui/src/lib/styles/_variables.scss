@@ -17,8 +17,10 @@ $font-size-xs: 1.0rem;   // 10px
 $font-size-s: 1.2rem;    // 12px
 $font-size-m: 1.4rem;     // 14px
 $font-size-l: 1.6rem;    // 16px
-$font-size-xl: 2.0rem;   // 20px
-$font-size-ul: 2.4rem;   // 24px
+$font-size-xl: 2.4rem;   // 24px
+$font-size-ul: 3.2rem;   // 32px
+$fons-size-header-m: 3.2rem; // 32px
+$fons-size-header-l: 4.0rem; // 40px
 
 /* Font Weights */
 $font-weight-ultra-thin: 100;
@@ -38,6 +40,7 @@ $icon-size-s: 2.0rem;     // 20px
 $icon-size-m: 2.4rem;     // 24px  
 $icon-size-l: 2.8rem;     // 32px
 $icon-size-xl: 3.2rem;    // 40px
+$icon-size-branding: 8rem; // 80px
 
 /* Border Sizes */
 $border-width-xs: 0.5rem;  // 0.5px
@@ -55,14 +58,8 @@ $border-radius-pill: 50%;  // remains the same for pill shapes
 /* Controls Sizes */
 $control-height-m: 3.6rem;  // 36px
 $control-height-l: 4.0rem;  // 40px
-
 $control-width-m: 24rem;  // 240px
 
-
-
-/* Branding Sizes */
-$branding-icon-size: 8.0rem; // 80px
-$branding-font-size: 4.4rem;    // 24px
 
 /* Panels Sizes */
 $sl-full-panel-width: 100%;

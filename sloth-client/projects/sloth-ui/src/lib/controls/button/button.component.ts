@@ -9,7 +9,6 @@ import { Action, ActionType } from '../../page-sync/action';
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent extends BaseControl {
-  icon = computed(()=>this.metaData()?.icon ?? '');
 
   onClick(): void {
     let action: Action | undefined;

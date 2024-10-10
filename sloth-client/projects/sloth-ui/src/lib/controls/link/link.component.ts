@@ -17,10 +17,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class LinkComponent extends BaseControl implements OnInit {
   // TO DO: Promably can be passed as input from parent.
   collapsed = signal<boolean>(false);
-
-  icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
-  hasIcon = computed<boolean>(()=>!(!this.icon()));
-  type = computed<string | undefined>(()=>this.config()?.internalType ?? 'regular');
+  
   color = computed<string | undefined>(()=>this.metaData()?.color ?? 'transparent');
 
   warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);

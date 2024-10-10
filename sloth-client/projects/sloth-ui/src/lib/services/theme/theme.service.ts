@@ -28,9 +28,8 @@ export class ThemeService {
     });
 
     // Populate the css variables
-    const root = document.documentElement;
     themes.forEach(theme => {
-      root.style.setProperty(`${theme.key}`, theme.value);
+      document.documentElement.style.setProperty(`${theme.key}`, theme.value);
     });
   }
 
@@ -38,12 +37,15 @@ export class ThemeService {
     shades.forEach(shade => { 
       const tintShade = shade < 0 ? 'shade' : 'tint';
       const generatedTintShade = shade < 0  ? this.generateShade(rgb, factor, shade) : this.generateTint(rgb, factor, shade);
+
       const themeKey = `--sl-${name}-${tintShade}-${Math.abs(shade)}`;
       const themeValue = this.rgbToHex(generatedTintShade);
       const theme = { key: themeKey, value: themeValue };
+
       const onThemeKey = `--sl-on-${name}-${tintShade}-${Math.abs(shade)}`;
       const onThemeValue = this.onTintShadeColor(generatedTintShade);
       const onTheme = { key: onThemeKey, value: onThemeValue };
+      
       themes.push(theme);
       themes.push(onTheme);
     });

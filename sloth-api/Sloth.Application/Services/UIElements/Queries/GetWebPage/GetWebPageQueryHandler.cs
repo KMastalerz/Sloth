@@ -139,7 +139,7 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
         });
 
 
-        // TO DO: Add Translations
+        // TODO: Add Translations
 
         return dto;
     }

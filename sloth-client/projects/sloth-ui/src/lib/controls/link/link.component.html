@@ -1,47 +1,26 @@
-@if(type() === 'sideNav' || type() === 'headerNav' || type() === 'buttonNav') {
-    <a  #navLink class="sl-control sl-link sl-on-hover-pop" 
-        [class]="{
-            'sl-link-primary': color() === 'primary',
-            'sl-link-secondary': color() === 'secondary',
-            'sl-link-header': type() === 'headerNav' && !color(),
-            'sl-link-side-nav': type() === 'sideNav',
-        }"
-        [matTooltip]="tooltip()"
-        [matTooltipDisabled]="!collapsed() || !tooltip()"
-        [matTooltipClass]="'my-mat-tooltip'"
-        matTooltipPosition="left"
-        [routerLink]="[route()]">
+@switch(type()) {
+    @case('side') {
+       <a   class="sl-control-base sl-control-link"
+            [matTooltipDisabled]="!collapsed() || !tooltip()"
+            [matTooltip]="tooltip()"
+            matTooltipPosition="left"
+            [routerLink]="[route()]">
+            
+            @if(icon()) {
+                <span   class="sl-control-icon"
+                        [matBadge]="count()" 
+                        [matBadgeHidden]="!collapsed() || !count()"> {{ icon() }}</span>
+            }
 
-    @if(icon()) {
-        <span   class="sl-link-icon"
-                [class]="{
-                    'sl-expanded': !collapsed(),
-                    'sl-collapsed': collapsed()
-                }"
-                [class]="{
-                    'sl-badge-info': checkResult() === 'info',
-                    'sl-badge-warning': checkResult() === 'warning',
-                    'sl-badge-error': checkResult() === 'error',
-                    'sl-pop': type() === 'sideNav'
-                }" 
-                [matBadge]="count()" 
-                [matBadgeHidden]="!collapsed() || !count()"
-                >
-            {{ icon() }}
-        </span>
+            @if(collapsed()) {
+                <label class="sl-control-label">{{ label() }}</label>
+                @if(count()) {
+                    <div>
+                        {{ count() }}
+                    </div>
+                }
+            }
+       </a>
     }
-
-    @if(!collapsed()) {
-    <span class="sl-link-label">{{ label() }}</span>
-
-        @if(count()) {
-            <p  class="sl-tag" 
-                [class]="{
-                    'sl-tag-info': checkResult() === 'info',
-                    'sl-tag-warning': checkResult() === 'warning',
-                    'sl-tag-error': checkResult() === 'error'
-            }"> {{ count() }}</p>
-        }
-    }
-</a>
 }
+

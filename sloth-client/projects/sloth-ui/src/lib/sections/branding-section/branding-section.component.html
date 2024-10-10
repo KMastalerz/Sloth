@@ -1,6 +1,8 @@
-<div class="sl-branding-container sl-flex-cenetered">
-    <img class="sl-branding-image sl-image-pill" [src]="imgPath()" [alt]="imgAlt()" />
-    @if(!collapsed()){
-        <span>{{ title() }}</span>
+<div class="sl-branding-section">
+    @if(showIcon()) {
+        <img class="" [src]="imgPath()" [alt]="imgAlt()" />
+    }
+    @if(showTitle()){
+        <h1>{{ title() }}</h1>
     }
 </div>

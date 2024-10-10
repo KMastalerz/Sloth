@@ -65,11 +65,11 @@ input[type="password"]::-webkit-textfield-decoration-container {
     align-self: center;
     justify-self: center;
     font-size: $font-size-xs !important;
-    padding: $space-xxs $space-xs !important;
+    padding: $space-xs $space-xs !important;
     font-weight: 700 !important;
 }
 
 mat-tooltip-component .mdc-tooltip__surface {
     font-size: $font-size-s;
-    padding: $space-xs $space-s;
+    padding: $space-s $space-m;
 }

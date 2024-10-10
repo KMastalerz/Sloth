@@ -11,5 +11,6 @@ export class BrandingSectionComponent {
   title = signal<string>('Sloth');
   imgPath = signal<string>('assets/icon.png');
   imgAlt = computed(() => `${this.title} logo`);
-  collapsed = input<boolean>(false);
+  showIcon = input<boolean>(true);
+  showTitle = input<boolean>(true);
 }

@@ -12,7 +12,6 @@ import { FormControlComponent } from '../../base/form-control/form-control.compo
 })
 export class PasswordComponent extends FormControlComponent{
   protected show = signal<boolean>(false);
-  protected type = computed(() => this.show()? 'text' : 'password');
   showHide = computed(()=> this.show() ? IconNames.Hide : IconNames.Show);
 
   protected toggleVisibility(): void {
