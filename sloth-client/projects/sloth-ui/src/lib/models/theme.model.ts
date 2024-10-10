@@ -9,3 +9,8 @@ export interface HSL {
 	light: number;
 	saturation: number;
 }
+
+export interface Theme {
+	key: string;
+	value: string;
+}

@@ -3,7 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: $sl-font;
-    font-weight: 300;
+    font-weight: $font-weight-light;
 }
 
 html {
@@ -15,7 +15,7 @@ html {
 
 body {
     line-height: 1;
-    color: var(--on-background);
+    color: $sl-on-background;
     overflow-x: hidden;
     font-size: $font-size-m;
 }
@@ -31,7 +31,7 @@ html, body {
 }
 
 ::placeholder {
-    color: var(--on-background);
+    color: $sl-on-background;
     opacity: 0.7; 
 }
 

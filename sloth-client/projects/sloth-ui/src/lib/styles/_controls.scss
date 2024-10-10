@@ -1,0 +1,19 @@
+.sl-control-base {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: $space-m;
+    padding-left: $space-m;
+    height: $control-height-m;
+    width: 100%;
+}
+
+.sl-control-icon {
+    font-family: $sl-icon-font;
+    font-size: $icon-size-m;
+}
+
+.sl-control-image {
+    height: $icon-size-m;
+    width: $icon-size-m;
+}

@@ -15,18 +15,23 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrl: './link.component.scss'
 })
 export class LinkComponent extends BaseControl implements OnInit {
+  // TO DO: Promably can be passed as input from parent.
   collapsed = signal<boolean>(false);
 
   icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
-  type = computed<string | undefined>(()=>this.config()?.internalType ?? undefined);
-  color = computed<string | undefined>(()=>this.metaData()?.color ?? undefined);
+  hasIcon = computed<boolean>(()=>!(!this.icon()));
+  type = computed<string | undefined>(()=>this.config()?.internalType ?? 'regular');
+  color = computed<string | undefined>(()=>this.metaData()?.color ?? 'transparent');
 
   warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);
   errorCount = computed<number | undefined>(()=>this.metaData()?.errorCount);
 
+  // TO DO: Implement, on error fallback to default
   checkResult = signal<string>('info');
   count = signal<number>(0);
 
+
+  // TO DO: If can be passed as input from parent, than remove below.
   ngOnInit(): void {
     console.log('LinkComponent ngOnInit', this.config());
     

@@ -1,60 +1,77 @@
+/* Fonts */
+$sl-font: "Work Sans", sans-serif;
+$sl-icon-font: "Material Symbols Outlined";
+
 /* Spacing (gap, padding, margin) */
-$space-us: 0.05rem;  // 1px
-$space-xxxs: 0.2rem;  // 2px
-$space-xxs: 0.4rem;  // 4px
-$space-xs: 0.8rem;   // 8px
-$space-s: 1.6rem;    // 16px
-$space-m: 2.4rem;    // 24px
-$space-l: 3.2rem;    // 32px
-$space-xl: 4.0rem;   // 40px
+$space-us: 0.1rem;  // 1px
+$space-xs: 0.4rem;   // 4px
+$space-s: 0.8rem;    // 8px
+$space-m: 1.2rem;    // 12px
+$space-l: 1.6rem;    // 16px
+$space-xl: 2.0rem;   // 20px
+$space-ul: 2.8rem;   // 28px
 
 /* Font Sizes */
-$font-size-xxs: 0.8rem;   // 8px
-$font-size-px: 1.0rem;    // 10px
-$font-size-xs: 1.2rem;    // 12px
-$font-size-s: 1.4rem;     // 14px
-$font-size-m: 1.6rem;     // 16px
-$font-size-l: 2.0rem;     // 20px
-$font-size-xl: 2.4rem;    // 24px
+$font-size-us: 0.8rem;   // 8px
+$font-size-xs: 1.0rem;   // 10px
+$font-size-s: 1.2rem;    // 12px
+$font-size-m: 1.4rem;     // 14px
+$font-size-l: 1.6rem;    // 16px
+$font-size-xl: 2.0rem;   // 20px
+$font-size-ul: 2.4rem;   // 24px
+
+/* Font Weights */
+$font-weight-ultra-thin: 100;
+$font-weight-extra-light: 200;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+$font-weight-black: 900;
+
 
 /* Icon Sizes */
 $icon-size-xs: 1.6rem;    // 16px
-$icon-size-s: 2.4rem;     // 24px
-$icon-size-m: 3.2rem;     // 32px
-$icon-size-l: 4.0rem;     // 40px
-$icon-size-xl: 4.8rem;    // 48px
+$icon-size-s: 2.0rem;     // 20px
+$icon-size-m: 2.4rem;     // 24px  
+$icon-size-l: 2.8rem;     // 32px
+$icon-size-xl: 3.2rem;    // 40px
 
-/* Control Sizes */
-$ctrl-size-s: 3.2rem;    // 32px
-$ctrl-size-m: 4.0rem;    // 40px
+/* Border Sizes */
+$border-width-xs: 0.5rem;  // 0.5px
+$border-width-s: 0.1rem;   // 1px
+$border-width-m: 0.2rem;   // 2px
+$border-width-l: 0.4rem;   // 4px
 
+/* Border Radius */
+$border-radius-xs: 0.8rem;  // 8px
+$border-radius-s: 1.2rem;  // 12px
+$border-radius-m: 1.6rem;  // 16px
+$border-radius-l: 2.4rem;  // 24px
+$border-radius-pill: 50%;  // remains the same for pill shapes
+
+/* Controls Sizes */
+$control-height-m: 3.6rem;  // 36px
+$control-height-l: 4.0rem;  // 40px
+
+$control-width-m: 24rem;  // 240px
+
+
+
+/* Branding Sizes */
 $branding-icon-size: 8.0rem; // 80px
 $branding-font-size: 4.4rem;    // 24px
 
-$standrad-control-width: 26.0rem; // 260px
+/* Panels Sizes */
+$sl-full-panel-width: 100%;
+$sl-full-panel-height: 100%;
+$sl-side-panel-full-width: 26.0rem;     // 260px
+$sl-side-panel-collapsed-width: 6.8rem; // 68px
 
-/* Border Radius */
-$border-radius-s: 0.4rem;  // 4px
-$border-radius-m: 0.8rem;  // 8px
-$border-radius-l: 1.6rem;  // 16px
-$border-radius-pill: 50%;  // remains the same for pill shapes
-
-/* Border Width */
-$border-width-s: 1px;  // 1px
-$border-width-m: 2px;  // 2px
-$border-width-l: 4px;  // 4px
 
 /* Box Shadow */
 $sl-button-shadow: 0rem 0.4rem 0.8rem rgba(0, 0, 0, 0.15), 0rem 0.2rem 0.4rem rgba(0, 0, 0, 0.3);
 $sl-button-shadow-raised: 0rem 0.6rem 1rem rgba(0, 0, 0, 0.2), 0rem 0.4rem 0.6rem rgba(0, 0, 0, 0.4);
 $sl-button-shadow-active: 0 0 1rem $sl-background;
-
-/* Control Shadow */
-$sl-ctrl-shadow: 0.1rem 0.1rem 0.5rem $sl-neutral;
-
-$sl-font: "Work Sans", sans-serif;
-$sl-icon-font: "Material Symbols Outlined";
-
-$sl-nav-expanded: 26.4rem;
-$sl-nav-collapsed: 6.8rem;
-$sl-header-nav-height: 5.2rem;
