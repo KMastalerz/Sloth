@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { BasePanel } from '../../base/base-panel/base-panel.component';
 import { BrandingSectionComponent } from '../../sections/branding-section/branding-section.component';
 import { DynamicControlDirective } from '../../directives/dynamic-control/dynamic-control.directive';
@@ -11,5 +11,9 @@ import { DynamicControlDirective } from '../../directives/dynamic-control/dynami
   styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent extends BasePanel {
-  collapsed = signal<boolean>(false);
+  collapsed = signal<boolean>(true);
+  toggleIcon = computed<string>(()=>this.collapsed() ? 'chevron_left' : 'chevron_right');
+  onClick() {
+    this.collapsed.set(!this.collapsed());
+  }
 }

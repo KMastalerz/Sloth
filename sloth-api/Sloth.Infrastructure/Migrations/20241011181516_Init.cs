@@ -136,6 +136,7 @@ namespace Sloth.Infrastructure.Migrations
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Style = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HasRouter = table.Column<bool>(type: "bit", nullable: false),
                     SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true)

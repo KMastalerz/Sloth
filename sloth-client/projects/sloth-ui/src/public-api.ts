@@ -25,9 +25,14 @@ export * from './lib/page-sync/dynamic-page-sync';
 // forms
 export * from './lib/forms/dynamic-router-form/dynamic-router-form.component';
 export * from './lib/forms/dynamic-form/dynamic-form.component';
+export * from './lib/forms/dynamic-grid/dynamic-grid.component';
 
 // models 
-export * from './lib/models/meta-data.model';
+export * from './lib/models/meta-data.types';
+
+//panels
+export * from './lib/panels/header/header.component';
+export * from './lib/panels/side-nav/side-nav.component';
 
 // sections
 export * from './lib/sections/branding-section/branding-section.component';

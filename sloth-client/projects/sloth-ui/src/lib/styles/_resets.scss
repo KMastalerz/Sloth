@@ -61,12 +61,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 // overrite angular material badge
 .mat-badge-content {
-    display: flex;
-    align-self: center;
-    justify-self: center;
     font-size: $font-size-xs !important;
-    padding: $space-xs $space-xs !important;
+    padding: 0.05rem $space-xs !important;
     font-weight: 700 !important;
+    background-color: $sl-information !important;
 }
 
 mat-tooltip-component .mdc-tooltip__surface {

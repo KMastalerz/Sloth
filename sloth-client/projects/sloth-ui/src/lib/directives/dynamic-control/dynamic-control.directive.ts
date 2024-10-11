@@ -14,6 +14,7 @@ export class DynamicControlDirective {
   pageSync = input.required<DynamicPageSync>();
   config = input.required<WebControl>();
   index = input<number | undefined>(undefined);
+  collapsed = input<boolean>(false);
 
   ngOnInit(): void {  
     const component = this.directory.getControl(this.config().controlType);
@@ -22,6 +23,10 @@ export class DynamicControlDirective {
       componentRef.instance.config.set(this.config());
       componentRef.instance.pageSync.set(this.pageSync());
       componentRef.instance.index.set(this.index());
+
+      if (componentRef.instance.collapsed) {
+        componentRef.instance.collapsed = this.collapsed;
+      }
     }
   }
 }

@@ -436,6 +436,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("HasRouter")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Label")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

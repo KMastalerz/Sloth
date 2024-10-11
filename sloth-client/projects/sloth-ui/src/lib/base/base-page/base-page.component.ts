@@ -15,19 +15,13 @@ export class BasePage {
   protected activatedRoute = inject(ActivatedRoute);
   pageSync = input.required<DynamicPageSync>();
   config = computed(()=> this.pageSync().pageConfig);
+  hasRouter = computed(()=> this.config().hasRouter);
   panels = computed(()=> this.config().webPanels);
   metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));
   actionEvent = output<Action>();
 
-  orientation = computed<string>(() => this.metaData()?.orientation ?? 'vertical')
-  position = computed<string>(() => this.metaData()?.position ?? '')
-  background = computed<string>(() => this.metaData()?.background ?? 'secondary')
-
   ngOnInit(): void {
-    console.log('[BasePage] ngOnInit', this.position());
-    
     this.pageSync()?.toParent.pipe(untilDestroyed(this)).subscribe(action => {
-      console.log('[BasePage] Action received', action);
       if(action) {
         this.actionEvent.emit(action);
       }

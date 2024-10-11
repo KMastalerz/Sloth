@@ -13,6 +13,7 @@ export class DynamicPanelDirective implements OnInit {
 
   pageSync = input.required<DynamicPageSync>();
   config = input.required<WebPanel>();
+  gridArea = input<string | undefined>(undefined);
 
   ngOnInit(): void {
     const component = this.directory.getPanel(this.config().panelType);
@@ -20,6 +21,7 @@ export class DynamicPanelDirective implements OnInit {
       const componentRef: any = this.container.createComponent(component);
       componentRef.instance.config.set(this.config());
       componentRef.instance.pageSync.set(this.pageSync());
+      componentRef.instance.gridArea.set(this.gridArea() ? `grid-area: ${this.gridArea()}` : undefined);
     }
   }
 }

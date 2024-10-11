@@ -12,26 +12,5 @@
     "CanAccess": true,
     "CanAdd": true,
     "CanDelete": true
-  },
-  {
-    "PageID": "projectManagement",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
-  },
-  {
-    "PageID": "projectAdd",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
-  },
-  {
-    "PageID": "projectOptions",
-    "UserGroup": "DEFAULT",
-    "CanAccess": true,
-    "CanAdd": true,
-    "CanDelete": true
   }
 ]

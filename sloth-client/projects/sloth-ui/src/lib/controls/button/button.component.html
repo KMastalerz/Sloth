@@ -1,1 +1,19 @@
-<button></button>
+@switch(type()) {
+    @case ('icon') {
+        <button>
+            <span>{{ icon() }}</span>
+        </button>
+    }
+    @case ('regular') {
+        <button>
+            <span>{{ label() }}</span>
+            <span>{{ icon() }}</span>
+        </button>
+    }
+    @case ('badged') {
+        <button>
+            <span>{{ label() }}</span>
+            <span>{{ icon() }}</span>
+        </button>
+    }
+}

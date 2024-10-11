@@ -1,0 +1,8 @@
+<div class="sl-dynamic-grid" [ngStyle]="generatedGrid().styles">
+    @for(panel of panels(); track $index) {
+        <ng-container slDynamicPanel [pageSync]="pageSync()" [config]="panel" [gridArea]="generatedGrid().areas[$index]"></ng-container>
+    }
+    @if(hasRouter()) {
+        <router-outlet></router-outlet>
+    }
+</div>

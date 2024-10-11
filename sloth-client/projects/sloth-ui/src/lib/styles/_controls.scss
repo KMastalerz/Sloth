@@ -1,7 +1,7 @@
 .sl-control-base {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: $space-s;
     padding-right: $space-m;
     padding-left: $space-m;
     height: $control-height-m;
@@ -17,6 +17,45 @@
     width: $icon-size-m;
 }
 
-.sl-control-link {
+.sl-link-side-nav {
+    border-radius: $border-radius-xs;
+    label {
+        font-weight: $font-weight-medium;
+    }
+    .sl-control-icon {
+        transition: transform 0.1s;
+    }
+}
+.sl-link-side-nav:hover {
+    background-color: $sl-background-hover;
+    .sl-control-icon {
+        transform: scale(1.2);
+    }
+}
 
+.sl-toggle-side-nav {
+    z-index: 9999;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $control-height-m;
+    height: $control-height-m;
+    box-shadow: $sl-button-shadow;
+    border-radius: $border-radius-s;
+    background: linear-gradient(to right, transparent 50%, $sl-background 50%);
+    transform: translateX(50%) translateY(50%);
+    transform: translateX(50%) translateY(50%);
+    top: 0;
+    right: 0;
+    
+    span {
+        transition: transform 0.3s ease; 
+        font-family: $sl-icon-font;
+        font-size: $icon-size-m;
+    }
+}
+
+.sl-toggle-side-nav:hover span {
+    transform: rotate(180deg);
 }

@@ -4,7 +4,16 @@
     "PanelID": "sideNav",
     "PanelType": "sideNav",
     "Sections": "main,admin,user,info",
-    "Controls": "dashboard, kanban, bugs, projects, tasks, messages, timesheet, setttings, userAccount, releases, documentation, projectManagement, teamAdmin, userAdmin",
+    "Controls": "dashboard, kanban, bugs, projects, tasks, timesheet, userAccount, releases, documentation, projectManagement, teamAdmin, userAdmin",
+    "Label": null,
+    "MetaData": null
+  },
+  {
+    "PageID": "main",
+    "PanelID": "header",
+    "PanelType": "header",
+    "Sections": null,
+    "Controls": "messages, setttings",
     "Label": null,
     "MetaData": null
   },
@@ -16,50 +25,5 @@
     "Controls": "login, password, process, forgotPassword",
     "Label": null,
     "MetaData": null
-  },
-  {
-    "PageID": "projectManagement",
-    "PanelID": "header",
-    "PanelType": "headerNav",
-    "Sections": "header",
-    "Controls": "projectList, projectOptions, projectAdd",
-    "Label": null,
-    "MetaData": null
-  },
-  {
-    "PageID": "projectAdd",
-    "PanelID": "details",
-    "PanelType": "form",
-    "Sections": "details",
-    "Controls": "projectName, projectType, shortDescription, description",
-    "Label": null,
-    "MetaData": null
-  },
-  {
-    "PageID": "projectOptions",
-    "PanelID": "type",
-    "PanelType": "gridForm",
-    "Sections": "type",
-    "Controls": "projectType, typeDescription, addProjectType",
-    "Label": "Project Type",
-    "MetaData": "{\"groupedControls\":[\"projectType\", \"typeDescription\", \"addProjectType\"],\"columns\":1}"
-  },
-  {
-    "PageID": "projectOptions",
-    "PanelID": "technology",
-    "PanelType": "gridForm",
-    "Sections": "technology",
-    "Controls": "technologyName, technologyIcon, addTechnology",
-    "Label": "Project Technologies",
-    "MetaData": "{\"groupedControls\":[\"technologyName\", \"technologyIcon\", \"addTechnology\"],\"columns\":1}"
-  },
-  {
-    "PageID": "projectOptions",
-    "PanelID": "removeTypes",
-    "PanelType": "controlList",
-    "Sections": "removeTypes",
-    "Controls": "projectType, removeType",
-    "Label": "Remove Types",
-    "MetaData": "{\"groupedControls\":[\"projectType, removeType\"]}"
   }
 ]

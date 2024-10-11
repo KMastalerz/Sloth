@@ -1,6 +1,6 @@
 @switch(type()) {
-    @case('side') {
-       <a   class="sl-control-base sl-control-link"
+    @case('sideNav') {
+       <a   class="sl-control-base sl-link-side-nav"
             [matTooltipDisabled]="!collapsed() || !tooltip()"
             [matTooltip]="tooltip()"
             matTooltipPosition="left"
@@ -12,7 +12,7 @@
                         [matBadgeHidden]="!collapsed() || !count()"> {{ icon() }}</span>
             }
 
-            @if(collapsed()) {
+            @if(!collapsed()) {
                 <label class="sl-control-label">{{ label() }}</label>
                 @if(count()) {
                     <div>

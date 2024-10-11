@@ -1,19 +1,22 @@
-<div class="sl-panel-absolute">
-    <button class="sl-side-nav-toggle sl-border-radius-xs">
-        <span>chevron_left</span>
+<div    class="sl-panel-absolute sl-side-nav-panel"
+        [class]="{
+            'sl-width-side-panel-expanded': !collapsed(),
+            'sl-width-side-panel-collapsed': collapsed()
+        }"
+        [style]="gridArea()">
+    <button class="sl-toggle-side-nav" (click)="onClick()">
+        <span> {{ toggleIcon() }} </span>
     </button>
-    <div class="sl-panel-base sl-gap-s sl-padding-s sl-border-radius-right-l">
+    <div class="sl-panel-base">
         <sl-branding-section [showTitle]="!collapsed()"></sl-branding-section>
         @for(section of sections(); track $index) {
             @if(!collapsed()){
                 <span class="sl-title-section">{{ section.label }}</span>
             }
             @for(control of section.webControls; track $index) {
-                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
+                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [collapsed]="collapsed()"></ng-container>
             }
         }
     </div>
 </div>
-<div>
-
-</div>
+<div class="sl-side-nav-panel-placeholder"></div>

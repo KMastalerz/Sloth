@@ -43,12 +43,10 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var languageSeed = GetData<LanguageSeed>(SeedFile.Language);
+            var language = GetData<Language>(SeedFile.Language);
 
-            if (languageSeed is not null)
+            if (language is not null)
             {
-                var language = mapper.Map<Language>(languageSeed);
-
                 // check if language already exists in database
                 if (!dbContext.Language.Any(l => l.LanguageCode == language.LanguageCode))
                 {
@@ -68,14 +66,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var systemOptionsSeed = GetData<List<SystemOptionSeed>>(SeedFile.SystemOptions);
+            var systemOptions = GetData<List<SystemOption>>(SeedFile.SystemOptions);
 
-            if (systemOptionsSeed is not null && systemOptionsSeed.Any())
+            if (systemOptions is not null && systemOptions.Any())
             {
-                var systemOptions = mapper.Map<IEnumerable<SystemOption>?>(systemOptionsSeed);
-
                 // filter systemOptionsSeed by those that do not exist in database
-                systemOptions = systemOptions!.Where(so => !dbContext.SystemOption.Any(dbso => dbso.OptionID == so.OptionID));
+                systemOptions = systemOptions!.Where(so => !dbContext.SystemOption.Any(dbso => dbso.OptionID == so.OptionID)).ToList();
 
                 if (systemOptions.Any())
                 {
@@ -96,14 +92,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var webPageSeed = GetData<List<WebPageSeed>>(SeedFile.WebPages);
+            var webPages = GetData<List<WebPage>>(SeedFile.WebPages);
 
-            if (webPageSeed is not null && webPageSeed.Any())
+            if (webPages is not null && webPages.Any())
             {
-                var webPages = mapper.Map<IEnumerable<WebPage>>(webPageSeed);
-
                 // filter webPages by those that do not exist in database
-                webPages = webPages!.Where(wp => !dbContext.WebPage.Any(dbwp => dbwp.PageID == wp.PageID));
+                webPages = webPages!.Where(wp => !dbContext.WebPage.Any(dbwp => dbwp.PageID == wp.PageID)).ToList();
 
                 if (webPages.Any())
                 {
@@ -124,14 +118,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var webPageSecuritySeed = GetData<List<WebPageSecuritySeed>>(SeedFile.WebPageSecurities);
+            var webPageSecurities = GetData<List<WebPageSecurity>>(SeedFile.WebPageSecurities);
 
-            if (webPageSecuritySeed is not null && webPageSecuritySeed.Any())
+            if (webPageSecurities is not null && webPageSecurities.Any())
             {
-                var webPageSecurities = mapper.Map<IEnumerable<WebPageSecurity>>(webPageSecuritySeed);
-
                 // filter webPages by those that do not exist in database
-                webPageSecurities = webPageSecurities!.Where(wps => !dbContext.WebPageSecurity.Any(dbwps => dbwps.PageID == wps.PageID && dbwps.UserGroup == wps.UserGroup));
+                webPageSecurities = webPageSecurities!.Where(wps => !dbContext.WebPageSecurity.Any(dbwps => dbwps.PageID == wps.PageID && dbwps.UserGroup == wps.UserGroup)).ToList();
 
                 if (webPageSecurities.Any())
                 {
@@ -153,14 +145,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var webPanelSeed = GetData<List<WebPanelSeed>>(SeedFile.WebPanels);
+            var webPanels = GetData<List<WebPanel>>(SeedFile.WebPanels);
 
-            if (webPanelSeed is not null && webPanelSeed.Any())
+            if (webPanels is not null && webPanels.Any())
             {
-                var webPanels = mapper.Map<IEnumerable<WebPanel>>(webPanelSeed);
-
                 // filter webPages by those that do not exist in database
-                webPanels = webPanels!.Where(wp => !dbContext.WebPanel.Any(dbwp => dbwp.PageID == wp.PageID && dbwp.PanelID == wp.PanelID));
+                webPanels = webPanels!.Where(wp => !dbContext.WebPanel.Any(dbwp => dbwp.PageID == wp.PageID && dbwp.PanelID == wp.PanelID)).ToList();
 
                 if (webPanels.Any())
                 {
@@ -181,14 +171,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var webSectionSeed = GetData<List<WebSectionSeed>>(SeedFile.WebSections);
+            var webSections = GetData<List<WebSection>>(SeedFile.WebSections);
 
-            if (webSectionSeed is not null && webSectionSeed.Any())
+            if (webSections is not null && webSections.Any())
             {
-                var webSections = mapper.Map<IEnumerable<WebSection>>(webSectionSeed);
-
                 // filter webSections by those that do not exist in database
-                webSections = webSections!.Where(ws => !dbContext.WebSection.Any(dbws => dbws.PageID == ws.PageID && dbws.PanelID == ws.PanelID && dbws.SectionID == ws.SectionID));
+                webSections = webSections!.Where(ws => !dbContext.WebSection.Any(dbws => dbws.PageID == ws.PageID && dbws.PanelID == ws.PanelID && dbws.SectionID == ws.SectionID)).ToList();
 
                 if (webSections.Any())
                 {
@@ -209,14 +197,13 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var webControlSeed = GetData<List<WebControlSeed>>(SeedFile.WebControls);
+            var webControls = GetData<List<WebControl>>(SeedFile.WebControls);
 
-            if (webControlSeed is not null && webControlSeed.Any())
+            if (webControls is not null && webControls.Any())
             {
-                var webControls = mapper.Map<IEnumerable<WebControl>>(webControlSeed);
 
                 // filter webControls by those that do not exist in database
-                webControls = webControls!.Where(wc => !dbContext.WebControl.Any(dbwc => dbwc.PageID == wc.PageID && dbwc.PanelID == wc.PanelID && dbwc.SectionID == wc.SectionID && dbwc.ControlID == wc.ControlID));
+                webControls = webControls!.Where(wc => !dbContext.WebControl.Any(dbwc => dbwc.PageID == wc.PageID && dbwc.PanelID == wc.PanelID && dbwc.ControlID == wc.ControlID)).ToList();
 
                 if (webControls.Any())
                 {
@@ -237,14 +224,12 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var userRolesSeed = GetData<List<UserRoleSeed>>(SeedFile.UserRoles);
+            var userRoles = GetData<List<UserRole>>(SeedFile.UserRoles);
 
-            if (userRolesSeed is not null && userRolesSeed.Any())
+            if (userRoles is not null && userRoles.Any())
             {
-                var userRoles = mapper.Map<IEnumerable<UserRole>>(userRolesSeed);
-
                 // filter userRolesSeed by those that do not exist in database
-                userRoles = userRoles!.Where(ur => !dbContext.UserRole.Any(dbur => dbur.RoleName == ur.RoleName));
+                userRoles = userRoles!.Where(ur => !dbContext.UserRole.Any(dbur => dbur.RoleName == ur.RoleName)).ToList();
 
                 if (userRoles.Any())
                 {
@@ -265,12 +250,10 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
     {
         try
         {
-            var userGroupSeed = GetData<UserGroupSeed>(SeedFile.UserGroup);
+            var userGroup = GetData<UserGroup>(SeedFile.UserGroup);
 
-            if (userGroupSeed is not null)
+            if (userGroup is not null)
             {
-                var userGroup = mapper.Map<UserGroup>(userGroupSeed);
-
                 // check if userGroup already exists in database
                 if (!dbContext.UserGroup.Any(ug => ug.GroupName == userGroup.GroupName))
                 {

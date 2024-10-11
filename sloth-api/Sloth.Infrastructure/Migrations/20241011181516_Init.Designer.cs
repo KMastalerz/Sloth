@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20241008175454_Init")]
+    [Migration("20241011181516_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -438,6 +438,9 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasRouter")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Label")
                         .IsRequired()

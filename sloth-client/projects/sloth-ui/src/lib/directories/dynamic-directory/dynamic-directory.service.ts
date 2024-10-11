@@ -7,6 +7,7 @@ import { PasswordComponent } from '../../controls/password/password.component';
 import { FormComponent } from '../../panels/form/form.component';
 import { FlexFormComponent } from '../../panels/flex-form/flex-form.component';
 import { GridFormComponent } from '../../panels/grid-form/grid-form.component';
+import { HeaderComponent } from '../../panels/header/header.component';
 import { SideNavComponent } from '../../panels/side-nav/side-nav.component';
 
 @Injectable({
@@ -41,6 +42,7 @@ export class DynamicDirectoryService {
     this.registerPanel('form', FormComponent);
     this.registerPanel('flexForm', FlexFormComponent);
     this.registerPanel('gridForm', GridFormComponent);
+    this.registerPanel('header', HeaderComponent);
     this.registerPanel('sideNav', SideNavComponent);
   }
 }

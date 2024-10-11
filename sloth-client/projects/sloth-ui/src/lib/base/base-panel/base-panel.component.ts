@@ -10,6 +10,7 @@ import { WebControl, WebPanel, WebSection } from '@sloth-http';
 export class BasePanel {
   pageSync = model.required<DynamicPageSync>();
   config = model.required<WebPanel>();
+  gridArea = model.required<string | undefined>();
   metaData = computed<any>(() => JSON.parse(this.config().metaData ?? '{}'));
   sections = computed<WebSection[]>(() => this.config().webSections ?? []);
   controls = computed<WebControl[]>(() => this.config().webControls ?? []);

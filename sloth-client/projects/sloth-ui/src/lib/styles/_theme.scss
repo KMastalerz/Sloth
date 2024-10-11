@@ -24,6 +24,8 @@
     --sl-on-background-shade-60: #F6F6F6;
     --sl-on-background-shade-80: #F6F6F6;
     --sl-on-background-shade-100: #F6F6F6;
+    --sl-background-border: #A2A2A2;
+    --sl-background-hover: #CBCBCB;
 
     /*    primary    */
     --sl-primary: #388CFA;
@@ -215,6 +217,8 @@ $sl-on-background-shade-40: var(--sl-on-background-shade-40);
 $sl-on-background-shade-60: var(--sl-on-background-shade-60);
 $sl-on-background-shade-80: var(--sl-on-background-shade-80);
 $sl-on-background-shade-100: var(--sl-on-background-shade-100);
+$sl-background-border: var(--sl-background-border);
+$sl-background-hover: var(--sl-background-hover);
 
 $sl-primary: var(--sl-primary);
 $sl-primary-tint-20: var(--sl-primary-tint-20);

@@ -4,13 +4,14 @@
     "Label": "Main",
     "SecurityTableID": null,
     "Description": "Main page",
-    "Panels": "sideNav",
+    "Panels": "sideNav, header",
     "Orientation": "horizontal",
     "Background": "standard",
     "Position": null,
     "Class": null,
     "Style": null,
-    "MetaData": null
+    "HasRouter":  true,
+    "MetaData": "{\"columns\":2,\"rows\":2,\"columnsRatio\":[\"auto\",1],\"rowsRatio\":[\"auto\",1],\"gridSpans\":[{\"type\":\"column\",\"id\":1,\"spanFrom\":1,\"spanTo\":2}]}"
   },
   {
     "PageID": "auth",
@@ -23,45 +24,7 @@
     "Position": "center",
     "Class": null,
     "Style": null,
-    "MetaData": null
-  },
-  {
-    "PageID": "projectManagement",
-    "Label": "Project Management",
-    "SecurityTableID": null,
-    "Description": "Base page to manage project configuration and add new ones",
-    "Panels": "header",
-    "Orientation": "vertical",
-    "Background": "standard",
-    "Position": null,
-    "Class": null,
-    "Style": null,
-    "MetaData": null
-  },
-  {
-    "PageID": "projectAdd",
-    "Label": "Project Add",
-    "SecurityTableID": null,
-    "Description": "Page to add new projects",
-    "Panels": "details",
-    "Orientation": "vertical",
-    "Background": "standard",
-    "Position": "top-center",
-    "Class": null,
-    "Style": null,
-    "MetaData": null
-  },
-  {
-    "PageID": "projectOptions",
-    "Label": "Project Options",
-    "SecurityTableID": null,
-    "Description": "Here you can add, edit and delete project types etc.",
-    "Panels": "options,removeTypes",
-    "Orientation": "vertical",
-    "Background": "standard",
-    "Position": "top-center",
-    "Class": null,
-    "Style": null,
+    "HasRouter": false,
     "MetaData": null
   }
 ]

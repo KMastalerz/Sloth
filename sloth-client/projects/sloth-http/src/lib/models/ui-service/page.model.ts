@@ -8,6 +8,7 @@ export interface WebPage {
     background?: string | null;
     style?: string | null;
     class?: string | null;
+    hasRouter: boolean;
     metaData?: string;
     webPanels?: WebPanel[];
 }
