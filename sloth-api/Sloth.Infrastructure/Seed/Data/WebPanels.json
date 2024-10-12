@@ -4,7 +4,7 @@
     "PanelID": "sideNav",
     "PanelType": "sideNav",
     "Sections": "main,admin,user,info",
-    "Controls": "dashboard, kanban, bugs, projects, tasks, timesheet, userAccount, releases, documentation, projectManagement, teamAdmin, userAdmin",
+    "Controls": "dashboard, kanban, bugs, projects, tasks, timesheet, releases, documentation, projectManagement, teamAdmin, userAdmin",
     "Label": null,
     "MetaData": null
   },

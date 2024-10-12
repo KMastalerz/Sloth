@@ -4,14 +4,7 @@
     "PanelID": "sideNav",
     "SectionID": "main",
     "Label": "Main",
-    "Controls": "dashboard,kanban,bugs,projects,tasks"
-  },
-  {
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "SectionID": "user",
-    "Label": "User",
-    "Controls": "timesheet,userAccount"
+    "Controls": "dashboard,kanban,bugs,projects,tasks, timesheet"
   },
   {
     "PageID": "main",

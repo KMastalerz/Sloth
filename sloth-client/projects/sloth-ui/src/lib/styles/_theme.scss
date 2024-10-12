@@ -1,31 +1,58 @@
 :root {
+    /*    border    => sl-background-shade/tint-30*/ 
+    --sl-border: #B7B7B7;
+
     /*    background    */
     --sl-background: #F5F5F5;
+    --sl-background-tint-10: #F6F6F6;
     --sl-background-tint-20: #F7F7F7;
+    --sl-background-tint-30: #F8F8F8;
     --sl-background-tint-40: #F8F8F8;
+    --sl-background-tint-50: #F9F9F9;
     --sl-background-tint-60: #FAFAFA;
+    --sl-background-tint-70: #FBFBFB;
     --sl-background-tint-80: #FCFCFC;
+    --sl-background-tint-90: #FDFDFD;
     --sl-background-tint-100: #FEFEFE;
+    --sl-background-shade-10: #E0E0E0;
     --sl-background-shade-20: #CBCBCB;
+    --sl-background-shade-30: #B7B7B7;
     --sl-background-shade-40: #A2A2A2;
+    --sl-background-shade-50: #8D8D8D;
     --sl-background-shade-60: #787878;
+    --sl-background-shade-70: #636363;
     --sl-background-shade-80: #4E4E4E;
+    --sl-background-shade-90: #3A3A3A;
     --sl-background-shade-100: #252525;
 
     /*    on-background    */
     --sl-on-background: #0A0A0A;
+    --sl-on-background-tint-10: #0A0A0A;
     --sl-on-background-tint-20: #0A0A0A;
+    --sl-on-background-tint-30: #0A0A0A;
     --sl-on-background-tint-40: #0A0A0A;
+    --sl-on-background-tint-50: #0A0A0A;
     --sl-on-background-tint-60: #0A0A0A;
+    --sl-on-background-tint-70: #0A0A0A;
     --sl-on-background-tint-80: #0A0A0A;
+    --sl-on-background-tint-90: #0A0A0A;
     --sl-on-background-tint-100: #0A0A0A;
+    --sl-on-background-shade-10: #0A0A0A;
     --sl-on-background-shade-20: #0A0A0A;
+    --sl-on-background-shade-30: #F6F6F6;
     --sl-on-background-shade-40: #F6F6F6;
+    --sl-on-background-shade-50: #F6F6F6;
     --sl-on-background-shade-60: #F6F6F6;
+    --sl-on-background-shade-70: #F6F6F6;
     --sl-on-background-shade-80: #F6F6F6;
+    --sl-on-background-shade-90: #F6F6F6;
     --sl-on-background-shade-100: #F6F6F6;
-    --sl-background-border: #A2A2A2;
-    --sl-background-hover: #CBCBCB;
+
+    --sl-background-hover: #E0E0E0;             //10
+    --sl-background-shade-20-hover: #B7B7B7;    //30
+    --sl-background-shade-40-hover: #8D8D8D;    //50
+    --sl-background-shade-60-hover: #636363;    //70
+    --sl-background-shade-80-hover: #3a3a3a;    //90
 
     /*    primary    */
     --sl-primary: #388CFA;
@@ -194,30 +221,52 @@
     --sl-on-warning-shade-90: #F6F6F6;
 }
 
+$sl-border: var(--sl-border);
+
 $sl-background: var(--sl-background);
+$sl-background-tint-10: var(--sl-background-tint-10);
 $sl-background-tint-20: var(--sl-background-tint-20);
+$sl-background-tint-30: var(--sl-background-tint-30);
 $sl-background-tint-40: var(--sl-background-tint-40);
+$sl-background-tint-50: var(--sl-background-tint-50);
 $sl-background-tint-60: var(--sl-background-tint-60);
+$sl-background-tint-70: var(--sl-background-tint-70);
 $sl-background-tint-80: var(--sl-background-tint-80);
+$sl-background-tint-90: var(--sl-background-tint-90);
 $sl-background-tint-100: var(--sl-background-tint-100);
+$sl-background-shade-10: var(--sl-background-shade-10);
 $sl-background-shade-20: var(--sl-background-shade-20);
+$sl-background-shade-30: var(--sl-background-shade-30);
 $sl-background-shade-40: var(--sl-background-shade-40);
+$sl-background-shade-50: var(--sl-background-shade-50);
 $sl-background-shade-60: var(--sl-background-shade-60);
+$sl-background-shade-70: var(--sl-background-shade-70);
 $sl-background-shade-80: var(--sl-background-shade-80);
+$sl-background-shade-90: var(--sl-background-shade-90);
 $sl-background-shade-100: var(--sl-background-shade-100);
 
 $sl-on-background: var(--sl-on-background);
+$sl-on-background-tint-10: var(--sl-on-background-tint-10);
 $sl-on-background-tint-20: var(--sl-on-background-tint-20);
+$sl-on-background-tint-30: var(--sl-on-background-tint-30);
 $sl-on-background-tint-40: var(--sl-on-background-tint-40);
+$sl-on-background-tint-50: var(--sl-on-background-tint-50);
 $sl-on-background-tint-60: var(--sl-on-background-tint-60);
+$sl-on-background-tint-70: var(--sl-on-background-tint-70);
 $sl-on-background-tint-80: var(--sl-on-background-tint-80);
+$sl-on-background-tint-90: var(--sl-on-background-tint-90);
 $sl-on-background-tint-100: var(--sl-on-background-tint-100);
+$sl-on-background-shade-10: var(--sl-on-background-shade-10);
 $sl-on-background-shade-20: var(--sl-on-background-shade-20);
+$sl-on-background-shade-30: var(--sl-on-background-shade-30);
 $sl-on-background-shade-40: var(--sl-on-background-shade-40);
+$sl-on-background-shade-50: var(--sl-on-background-shade-50);
 $sl-on-background-shade-60: var(--sl-on-background-shade-60);
+$sl-on-background-shade-70: var(--sl-on-background-shade-70);
 $sl-on-background-shade-80: var(--sl-on-background-shade-80);
+$sl-on-background-shade-90: var(--sl-on-background-shade-90);
 $sl-on-background-shade-100: var(--sl-on-background-shade-100);
-$sl-background-border: var(--sl-background-border);
+
 $sl-background-hover: var(--sl-background-hover);
 
 $sl-primary: var(--sl-primary);
