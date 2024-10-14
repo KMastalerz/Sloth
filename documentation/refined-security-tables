@@ -119,7 +119,7 @@ public class WebControl
     public string ControlType { get; set; } = default!;
     public string? InternalType { get; set; } = null;
     public string? ChildControls { get; set; } = null;
-    public string? SecurityTableID { get; set; }
+    public string? SecurityTableID { get; set; } = null;
     public string? ControlLabel { get; set; } = null;
     public string? ControlPlaceholder { get; set; } = null;
     public string? ControlTooltip { get; set; } = null;
