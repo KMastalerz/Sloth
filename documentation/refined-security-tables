@@ -111,6 +111,7 @@ public class WebPanel
     public string PageID { get; set; } = default!; //PK
     public string PanelID { get; set; } = default!; //PK
     public string PanelType { get; set; } = default!;
+    public string? ParentPanelID { get; set; } = null!
     public string? Sections { get; set; } = null;
     public string Controls { get; set; } = default!;
     public string? Class { get; set; } = null;
