@@ -104,6 +104,7 @@ public class WebPage
     public string? MetaData { get; set; } = null;
 }
 
+// In sections panel can hold another panel (comma delimited)
 public class WebPanel
 {
     public string AppID { get; set; } = default!; //PK
@@ -119,16 +120,18 @@ public class WebPanel
     public string? MetaData { get; set; } = null;
 }
 
-public class WebSection
-{
-    public string AppID { get; set; } = default!; //PK
-    public string PageID { get; set; } = default!; //PK
-    public string PanelID { get; set; } = default!; //PK
-    public string SectionID { get; set; } = default!; //PK
-    public string Controls { get; set; } = default!;
-    public string? Label { get; set; } = null;
-    public string? MetaData { get; set; } = null;
-}
+// Remove
+// public class WebSection
+// {
+//     public string AppID { get; set; } = default!; //PK
+//     public string PageID { get; set; } = default!; //PK
+//     public string PanelID { get; set; } = default!; //PK
+//     public string SectionID { get; set; } = default!; //PK
+//     public string Controls { get; set; } = default!;
+//     public string? Label { get; set; } = null;
+//     public string? MetaData { get; set; } = null;
+// }
+
 
 public class WebControl
 {
