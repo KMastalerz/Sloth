@@ -2,18 +2,19 @@ This is my refined idea:
 
 public class WebPageSecurity
 {
-    public string PageID { get; set; } = default!; //FK
-    public Guid RoleID { get; set; } = default!;   //FK
+    public string AppID { get; set; } = default!; //FK   //PK
+    public string PageID { get; set; } = default!; //FK  //PK
+    public Guid RoleID { get; set; } = default!;   //FK  //PK
     public bool CanAccess { get; set; } = true;
     public bool CanAdd { get; set; } = true;
-	public bool CanModify { get; set; } = true;
+    public bool CanModify { get; set; } = true;
     public bool CanDelete { get; set; } = true;
 }
 
 public class SecurityTable
 {
-    public string SecurityTableID { get; set; } = default!;
-    public string ControlID { get; set; } = default!;
+    public string SecurityTableID { get; set; } = default!; //PK
+    public string ControlID { get; set; } = default!; //PK
     public Guid RoleID { get; set; } = default!;  //FK
     public bool IsHidden { get; set; } = false; 
     public bool IsReadOnly { get; set; } = false;
@@ -24,34 +25,34 @@ public class SecurityTable
 // Remove!!!
 // public class UserGroup
 // {
-//     public Guid GroupID { get; set; } = new Guid();
+//     public Guid GroupID { get; set; } = new Guid(); 
 //     public string GroupName { get; set; } = default!;
 //     public string? Description { get; set; }
 // }
 
 public class UserRole
 {
-    public Guid RoleID { get; set; } = new Guid();
+    public Guid RoleID { get; set; } = new Guid();  //PK
     public string RoleName { get; set; } = default!;
     public string? Description { get; set; } = null;
-	public int PermissionLevel { get; set; } = 0;
+    public int PermissionLevel { get; set; } = 0;
 }
 
 public class UserRoleLink 
 {
-	public Guid RoleID { get; set; } = default!;  //FK
-	public Guid UserID { get; set; } = default!;  //FK
-	public DateTime? ExpireAt {get; set;} = null;
+    public Guid RoleID { get; set; } = default!;  //FK   //PK
+    public Guid UserID { get; set; } = default!;  //FK   //PK
+    public DateTime? ExpireAt {get; set;} = null;
 }
 
 // table that holds history of user access change overtime for audit purposes
 public class UserRoleLinkHistory
 {
-	public Guid RoleID { get; set; } = default!;  //FK
-	public Guid UserID { get; set; } = default!;  //FK
-	public DateTime AddedAt {get; set;} = DateTime.UtcNow;
-	public DateTime? ExpireAt {get; set;} = null;
-	public Guid? ModifiedByUserID { get; set; } = null;  //FK
+    public Guid RoleID { get; set; } = default!;  //FK 
+    public Guid UserID { get; set; } = default!;  //FK  
+    public DateTime AddedAt {get; set;} = DateTime.UtcNow;
+    public DateTime? ExpiredAt {get; set;} = null;
+    public Guid? ModifiedByUserID { get; set; } = null;  //FK
     public string? ChangeReason { get; set; } = null;
 }
 
@@ -67,12 +68,29 @@ public class User
     public string? LanguageCode { get; set; } = "ENU";
     public int? ThemeID { get; set; } = null;
     public IEnumerable<UserRole>? Roles { get; set; } = null;
-	public DateTime? ExpiredAt {get; set;} = null; //if set user has no longer access, but can be re-activated
+    public DateTime? ExpireAt {get; set;} = null; 
+}
+
+public class UserHistory
+{
+    public Guid UserID { get; set; } = default!;
+    public string UserName { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
+    public string Email { get; set; } = default!;
+    public string? UserImageUrl { get; set;} = null;
+    public string? LanguageCode { get; set; } = "ENU";
+    public int? ThemeID { get; set; } = null;
+    public DateTime AddedAt {get; set;} = DateTime.UtcNow;
+    public DateTime? ExpiredAt {get; set;} = null; 
+    public Guid? ModifiedByUserID { get; set; } = null;  //FK
+    public string? ChangeReason { get; set; } = null;
 }
 
 public class WebPage
 {
-    public string PageID { get; set; } = default!;
+    public string AppID { get; set; } = default!; //PK
+    public string PageID { get; set; } = default!; //PK
     public string Label { get; set; } = default!;
     public string Panels { get; set; } = default!;
     public string? Orientation { get; set; } = null;
@@ -88,8 +106,9 @@ public class WebPage
 
 public class WebPanel
 {
-    public string PageID { get; set; } = default!;
-    public string PanelID { get; set; } = default!;
+    public string AppID { get; set; } = default!; //PK
+    public string PageID { get; set; } = default!; //PK
+    public string PanelID { get; set; } = default!; //PK
     public string PanelType { get; set; } = default!;
     public string? Sections { get; set; } = null;
     public string Controls { get; set; } = default!;
@@ -102,9 +121,10 @@ public class WebPanel
 
 public class WebSection
 {
-    public string PageID { get; set; } = default!;
-    public string PanelID { get; set; } = default!;
-    public string SectionID { get; set; } = default!;
+    public string AppID { get; set; } = default!; //PK
+    public string PageID { get; set; } = default!; //PK
+    public string PanelID { get; set; } = default!; //PK
+    public string SectionID { get; set; } = default!; //PK
     public string Controls { get; set; } = default!;
     public string? Label { get; set; } = null;
     public string? MetaData { get; set; } = null;
@@ -112,10 +132,11 @@ public class WebSection
 
 public class WebControl
 {
-    public string PageID { get; set; } = default!;
-    public string PanelID { get; set; } = default!;
+    public string AppID { get; set; } = default!; //PK
+    public string PageID { get; set; } = default!; //PK
+    public string PanelID { get; set; } = default!; //PK
     public string? SectionID { get; set; } = null;
-    public string ControlID { get; set; } = default!;
+    public string ControlID { get; set; } = default!; //PK
     public string ControlType { get; set; } = default!;
     public string? InternalType { get; set; } = null;
     public string? ChildControls { get; set; } = null;
