@@ -155,3 +155,67 @@ public class WebControl
     public string? MetaData { get; set; } = null;
     public string? Validation { get; set; } = null;
 }
+
+// Example of WebPage with WebPanels // Set MAX nesting to 4! (Can be extended in Services & Application)
+{
+	"AppID": "sloth",
+    "PageID": "main",
+    "Label": "Main",
+    "SecurityTableID": null,
+    "Description": "Main page",
+    "Panels": "sideNav, header",
+    "Orientation": "horizontal",
+    "Background": "standard",
+    "Position": null,
+    "Class": null,
+    "Style": null,
+    "HasRouter":  true,
+	"Panels" : [
+		  {
+			"AppID": "sloth",
+			"PageID": "main",
+			"PanelID": "sideNav",
+			"PanelType": "sideNav",
+			"ParentPanelID": null,
+			"Sections": "main,admin,info,logoff",
+			"Controls": "logoff",
+			"Label": null,
+			"MetaData": null
+		  },
+		  {
+			"AppID": "sloth",
+			"PageID": "main",
+			"PanelID": "main",
+			"PanelType": "sideNavSection",
+			"ParentPanelID": "sideNav"
+			"Sections": "dashboard,kanban,bugs,projects,tasks, timesheet",
+			"Controls": null,
+			"Label": "Main",
+			"MetaData": null
+		  },
+		  {
+			"AppID": "sloth",
+			"PageID": "main",
+			"PanelID": "info",
+			"PanelType": "sideNavSection",
+			"ParentPanelID": "sideNav"
+			"Sections": null,
+			"Controls": "releases,documentation",
+			"Label": "Info",
+			"MetaData": null
+		  },	  
+		  {
+			"AppID": "sloth",
+			"PageID": "main",
+			"PanelID": "info",
+			"PanelType": "sideNavSection",
+			"ParentPanelID": "sideNav"
+			"Sections": null,
+			"Controls": "projectManagement,teamManagement,userManagement",
+			"Label": "Admin",
+			"MetaData": null
+		  },
+	]
+}
+
+
