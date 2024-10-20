@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CookieKeys, DateUtilityService, StorageService, StorageType } from '@sloth-shared';
+import { CookieKeys, DateService, StorageService, StorageType } from '@sloth-shared';
 
 import { AccessTokenResponse } from '../../models/auth/access-token-response.model';
 
@@ -8,7 +8,7 @@ import { AccessTokenResponse } from '../../models/auth/access-token-response.mod
 })
 export class AuthStateService {
   private storageService = inject(StorageService);
-  private dateUtility = inject(DateUtilityService);
+  private dateUtility = inject(DateService);
 
   get refreshToken(): string | null {
     return this.storageService.getItem(CookieKeys.RefreshToken, StorageType.COOKIE);

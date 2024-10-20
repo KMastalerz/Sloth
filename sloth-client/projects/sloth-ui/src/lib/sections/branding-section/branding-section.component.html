@@ -1,6 +1,6 @@
 <div class="sl-branding-section">
     @if(showIcon()) {
-        <img class="" [src]="imgPath()" [alt]="imgAlt()" />
+        <sl-icon [class]="'branding'" [icon]="icon()"></sl-icon>
     }
     @if(showTitle()){
         <h1>{{ title() }}</h1>

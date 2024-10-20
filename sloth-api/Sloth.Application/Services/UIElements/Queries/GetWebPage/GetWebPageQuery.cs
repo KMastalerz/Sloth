@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Sloth.Application.DTO;
-using Sloth.Domain.Constants;
 
 namespace Sloth.Application.Services.UIElements;
-public class GetWebPageQuery(string pageID) : IRequest<GetWebPage>
+public class GetWebPageQuery(string appID, string pageID) : IRequest<GetWebPage>
 {
+    public string AppID { get; set; } = appID;
     public string PageID { get; set; } = pageID;
     // TODO: Implement security
-    public bool ByPassSecurity { get; set; } = true;// WebSecurity.PublicPages.Contains(pageID);
+    public bool BypassSecurity { get; set; } = true;// WebSecurity.PublicPages.Contains(pageID);
 }

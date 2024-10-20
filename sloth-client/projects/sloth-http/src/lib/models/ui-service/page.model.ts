@@ -44,7 +44,7 @@ export interface WebControl {
     sectionID: string;
     controlID: string;
     controlType: string;
-    internalType?: string | null;
+    innerType?: string | null;
     childControls?: string | null;
     controlLabel?: string | null;
     controlPlaceholder?: string | null;

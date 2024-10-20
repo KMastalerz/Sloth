@@ -1,3 +1,5 @@
-<header class="header-panel" [style]="gridArea()">
-    <sl-branding-section [showIcon]="false" [showTitle]="true"></sl-branding-section>
+<header class="sl-header-panel right">
+    @for(control of config().webControls; track $index) {
+        <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
+    }
 </header>

@@ -1,5 +1,6 @@
-import { Component, computed, input, model } from '@angular/core';
+import { Component, computed, inject, input, model } from '@angular/core';
 import { WebControl } from '@sloth-http';
+import { JsonService } from '@sloth-shared';
 import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
 
 @Component({
@@ -8,20 +9,21 @@ import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
   template:''
 })
 export class BaseControl  {
-  config = model.required<WebControl>();
-  pageSync = model.required<DynamicPageSync>();
-  index = model.required<number | undefined>();
+  protected jsonUtil = inject(JsonService);
+  navCollapsed = input<boolean>(false);
+  config = input.required<WebControl>();
+  pageSync = input.required<DynamicPageSync>();
+  index = input.required<number | undefined>();
 
   controlID = computed<string>(() => this.config()?.controlID ?? '');
-  metaData = computed<any>(() => JSON.parse(this.config()?.metaData ?? '{}'));
-  validation = computed<any>(() => JSON.parse(this.config()?.validation ?? '{}'));
+  validation = computed<any>(() => this.jsonUtil.tryParse(this.config()?.validation));
 
   action = computed<string | undefined>(() => this.config()?.action ?? undefined);
   icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
   label = computed<string | undefined>(() => this.config()?.controlLabel ?? undefined);  
   placeholder = computed<string | undefined>(() => this.config()?.controlPlaceholder ?? undefined);
+  tooltip = computed<string | undefined>(() => this.config()?.controlTooltip ?? undefined);
   route = computed<string | undefined>(() => this.config()?.route ?? undefined);  
-  tooltip = computed<string | undefined>(() => this.config()?.controlTooltip ?? undefined);  
-  type = computed<string | undefined>(()=>this.config()?.internalType ?? undefined);
+  type = computed<string | undefined>(()=>this.config()?.innerType ?? undefined);
 }
 

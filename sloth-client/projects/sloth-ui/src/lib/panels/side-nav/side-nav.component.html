@@ -1,7 +1,7 @@
-<div    class="sl-panel-absolute sl-side-nav-panel"
+<nav    class="sl-panel-absolute sl-side-nav-panel"
         [class]="{
-            'sl-width-side-panel-expanded': !collapsed(),
-            'sl-width-side-panel-collapsed': collapsed()
+            'expanded': !collapsed(),
+            'collapsed': collapsed()
         }"
         [style]="gridArea()">
     <button class="sl-toggle-side-nav" (click)="onClick()">
@@ -10,13 +10,21 @@
     <div class="sl-panel-base">
         <sl-branding-section [showTitle]="!collapsed()"></sl-branding-section>
         @for(section of sections(); track $index) {
-            @if(!collapsed()){
-                <span class="sl-title-section">{{ section.label }}</span>
-            }
-            @for(control of section.webControls; track $index) {
-                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [collapsed]="collapsed()"></ng-container>
-            }
+            <div class="sl-side-nav-section">
+                @if(!collapsed()){
+                    <span class="sl-title-section">{{ section.label }}</span>
+                }
+                @for(control of section.webControls; track $index) {
+                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
+                }
+            </div>
         }
+
+        <div class="sl-side-nav-section bottom">
+            @for(control of controls(); track $index) {
+                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
+               }
+        </div>
     </div>
-</div>
+</nav>
 <div class="sl-side-nav-panel-placeholder"></div>

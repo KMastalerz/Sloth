@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Domain", "Sloth.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Infrastructure", "Sloth.Infrastructure\Sloth.Infrastructure.csproj", "{44117225-A7E3-451A-82ED-EEC8018411F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sloth.Shared", "Sloth.Shared\Sloth.Shared.csproj", "{E3B7824B-8007-4852-91AC-6BAE4948D815}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Shared", "Sloth.Shared\Sloth.Shared.csproj", "{E3B7824B-8007-4852-91AC-6BAE4948D815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sloth.Designer", "Sloth.Designer\Sloth.Designer.csproj", "{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E3B7824B-8007-4852-91AC-6BAE4948D815}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3B7824B-8007-4852-91AC-6BAE4948D815}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3B7824B-8007-4852-91AC-6BAE4948D815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

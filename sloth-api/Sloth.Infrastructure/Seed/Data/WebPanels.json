@@ -1,23 +1,26 @@
 [
   {
+    "AppID": "sloth",
     "PageID": "main",
     "PanelID": "sideNav",
     "PanelType": "sideNav",
     "Sections": "main,admin,user,info",
-    "Controls": "dashboard, kanban, bugs, projects, tasks, timesheet, releases, documentation, projectManagement, teamAdmin, userAdmin",
+    "Controls": "logout",
     "Label": null,
     "MetaData": null
   },
   {
+    "AppID": "sloth",
     "PageID": "main",
     "PanelID": "header",
     "PanelType": "header",
     "Sections": null,
-    "Controls": "messages, setttings",
+    "Controls": "messages, account, setttings",
     "Label": null,
     "MetaData": null
   },
   {
+    "AppID": "sloth",
     "PageID": "auth",
     "PanelID": "login",
     "PanelType": "form",

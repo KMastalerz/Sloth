@@ -1,26 +1,26 @@
-@switch(type()) {
-    @case('sideNav') {
-       <a   class="sl-control-base sl-link-side-nav"
-            [matTooltipDisabled]="!collapsed() || !tooltip()"
-            [matTooltip]="tooltip()"
-            matTooltipPosition="left"
-            [routerLink]="[route()]">
-            
-            @if(icon()) {
-                <span   class="sl-control-icon"
-                        [matBadge]="count()" 
-                        [matBadgeHidden]="!collapsed() || !count()"> {{ icon() }}</span>
-            }
+<a   class="sl-control-base sl-link"
+    [class]="{
+        'error': counterType() === 'error',
+        'warning': counterType() === 'warning',
+        'information': counterType() === 'information',
+    }"
+    [matTooltipDisabled]="!showTooltip()"
+    [matTooltip]="tooltip()"
+    [matTooltipPosition]="tooltipPlacement()"
+    [routerLink]="[route()]">
 
-            @if(!collapsed()) {
-                <label class="sl-control-label">{{ label() }}</label>
-                @if(count()) {
-                    <div>
-                        {{ count() }}
-                    </div>
-                }
-            }
-       </a>
-    }
+@if(showIcon()) {
+    <span   class="sl-control-icon"
+            [matBadge]="count()" 
+            [matBadgeHidden]="!showBagde()"> {{ icon() }}</span>
 }
 
+@if(showLabel()) {
+    <label class="sl-control-label">{{ label() }}</label>
+    @if(count()) {
+        <div    class="sl-link-tag">
+            {{ count() }}
+        </div>
+    }
+}
+</a>

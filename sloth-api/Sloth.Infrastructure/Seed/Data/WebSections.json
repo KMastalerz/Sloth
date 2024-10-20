@@ -1,5 +1,6 @@
 [
   {
+    "AppID": "sloth",
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "main",
@@ -7,6 +8,7 @@
     "Controls": "dashboard,kanban,bugs,projects,tasks, timesheet"
   },
   {
+    "AppID": "sloth",
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "info",
@@ -14,6 +16,7 @@
     "Controls": "releases,documentation"
   },
   {
+    "AppID": "sloth",
     "PageID": "main",
     "PanelID": "sideNav",
     "SectionID": "admin",

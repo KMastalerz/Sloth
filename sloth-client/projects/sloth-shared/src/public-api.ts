@@ -1,7 +1,8 @@
 //utility services
-export * from './lib/date/date-utility.service';
-export * from './lib/list/list-utility.service';
-export * from './lib/string/string-utility.service';
+export * from './lib/date/date.service';
+export * from './lib/json/json.service';
+export * from './lib/list/list.service';
+export * from './lib/string/string.service';
 
 //services
 export * from './lib/services/storage/storage.service';

@@ -14,7 +14,7 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
 {
     public async Task<GetWebPage> Handle(GetWebPageQuery request, CancellationToken cancellationToken)
     {
-        if(!request.ByPassSecurity)
+        if(!request.BypassSecurity)
         {
             var currentUser = userContext.GetCurrentUser();
 
@@ -32,16 +32,14 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
                 throw new NotFoundException(nameof(Claim), SlothClaimTypes.Group);
         }
 
-        var webPage = await uIElementsRepository.GetWebPageAsync(request.PageID) ??
+        var webPage = await uIElementsRepository.GetWebPageAsync(request.AppID, request.PageID) ??
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
-        var webPanels = await uIElementsRepository.ListWebPanelAsync(request.PageID) ??
-            throw new NotFoundException(nameof(List<WebPanel>), request.PageID);
+        var webPanels = await uIElementsRepository.ListWebPanelAsync(request.AppID, request.PageID) ?? [];
 
-        var webSections = await uIElementsRepository.ListWebSectionAsync(request.PageID) ?? [];
+        var webSections = await uIElementsRepository.ListWebSectionAsync(request.AppID, request.PageID) ?? [];
 
-        var webControls = await uIElementsRepository.ListWebControlAsync(request.PageID) ??
-            throw new NotFoundException(nameof(List<WebControl>), request.PageID);
+        var webControls = await uIElementsRepository.ListWebControlAsync(request.AppID, request.PageID) ?? [];
 
 
         // Build list of needed security tables

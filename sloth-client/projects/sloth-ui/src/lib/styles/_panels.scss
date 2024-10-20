@@ -1,5 +1,5 @@
 .sl-panel-absolute {
-    z-index: 9998;
+    z-index: 1000;
     position: absolute;
     top: 0;
     left: 0;
@@ -20,40 +20,73 @@
     border-color: $sl-background-border;
     background: $sl-background;
     color: $sl-on-background;
-    padding: 0 $space-s;
     transition: width 0.3s;
     width: 100%;
     height: 100%;
     .sl-title-section {
-        margin-left: $space-s;
-        margin-top: $space-s;
+        padding: 0 $space-1rem;
+        font-size: $font-size-s;
+        opacity: 0.8;
     }
     .sl-panel-base {
         gap: $space-s;
+        height: 100%;;
     }
+
+    &.expanded {
+        width: $sl-width-side-panel-expanded;
+    }
+
+    &.collapsed {
+        width: $sl-width-side-panel-collapsed;
+    }
+}
+
+.sl-side-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: $space-s;
+    padding: $space-s $space-1rem;
+
+    &.bottom {
+        //move to bottom of flex
+        height: 100%;
+        justify-content: end;
+
+
+    }
+}
+
+.sl-side-nav-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    height: 100%;
+    gap: $space-s;
+    padding: $space-m $space-1rem;
 }
 
 .sl-side-nav-panel-placeholder {
     width: $sl-width-side-panel-collapsed;
     height: 100%;
-    background: $sl-background-shade-20;
+    background: $sl-background-shade-10;
 }
 
-.header-panel {
+.sl-header-panel {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 5.2rem;
-    background: $sl-background-shade-20;
-    color: $sl-on-background-shade-20;
-    border-bottom: $border-s;
-    border-color: $sl-background-border;
-}
+    height: 4rem;
+    background: $sl-background-shade-10;
+    color: $sl-on-background-shade-10;
+    padding: 0 $space-1rem;
 
-.header-panel-left {
-    justify-content: start;
-}
+    &.left {
+        justify-content: start;
+    }
 
-.header-panel-right {
-    justify-content: end;
+    &.right {
+        justify-content: end;
+    }
 }

@@ -17,28 +17,37 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [AllowAnonymous]
-    public async Task<ActionResult<GetWebPage>> GetLoginWebPage()
+    public async Task<ActionResult<GetWebPage>> GetLoginWebPage(string appID)
     {
-        var result = await mediator.Send(new GetWebPageQuery(WebPages.Auth));
+        var result = await mediator.Send(new GetWebPageQuery(appID, WebPages.Auth));
         return Ok(result);
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetWebPage>> GetMainWebPage()
+    public async Task<ActionResult<GetWebPage>> GetMainWebPage(string appID)
     {
-        var result = await mediator.Send(new GetWebPageQuery(WebPages.Main));
+        var result = await mediator.Send(new GetWebPageQuery(appID, WebPages.Main));
         return Ok(result);
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetWebPage>> GetWebPage([FromQuery] string pageID)
+    public async Task<ActionResult<GetWebPage>> GetWebPage([FromQuery] string appID, [FromQuery] string pageID)
     {
         // This will prevent ByPassSecurity from being set to true
-        var result = await mediator.Send(new GetWebPageQuery(pageID));
+        var result = await mediator.Send(new GetWebPageQuery(appID, pageID));
+        return Ok(result);
+    }
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<GetWebPage>>?> ListWebPageByID([FromQuery] string? appID = null, [FromQuery] string? pageID = null)
+    {
+        // This will prevent ByPassSecurity from being set to true
+        var result = await mediator.Send(new ListWebPageByIDQuery(appID, pageID));
         return Ok(result);
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HSL, RGB, Theme } from '../../models/theme.model';
-import { Colors, Factor, Shades, ThemeType } from '../../constants/theme.constants';
+import { Colors, Factor, Shades } from '../../constants/theme.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +9,66 @@ export class ThemeService {
 
   constructor(){
     const themes: Theme[] = [];
+    let themeType: 'background' | 'regular' | 'information' | 'neutral' = 'background';
     Colors.Colors.forEach(theme => {
-      let rgb: RGB = this.hexToRgb(theme.hex.toString()) ?? { red: 0, green: 0, blue: 0 };
-      switch(theme.type){
-        case ThemeType.Regular:
+      let hexBase = '#FFFFFF';
+      switch (theme) {
+        case 'background':
+          hexBase = '#F0F0F0';
+          themeType = 'background';
+          break;
+        case 'error':
+          hexBase = '#B41C2B';
+          themeType = 'information';
+          break;
+        case 'information':
+          hexBase = '#388CFA';
+          themeType = 'information';
+          break;
+        case 'neutral':
+          hexBase = '#FFFFFF';
+          themeType = 'neutral';
+          break;
+        case 'primary':
+          hexBase = '#388CFA';
+          themeType = 'regular';
+          break;
+        case 'secondary':
+          hexBase = '#38BC64';
+          themeType = 'regular';
+          break;
+        case 'success':
+          hexBase = '#009F42';
+          themeType = 'information';
+          break;
+        case 'tertiary':
+          hexBase = '#BC3890';
+          themeType = 'regular';
+          break;
+        case 'warning':
+          hexBase = '#CC8800';
+          themeType = 'information';
+          break;
+      }
+
+      let rgb: RGB = this.hexToRgb(hexBase) ?? { red: 0, green: 0, blue: 0 };
+      
+      switch(themeType){
+        case 'background':
+          const backgroundFactors = Shades.Full;
+          this.generateTintOrShade(rgb, Factor.Regular, theme, backgroundFactors, themes); 
+          break;
+        case 'regular':
           const regularFactors = Shades.Regular;
-          this.generateTintOrShade(rgb, Factor.Regular, theme.name, regularFactors, themes); 
+          this.generateTintOrShade(rgb, Factor.Regular, theme, regularFactors, themes); 
           break;
-        case ThemeType.Information:
+        case 'information':
           const infoFactors = Shades.Information;
-          this.generateTintOrShade(rgb, Factor.Regular, theme.name, infoFactors, themes); 
+          this.generateTintOrShade(rgb, Factor.Regular, theme, infoFactors, themes); 
           break;
-        case ThemeType.Neutral:
-          const neutralFactors = Shades.Neutral;
-          this.generateTintOrShade(rgb, Factor.Neutral, theme.name, neutralFactors, themes); 
+        case 'neutral':
+          const neutralFactors = Shades.FullPositive;
+          this.generateTintOrShade(rgb, Factor.Neutral, theme, neutralFactors, themes); 
           break
       }
     });
@@ -43,7 +89,9 @@ export class ThemeService {
       const theme = { key: themeKey, value: themeValue };
 
       const onThemeKey = `--sl-on-${name}-${tintShade}-${Math.abs(shade)}`;
-      const onThemeValue = this.onTintShadeColor(generatedTintShade);
+      const onDark = this.rgbToHex(this.generateShade(rgb, 0.90, 10));
+      const onLight = this.rgbToHex(this.generateShade(rgb, 0.90, 100));
+      const onThemeValue = this.onTintShadeColor(generatedTintShade, onDark, onLight);
       const onTheme = { key: onThemeKey, value: onThemeValue };
       
       themes.push(theme);
@@ -51,8 +99,8 @@ export class ThemeService {
     });
   }
 
-  private onTintShadeColor(rgb: RGB): string {
-    return (rgb.red * 0.299 + rgb.green * 0.587 + rgb.blue * 0.114) > 186 ? '#0A0A0A' : '#F5F5F5';
+  private onTintShadeColor(rgb: RGB, onDark: string, onLight: string): string {
+    return (rgb.red * 0.299 + rgb.green * 0.587 + rgb.blue * 0.114) > 186 ? onLight : onDark;
   }
 
   private generateTint(rgb: RGB, factor: number, shade: number): RGB {

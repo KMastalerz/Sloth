@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    gap: $space-l;
+    padding: $space-l $space-s;
     img {
         display: block;
         width: 100%;    

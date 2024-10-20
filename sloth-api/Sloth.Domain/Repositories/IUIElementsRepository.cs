@@ -4,8 +4,9 @@ namespace Sloth.Domain.Repositories;
 
 public interface IUIElementsRepository
 {
-    Task<WebPage?> GetWebPageAsync(string pageID);
-    Task<IEnumerable<WebControl>?> ListWebControlAsync(string pageID);
-    Task<IEnumerable<WebPanel>?> ListWebPanelAsync(string pageID);
-    Task<IEnumerable<WebSection>?> ListWebSectionAsync(string pageID);
+    Task<WebPage?> GetWebPageAsync(string appID, string pageID);
+    Task<IEnumerable<WebControl>?> ListWebControlAsync(string appID, string pageID);
+    Task<IEnumerable<WebPanel>?> ListWebPanelAsync(string appID, string pageID);
+    Task<IEnumerable<WebSection>?> ListWebSectionAsync(string appID, string pageID);
+    Task<IEnumerable<WebPage>?> ListWebPageByIDAsync(string? appID, string? pageID);
 }

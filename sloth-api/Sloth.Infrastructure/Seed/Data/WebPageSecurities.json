@@ -1,5 +1,6 @@
 [
   {
+    "AppID": "sloth",
     "PageID": "main",
     "UserGroup": "DEFAULT",
     "CanAccess": true,
@@ -7,6 +8,7 @@
     "CanDelete": true
   },
   {
+    "AppID": "sloth",
     "PageID": "auth",
     "UserGroup": "DEFAULT",
     "CanAccess": true,

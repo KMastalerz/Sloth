@@ -1,5 +1,5 @@
 /* Fonts */
-$sl-font: "Work Sans", sans-serif;
+$sl-font: "Inter", sans-serif;
 $sl-icon-font: "Material Symbols Outlined";
 $sl-font-branding: "Dancing Script", cursive;
 
@@ -7,6 +7,7 @@ $sl-font-branding: "Dancing Script", cursive;
 $space-us: 0.1rem;      // 1px
 $space-xs: 0.4rem;      // 4px
 $space-s: 0.8rem;       // 8px
+$space-1rem: 1rem;      // 10px
 $space-m: 1.2rem;       // 12px
 $space-l: 1.6rem;       // 16px
 $space-xl: 2.0rem;      // 20px
@@ -50,10 +51,11 @@ $border-m: 0.2rem solid;      // 2px
 $border-l: 0.4rem solid;      // 4px
 
 /* Border Radius */
-$border-radius-xs: 0.8rem;  // 8px
-$border-radius-s: 1.2rem;   // 12px
-$border-radius-m: 1.6rem;   // 16px
-$border-radius-l: 2.4rem;   // 24px
+$border-radius-xs: 0.4rem;  // 4px
+$border-radius-s: 0.8rem;   // 8px
+$border-radius-m: 1.2rem;   // 12px
+$border-radius-l: 1.8rem;   // 18px
+$border-radius-xl: 2.4rem;  // 24px
 $border-radius-pill: 50%;   // remains the same for pill shapes
 
 /* Controls Sizes */
@@ -65,7 +67,7 @@ $control-width-m: 24rem;    // 240px
 /* Panels Sizes */
 $sl-full-panel-width: 100%;
 $sl-full-panel-height: 100%;
-$sl-width-side-panel-expanded: 26.0rem; // 260px
+$sl-width-side-panel-expanded: 28.0rem; // 260px
 $sl-width-side-panel-collapsed: 6.8rem; // 68px
 
 

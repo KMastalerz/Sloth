@@ -1,5 +1,6 @@
 [
   {
+    "AppID": "sloth",
     "PageID": "main",
     "Label": "Main",
     "SecurityTableID": null,
@@ -10,10 +11,11 @@
     "Position": null,
     "Class": null,
     "Style": null,
-    "HasRouter":  true,
+    "HasRouter": true,
     "MetaData": "{\"columns\":2,\"rows\":2,\"columnsRatio\":[\"auto\",1],\"rowsRatio\":[\"auto\",1],\"gridSpans\":[{\"type\":\"column\",\"id\":1,\"spanFrom\":1,\"spanTo\":2}]}"
   },
   {
+    "AppID": "sloth",
     "PageID": "auth",
     "Label": "Login",
     "SecurityTableID": null,

@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { NgStyle } from '@angular/common';
 import { StyleGeneratorService } from '../../services/style-generator/style-generator.service';
 import { DynamicPanelDirective } from '../../directives/dynamic-panel/dynamic-panel.directive';
-import { BasePage } from '../../base/base-page/base-page.component';
+import { BaseForm } from '../../base/base-form/base-form.component';
 import { GeneratedGrid } from '../../models/forms.types';
 
 @Component({
@@ -13,7 +13,7 @@ import { GeneratedGrid } from '../../models/forms.types';
   templateUrl: './dynamic-grid.component.html',
   styleUrl: './dynamic-grid.component.scss'
 })
-export class DynamicGridComponent extends BasePage {
+export class DynamicGridComponent extends BaseForm {
   styleGenerator = inject(StyleGeneratorService)
   generatedGrid = computed<GeneratedGrid>(() => {
     const style = this.styleGenerator.generateGrid(this.metaData())

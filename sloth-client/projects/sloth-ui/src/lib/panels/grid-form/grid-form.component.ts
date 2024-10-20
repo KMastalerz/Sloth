@@ -19,7 +19,7 @@ export class GridFormComponent extends BasePanel {
   
   protected getSectionGroupedControls(section: WebSection): string[] | undefined {
     if(section.metaData) {
-      const metaData = JSON.parse(section.metaData);
+      const metaData = this.jsonUtil.tryParse(section.metaData);
 
       if(metaData.groupedControls) {
         return metaData.groupedControls;

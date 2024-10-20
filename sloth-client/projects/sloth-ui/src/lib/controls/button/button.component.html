@@ -1,19 +1,15 @@
-@switch(type()) {
-    @case ('icon') {
-        <button>
-            <span>{{ icon() }}</span>
-        </button>
+<button class="sl-control-base sl-button"
+        [ngClass]="[btnStyle(), btnSize(), btnType()]"
+        [matTooltipDisabled]="!showTooltip()"
+        [matTooltip]="tooltip()"
+        [matTooltipPosition]="tooltipPlacement()"
+        type="button">
+    @if(showIcon()) {
+        <span   class="sl-control-icon"
+                [matBadge]="count()" 
+                [matBadgeHidden]="!showBagde()"> {{ icon() }}</span>
     }
-    @case ('regular') {
-        <button>
-            <span>{{ label() }}</span>
-            <span>{{ icon() }}</span>
-        </button>
+    @if(showLabel()) {
+        <label class="sl-control-label">{{ label() }}</label>
     }
-    @case ('badged') {
-        <button>
-            <span>{{ label() }}</span>
-            <span>{{ icon() }}</span>
-        </button>
-    }
-}
+</button>

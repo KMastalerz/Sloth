@@ -12,3 +12,23 @@ export type GridSpan = {
     spanFrom: number;
     spanTo: number;
 }
+
+export type ButtonInnerType = {
+    style?: 'flat' | 'neutral' | 'primary' | 'secondary' | 'tertiary' | 'error' | null;
+    type?: 'icon' | 'text' | 'icon-text'| null;
+    size?: 'small' | 'medium' | 'large'| null;
+}
+
+export type LinkMetadata = {
+    tooltipPlacement: 'above' | 'below' | 'left' | 'right';
+    counterSubject?: string,
+    warningCount?: number,
+    errorCount?: number
+}
+
+export type ButtonMetadata = {
+    tooltipPlacement: 'above' | 'below' | 'left' | 'right';
+    counterSubject?: string,
+    warningCount?: number,
+    errorCount?: number
+}

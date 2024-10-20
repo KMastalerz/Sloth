@@ -5,7 +5,7 @@ public class GetWebControl
     public string? SectionID { get; set; } = null;
     public string ControlID { get; set; } = default!;
     public string ControlType { get; set; } = default!;
-    public string? InternalType { get; set; } = null;
+    public string? InnerType { get; set; } = null;
     public string? ChildControls { get; set; } = null;
     public string? ControlLabel { get; set; }
     public string? ControlPlaceholder { get; set; }

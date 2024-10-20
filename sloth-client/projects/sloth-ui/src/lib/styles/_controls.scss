@@ -2,9 +2,6 @@
     display: flex;
     align-items: center;
     gap: $space-s;
-    padding-right: $space-m;
-    padding-left: $space-m;
-    height: $control-height-m;
 }
 
 .sl-control-icon {
@@ -15,24 +12,79 @@
 .sl-control-image {
     height: $icon-size-m;
     width: $icon-size-m;
+
+    &.branding {
+        color: $sl-on-background;
+        height: 5.2rem;
+        width: 5.2rem;
+    }
 }
 
-.sl-link-side-nav {
+.sl-control-label {
+    font-size: $font-size-s;
+    font-weight: $font-weight-regular;
+}
+
+
+/* LINK */
+.sl-link {
     border-radius: $border-radius-xs;
-    label {
-        font-weight: $font-weight-medium;
-    }
+    padding: $space-s $space-m;
+    font-size: $font-size-m;
     .sl-control-icon {
         transition: transform 0.1s;
     }
-}
-.sl-link-side-nav:hover {
-    background-color: $sl-background-hover;
-    .sl-control-icon {
-        transform: scale(1.2);
+
+    .sl-control-label {
+        font-size: $font-size-m;
+        font-weight: $font-weight-regular;
+    }
+
+    &:hover {
+        background-color: $sl-background-hover;
+        .sl-control-icon {
+            transform: scale(1.2);
+        }
+    }
+
+    &.error {
+        .sl-link-tag {
+            @extend .sl-error;
+        }
+
+        .mat-badge-content {
+            @extend .sl-error;
+        }
+    }
+    &.warning {
+        .sl-link-tag {
+            @extend .sl-warning;
+        }
+
+        .mat-badge-content {
+            @extend .sl-warning;
+        }
+    }
+    &.information {
+        .sl-link-tag {
+            @extend .sl-information;
+        }
+
+        .mat-badge-content {
+            @extend .sl-information;
+        }
     }
 }
 
+.sl-link-tag {
+    border-radius: $border-radius-xs;
+    padding: 0.2rem 0.6rem;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+}
+
+
+/* SIDE-NAV TOGGLE */
 .sl-toggle-side-nav {
     z-index: 9999;
     position: absolute;
@@ -58,4 +110,145 @@
 
 .sl-toggle-side-nav:hover span {
     transform: rotate(180deg);
+}
+
+
+/* BUTTON */
+.sl-button {
+    justify-content: center;
+    padding: $space-s $space-m;
+    height: $control-height-m;
+
+    .sl-control-label {
+        font-size: $font-size-m;
+        font-weight: $font-weight-semi-bold;
+    }
+
+    .sl-control-icon {
+        font-size: $icon-size-m;
+    }
+
+    &.icon {
+        height: $control-height-m;
+        width: $control-height-m;
+        padding: $space-s;
+    }
+
+    &.small {
+        height: 100%;
+        width: 100%;
+
+        .sl-control-icon {
+            font-size: $icon-size-s;
+        }
+    }
+
+    &.flat {
+        background: transparent;
+        color: $sl-on-background;
+    }
+    &.flat:hover {
+        background: transparent;
+        color: $sl-primary;
+    }
+
+    &.neutral {
+        @extend .sl-neutral-background;
+    };
+
+    &.primary {
+        @extend .sl-primary-background;
+    };
+
+    &.secondary {
+        @extend .sl-secondary-background;
+    };
+
+    &.tertiary {
+        @extend .sl-tertiary-background;
+    };
+
+    &.error {
+        @extend .sl-error-background;
+    };
+}
+
+// Hover and Background Colors
+.sl-error {
+    background: $sl-error !important; 
+    color: $sl-on-error !important; 
+}
+
+.sl-warning {
+    background: $sl-warning !important; 
+    color: $sl-on-warning !important; 
+}
+
+.sl-information {
+    background: $sl-information !important; 
+    color: $sl-on-information !important; 
+}
+
+.sl-error-background {
+    background: $sl-error;
+    color: $sl-on-error;
+    &:hover {
+        background: $sl-error-tint-30;
+        color: $sl-on-error-tint-30;
+    }
+}
+
+
+.sl-warning-background {
+    background: $sl-warning;
+    color: $sl-on-warning;
+    &:hover {
+        background: $sl-warning-tint-30;
+        color: $sl-on-warning-tint-30;
+    }
+}
+
+.sl-information-background {
+    background: $sl-information;
+    color: $sl-on-information;
+    &:hover {
+        background: $sl-information-tint-30;
+        color: $sl-on-information-tint-30;
+    }
+}
+
+.sl-neutral-background {
+    background: $sl-neutral-shade-40;
+    color: $sl-on-neutral-shade-40;
+    &:hover {
+        background: $sl-neutral-shade-30;
+        color: $sl-on-neutral-shade-30;
+    }
+}
+
+.sl-primary-background {
+    background: $sl-primary;
+    color: $sl-on-primary;
+    &:hover {
+        background: $sl-primary-tint-20;
+        color: $sl-on-primary-tint-20;
+    }
+}
+
+.sl-secondary-background {
+    background: $sl-secondary;
+    color: $sl-on-secondary;
+    &:hover {
+        background: $sl-secondary-tint-20;
+        color: $sl-on-secondary-tint-20;
+    }
+}
+
+.sl-tertiary-background {
+    background: $sl-tertiary;
+    color: $sl-on-tertiary;
+    &:hover {
+        background: $sl-tertiary-tint-20;
+        color: $sl-on-tertiary-tint-20;
+    }
 }

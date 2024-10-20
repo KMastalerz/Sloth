@@ -1,7 +1,7 @@
 :root {
-    /*    border    => sl-background-shade/tint-30*/ 
-    --sl-border: #B7B7B7;
-
+    /* Variables based on lighting */ 
+    --sl-background-border: #B7B7B7;
+    --sl-background-hover: #E0E0E0;
     /*    background    */
     --sl-background: #F5F5F5;
     --sl-background-tint-10: #F6F6F6;
@@ -47,12 +47,6 @@
     --sl-on-background-shade-80: #F6F6F6;
     --sl-on-background-shade-90: #F6F6F6;
     --sl-on-background-shade-100: #F6F6F6;
-
-    --sl-background-hover: #E0E0E0;             //10
-    --sl-background-shade-20-hover: #B7B7B7;    //30
-    --sl-background-shade-40-hover: #8D8D8D;    //50
-    --sl-background-shade-60-hover: #636363;    //70
-    --sl-background-shade-80-hover: #3a3a3a;    //90
 
     /*    primary    */
     --sl-primary: #388CFA;
@@ -134,18 +128,28 @@
 
     /*    neutral    */
     --sl-neutral: #FFFFFF;
+    --sl-neutral-shade-10: #F6F6F6;
     --sl-neutral-shade-20: #CDCDCD;
+    --sl-neutral-shade-30: #A4A4A4;
     --sl-neutral-shade-40: #9B9B9B;
+    --sl-neutral-shade-50: #828282;
     --sl-neutral-shade-60: #696969;
-    --sl-neutral-shade-80: #373737;
+    --sl-neutral-shade-70: #505050;
+    --sl-neutral-shade-80: #0f0d0d;
+    --sl-neutral-shade-90: #0A0A0A;
     --sl-neutral-shade-100: #050505;
 
     /*    on-neutral    */
     --sl-on-neutral: #0A0A0A;
+    --sl-on-neutral-shade-10: #0A0A0A;
     --sl-on-neutral-shade-20: #0A0A0A;
+    --sl-on-neutral-shade-30: #0A0A0A;
     --sl-on-neutral-shade-40: #F6F6F6;
+    --sl-on-neutral-shade-50: #F6F6F6;
     --sl-on-neutral-shade-60: #F6F6F6;
+    --sl-on-neutral-shade-70: #F6F6F6;
     --sl-on-neutral-shade-80: #F6F6F6;
+    --sl-on-neutral-shade-90: #F6F6F6;
     --sl-on-neutral-shade-100: #F6F6F6;
 
     /*    error    */
@@ -221,7 +225,8 @@
     --sl-on-warning-shade-90: #F6F6F6;
 }
 
-$sl-border: var(--sl-border);
+$sl-background-border: var(--sl-background-border);
+$sl-background-hover: var(--sl-background-hover);
 
 $sl-background: var(--sl-background);
 $sl-background-tint-10: var(--sl-background-tint-10);
@@ -266,8 +271,6 @@ $sl-on-background-shade-70: var(--sl-on-background-shade-70);
 $sl-on-background-shade-80: var(--sl-on-background-shade-80);
 $sl-on-background-shade-90: var(--sl-on-background-shade-90);
 $sl-on-background-shade-100: var(--sl-on-background-shade-100);
-
-$sl-background-hover: var(--sl-background-hover);
 
 $sl-primary: var(--sl-primary);
 $sl-primary-tint-20: var(--sl-primary-tint-20);
@@ -342,17 +345,27 @@ $sl-on-tertiary-shade-80: var(--sl-on-tertiary-shade-80);
 $sl-on-tertiary-shade-100: var(--sl-on-tertiary-shade-100);
 
 $sl-neutral: var(--sl-neutral);
+$sl-neutral-shade-10: var(--sl-neutral-shade-10);
 $sl-neutral-shade-20: var(--sl-neutral-shade-20);
+$sl-neutral-shade-30: var(--sl-neutral-shade-30);
 $sl-neutral-shade-40: var(--sl-neutral-shade-40);
+$sl-neutral-shade-50: var(--sl-neutral-shade-50);
 $sl-neutral-shade-60: var(--sl-neutral-shade-60);
+$sl-neutral-shade-70: var(--sl-neutral-shade-70);
 $sl-neutral-shade-80: var(--sl-neutral-shade-80);
+$sl-neutral-shade-90: var(--sl-neutral-shade-90);
 $sl-neutral-shade-100: var(--sl-neutral-shade-100);
 
 $sl-on-neutral: var(--sl-on-neutral);
+$sl-on-neutral-shade-10: var(--sl-on-neutral-shade-10);
 $sl-on-neutral-shade-20: var(--sl-on-neutral-shade-20);
+$sl-on-neutral-shade-30: var(--sl-on-neutral-shade-30);
 $sl-on-neutral-shade-40: var(--sl-on-neutral-shade-40);
+$sl-on-neutral-shade-50: var(--sl-on-neutral-shade-50);
 $sl-on-neutral-shade-60: var(--sl-on-neutral-shade-60);
+$sl-on-neutral-shade-70: var(--sl-on-neutral-shade-70);
 $sl-on-neutral-shade-80: var(--sl-on-neutral-shade-80);
+$sl-on-neutral-shade-90: var(--sl-on-neutral-shade-90);
 $sl-on-neutral-shade-100: var(--sl-on-neutral-shade-100);
 
 $sl-error: var(--sl-error);

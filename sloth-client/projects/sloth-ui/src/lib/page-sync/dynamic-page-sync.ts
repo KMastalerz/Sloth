@@ -3,17 +3,18 @@ import { BehaviorSubject } from "rxjs";
 import { Action } from "./action";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { inject } from "@angular/core";
-import { ListUtilityService } from "@sloth-shared";
+import { ListService } from "@sloth-shared";
 import { StaticWebObjects } from "../constants/page.constants";
 
 export class DynamicPageSync {
     private formBuilder = inject(FormBuilder);
-    private listUtil = inject(ListUtilityService);
+    private listUtil = inject(ListService);
     private webControlMap: Map<string, WebControl> = new Map<string, WebControl>();
     private webPanelMap: Map<string, WebPanel | undefined> = new Map<string, WebPanel | undefined>();
 
     pageConfig: WebPage = {} as WebPage;
     pageForm: FormGroup = {} as FormGroup;
+    pageInstance: any;
 
     toParent: BehaviorSubject<Action | undefined> = new BehaviorSubject<Action | undefined>(undefined);
     toChild: BehaviorSubject<Action | undefined> = new BehaviorSubject<Action | undefined>(undefined);

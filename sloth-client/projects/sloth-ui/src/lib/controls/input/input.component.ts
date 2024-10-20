@@ -10,6 +10,5 @@ import { FormControlComponent } from '../../base/form-control/form-control.compo
   styleUrl: './input.component.scss'
 })
 export class InputComponent extends FormControlComponent {
-  isRequired = computed(()=>this.metaData()?.required ?? true);
 }
 

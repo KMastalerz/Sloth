@@ -10,6 +10,8 @@ public class UIElementsProfile : Profile
     {
         CreateMap<WebPage, GetWebPage>().ReverseMap();
 
+        CreateMap<WebPage, DesignerListWebPageItem>().ReverseMap();
+
         CreateMap<WebPanel, GetWebPanel>().ReverseMap();
 
         CreateMap<WebSection, GetWebSection>().ReverseMap();

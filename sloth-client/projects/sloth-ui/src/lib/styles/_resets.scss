@@ -59,6 +59,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
     appearance: none;
 }
 
+svg {
+    width: 100%;  /* Or any desired width */
+    height: 100%; /* Or any desired height */
+    display: block; /* Ensures the SVG respects the container's dimensions */
+}
+
 // overrite angular material badge
 .mat-badge-content {
     font-size: $font-size-xs !important;

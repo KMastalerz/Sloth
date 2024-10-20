@@ -1,12 +1,13 @@
 ﻿namespace Sloth.Domain.Entities;
 public class WebControl
 {
+    public string AppID { get; set; } = default!;
     public string PageID { get; set; } = default!;
     public string PanelID { get; set; } = default!;
     public string? SectionID { get; set; } = null;
     public string ControlID { get; set; } = default!;
     public string ControlType { get; set; } = default!;
-    public string? InternalType { get; set; } = null;
+    public string? InnerType { get; set; } = null;
     public string? ChildControls { get; set; } = null;
     public string? SecurityTableID { get; set; }
     public string? ControlLabel { get; set; } = null;
@@ -18,4 +19,6 @@ public class WebControl
     public string? Icon { get; set; } = null;
     public string? MetaData { get; set; } = null;
     public string? Validation { get; set; } = null;
+    public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
+    public Guid ChangeUser { get; set; } = default!;
 }
