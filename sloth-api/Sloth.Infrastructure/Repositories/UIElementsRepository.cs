@@ -10,6 +10,17 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     {
         return await dbContext.WebPage.FindAsync(appID, pageID);
     }
+    public async Task<WebPage?> GetFullWebPageAsync(string appID, string pageID)
+    {
+        return await dbContext.WebPage
+            .Include(p => p.WebPanels)
+                .ThenInclude(pa => pa.WebControls
+                    .Where(c => c.SectionID == null)) // Include only controls without SectionID
+            .Include(p => p.WebPanels)
+                .ThenInclude(pa => pa.WebSections) // Include sections inside panels
+                    .ThenInclude(s => s.WebControls) // Include controls inside sections
+            .FirstOrDefaultAsync(p => p.AppID == appID && p.PageID == pageID);
+    }
     public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string appID, string pageID)
     {
         return await dbContext.WebControl.Where(p => p.AppID == appID && p.PageID == pageID).ToListAsync();;
@@ -26,5 +37,10 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     {
         var records = await dbContext.WebPage.Where(p => (appID == null || p.AppID.Contains(appID)) && (pageID == null || p.PageID.Contains(pageID))).ToListAsync();
         return await dbContext.WebPage.Where(p => (appID == null || p.AppID.Contains(appID)) && (pageID == null || p.PageID.Contains(pageID))).ToListAsync();
+    }
+
+    public async Task<IEnumerable<string>?> ListWebApplicationIDsAsync()
+    {
+        return await dbContext.WebPage.Select(p => p.AppID).Distinct().ToListAsync();
     }
 }

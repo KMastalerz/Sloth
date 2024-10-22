@@ -25,13 +25,13 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Orientation="Horizontal">
-            <ComboBox  ItemsSource="{Binding WebApps}"
-                       SelectedItem="{Binding WebApp, UpdateSourceTrigger=PropertyChanged}"
+            <ComboBox  ItemsSource="{Binding WebApps, UpdateSourceTrigger=PropertyChanged}"
+                       SelectedItem="{Binding AppID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Width="160"
                        materialDesign:HintAssist.Hint="Application"
                        Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
             <TextBox    Margin="20 0 0 0"
-                        Text="{Binding WebPage, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding PageID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Width="260"
                         Padding="12 8"
                         materialDesign:HintAssist.Hint="Search"
@@ -43,6 +43,7 @@
                       FontSize="12"
                       Foreground="White"
                       Command="{Binding SearchPages}"
+                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SearchPageParams, UpdateSourceTrigger=PropertyChanged}"
                       Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
             <Button   Margin="20 0 0 0"
                       Content="Add new"

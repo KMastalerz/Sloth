@@ -1,4 +1,4 @@
-﻿namespace Sloth.Designer.Pages.WebPageEdit;
+﻿namespace Sloth.Designer.Pages;
 public class WebPageEditViewModel
 {
 }

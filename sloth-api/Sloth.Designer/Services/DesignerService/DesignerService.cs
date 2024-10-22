@@ -1,34 +1,25 @@
-﻿using Sloth.Designer.Models;
+﻿using Sloth.Designer.Core;
+using Sloth.Shared.Models;
 using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace Sloth.Designer.Services;
-internal class DesignerService : IDesignerService
+internal class DesignerService(IHttpServices httpServices) : IDesignerService
 {
-    private readonly HttpClient httpClient;
-    public DesignerService(IHttpClientFactory httpClientFactory)
-    {
-        httpClient = httpClientFactory.CreateClient("ApiClient");
-    }
-    private static string basePath = "/api/UIElements/";
     public async Task<ObservableCollection<ListWebPageItem>?> ListWebPageByID(string? appID, string? pageID)
     {
-        var request = RequestBuilder.BuildRequest(basePath, "ListWebPageByID", new()
+        var parms = new Dictionary<string, object?>()
         {
             { "appID", appID },
             { "pageID", pageID }
-        });
-        var response = await httpClient.GetAsync(request);
+        };
 
-        if (response.IsSuccessStatusCode)
-        {
-            var webPages = await response.Content.ReadFromJsonAsync<IEnumerable<ListWebPageItem>>();
-            return webPages is null ? null : new(webPages);
-        }
-        else
-        {
-            throw new NotImplementedException();
-        }
+        var response = await httpServices.GetAsync<IEnumerable<ListWebPageItem>>(HttpServicePaths.UIElements, "ListWebPageByID", parms);
+        return response.Data is null ? null : new(response.Data);
+    }
+
+    public async Task<IEnumerable<string>?> ListWebApplicationIDs()
+    {
+        var response = await httpServices.GetAsync<IEnumerable<string>>(HttpServicePaths.UIElements, "ListWebApplicationIDs");
+        return response.Data is null ? null : response.Data;
     }
 }

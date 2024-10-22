@@ -1,7 +1,6 @@
-﻿
+﻿namespace Sloth.Designer.Models;
 
-namespace Sloth.Domain.Entities;
-public class WebPage
+public class WebPageItem
 {
     public string AppID { get; set; } = default!;
     public string PageID { get; set; } = default!;
@@ -16,7 +15,6 @@ public class WebPage
     public string? SecurityTableID { get; set; } = null;
     public string? Description { get; set; } = null;
     public string? MetaData { get; set; } = null;
-    public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
-    public Guid ChangeUser { get; set; } = default!;
-    public List<WebPanel> WebPanels { get; set; } = [];
+
+    public IEnumerable<WebPanelItem> WebPanels { get; set; } = [];
 }

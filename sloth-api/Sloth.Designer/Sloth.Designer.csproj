@@ -25,10 +25,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Designer\Forms\" />
-    <Folder Include="Pages\Designer\Controls\" />
-    <Folder Include="Pages\Designer\Sections\" />
-    <Folder Include="Pages\Designer\Panels\" />
+    <Folder Include="Models\Items\" />
+    <Folder Include="Pages\Forms\Forms\" />
+    <Folder Include="Pages\Forms\Controls\" />
+    <Folder Include="Pages\Forms\Sections\" />
+    <Folder Include="Pages\Forms\Panels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sloth.Shared\Sloth.Shared.csproj" />
   </ItemGroup>
 
 </Project>

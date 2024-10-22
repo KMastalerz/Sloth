@@ -10,16 +10,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        try
-        {
-            var dataContext = App.ServiceProvider.GetRequiredService<MainWindowViewModel>();
-            DataContext = dataContext;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        
-     
+        DataContext = App.ServiceProvider.GetRequiredService<MainWindowViewModel>();
     }
 }

@@ -359,6 +359,31 @@ public partial class Init : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "WebSection",
+            columns: table => new
+            {
+                AppID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                SectionID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                Controls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_WebSection", x => new { x.AppID, x.PageID, x.PanelID, x.SectionID });
+                table.ForeignKey(
+                    name: "FK_WebSection_WebPanel_AppID_PageID_PanelID",
+                    columns: x => new { x.AppID, x.PageID, x.PanelID },
+                    principalTable: "WebPanel",
+                    principalColumns: new[] { "AppID", "PageID", "PanelID" },
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateTable(
             name: "WebControl",
             columns: table => new
             {
@@ -366,7 +391,7 @@ public partial class Init : Migration
                 PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 ControlID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                SectionID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                SectionID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                 ControlType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 InnerType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChildControls = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -392,31 +417,11 @@ public partial class Init : Migration
                     principalTable: "WebPanel",
                     principalColumns: new[] { "AppID", "PageID", "PanelID" },
                     onDelete: ReferentialAction.Cascade);
-            });
-
-        migrationBuilder.CreateTable(
-            name: "WebSection",
-            columns: table => new
-            {
-                AppID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                SectionID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Controls = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_WebSection", x => new { x.AppID, x.PageID, x.PanelID, x.SectionID });
                 table.ForeignKey(
-                    name: "FK_WebSection_WebPanel_AppID_PageID_PanelID",
-                    columns: x => new { x.AppID, x.PageID, x.PanelID },
-                    principalTable: "WebPanel",
-                    principalColumns: new[] { "AppID", "PageID", "PanelID" },
-                    onDelete: ReferentialAction.Cascade);
+                    name: "FK_WebControl_WebSection_AppID_PageID_PanelID_SectionID",
+                    columns: x => new { x.AppID, x.PageID, x.PanelID, x.SectionID },
+                    principalTable: "WebSection",
+                    principalColumns: new[] { "AppID", "PageID", "PanelID", "SectionID" });
             });
 
         migrationBuilder.CreateIndex(
@@ -443,6 +448,11 @@ public partial class Init : Migration
             name: "IX_User_ThemeID",
             table: "User",
             column: "ThemeID");
+
+        migrationBuilder.CreateIndex(
+            name: "IX_WebControl_AppID_PageID_PanelID_SectionID",
+            table: "WebControl",
+            columns: new[] { "AppID", "PageID", "PanelID", "SectionID" });
     }
 
     /// <inheritdoc />
@@ -485,13 +495,10 @@ public partial class Init : Migration
             name: "WebPageSecurity");
 
         migrationBuilder.DropTable(
-            name: "WebSection");
-
-        migrationBuilder.DropTable(
             name: "User");
 
         migrationBuilder.DropTable(
-            name: "WebPanel");
+            name: "WebSection");
 
         migrationBuilder.DropTable(
             name: "Language");
@@ -504,6 +511,9 @@ public partial class Init : Migration
 
         migrationBuilder.DropTable(
             name: "UserRole");
+
+        migrationBuilder.DropTable(
+            name: "WebPanel");
 
         migrationBuilder.DropTable(
             name: "WebPage");

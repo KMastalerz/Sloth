@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20241020124746_Init")]
+    [Migration("20241022203442_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -396,7 +396,7 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SectionID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
@@ -405,6 +405,8 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppID", "PageID", "PanelID", "ControlID");
+
+                    b.HasIndex("AppID", "PageID", "PanelID", "SectionID");
 
                     b.ToTable("WebControl");
                 });
@@ -575,7 +577,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.ToTable("WebPanel");
                 });
 
-            modelBuilder.Entity("WebSection", b =>
+            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
                 {
                     b.Property<string>("AppID")
                         .HasColumnType("nvarchar(450)");
@@ -685,10 +687,15 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPanel", null)
-                        .WithMany()
+                        .WithMany("WebControls")
                         .HasForeignKey("AppID", "PageID", "PanelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Sloth.Domain.Entities.WebSection", null)
+                        .WithMany("WebControls")
+                        .HasForeignKey("AppID", "PageID", "PanelID", "SectionID")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebPageSecurity", b =>
@@ -703,19 +710,36 @@ namespace Sloth.Infrastructure.Migrations
             modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPage", null)
-                        .WithMany()
+                        .WithMany("WebPanels")
                         .HasForeignKey("AppID", "PageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebSection", b =>
+            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
                 {
                     b.HasOne("Sloth.Domain.Entities.WebPanel", null)
-                        .WithMany()
+                        .WithMany("WebSections")
                         .HasForeignKey("AppID", "PageID", "PanelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPage", b =>
+                {
+                    b.Navigation("WebPanels");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
+                {
+                    b.Navigation("WebControls");
+
+                    b.Navigation("WebSections");
+                });
+
+            modelBuilder.Entity("Sloth.Domain.Entities.WebSection", b =>
+                {
+                    b.Navigation("WebControls");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
-﻿
-namespace Sloth.Application.DTO;
-public class DesignerListWebPageItem
+﻿namespace Sloth.Shared.Models;
+
+public class ListWebPageItem
 {
     public string AppID { get; set; } = default!;
     public string PageID { get; set; } = default!;

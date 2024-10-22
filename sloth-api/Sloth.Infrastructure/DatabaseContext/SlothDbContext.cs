@@ -42,7 +42,11 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
 
             entity.HasMany<WebPageSecurity>()
                   .WithOne()
-                  .HasForeignKey(wps => new {wps.AppID, wps.PageID});
+                  .HasForeignKey(wps => new { wps.AppID, wps.PageID});
+
+            entity.HasMany(e => e.WebPanels)
+                  .WithOne()
+                  .HasForeignKey(wp => new { wp.AppID, wp.PageID });
         });
 
         // WebPanel Configuration
@@ -51,9 +55,17 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
             entity.HasKey(e => new {e.AppID, e.PageID, e.PanelID });
 
             entity.HasOne<WebPage>()
-                  .WithMany()
+                  .WithMany(wp => wp.WebPanels)
                   .HasForeignKey(wp => new {wp.AppID, wp.PageID})
                   .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(e => e.WebSections)
+                    .WithOne()
+                    .HasForeignKey(ws => new { ws.AppID, ws.PageID, ws.PanelID });
+
+            entity.HasMany(e => e.WebControls)
+                    .WithOne()
+                    .HasForeignKey(wc => new { wc.AppID, wc.PageID, wc.PanelID });
         });
 
         // WebControl Configuration
@@ -62,10 +74,29 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
             entity.HasKey(e => new { e.AppID, e.PageID, e.PanelID, e.ControlID });
 
             entity.HasOne<WebPanel>()
-                .WithMany()
+                .WithMany(wp => wp.WebControls)
                 .HasForeignKey(wc => new {wc.AppID, wc.PageID, wc.PanelID })
                 .OnDelete(DeleteBehavior.Cascade);
 
+            entity.HasOne<WebSection>()
+              .WithMany(ws => ws.WebControls) 
+              .HasForeignKey(wc => new { wc.AppID, wc.PageID, wc.PanelID, wc.SectionID })
+              .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        // WebSection Configuration
+        builder.Entity<WebSection>(entity =>
+        {
+            entity.HasKey(e => new { e.AppID, e.PageID, e.PanelID, e.SectionID });
+
+            entity.HasOne<WebPanel>()
+                .WithMany(wp => wp.WebSections)
+                .HasForeignKey(ws => new { ws.AppID, ws.PageID, ws.PanelID })
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(e => e.WebControls)
+                   .WithOne()
+                   .HasForeignKey(wc => new { wc.AppID, wc.PageID, wc.PanelID, wc.SectionID });
         });
 
         // WebOption Configuration
@@ -74,16 +105,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
             entity.HasKey(e => new {e.Functionality, e.OptionKey});
         });
 
-        // WebSection Configuration
-        builder.Entity<WebSection>(entity =>
-        {
-            entity.HasKey(e => new {e.AppID, e.PageID, e.PanelID, e.SectionID });
 
-            entity.HasOne<WebPanel>()
-                .WithMany()
-                .HasForeignKey(ws => new {ws.AppID, ws.PageID, ws.PanelID })
-                .OnDelete(DeleteBehavior.Cascade);
-        });
 
         // Translation Configuration
         builder.Entity<Translation>(entity =>

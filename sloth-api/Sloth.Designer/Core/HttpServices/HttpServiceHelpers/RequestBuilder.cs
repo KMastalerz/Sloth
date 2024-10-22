@@ -1,4 +1,4 @@
-﻿namespace Sloth.Designer.Services;
+﻿namespace Sloth.Designer.Core;
 
 public class RequestBuilder
 {
@@ -15,5 +15,9 @@ public class RequestBuilder
             .Select(param => $"{Uri.EscapeDataString(param.Key)}={Uri.EscapeDataString(Convert.ToString(param.Value, System.Globalization.CultureInfo.InvariantCulture)!)}"));
 
         return $"{basePath}{request}?{queryString}";
+    }
+    public static string BuildRequest(string basePath, string request)
+    {
+        return $"{basePath}{request}";
     }
 }

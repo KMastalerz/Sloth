@@ -46,8 +46,24 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<GetWebPage>>?> ListWebPageByID([FromQuery] string? appID = null, [FromQuery] string? pageID = null)
     {
-        // This will prevent ByPassSecurity from being set to true
         var result = await mediator.Send(new ListWebPageByIDQuery(appID, pageID));
+        return Ok(result);
+    }
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<string>>?> ListWebApplicationIDs()
+    {
+        var result = await mediator.Send(new ListWebApplicationIDsQuery());
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<GetWebControl>>?> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
+    {
+        var result = await mediator.Send(new GetFullWebPageQuery(appID, pageID));
         return Ok(result);
     }
 }

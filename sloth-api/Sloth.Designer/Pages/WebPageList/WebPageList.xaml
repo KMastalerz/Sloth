@@ -10,7 +10,9 @@
           HorizontalAlignment="Stretch">
         <DataGrid CanUserAddRows="False"
                   CanUserResizeColumns="False"
+                  AutoGenerateColumns="False"
                   IsReadOnly="True"
+                  SelectionUnit="{Binding ElementName=selectionUnitComboBox, Path=SelectedValue}"
                   SelectedItem="{Binding SelectedWebPage, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding WebPages}">
             <DataGrid.Columns>
@@ -18,15 +20,32 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button     Content="{materialDesign:PackIcon Kind=Edit, Size=14}"
-                                        Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}" 
-                                        Width="24"
-                                        Height="24"
-                                        Style="{StaticResource MaterialDesignIconForegroundButton}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button     Content="{materialDesign:PackIcon Kind=Edit, Size=14}"
+                                            Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}" 
+                                            ToolTip="Edit"
+                                            Width="24"
+                                            Height="24"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
+                                <Button     Content="{materialDesign:PackIcon Kind=GarbageCan, Size=14}"
+                                            Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}" 
+                                            ToolTip="Delete"
+                                            Width="24"
+                                            Height="24"
+                                            Margin="10 0"
+                                            Background="DarkGray"
+                                            BorderBrush="DarkGray"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
+                            </StackPanel>
+
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="App ID" Binding="{Binding AppID}"/>
+                <DataGridTextColumn Header="Page ID" Binding="{Binding PageID}"/>
+                <DataGridTextColumn Header="Change Date" Binding="{Binding ChangeDate}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

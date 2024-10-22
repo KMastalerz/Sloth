@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sloth.Designer.Core;
 using Sloth.Designer.Pages;
 using Sloth.Designer.Services;
 using System.IO;
-using System.Net.Http;
 using System.Windows;
 
 namespace Sloth.Designer;
@@ -57,6 +57,7 @@ public partial class App : Application
         });
 
         // Register other services if needed
+        services.AddSingleton<IHttpServices, HttpServices>();
         services.AddSingleton<IDesignerService, DesignerService>();
         services.AddSingleton<IWebPageStateService, WebPageStateService>();
     }

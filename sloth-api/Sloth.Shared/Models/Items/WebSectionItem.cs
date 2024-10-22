@@ -1,5 +1,6 @@
-namespace Sloth.Domain.Entities;
-public class WebSection
+﻿namespace Sloth.Shared.Models;
+
+public class WebSectionItem
 {
     public string AppID { get; set; } = default!;
     public string PageID { get; set; } = default!;
@@ -10,5 +11,5 @@ public class WebSection
     public string? MetaData { get; set; } = null;
     public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
     public Guid ChangeUser { get; set; } = default!;
-    public List<WebControl> WebControls { get; set; } = [];
+    public IEnumerable<WebControlItem> WebControls { get; set; } = [];
 }
