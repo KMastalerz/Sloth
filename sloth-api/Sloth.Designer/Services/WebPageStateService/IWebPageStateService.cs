@@ -7,5 +7,5 @@ public interface IWebPageStateService: IBaseStateService
 {
     IEnumerable<string> WebApplications { get; set; }
     IEnumerable<ListWebPageItem> WebPages { get;  set;}
-    ListWebPageItem? WebPage { get; set; }
+    WebPageItem? WebPage { get; set; }
 }

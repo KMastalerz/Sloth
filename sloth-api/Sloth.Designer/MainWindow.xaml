@@ -51,7 +51,7 @@
                       Style="{StaticResource MaterialDesignFlatButton}"/>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <ContentControl Content="{Binding UserControl}"/>
+            <ContentControl Content="{Binding UserControl, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </Window>

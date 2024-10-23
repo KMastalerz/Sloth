@@ -64,14 +64,16 @@ public partial class App : Application
     private void ConfigureViewModels(ServiceCollection services)
     {
         // Register ViewModels
-        services.AddTransient<MainWindowViewModel>();
+        services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<WebPageListViewModel>();
+        services.AddTransient<WebPageEditViewModel>();
     }
     private void ConfigureViews(ServiceCollection services)
     {
         // Register Views
-        services.AddTransient<MainWindow>();
+        services.AddSingleton<MainWindow>();
         services.AddTransient<WebPageList>();
+        services.AddTransient<WebPageEdit>();
     }
 }
 

@@ -5,22 +5,22 @@ using System.Collections.ObjectModel;
 using static Sloth.Designer.Pages.WebPageListCommands;
 
 namespace Sloth.Designer.Pages;
-public class WebPageListViewModel(IWebPageStateService webPageStateService) : BaseViewModel
+public class WebPageListViewModel : BaseViewModel
 {
-    private ListWebPageItem? selectedWebPage = null;
-    public ListWebPageItem? SelectedWebPage
+    public WebPageListViewModel(IWebPageStateService webPageStateService, IDesignerService designerService, MainWindowViewModel mainWindowViewModel)
     {
-        get => selectedWebPage;
-        set => SetProperty(ref selectedWebPage, value);
+        EditPage = new EditPage(designerService, webPageStateService, mainWindowViewModel);
+        WebPages = new(webPageStateService.WebPages);
+        
     }
 
-    private ObservableCollection<ListWebPageItem> webPages = new(webPageStateService.WebPages);
+    private ObservableCollection<ListWebPageItem> webPages = [];
     public ObservableCollection<ListWebPageItem> WebPages
     {
         get => webPages;
         set => SetProperty(ref webPages, value);
     }
 
-    public IAsyncCommand EditPage { get; private set; } = new EditPage();
+    public IAsyncCommand EditPage { get; private set; }
 
 }

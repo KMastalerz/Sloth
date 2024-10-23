@@ -66,5 +66,5 @@ public class MainWindowViewModel : BaseViewModel
         set => SetProperty(ref searchPageParams, value);
     }
 
-    public IAsyncCommand SearchPages { get; private set; }
+    public SearchPages SearchPages { get; private set; }
 }

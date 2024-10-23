@@ -39,8 +39,8 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebPages changes
         }
     }
-    private ListWebPageItem? webPage { get; set; } = null;
-    public ListWebPageItem? WebPage
+    private WebPageItem? webPage { get; set; } = null;
+    public WebPageItem? WebPage
     {
         get => webPage;
         set

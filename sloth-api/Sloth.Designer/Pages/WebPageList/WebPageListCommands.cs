@@ -1,24 +1,21 @@
 ﻿using Sloth.Designer.Core;
+using Sloth.Designer.Services;
+using Sloth.Shared.Models;
 
 namespace Sloth.Designer.Pages;
-
 public class WebPageListCommands
 {
-    public class EditPage : AsyncCommand
+    public class EditPage(IDesignerService designerService, IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel) : AsyncCommand
     {
-        public EditPage()
-        {
-            //webPageStateService = App.ServiceProvider.GetRequiredService<IWebPageStateService>();
-            //mainWindowViewModel = App.ServiceProvider.GetRequiredService<MainWindowViewModel>();
-            //this.webPageListViewModel = webPageListViewModel;
-        }
-
         public override bool CanExecute(object? parameter = null) => true;
         public override async Task ExecuteAsync(object? parameter = null)
         {
-            // webPageStateService.WebPage = webPageListViewModel.SelectedWebPage;
-            // TODO: download full web page details: webpage, webcontrols, webpanels, websections and bind it to WebPage
-            // TODO: display designer web page editor
+            var parms = parameter as ListWebPageItem;
+            if (parms is null) return;
+
+            webPageStateService.WebPage = await designerService.GetFullWebPage(parms.AppID, parms.PageID);
+
+            mainWindowViewModel.UserControl = new WebPageEdit();
         }
     }
 }

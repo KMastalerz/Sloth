@@ -22,4 +22,16 @@ internal class DesignerService(IHttpServices httpServices) : IDesignerService
         var response = await httpServices.GetAsync<IEnumerable<string>>(HttpServicePaths.UIElements, "ListWebApplicationIDs");
         return response.Data is null ? null : response.Data;
     }
+
+    public async Task<WebPageItem?> GetFullWebPage(string appID, string pageID)
+    {
+        var parms = new Dictionary<string, object?>()
+        {
+            { "appID", appID },
+            { "pageID", pageID }
+        };
+
+        var response = await httpServices.GetAsync<WebPageItem>(HttpServicePaths.UIElements, "GetFullWebPage", parms);
+        return response.Data is null ? null : response.Data;
+    }
 }

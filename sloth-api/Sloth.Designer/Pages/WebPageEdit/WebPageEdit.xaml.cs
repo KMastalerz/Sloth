@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace Sloth.Designer.Pages;
 
@@ -10,5 +11,6 @@ public partial class WebPageEdit : UserControl
     public WebPageEdit()
     {
         InitializeComponent();
+        DataContext = App.ServiceProvider.GetRequiredService<WebPageEditViewModel>();
     }
 }
