@@ -1,4 +1,6 @@
-﻿namespace Sloth.Shared.Models;
+﻿using System.Collections.ObjectModel;
+
+namespace Sloth.Shared.Models;
 
 public class WebPanelItem
 {
@@ -15,6 +17,6 @@ public class WebPanelItem
     public string? MetaData { get; set; } = null;
     public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
     public Guid ChangeUser { get; set; } = default!;
-    public IEnumerable<WebSectionItem> WebSections { get; set; } = [];
-    public IEnumerable<WebControlItem> WebControls { get; set; } = [];
+    public ObservableCollection<WebSectionItem> WebSections { get; set; } = [];
+    public ObservableCollection<WebControlItem> WebControls { get; set; } = [];
 }

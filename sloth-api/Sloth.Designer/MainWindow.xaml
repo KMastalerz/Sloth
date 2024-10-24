@@ -9,9 +9,6 @@
         xmlns:converters="clr-namespace:Sloth.Designer.Converters"
         mc:Ignorable="d"
         Title="Sloth Designer" Height="450" Width="800">
-    <Window.InputBindings>
-        <core:FocusKeyBinding Command="{Binding EnterKeyCommand}" Key="Enter" TargetElementName="UserNameTextBox" />
-    </Window.InputBindings>
     <Window.Resources>
         <converters:PascalCaseToHeaderConverter x:Key="PascalCaseToHeaderConverter" />
     </Window.Resources>
