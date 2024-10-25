@@ -4,6 +4,7 @@ using Sloth.Application.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Sloth.Domain.Constants;
 using Sloth.Application.Services.UIElements;
+using Sloth.Shared.Models;
 
 namespace Sloth.API.Controllers;
 
@@ -61,7 +62,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<GetWebControl>>?> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
+    public async Task<ActionResult<WebPageItem?>> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
     {
         var result = await mediator.Send(new GetFullWebPageQuery(appID, pageID));
         return Ok(result);

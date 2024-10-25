@@ -43,8 +43,8 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
 
 
         // Build list of needed security tables
-        var neededSecTables = webControls.Where(wp => wp.SecurityTableID is not null).Select(wc => wc.SecurityTableID).Distinct()
-            .Union(webPanels.Where(wp => wp.SecurityTableID is not null).Select(wp => wp.SecurityTableID).Distinct());
+        var neededSecTables = webControls.Where(control => control.SecurityTableID is not null).Select(control => control.SecurityTableID).Distinct()
+            .Union(webPanels.Where(panel => panel.SecurityTableID is not null).Select(panel => panel.SecurityTableID).Distinct());
 
         if (webPage.SecurityTableID is not null)
             neededSecTables.Union([webPage.SecurityTableID]);
@@ -68,70 +68,70 @@ public class GetWebPageQueryHandler(ILogger<GetWebPageQueryHandler> logger, IUse
 
 
         // For each WebPanel, map WebSections and respect the order
-        dto.WebPanels.ForEach(wp =>
+        dto.WebPanels.ForEach(panel =>
         {
             // Assuming `sections` in WebPanel contains the order
-            var controlOrder = wp.Controls.Split(',');
+            var controlOrder = panel.Controls.Split(',');
 
             // Map WebControls and order them based on `sectionOrder`
-            wp.WebControls = controlOrder
-                .Select(order => webControls.FirstOrDefault(wc => wc.ControlID == order.Trim() && wc.PanelID == wp.PanelID))
-                .Where(wc => wc != null)
-                .Select(wc => mapper.Map<GetWebControl>(wc))
+            panel.WebControls = controlOrder
+                .Select(order => webControls.FirstOrDefault(control => control.ControlID == order.Trim() && control.PanelID == panel.PanelID))
+                .Where(control => control != null)
+                .Select(control => mapper.Map<GetWebControl>(control))
                 .ToList();
         });
 
         // Create dictionaries for faster lookups
-        var wpDict = webPanels.ToDictionary(w => w.PanelID, w => w.SecurityTableID);
-        var wcDict = webControls.ToDictionary(w => new { w.ControlID, w.SectionID, w.PanelID }, w => w.SecurityTableID);
+        var wpDict = webPanels.ToDictionary(panel => panel.PanelID, panel => panel.SecurityTableID);
+        var wcDict = webControls.ToDictionary(control => new { control.ControlID, control.SectionID, control.PanelID }, control => control.SecurityTableID);
 
-        dto.WebPanels.ForEach(wp =>
+        dto.WebPanels.ForEach(panel =>
         {
-            wp.WebControls.ForEach(wc =>
+            panel.WebControls.ForEach(control =>
             {
                 // Look up security table IDs using dictionaries for fast access
-                var wcSecTable = wcDict.TryGetValue(new { wc.ControlID, wc.SectionID, wc.PanelID }, out var wcSec) ? wcSec : null;
-                var wpSecTable = wpDict.TryGetValue(wp.PanelID, out var wpSec) ? wpSec : null;
+                var wcSecTable = wcDict.TryGetValue(new { control.ControlID, control.SectionID, control.PanelID }, out var wcSec) ? wcSec : null;
+                var wpSecTable = wpDict.TryGetValue(panel.PanelID, out var wpSec) ? wpSec : null;
 
                 // Determine the effective security table ID
                 var searchedSecTable = wcSecTable ?? wpSecTable ?? webPage.SecurityTableID;
 
                 if (searchedSecTable is not null)
                 {
-                    var secTable = secTables.FirstOrDefault(st => st.SecurityTableID == searchedSecTable && st.ControlID == wc.ControlID);
+                    var secTable = secTables.FirstOrDefault(security => security.SecurityTableID == searchedSecTable && security.ControlID == security.ControlID);
 
                     if (secTable is not null)
                     {
-                        wc.IsDisabled = secTable.IsDisabled;
-                        wc.IsReadOnly = secTable.IsReadOnly;
-                        wc.IsRequired = secTable.IsRequired;
-                        wc.IsHidden = secTable.IsHidden;
+                        control.IsDisabled = secTable.IsDisabled;
+                        control.IsReadOnly = secTable.IsReadOnly;
+                        control.IsRequired = secTable.IsRequired;
+                        control.IsHidden = secTable.IsHidden;
                     }
                 }
             });
         });
 
         // Build the WebSections
-        dto.WebPanels.ForEach(wp =>
+        dto.WebPanels.ForEach(panel =>
         {
-            var orderedSections = wp.Sections?.Split(',');
+            var orderedSections = panel.Sections?.Split(',');
             if(orderedSections is not null)
             {
-                wp.WebSections = orderedSections
-                    .Select(order => webSections.FirstOrDefault(ws => ws.SectionID == order.Trim() && ws.PanelID == wp.PanelID))
-                    .Where(ws => ws != null)
-                    .Select(ws => mapper.Map<GetWebSection>(ws))
+                panel.WebSections = orderedSections
+                    .Select(order => webSections.FirstOrDefault(section => section.SectionID == order.Trim() && section.PanelID == panel.PanelID))
+                    .Where(section => section != null)
+                    .Select(section => mapper.Map<GetWebSection>(section))
                     .ToList();
             }
 
-            wp.WebSections.ForEach(ws =>
+            panel.WebSections.ForEach(section =>
             {
-                var controlsOrdered = ws.Controls.Split(',');
+                var controlsOrdered = section.Controls.Split(',');
 
-                ws.WebControls = controlsOrdered
-                    .Select(order => webControls.FirstOrDefault(ws => ws.SectionID == ws.SectionID && ws.ControlID == order.Trim() && ws.PanelID == wp.PanelID))
-                    .Where(ws => ws != null)
-                    .Select(ws => mapper.Map<GetWebControl>(ws))
+                section.WebControls = controlsOrdered
+                    .Select(order => webControls.FirstOrDefault(control => control.SectionID == section.SectionID && control.ControlID == order.Trim() && section.PanelID == panel.PanelID))
+                    .Where(section => section != null)
+                    .Select(section => mapper.Map<GetWebControl>(section))
                     .ToList();
             });
         });

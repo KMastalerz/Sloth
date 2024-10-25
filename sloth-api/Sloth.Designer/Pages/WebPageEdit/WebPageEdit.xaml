@@ -4,15 +4,7 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:converters="clr-namespace:Sloth.Designer.Converters"
              xmlns:core="clr-namespace:Sloth.Designer.Core">
-    <UserControl.Resources>
-        <!-- Boolean to Visibility Converter (built-in in WPF but declare if needed) -->
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-        <!-- Empty Collection to Visibility Converter -->
-        <converters:EmptyCollectionToVisibilityConverter x:Key="EmptyCollectionToVisibilityConverter" />
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,7 +17,7 @@
         <StackPanel Grid.ColumnSpan="2">
             <StackPanel 
                     HorizontalAlignment="Left"
-                    Margin="8 0 16 0">
+                    Margin="16 0 16 0">
                 <Button ToolTip="Go back"
                         Command="{Binding GoBack}"
                         FontSize="12"
@@ -40,20 +32,15 @@
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
-                        Margin="16 4 0 0">
-                <Button Content="{materialDesign:PackIcon Kind=Add,Size=16}"
-                        Height="24"
-                        Width="24"
-                        ToolTip="Add"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
-                <Button Content="{materialDesign:PackIcon Kind=Delete,Size=16}"
-                        Height="24"
-                        Width="24"
-                        ToolTip="Delete"
-                        Margin="16 0"
-                        Background="DarkGray"
-                        BorderBrush="DarkGray"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
+                        Margin="0 8 0 0">
+                <Button Content="Save changes"
+                        FontSize="12"
+                        Margin="16 0 0 0"
+                        Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}"/>
+                <Button Content="Delete page"
+                        FontSize="12"
+                        Margin="16 0 0 0"
+                        Style="{StaticResource MaterialDesignFlatDarkButton}"/>
             </StackPanel>
         </StackPanel>
 
@@ -61,65 +48,42 @@
               Margin="10 10 0 0">
             <StackPanel>
                 <!--page-->
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center">
-                    <ToggleButton   x:Name="ExpandPage"
-                                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CollapseAll}"
-                                    IsChecked="False"
-                                    Content="{materialDesign:PackIcon Kind=ExpandAll}"
-                                    Background="Transparent"
-                                    Foreground="Black"
-                                    Style="{StaticResource MaterialDesignActionToggleButton}"
-                                    ToolTip="Show Panels"/>
-                    <TextBlock  Text="{Binding WebPage.PageID}"
-                                Margin="0 4 0 0"
-                                ToolTip="Page"
-                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
-                    </TextBlock>
-                    <materialDesign:PackIcon Kind="BookOpenPageVariantOutline"
-                                             Margin="8 8 0 0"/>
-                    <Button Width="24"
-                            Height="24"
-                            Margin="8 0 0 0"
-                            Style="{StaticResource MaterialDesignIconForegroundButton}">
-                        <materialDesign:PackIcon Kind="PlusThick"
-                                                     Width="16"
-                                                     Height="16"/>
-                    </Button>
-                    <Button Width="24"
-                            Height="24"
-                            Margin="8 0 0 0"
-                            Style="{StaticResource MaterialDesignIconForegroundButton}">
-                        <materialDesign:PackIcon Kind="Pencil"
-                                                     Width="16"
-                                                     Height="16"/>
-                    </Button>
+                <StackPanel VerticalAlignment="Center">
+                    <local:WebPageElement   x:Name="ExpandPage"
+                                            Label="{Binding WebPage.PageID}"
+                                            CanExpand="True"
+                                            CanAdd="True"
+                                            CanEdit="True"
+                                            AddTooltip="Add panel"
+                                            EditTooltip="Edit page"
+                                            IsExpanded="False"
+                                            Add="{Binding AddPanelCommand}"
+                                            Icon="PageLayoutBody"/>
                 </StackPanel>
                 <!--panels-->
                 <ItemsControl ItemsSource="{Binding WebPage.WebPanels}"
-                              Visibility="{Binding IsChecked, ElementName=ExpandPage, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Visibility="{Binding IsExpanded, ElementName=ExpandPage, Converter={StaticResource BooleanToVisibilityConverter}}"
                               AllowDrop="True"
-                              Margin="16 0 0 0">
+                              Margin="24 0 0 0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                    <ToggleButton   x:Name="ExpandPanel"
-                                                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CollapseAll}"
-                                                    IsChecked="False"
-                                                    Content="{materialDesign:PackIcon Kind=ExpandAll}"
-                                                    Background="Transparent"
-                                                    Foreground="Black"
-                                                    Style="{StaticResource MaterialDesignActionToggleButton}"
-                                                    ToolTip="Show Sections and Controls"/>
-                                    <TextBlock  Text="{Binding PanelID}"
-                                                Margin="0 4 0 0"
-                                                ToolTip="Panel"
-                                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
-                                    </TextBlock>
-                                    <materialDesign:PackIcon Kind="SolarPanel"
-                                                             Margin="8 8 0 0"/>
+                                    <local:WebPageElement   x:Name="ExpandPanel"
+                                                            Label="{Binding PanelID}"
+                                                            CanExpand="True"
+                                                            CanAdd="True"
+                                                            CanEdit="True"
+                                                            CanDelete="True"
+                                                            AddTooltip="Add section or control"
+                                                            EditTooltip="Edit panel"
+                                                            DeleteTooltip="Delete panel"
+                                                            IsExpanded="False"
+                                                            Add="{Binding DataContext.AddPanelChildrenCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                            Delete="{Binding DataContext.DeletePanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                            CommandParameter ="{Binding}"
+                                                            Icon="ViewDashboard"/>
                                     <b:Interaction.Triggers>
                                         <b:EventTrigger EventName="MouseMove">
                                             <core:CustomInvokeCommandAction Command="{Binding DataContext.MovePanel, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -137,29 +101,27 @@
                                 </StackPanel>
                                 <!--sections-->
                                 <ItemsControl ItemsSource="{Binding WebSections}" 
-                                              Margin="16 0 0 0"
+                                              Margin="24 0 0 0"
                                               AllowDrop="True"
-                                              Visibility="{Binding IsChecked, ElementName=ExpandPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                              Visibility="{Binding IsExpanded, ElementName=ExpandPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal"
-                                                            VerticalAlignment="Center">
-                                                    <ToggleButton   x:Name="ExpandSection"
-                                                                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=CollapseAll}"
-                                                                    IsChecked="False"
-                                                                    Content="{materialDesign:PackIcon Kind=ExpandAll}"
-                                                                    Background="Transparent"
-                                                                    Foreground="Black"
-                                                                    Style="{StaticResource MaterialDesignActionToggleButton}"
-                                                                    ToolTip="Show Controls"/>
-                                                    <TextBlock  Text="{Binding SectionID}"
-                                                                Margin="0 4 0 0"
-                                                                ToolTip="Section"
-                                                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
-                                                    </TextBlock>
-                                                    <materialDesign:PackIcon Kind="VectorIntersection"
-                                                                             Margin="8 8 0 0"/>
+                                                <StackPanel>
+                                                    <local:WebPageElement   x:Name="ExpandSection"
+                                                                            Label="{Binding SectionID}"
+                                                                            CanExpand="True"
+                                                                            CanAdd="True"
+                                                                            CanEdit="True"
+                                                                            CanDelete="True"
+                                                                            AddTooltip="Add control"
+                                                                            EditTooltip="Edit section"
+                                                                            DeleteTooltip="Delete section"
+                                                                            IsExpanded="False"
+                                                                            Add="{Binding DataContext.AddSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                            Delete="{Binding DataContext.DeleteSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                            CommandParameter ="{Binding}"
+                                                                            Icon="VectorIntersection"/>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="MouseMove">
                                                             <core:CustomInvokeCommandAction Command="{Binding DataContext.MoveSection, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -177,21 +139,20 @@
                                                 </StackPanel>
                                                 <!--section controls-->
                                                 <ItemsControl ItemsSource="{Binding WebControls}" 
-                                                              Margin="48 0 0 0"
+                                                              Margin="24 0 0 0"
                                                               AllowDrop="True"
-                                                              Visibility="{Binding IsChecked, ElementName=ExpandSection, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                              Visibility="{Binding IsExpanded, ElementName=ExpandSection, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate >
-                                                            <StackPanel Orientation="Horizontal"
-                                                                        VerticalAlignment="Center">
-                                                                <TextBlock  Text="{Binding ControlID}"
-                                                                            Margin="0 4"
-                                                                            ToolTip="Section control"
-                                                                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
-
-                                                                </TextBlock>
-                                                                <materialDesign:PackIcon    Kind="FormTextbox"
-                                                                                            Margin="8 8 0 0"/>
+                                                            <StackPanel>
+                                                                <local:WebPageElement   Label="{Binding ControlID}"
+                                                                                        CanEdit="True"
+                                                                                        CanDelete="True"
+                                                                                        EditTooltip="Edit control"
+                                                                                        DeleteTooltip="Delete control"
+                                                                                        Delete="{Binding DataContext.DeleteSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                        CommandParameter ="{Binding}"
+                                                                                        Icon="FormTextbox"/>
                                                                 <b:Interaction.Triggers>
                                                                     <b:EventTrigger EventName="MouseMove">
                                                                         <core:CustomInvokeCommandAction Command="{Binding DataContext.MoveSectionControl, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -216,20 +177,20 @@
                                 </ItemsControl>
                                 <!--panel controls-->
                                 <ItemsControl ItemsSource="{Binding WebControls}" 
-                                              Margin="48 0 0 0"
+                                              Margin="24 0 0 0"
                                               AllowDrop="True"
-                                              Visibility="{Binding IsChecked, ElementName=ExpandPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                              Visibility="{Binding IsExpanded, ElementName=ExpandPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal"
-                                                        VerticalAlignment="Center">
-                                                <TextBlock  Text="{Binding ControlID}"
-                                                            Margin="0 4"
-                                                            ToolTip="Panel control"
-                                                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}">
-                                                </TextBlock>
-                                                <materialDesign:PackIcon    Kind="FormTextbox"
-                                                                            Margin="8 8 0 0"/>
+                                            <StackPanel>
+                                                <local:WebPageElement   Label="{Binding ControlID}"
+                                                                        CanEdit="True"
+                                                                        CanDelete="True"
+                                                                        EditTooltip="Edit control"
+                                                                        DeleteTooltip="Delete control"
+                                                                        Delete="{Binding DataContext.DeletePanelControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter ="{Binding}"
+                                                                        Icon="FormTextbox"/>
                                                 <b:Interaction.Triggers>
                                                     <b:EventTrigger EventName="MouseMove">
                                                         <core:CustomInvokeCommandAction Command="{Binding DataContext.MovePanelControl, RelativeSource={RelativeSource AncestorType=UserControl}}"

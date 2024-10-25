@@ -67,6 +67,7 @@ public partial class App : Application
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<WebPageListViewModel>();
         services.AddTransient<WebPageEditViewModel>();
+        services.AddTransient<AddElementViewModel>();
     }
     private void ConfigureViews(ServiceCollection services)
     {
@@ -74,6 +75,8 @@ public partial class App : Application
         services.AddSingleton<MainWindow>();
         services.AddTransient<WebPageList>();
         services.AddTransient<WebPageEdit>();
+        services.AddTransient<WebPageElement>();
+        services.AddTransient<AddElement>();
     }
 }
 

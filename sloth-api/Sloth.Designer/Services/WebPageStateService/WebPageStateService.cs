@@ -1,5 +1,8 @@
 ﻿using Sloth.Designer.Core;
+using Sloth.Designer.Enums;
+using Sloth.Designer.Models;
 using Sloth.Shared.Models;
+using System.ComponentModel.Design;
 
 namespace Sloth.Designer.Services;
 
@@ -49,4 +52,109 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebPage changes
         }
     }
+    public WebPanelItem? webPanel { get; set; }
+    public WebPanelItem? WebPanel
+    {
+        get => webPanel;
+        set
+        {
+            webPanel = value;
+            NotifyStateChanged(value); // Notify when WebPanel changes
+        }
+    }
+    public WebSectionItem? webSection { get; set; }
+    public WebSectionItem? WebSection
+    {
+        get => webSection;
+        set
+        {
+            webSection = value;
+            NotifyStateChanged(value); // Notify when WebSection changes
+        }
+    }
+
+    public AddElementType? addElementType; 
+    public AddElementType? AddElementType
+    {
+        get => addElementType;
+        set
+        {
+            addElementType = value;
+            NotifyStateChanged(value); // Notify when AddElementType changes
+        }
+    }
+
+    public void AddPanel(NewElementItem param)
+    {
+        if(WebPage == null) return;
+        WebPage.WebPanels.Add(new()
+        {
+            AppID = WebPage.AppID,
+            PageID = WebPage.PageID,
+            PanelID = param.ElementID,
+            PanelType = param.ElementType,
+        });
+    }
+    public void AddSection(NewElementItem param)
+    {
+        if(WebPanel == null) return;
+        WebPanel.WebSections.Add(new()
+        {
+            AppID = WebPanel.AppID,
+            PageID = WebPanel.PageID,
+            PanelID = WebPanel.PanelID,
+            SectionID = param.ElementID
+        });
+    }
+    public void AddPanelControl(NewElementItem param)
+    {
+        if (WebPanel == null) return;
+        WebPanel.WebControls.Add(new()
+        {
+            AppID = WebPanel.AppID,
+            PageID = WebPanel.PageID,
+            PanelID = WebPanel.PanelID,
+            SectionID = null,
+            ControlID = param.ElementID,
+            ControlType = param.ElementType
+        });
+    }
+    public void AddSectionControl(NewElementItem param)
+    {
+        if (WebSection == null) return;
+        WebSection.WebControls.Add(new()
+        {
+            AppID = WebSection.AppID,
+            PageID = WebSection.PageID,
+            PanelID = WebSection.PanelID,
+            SectionID = WebSection.SectionID,
+            ControlID = param.ElementID,
+            ControlType = param.ElementType
+        });
+    }
+    public void DeletePanel(WebPanelItem panel)
+    {
+        if (WebPage == null) return;
+        WebPage.WebPanels.Remove(panel);
+    }
+    public void DeleteSection(WebSectionItem section)
+    {
+        if (WebPage == null) return;
+        var webSections = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == section.PanelID)?.WebSections;
+        webSections?.Remove(section);
+    }
+    public void DeletePanelControl(WebControlItem control)
+    {
+        if (WebPage == null) return;
+        var webControls = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == control.PanelID)?.WebControls;
+        webControls?.Remove(control);
+    }
+    public void DeleteSectionControl(WebControlItem control)
+    {
+        if (WebPage == null) return;
+        var webControls = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == control.PanelID)?
+            .WebSections.FirstOrDefault(s => s.SectionID == control.SectionID)?.WebControls;
+        webControls?.Remove(control);
+    }
+
 }

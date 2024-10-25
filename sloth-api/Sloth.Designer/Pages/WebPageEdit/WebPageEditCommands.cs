@@ -2,17 +2,17 @@
 using Sloth.Shared.Models;
 using System.Windows;
 using System.Windows.Input;
+using Sloth.Designer.Enums;
+using Sloth.Designer.Core;
 
 namespace Sloth.Designer.Pages;
 public class WebPageEditCommands
 {
-    public class GoBack(IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel) : ICommand
+    public class GoBack(IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             webPageStateService.WebPage = null;
             mainWindowViewModel.UserControl = new WebPageList();
@@ -20,13 +20,11 @@ public class WebPageEditCommands
     }
 
     #region [Section Control]
-    public class MoveSectionControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class MoveSectionControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -49,13 +47,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DragSectionControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DragSectionControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             if (webPageEditViewModel.ParentSection is null) return;
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -123,13 +119,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DropSectionControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DropSectionControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -152,13 +146,11 @@ public class WebPageEditCommands
     #endregion
 
     #region [Panel Control]
-    public class MovePanelControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class MovePanelControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -181,13 +173,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DragPanelControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DragPanelControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             if (webPageEditViewModel.ParentPanel is null) return;
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -255,13 +245,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DropPanelControl(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DropPanelControl(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -284,13 +272,11 @@ public class WebPageEditCommands
     #endregion
 
     #region [Section]
-    public class MoveSection(WebPageEditViewModel webPageEditViewModel) : ICommand
-        {
-            public event EventHandler? CanExecuteChanged;
+    public class MoveSection(WebPageEditViewModel webPageEditViewModel) : SyncCommand
+    {
+            protected override bool CanExecuteSync(object? parameter = null) => true;
 
-            public bool CanExecute(object? parameter = null) => true;
-
-            public void Execute(object? parameter = null)
+            protected override void ExecuteSync(object? parameter = null)
             {
 
                 if (parameter is Tuple<object, EventArgs> parameters)
@@ -313,13 +299,11 @@ public class WebPageEditCommands
                 }
             }
         }
-    public class DragSection(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DragSection(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             if (webPageEditViewModel.ParentPanel is null) return;
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -387,13 +371,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DropSection(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DropSection(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -416,13 +398,11 @@ public class WebPageEditCommands
     #endregion
 
     #region [Panel]
-    public class MovePanel() : ICommand
+    public class MovePanel() : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -444,13 +424,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DragPanel(WebPageEditViewModel webPageEditViewModel) : ICommand
+    public class DragPanel(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
             if (webPageEditViewModel.WebPage is null) return;
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -510,13 +488,11 @@ public class WebPageEditCommands
             }
         }
     }
-    public class DropPanel() : ICommand
+    public class DropPanel() : SyncCommand
     {
-        public event EventHandler? CanExecuteChanged;
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
-        public bool CanExecute(object? parameter = null) => true;
-
-        public void Execute(object? parameter = null)
+        protected override void ExecuteSync(object? parameter = null)
         {
 
             if (parameter is Tuple<object, EventArgs> parameters)
@@ -532,6 +508,84 @@ public class WebPageEditCommands
                     dragEventArgs.Handled = true;
                 }
             }
+        }
+    }
+    #endregion
+
+    #region [Add Items]
+    public class AddPanelCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            webPageStateService.AddElementType = AddElementType.Panel;
+            mainWindowViewModel.Dialog = new AddElement();
+        }
+    }
+    public class AddPanelChildrenCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            webPageStateService.AddElementType = AddElementType.PanelChildren;
+            webPageStateService.WebPanel = parameter as WebPanelItem;
+            mainWindowViewModel.Dialog = new AddElement();
+        }
+    }
+    public class AddSectionControlCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService): SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            webPageStateService.AddElementType = AddElementType.SectionControl;
+            webPageStateService.WebSection = parameter as WebSectionItem;
+            mainWindowViewModel.Dialog = new AddElement();
+        }
+    }
+    #endregion
+
+    #region [Delete Items]
+    public class DeletePanelCommand(IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is WebPanelItem panel)
+                webPageStateService.DeletePanel(panel);
+        }
+    }
+    public class DeleteSectionCommand(IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is WebSectionItem panel)
+                webPageStateService.DeleteSection(panel);
+        }
+    }
+    public class DeletePanelControlCommand(IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is WebControlItem panel)
+                webPageStateService.DeletePanelControl(panel);
+        }
+    }
+    public class DeleteSectionControlCommand(IWebPageStateService webPageStateService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is WebControlItem panel)
+                webPageStateService.DeleteSectionControl(panel);
         }
     }
     #endregion

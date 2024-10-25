@@ -23,9 +23,18 @@ public class WebPageEditViewModel: BaseViewModel
         MovePanel = new MovePanel();
         DragPanel = new DragPanel(this);
         DropPanel = new DropPanel();
+
+        AddPanelCommand = new AddPanelCommand(mainWindowViewModel, webPageStateService);
+        AddPanelChildrenCommand = new AddPanelChildrenCommand(mainWindowViewModel, webPageStateService);
+        AddSectionControlCommand = new AddSectionControlCommand(mainWindowViewModel, webPageStateService);
+
+        DeletePanelCommand = new DeletePanelCommand(webPageStateService);
+        DeleteSectionCommand = new DeleteSectionCommand(webPageStateService);
+        DeletePanelControlCommand = new DeletePanelControlCommand(webPageStateService);
+        DeleteSectionControlCommand = new DeleteSectionControlCommand(webPageStateService);
+
         WebPage = webPageStateService.WebPage;
     }
-
 
     private WebPageItem? webPage; 
     public WebPageItem? WebPage
@@ -33,7 +42,6 @@ public class WebPageEditViewModel: BaseViewModel
         get => webPage;
         set => SetProperty(ref webPage, value);
     }
-
 
     private WebSectionItem? parentSection;
     public WebSectionItem? ParentSection
@@ -48,20 +56,24 @@ public class WebPageEditViewModel: BaseViewModel
         set => SetProperty(ref parentPanel, value);
     }
 
-
-
-
-    public ICommand GoBack { get; private set; }
-    public ICommand MoveSectionControl { get; private set; }
-    public ICommand DragSectionControl { get; private set; }
-    public ICommand DropSectionControl { get; private set; }
-    public ICommand MovePanelControl { get; private set; }
-    public ICommand DragPanelControl { get; private set; }
-    public ICommand DropPanelControl { get; private set; }
-    public ICommand MoveSection { get; private set; }
-    public ICommand DragSection { get; private set; }
-    public ICommand DropSection { get; private set; }
-    public ICommand MovePanel { get; private set; }
-    public ICommand DragPanel { get; private set; }
-    public ICommand DropPanel { get; private set; }
+    public ICommand GoBack { get; }
+    public ICommand MoveSectionControl { get; }
+    public ICommand DragSectionControl { get; }
+    public ICommand DropSectionControl { get; }
+    public ICommand MovePanelControl { get; }
+    public ICommand DragPanelControl { get; }
+    public ICommand DropPanelControl { get; }
+    public ICommand MoveSection { get; }
+    public ICommand DragSection { get; }
+    public ICommand DropSection { get; }
+    public ICommand MovePanel { get; }
+    public ICommand DragPanel { get; }
+    public ICommand DropPanel { get; }
+    public ICommand AddPanelCommand { get; }
+    public ICommand AddPanelChildrenCommand { get; }
+    public ICommand AddSectionControlCommand { get; }
+    public ICommand DeletePanelCommand { get; }
+    public ICommand DeleteSectionCommand { get; }
+    public ICommand DeletePanelControlCommand { get; }
+    public ICommand DeleteSectionControlCommand { get; }
 }
