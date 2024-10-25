@@ -2,7 +2,6 @@
 using Sloth.Designer.Enums;
 using Sloth.Designer.Models;
 using Sloth.Shared.Models;
-using System.ComponentModel.Design;
 
 namespace Sloth.Designer.Services;
 
@@ -21,7 +20,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
     }
 
     // Public properties for state
-    private IEnumerable<string> _webApplications = [];
+    private IEnumerable<string> _webApplications { get; set; } = [];
     public IEnumerable<string> WebApplications
     {
         get => _webApplications;
@@ -31,8 +30,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebApplications changes
         }
     }
-
-    private IEnumerable<ListWebPageItem> _webPages = [];
+    private IEnumerable<ListWebPageItem> _webPages { get; set; } = [];
     public IEnumerable<ListWebPageItem> WebPages
     {
         get => _webPages;
@@ -72,8 +70,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebSection changes
         }
     }
-
-    public AddElementType? addElementType; 
+    public AddElementType? addElementType { get; set; }
     public AddElementType? AddElementType
     {
         get => addElementType;

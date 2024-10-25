@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:core="clr-namespace:Sloth.Designer.Core">
+             xmlns:core="clr-namespace:Sloth.Designer.Core"
+             xmlns:converters="clr-namespace:Sloth.Designer.Converters">
+    <UserControl.Resources>
+        <converters:BooleanThicknessConverter x:Key="LabelMarginConverter" TrueValue="8 4 0 4" FalseValue="16 4 0 4"/>
+    </UserControl.Resources>
     <StackPanel Orientation="Horizontal" 
                 VerticalAlignment="Center">
 
@@ -23,7 +27,7 @@
                         Style="{StaticResource MaterialDesignActionToggleButton}"/>
 
         <TextBlock  Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    Margin="8 4 0 4"
+                    Margin="{Binding CanExpand, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LabelMarginConverter}}"
                     Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
 
         <Button Width="24"

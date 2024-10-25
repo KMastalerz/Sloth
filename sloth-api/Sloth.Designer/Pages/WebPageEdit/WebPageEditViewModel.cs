@@ -1,6 +1,7 @@
 ﻿using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
+using System.Windows.Controls;
 using System.Windows.Input;
 using static Sloth.Designer.Pages.WebPageEditCommands;
 
@@ -49,11 +50,19 @@ public class WebPageEditViewModel: BaseViewModel
         get => parentSection;
         set => SetProperty(ref parentSection, value);
     }
+
     private WebPanelItem? parentPanel;
     public WebPanelItem? ParentPanel
     {
         get => parentPanel;
         set => SetProperty(ref parentPanel, value);
+    }
+
+    private UserControl? editControl = null;
+    public UserControl? EditControl
+    {
+        get => editControl;
+        set => SetProperty(ref editControl, value);
     }
 
     public ICommand GoBack { get; }

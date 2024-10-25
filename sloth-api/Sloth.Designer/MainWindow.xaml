@@ -7,17 +7,28 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:core="clr-namespace:Sloth.Designer.Core"
         xmlns:converters="clr-namespace:Sloth.Designer.Converters"
-        mc:Ignorable="d"
-        Title="Sloth Designer" Height="450" Width="800">
+        Title="Sloth Designer" MinHeight="600" MinWidth="800" Height="600" Width="1000">
     <Window.Resources>
         <converters:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+        <Style x:Key="ComboBoxBaseStyle" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Padding" Value="12 12"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="TextBoxBaseStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Width" Value="180" />
+            <Setter Property="Padding" Value="12 8"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
     </Window.Resources>
     <materialDesign:DialogHost DialogContentUniformCornerRadius="20"
                                DialogContent="{Binding Dialog, UpdateSourceTrigger=PropertyChanged}"
                                IsOpen="{Binding Dialog, Converter={StaticResource NullToBooleanConverter}}"
-                               DialogTheme="Inherit">
-
-        <Grid>
+                               DialogTheme="Inherit"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -28,33 +39,30 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <ComboBox  ItemsSource="{Binding WebApps, UpdateSourceTrigger=PropertyChanged}"
-                           SelectedItem="{Binding AppID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                           Width="160"
-                           materialDesign:HintAssist.Hint="Application"
-                           Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                            SelectedItem="{Binding AppID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Application"
+                            Style="{StaticResource ComboBoxBaseStyle}"/>
                 <TextBox    Margin="20 0 0 0"
                             Text="{Binding PageID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            Width="260"
-                            Padding="12 8"
                             materialDesign:HintAssist.Hint="Search"
                             materialDesign:TextFieldAssist.HasLeadingIcon="true"
                             materialDesign:TextFieldAssist.LeadingIcon="Search"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                            Style="{StaticResource TextBoxBaseStyle}"/>
                 <Button   Margin="20 0 0 0"
-                          Content="Search"
-                          FontSize="12"
-                          Foreground="White"
-                          Command="{Binding SearchPages}"
-                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SearchPageParams, UpdateSourceTrigger=PropertyChanged}"
-                          Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
+                            Content="Search"
+                            FontSize="12"
+                            Foreground="White"
+                            Command="{Binding SearchPages}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SearchPageParams, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
                 <Button   Margin="20 0 0 0"
-                          Content="Add new page"
-                          FontSize="12"
-                          Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                            Content="Add new page"
+                            FontSize="12"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1">
+            <Grid Grid.Row="1">
                 <ContentControl Content="{Binding UserControl, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
+            </Grid>
         </Grid>
     </materialDesign:DialogHost>
 </Window>

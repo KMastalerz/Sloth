@@ -28,7 +28,6 @@
   <ItemGroup>
     <Folder Include="Models\Items\" />
     <Folder Include="Pages\Forms\Forms\" />
-    <Folder Include="Pages\Forms\Controls\" />
     <Folder Include="Pages\Forms\Sections\" />
     <Folder Include="Pages\Forms\Panels\" />
   </ItemGroup>

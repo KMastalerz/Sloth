@@ -5,28 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <UserControl.Resources>
+        <Style x:Key="ComboBoxBaseStyle" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+            <Setter Property="Width" Value="260"/>
+            <Setter Property="Padding" Value="12 12"/>
+            <Setter Property="Margin" Value="0 16 0 0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="TextBoxBaseStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Width" Value="260" />
+            <Setter Property="Padding" Value="12 12"/>
+            <Setter Property="Margin" Value="0 16 0 0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </UserControl.Resources>
     <StackPanel Margin="40 40">
         <!--display id panel children only-->
         <ComboBox   materialDesign:HintAssist.Hint="{Binding ChildrenTypesLabel}"
                     Visibility="{Binding ShowPanelItemTypeSelection, Converter={StaticResource BooleanToVisibilityConverter}}"
                     ItemsSource="{Binding ChildrenTypes}"
                     SelectedItem="{Binding ChildType}"
-                    Width="260"
-                    Margin="0 12"
-                    Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                    Style="{StaticResource ComboBoxBaseStyle}"/>
         <!--hide if panel children not selected-->
         <TextBox    materialDesign:HintAssist.Hint="{Binding ElementLabel}"
                     Text="{Binding ElementID}"
-                    Width="260"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    Style="{StaticResource TextBoxBaseStyle}"/>
         <!--hide if section or not selected on panel children-->
         <ComboBox   materialDesign:HintAssist.Hint="{Binding ElementTypesLabel}"
                     Visibility="{Binding ShowElementTypeSelection, Converter={StaticResource BooleanToVisibilityConverter}}"
                     ItemsSource="{Binding ElementTypes}"
                     SelectedItem="{Binding ElementType}"
-                    Width="260"
-                    Margin="0 12"
-                    Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                    Style="{StaticResource ComboBoxBaseStyle}"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0 12">
             <Button Content="Add"
