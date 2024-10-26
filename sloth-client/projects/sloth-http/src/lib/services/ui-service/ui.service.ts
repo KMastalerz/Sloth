@@ -23,16 +23,16 @@ export class UIService extends BaseService {
       case 'auth':
         return await this.getLoginWebPageAsync();
       default:
-        const command = {pageID: pageID} as GetWebPageQuery;
+        const command = {pageID: pageID, appID: 'sloth'} as GetWebPageQuery;
         return await this.get<WebPage>(UIElementsActions.GetWebPage, command);
     }
   }
 
   async getMainWebPageAsync(): Promise<ServiceReturnValue<WebPage>> {
-    return await this.get<WebPage>(UIElementsActions.GetMainWebPage);
+    return await this.get<WebPage>(UIElementsActions.GetMainWebPage, { appID: 'sloth' });
   }
 
   async getLoginWebPageAsync(): Promise<ServiceReturnValue<WebPage>> {
-    return await this.get<WebPage>(UIElementsActions.GetLoginWebPage);
+    return await this.get<WebPage>(UIElementsActions.GetLoginWebPage, { appID: 'sloth' });
   }
 }

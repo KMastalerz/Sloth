@@ -6,11 +6,11 @@ using System.Windows.Input;
 namespace Sloth.Designer.Pages;
 
 /// <summary>
-/// Interaction logic for WebPageElement.xaml
+/// Interaction logic for WebPageItem.xaml
 /// </summary>
-public partial class WebPageElement : UserControl
+public partial class WebPageListItem : UserControl
 {
-    public WebPageElement()
+    public WebPageListItem()
     {
         InitializeComponent();
     }
@@ -25,7 +25,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for CommandParameter.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CommandParameterProperty =
-        DependencyProperty.Register("CommandParameter", typeof(object), typeof(WebPageElement), new PropertyMetadata(null));
+        DependencyProperty.Register("CommandParameter", typeof(object), typeof(WebPageListItem), new PropertyMetadata(null));
 
 
     public string Label
@@ -36,7 +36,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty LabelProperty =
-        DependencyProperty.Register("Label", typeof(string), typeof(WebPageElement), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("Label", typeof(string), typeof(WebPageListItem), new PropertyMetadata(string.Empty));
 
     public PackIconKind Icon
     {
@@ -46,7 +46,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IconProperty =
-        DependencyProperty.Register("Icon", typeof(PackIconKind), typeof(WebPageElement), new PropertyMetadata(null));
+        DependencyProperty.Register("Icon", typeof(PackIconKind), typeof(WebPageListItem), new PropertyMetadata(null));
 
 
     public bool CanExpand
@@ -57,7 +57,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for CanExpand.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CanExpandProperty =
-        DependencyProperty.Register("CanExpand", typeof(bool), typeof(WebPageElement), new PropertyMetadata(false));
+        DependencyProperty.Register("CanExpand", typeof(bool), typeof(WebPageListItem), new PropertyMetadata(false));
 
     public bool IsExpanded
     {
@@ -67,7 +67,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsExpandedProperty =
-        DependencyProperty.Register("IsExpanded", typeof(bool), typeof(WebPageElement), new PropertyMetadata(false));
+        DependencyProperty.Register("IsExpanded", typeof(bool), typeof(WebPageListItem), new PropertyMetadata(false));
 
     public bool CanEdit
     {
@@ -77,7 +77,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for CanEdit.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CanEditProperty =
-        DependencyProperty.Register("CanEdit", typeof(bool), typeof(WebPageElement), new PropertyMetadata(false));
+        DependencyProperty.Register("CanEdit", typeof(bool), typeof(WebPageListItem), new PropertyMetadata(false));
 
     public bool CanDelete
     {
@@ -87,7 +87,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for CanDelete.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CanDeleteProperty =
-        DependencyProperty.Register("CanDelete", typeof(bool), typeof(WebPageElement), new PropertyMetadata(false));
+        DependencyProperty.Register("CanDelete", typeof(bool), typeof(WebPageListItem), new PropertyMetadata(false));
 
     public bool CanAdd
     {
@@ -97,7 +97,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for CanAdd.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CanAddProperty =
-        DependencyProperty.Register("CanAdd", typeof(bool), typeof(WebPageElement), new PropertyMetadata(false));
+        DependencyProperty.Register("CanAdd", typeof(bool), typeof(WebPageListItem), new PropertyMetadata(false));
 
     public ICommand Edit
     {
@@ -107,7 +107,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for Edit.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty EditProperty =
-        DependencyProperty.Register("Edit", typeof(ICommand), typeof(WebPageElement), new PropertyMetadata(null));
+        DependencyProperty.Register("Edit", typeof(ICommand), typeof(WebPageListItem), new PropertyMetadata(null));
 
     public ICommand Delete
     {
@@ -117,7 +117,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for Delete.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty DeleteProperty =
-        DependencyProperty.Register("Delete", typeof(ICommand), typeof(WebPageElement), new PropertyMetadata(null));
+        DependencyProperty.Register("Delete", typeof(ICommand), typeof(WebPageListItem), new PropertyMetadata(null));
 
     public ICommand Add
     {
@@ -127,7 +127,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for Add.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty AddProperty =
-        DependencyProperty.Register("Add", typeof(ICommand), typeof(WebPageElement), new PropertyMetadata(null));
+        DependencyProperty.Register("Add", typeof(ICommand), typeof(WebPageListItem), new PropertyMetadata(null));
 
     public string AddTooltip
     {
@@ -137,7 +137,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for AddTooltip.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty AddTooltipProperty =
-        DependencyProperty.Register("AddTooltip", typeof(string), typeof(WebPageElement), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("AddTooltip", typeof(string), typeof(WebPageListItem), new PropertyMetadata(string.Empty));
 
     public string EditTooltip
     {
@@ -147,7 +147,7 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for EditTooltip.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty EditTooltipProperty =
-        DependencyProperty.Register("EditTooltip", typeof(string), typeof(WebPageElement), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("EditTooltip", typeof(string), typeof(WebPageListItem), new PropertyMetadata(string.Empty));
 
     public string DeleteTooltip
     {
@@ -157,5 +157,5 @@ public partial class WebPageElement : UserControl
 
     // Using a DependencyProperty as the backing store for DeleteTooltip.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty DeleteTooltipProperty =
-        DependencyProperty.Register("DeleteTooltip", typeof(string), typeof(WebPageElement), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("DeleteTooltip", typeof(string), typeof(WebPageListItem), new PropertyMetadata(string.Empty));
 }

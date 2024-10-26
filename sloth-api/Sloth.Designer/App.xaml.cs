@@ -42,6 +42,8 @@ public partial class App : Application
 
         ServiceProvider = services.BuildServiceProvider();
 
+        InitialRouting();
+
         base.OnStartup(e);
     }
 
@@ -58,14 +60,20 @@ public partial class App : Application
 
         // Register other services if needed
         services.AddSingleton<IHttpServices, HttpServices>();
+        services.AddSingleton<IUserSettingsService, UserSettingsService>();
+        services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IDesignerService, DesignerService>();
         services.AddSingleton<IWebPageStateService, WebPageStateService>();
+        services.AddSingleton<IMainWindowService, MainWindowService>();
     }
     private void ConfigureViewModels(ServiceCollection services)
     {
         // Register ViewModels
         services.AddSingleton<MainWindowViewModel>();
-        services.AddTransient<WebPageListViewModel>();
+        services.AddSingleton<MainPageViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<WebPageSearchViewModel>();
+        services.AddSingleton<WebPageListViewModel>();
         services.AddTransient<WebPageEditViewModel>();
         services.AddTransient<AddElementViewModel>();
     }
@@ -73,10 +81,42 @@ public partial class App : Application
     {
         // Register Views
         services.AddSingleton<MainWindow>();
-        services.AddTransient<WebPageList>();
+        services.AddSingleton<MainPage>();
+        services.AddSingleton<Login>();
+        services.AddSingleton<WebPageSearch>();
+        services.AddSingleton<WebPageList>();
         services.AddTransient<WebPageEdit>();
-        services.AddTransient<WebPageElement>();
         services.AddTransient<AddElement>();
+    }
+    private async Task InitialRouting()
+    {
+        var userSettingsService = ServiceProvider.GetRequiredService<IUserSettingsService>();
+        var authService = ServiceProvider.GetRequiredService<IAuthService>();
+        var mainWindowService = ServiceProvider.GetRequiredService<IMainWindowService>();
+
+        if(userSettingsService.IsLoogedIn())
+        {
+            var token = userSettingsService.GetRefreshToken();
+            var username = userSettingsService.GetUserName();
+
+            if(token is null || username is null)
+            {
+                mainWindowService.LoadPage(new Login());
+                return;
+            }
+
+            await authService.Refreshtoken(username, token);
+
+            if (userSettingsService.IsLoogedIn())
+                mainWindowService.LoadPage(new MainPage());
+            else
+                mainWindowService.LoadPage(new Login());
+        }
+        else
+        {
+            mainWindowService.LoadPage(new Login());
+        }
+
     }
 }
 

@@ -7,9 +7,9 @@ using static Sloth.Designer.Pages.WebPageListCommands;
 namespace Sloth.Designer.Pages;
 public class WebPageListViewModel : BaseViewModel
 {
-    public WebPageListViewModel(IWebPageStateService webPageStateService, IDesignerService designerService, MainWindowViewModel mainWindowViewModel)
+    public WebPageListViewModel(IWebPageStateService webPageStateService, IDesignerService designerService, MainPageViewModel mainPageViewModel)
     {
-        EditPage = new EditPage(designerService, webPageStateService, mainWindowViewModel);
+        EditPage = new EditPage(designerService, webPageStateService, mainPageViewModel);
         WebPages = new(webPageStateService.WebPages);
         
     }

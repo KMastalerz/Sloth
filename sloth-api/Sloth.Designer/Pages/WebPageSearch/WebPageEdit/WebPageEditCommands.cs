@@ -8,14 +8,14 @@ using Sloth.Designer.Core;
 namespace Sloth.Designer.Pages;
 public class WebPageEditCommands
 {
-    public class GoBack(IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel) : SyncCommand
+    public class GoBack(IWebPageStateService webPageStateService, MainPageViewModel mainPageViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
         protected override void ExecuteSync(object? parameter = null)
         {
             webPageStateService.WebPage = null;
-            mainWindowViewModel.UserControl = new WebPageList();
+            mainPageViewModel.UserControl = new WebPageList();
         }
     }
 
@@ -513,17 +513,17 @@ public class WebPageEditCommands
     #endregion
 
     #region [Add Items]
-    public class AddPanelCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService) : SyncCommand
+    public class AddPanelCommand(IMainWindowService mainWindowService, IWebPageStateService webPageStateService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
         protected override void ExecuteSync(object? parameter = null)
         {
             webPageStateService.AddElementType = AddElementType.Panel;
-            mainWindowViewModel.Dialog = new AddElement();
+            mainWindowService.ShowDialog(new AddElement());
         }
     }
-    public class AddPanelChildrenCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService) : SyncCommand
+    public class AddPanelChildrenCommand(IMainWindowService mainWindowService, IWebPageStateService webPageStateService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
@@ -531,10 +531,10 @@ public class WebPageEditCommands
         {
             webPageStateService.AddElementType = AddElementType.PanelChildren;
             webPageStateService.WebPanel = parameter as WebPanelItem;
-            mainWindowViewModel.Dialog = new AddElement();
+            mainWindowService.ShowDialog(new AddElement());
         }
     }
-    public class AddSectionControlCommand(MainWindowViewModel mainWindowViewModel, IWebPageStateService webPageStateService): SyncCommand
+    public class AddSectionControlCommand(IMainWindowService mainWindowService, IWebPageStateService webPageStateService): SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
@@ -542,7 +542,7 @@ public class WebPageEditCommands
         {
             webPageStateService.AddElementType = AddElementType.SectionControl;
             webPageStateService.WebSection = parameter as WebSectionItem;
-            mainWindowViewModel.Dialog = new AddElement();
+            mainWindowService.ShowDialog(new AddElement());
         }
     }
     #endregion

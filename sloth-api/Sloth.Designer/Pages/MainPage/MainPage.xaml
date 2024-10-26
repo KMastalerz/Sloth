@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Sloth.Designer.Pages.MainPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:MainPageViewModel, IsDesignTimeCreatable=False}">
+    <Grid HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Mode="PrimaryDark"
+                                  CornerRadius="0 0 12 12">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="16 0 16 12">
+                <Button     Content="Logoff"
+                            Command="{Binding Logoff}"
+                            Style="{StaticResource SlothButtonHeader}"/>
+                <Button     Content="Account"
+                            Style="{StaticResource SlothButtonHeader}"/>
+            </StackPanel>
+        </materialDesign:ColorZone>
+
+        <ContentControl Grid.Row="1"
+                        Content="{Binding UserControl}"/>
+    </Grid>
+
+</UserControl>

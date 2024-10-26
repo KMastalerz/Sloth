@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Sloth.Designer.Pages.WebPageElement"
+﻿<UserControl x:Class="Sloth.Designer.Pages.WebPageListItem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
              xmlns:core="clr-namespace:Sloth.Designer.Core"
              xmlns:converters="clr-namespace:Sloth.Designer.Converters">
     <UserControl.Resources>
-        <converters:BooleanThicknessConverter x:Key="LabelMarginConverter" TrueValue="8 4 0 4" FalseValue="16 4 0 4"/>
+        <converters:BooleanThicknessConverter x:Key="LabelMarginConverter" TrueValue="8 0 0 4" FalseValue="16 0 0 4"/>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" 
                 VerticalAlignment="Center">
@@ -28,7 +28,7 @@
 
         <TextBlock  Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     Margin="{Binding CanExpand, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource LabelMarginConverter}}"
-                    Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"/>
 
         <Button Width="24"
                 Height="24"

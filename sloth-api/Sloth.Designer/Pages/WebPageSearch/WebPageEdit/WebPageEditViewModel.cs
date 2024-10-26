@@ -9,9 +9,9 @@ namespace Sloth.Designer.Pages;
 public class WebPageEditViewModel: BaseViewModel
 {
 
-    public WebPageEditViewModel(IDesignerService designerService, IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel)
+    public WebPageEditViewModel(IDesignerService designerService, IWebPageStateService webPageStateService, MainPageViewModel mainPageViewModel, IMainWindowService mainWindowService)
     {
-        GoBack = new GoBack(webPageStateService, mainWindowViewModel);
+        GoBack = new GoBack(webPageStateService, mainPageViewModel);
         MoveSectionControl = new MoveSectionControl(this);
         DragSectionControl = new DragSectionControl(this);
         DropSectionControl = new DropSectionControl(this);
@@ -25,9 +25,9 @@ public class WebPageEditViewModel: BaseViewModel
         DragPanel = new DragPanel(this);
         DropPanel = new DropPanel();
 
-        AddPanelCommand = new AddPanelCommand(mainWindowViewModel, webPageStateService);
-        AddPanelChildrenCommand = new AddPanelChildrenCommand(mainWindowViewModel, webPageStateService);
-        AddSectionControlCommand = new AddSectionControlCommand(mainWindowViewModel, webPageStateService);
+        AddPanelCommand = new AddPanelCommand(mainWindowService, webPageStateService);
+        AddPanelChildrenCommand = new AddPanelChildrenCommand(mainWindowService, webPageStateService);
+        AddSectionControlCommand = new AddSectionControlCommand(mainWindowService, webPageStateService);
 
         DeletePanelCommand = new DeletePanelCommand(webPageStateService);
         DeleteSectionCommand = new DeleteSectionCommand(webPageStateService);

@@ -26,10 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Items\" />
-    <Folder Include="Pages\Forms\Forms\" />
-    <Folder Include="Pages\Forms\Sections\" />
-    <Folder Include="Pages\Forms\Panels\" />
+    <Folder Include="Pages\WebPageSearch\WebPageEdit\WebObjects\Forms\" />
+    <Folder Include="Pages\WebPageSearch\WebPageEdit\WebObjects\Sections\" />
+    <Folder Include="Pages\WebPageSearch\WebPageEdit\WebObjects\Panels\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -61,4 +61,28 @@ internal class HttpServices : IHttpServices
 
         return result;
     }
+    public async Task<ServiceReturnValue<T>> PostAsync<T>(string basePath, string methodName, object data)
+    {
+        var request = RequestBuilder.BuildRequest(basePath, methodName);
+        var response = await httpClient.PostAsJsonAsync(request, data);
+
+        var result = new ServiceReturnValue<T>
+        {
+            ResponseCode = (int)response.StatusCode,
+            Success = response.IsSuccessStatusCode
+        };
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Successfully received the data
+            result.Data = await response.Content.ReadFromJsonAsync<T>();
+        }
+        else
+        {
+            // In case of error, populate error details
+            result.Error = await response.Content.ReadAsStringAsync(); // Capture error message
+        }
+
+        return result;
+    }
 }

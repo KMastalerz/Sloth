@@ -4,50 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <UserControl.Resources>
-        <Style x:Key="ComboBoxBaseStyle" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
-            <Setter Property="Width" Value="260"/>
-            <Setter Property="Padding" Value="12 12"/>
-            <Setter Property="Margin" Value="0 16 0 0"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-        <Style x:Key="TextBoxBaseStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-            <Setter Property="Width" Value="260" />
-            <Setter Property="Padding" Value="12 12"/>
-            <Setter Property="Margin" Value="0 16 0 0"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-    </UserControl.Resources>
-    <StackPanel Margin="40 40">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:AddElementViewModel, IsDesignTimeCreatable=False}">
+    <StackPanel Margin="20 20">
         <!--display id panel children only-->
         <ComboBox   materialDesign:HintAssist.Hint="{Binding ChildrenTypesLabel}"
                     Visibility="{Binding ShowPanelItemTypeSelection, Converter={StaticResource BooleanToVisibilityConverter}}"
                     ItemsSource="{Binding ChildrenTypes}"
-                    SelectedItem="{Binding ChildType}"
-                    Style="{StaticResource ComboBoxBaseStyle}"/>
+                    SelectedItem="{Binding ChildType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothComboBox}"/>
         <!--hide if panel children not selected-->
         <TextBox    materialDesign:HintAssist.Hint="{Binding ElementLabel}"
-                    Text="{Binding ElementID}"
-                    Style="{StaticResource TextBoxBaseStyle}"/>
+                    Text="{Binding ElementID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothTextBox}"/>
         <!--hide if section or not selected on panel children-->
         <ComboBox   materialDesign:HintAssist.Hint="{Binding ElementTypesLabel}"
                     Visibility="{Binding ShowElementTypeSelection, Converter={StaticResource BooleanToVisibilityConverter}}"
                     ItemsSource="{Binding ElementTypes}"
-                    SelectedItem="{Binding ElementType}"
-                    Style="{StaticResource ComboBoxBaseStyle}"/>
+                    SelectedItem="{Binding ElementType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothComboBox}"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0 12">
             <Button Content="Add"
-                    FontSize="12"
                     Command="{Binding AddNewElement}"
                     CommandParameter="{Binding}"
-                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"/>
+                    Style="{StaticResource SlothButton}"/>
             <Button Content="Cancel"
-                    Margin="16 0 0 0"
-                    FontSize="12"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                    Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                    Style="{StaticResource SlothButtonNeutral}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

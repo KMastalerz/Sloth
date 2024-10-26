@@ -5,7 +5,7 @@ using Sloth.Shared.Models;
 namespace Sloth.Designer.Pages;
 public class WebPageListCommands
 {
-    public class EditPage(IDesignerService designerService, IWebPageStateService webPageStateService, MainWindowViewModel mainWindowViewModel) : AsyncCommand
+    public class EditPage(IDesignerService designerService, IWebPageStateService webPageStateService, MainPageViewModel mainPageViewModel) : AsyncCommand
     {
         public override bool CanExecute(object? parameter = null) => true;
         public override async Task ExecuteAsync(object? parameter = null)
@@ -15,7 +15,7 @@ public class WebPageListCommands
 
             webPageStateService.WebPage = await designerService.GetFullWebPage(parms.AppID, parms.PageID);
 
-            mainWindowViewModel.UserControl = new WebPageEdit();
+            mainPageViewModel.UserControl = new WebPageEdit();
         }
     }
 }

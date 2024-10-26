@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="Sloth.Designer.Pages.BaseControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:BaseControlViewModel, IsDesignTimeCreatable=False}">
+    <Grid Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Accounts"
+                       Style="{StaticResource SlothTextBlockHeadline}"/>
+            
+            <Separator Style="{StaticResource MaterialDesignSeparator}"/>
+        </StackPanel>
+
+        <WrapPanel Grid.Row="1">
+            <Border Style="{StaticResource SlothBorder}">
+                <StackPanel>
+                    <!--type-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Type"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <!--innertype (besides button)-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Inner Type"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <!--innertype (button) start-->
+                    <!--style-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Inner Style"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <!--type-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Inner Type"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <!--size-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Inner Size"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <!--innertype (button) end-->
+                </StackPanel>
+            </Border>
+
+            <!--security table id-->
+            <Border Style="{StaticResource SlothBorder}">
+                <TextBox    materialDesign:HintAssist.Hint="Security Table"
+                            Style="{StaticResource SlothTextBox}"/>
+            </Border>
+
+            <Border Style="{StaticResource SlothBorder}">
+                <StackPanel>
+                    <!--control label-->
+                    <TextBox    materialDesign:HintAssist.Hint="Label"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <!--control placeholder-->
+                    <TextBox    materialDesign:HintAssist.Hint="Placeholder"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <!--control tooltip-->
+                    <TextBox    materialDesign:HintAssist.Hint="Tooltip"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <!--tooltip placement-->
+                    <ComboBox   materialDesign:HintAssist.Hint="Tooltip Placement"
+                            Style="{StaticResource SlothComboBox}"/>
+                    <!--icon-->
+                    <TextBox    materialDesign:HintAssist.Hint="Icon"
+                            Style="{StaticResource SlothTextBox}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource SlothBorder}">
+                <StackPanel>
+                    <!--route-->
+                    <TextBox    materialDesign:HintAssist.Hint="Route"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <!--route page id-->
+                    <TextBox    materialDesign:HintAssist.Hint="Route Page ID"
+                                Style="{StaticResource SlothTextBox}"/>
+                </StackPanel>
+            </Border>
+            
+            <local:Button/>
+            <!--<ContentControl Content="{Binding MetadataControl}"/>-->
+        </WrapPanel>
+
+
+    </Grid>
+
+</UserControl>
