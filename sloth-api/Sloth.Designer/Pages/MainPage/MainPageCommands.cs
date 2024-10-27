@@ -5,13 +5,13 @@ namespace Sloth.Designer.Pages;
 
 public static class MainPageCommands
 {
-    public class Logoff(IAuthService authService, IMainWindowService mainWindowService) : SyncCommand
+    public class Logoff(IAuthService authService, IWindowService windowService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
         protected override void ExecuteSync(object? parameter = null)
         {
             authService.Logoff();
-            mainWindowService.LoadPage(new Login());
+            windowService.LoadPage(new Login());
         }
     }
 }

@@ -1,42 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Sloth.Domain.Constants;
+﻿namespace Sloth.Domain.Constants;
 
 public static class AuthScheme
 {
     public static string Bearer = "Bearer";
 }
 
-public static class Config
-{
-    /// <summary>
-    /// PasswordComplexity contains serialized PasswordOptions from Microsoft.AspNetCore.Identity;
-    /// </summary>
-    public const string PasswordOptions = "PasswordOptions";
-    public const string RefreshTokenLifetime = "RefreshTokenLifetime";
-    public const string TokenIssuer = "TokenIssuer";
-    public const string TokenKey = "TokenKey";
-    public const string TokenLifetime = "TokenLifetime";
-
-
-    public static readonly IEnumerable<string> ConfigOptions = [
-        PasswordOptions,
-        RefreshTokenLifetime,
-        TokenIssuer,
-        TokenKey,
-        TokenLifetime
-    ];
-}
-
 public static class ConfigurationKeys
 {
     public const string ConnectionString = "Sloth";
-    public const string DefaultConfiguration = "DefaultConfiguration";
-}
-
-public static class Endpoints
-{
-    public const string UIElements = "UIElements";
+    public const string Configuration = "Configuration";
+    public const string SeederOptions = "SeederOptions";
+    public const string AllowedHosts = "AllowedHosts";
 }
 
 public static class SlothClaimTypes

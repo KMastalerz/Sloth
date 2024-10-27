@@ -1,8 +1,8 @@
 <button class="sl-control-base sl-button"
-        [ngClass]="[btnStyle(), btnSize(), btnType()]"
+        [ngClass]="[style(), size(), type()]"
         [matTooltipDisabled]="!showTooltip()"
         [matTooltip]="tooltip()"
-        [matTooltipPosition]="tooltipPlacement()"
+        [matTooltipPosition]="tooltipPosition()"
         type="button">
     @if(showIcon()) {
         <span   class="sl-control-icon"

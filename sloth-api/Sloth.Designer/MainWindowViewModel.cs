@@ -4,11 +4,11 @@ using System.Windows.Controls;
 namespace Sloth.Designer;
 public class MainWindowViewModel : BaseViewModel
 {
-    private UserControl? userControl = null;
-    public UserControl? UserControl
+    private UserControl? windowControl = null;
+    public UserControl? WindowControl
     {
-        get => userControl;
-        set => SetProperty(ref userControl, value);
+        get => windowControl;
+        set => SetProperty(ref windowControl, value);
     }
 
     private UserControl? dialog = null; 

@@ -5,6 +5,7 @@ namespace Sloth.Designer.Services;
 
 internal class AuthService(IHttpServices httpServices, IUserSettingsService userSettingsService) : IAuthService
 {
+   
     public async Task<bool> Login(string login, string password)
     {
         var response = await httpServices.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "Login", new
@@ -13,13 +14,12 @@ internal class AuthService(IHttpServices httpServices, IUserSettingsService user
             Password = password
         });
 
+
         if (response.Success)
         {
             var token = response.Data;
 
-            var rememberMe = userSettingsService.GetRememberMe();
-            if(rememberMe)
-                userSettingsService.SaveToken(token!);
+            userSettingsService.SaveToken(token!);
 
             return true;
         }
@@ -27,21 +27,19 @@ internal class AuthService(IHttpServices httpServices, IUserSettingsService user
         return false;
     }
 
-    public async Task Refreshtoken(string username, string password)
+    public async Task Refreshtoken(string username, string refreshToken)
     {
         var response = await httpServices.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "RefreshToken", new
         {
             UserName = username,
-            Password = password
+            RefreshToken = refreshToken
         });
 
         if (response.Success)
         {
             var token = response.Data;
 
-            var rememberMe = userSettingsService.GetRememberMe();
-            if (rememberMe)
-                userSettingsService.SaveToken(token!);
+            userSettingsService.SaveToken(token!);
         }
     }
 

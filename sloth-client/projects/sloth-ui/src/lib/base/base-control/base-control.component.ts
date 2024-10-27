@@ -20,10 +20,14 @@ export class BaseControl  {
 
   action = computed<string | undefined>(() => this.config()?.action ?? undefined);
   icon = computed<string | undefined>(()=>this.config()?.icon ?? undefined);
-  label = computed<string | undefined>(() => this.config()?.controlLabel ?? undefined);  
-  placeholder = computed<string | undefined>(() => this.config()?.controlPlaceholder ?? undefined);
-  tooltip = computed<string | undefined>(() => this.config()?.controlTooltip ?? undefined);
+  innerType = computed<string | undefined>(() => this.config()?.innerType ?? undefined);
+  label = computed<string | undefined>(() => this.config()?.label ?? undefined);  
+  placeholder = computed<string | undefined>(() => this.config()?.placeholder ?? undefined);
+  tooltip = computed<string | undefined>(() => this.config()?.tooltip ?? undefined);
+  tooltipPosition = computed<'above' | 'below' | 'left' | 'right'>(() => this.config()?.tooltipPosition ?? 'right');
   route = computed<string | undefined>(() => this.config()?.route ?? undefined);  
+  size = computed<string | undefined>(() => this.config()?.size ?? undefined);
+  style = computed<string | undefined>(() => this.config()?.style ?? undefined);
   type = computed<string | undefined>(()=>this.config()?.innerType ?? undefined);
 }
 

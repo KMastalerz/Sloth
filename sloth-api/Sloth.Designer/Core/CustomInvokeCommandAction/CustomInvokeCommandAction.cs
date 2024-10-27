@@ -49,7 +49,7 @@ public class CustomInvokeCommandAction : TriggerAction<DependencyObject>
         // If CommandParameter is not explicitly set, pass the EventArgs as the command parameter
         if (commandParameter == null)
         {
-            commandParameter = eventArgs;
+            commandParameter = eventArgs!;
         }
         else if (eventArgs != null)
         {

@@ -8,16 +8,15 @@ namespace Sloth.Designer.Pages;
 
 public class MainPageViewModel : BaseViewModel
 {
-    public MainPageViewModel(IAuthService authService, IMainWindowService mainWindowService)
+    public MainPageViewModel(IAuthService authService, IWindowService windowService)
     {
-        UserControl = new WebPageSearch();
-        Logoff = new Logoff(authService, mainWindowService);
+        Logoff = new Logoff(authService, windowService);
     }
-    private UserControl? userControl = null;
-    public UserControl? UserControl
+    private UserControl? mainPageControl = null;
+    public UserControl? MainPageControl
     {
-        get => userControl;
-        set => SetProperty(ref userControl, value);
+        get => mainPageControl;
+        set => SetProperty(ref mainPageControl, value);
     }
 
     public ICommand Logoff { get; }

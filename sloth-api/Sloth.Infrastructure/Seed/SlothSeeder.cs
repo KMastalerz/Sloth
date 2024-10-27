@@ -26,7 +26,7 @@ internal class SlothSeeder(ILogger<SlothSeeder> logger, SlothDbContext dbContext
                 }
             }
 
-            await SeedSystemOptions();
+            //await SeedSystemOptions(); // TODO: Add system options later
             await SeedWebPages();
             await SeedWebPageSecurities();
             await SeedWebPanels();

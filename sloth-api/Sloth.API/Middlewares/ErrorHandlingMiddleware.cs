@@ -8,43 +8,39 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
     {
         try
         {
-            await next.Invoke(context);
+            await next(context);
         }
         catch (NotFoundException ex)
         {
-            logger.LogWarning(ex, ex.Message);
-            context.Response.StatusCode = 404;
-            await context.Response.WriteAsync(ex.Message);
+            await HandleExceptionAsync(context, ex, 404, ex.Message);
         }
         catch (InvalidLoginException ex)
         {
-            logger.LogWarning(ex, ex.Message);
-            context.Response.StatusCode = 403;
-            await context.Response.WriteAsync(ex.Message);
+            await HandleExceptionAsync(context, ex, 403, ex.Message);
         }
         catch (MissingSystemOptionException ex)
         {
-            logger.LogWarning(ex, ex.Message);
-            context.Response.StatusCode = 403;
-            await context.Response.WriteAsync(ex.Message);
+            await HandleExceptionAsync(context, ex, 403, ex.Message);
         }
         catch (MissingAccessException ex)
         {
-            logger.LogWarning(ex, ex.Message);
-            context.Response.StatusCode = 401;
-            await context.Response.WriteAsync(ex.Message);
+            await HandleExceptionAsync(context, ex, 401, ex.Message);
         }
         catch (InvalidPropertyException ex)
         {
-            logger.LogWarning(ex, ex.Message);
-            context.Response.StatusCode = 401;
-            await context.Response.WriteAsync(ex.Message);
+            await HandleExceptionAsync(context, ex, 401, ex.Message);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, ex.Message);
-            context.Response.StatusCode = 500;
-            await context.Response.WriteAsync("Something went wrong.");
+            await HandleExceptionAsync(context, ex, 500, "Something went wrong.");
         }
+    }
+
+    private async Task HandleExceptionAsync(HttpContext context, Exception ex, int statusCode, string message)
+    {
+        logger.LogError(ex, message);
+        context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new { error = message });
     }
 }

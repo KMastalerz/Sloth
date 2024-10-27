@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Sloth.Application.DTO.Security;
 using Sloth.Application.Services.Security;
+using Sloth.Domain.DTO;
 using Sloth.Domain.Entities;
 
 namespace Sloth.Application.Profiles;

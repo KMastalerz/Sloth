@@ -129,9 +129,9 @@ export class DynamicPageSync {
             }
             
            // Check if control holds FormControl or FormGroup
-           if (this.listUtil.Contains(StaticWebObjects.FormGroupTypeControls, controlConfig.controlType) && controlConfig.childControls) {
+           if (this.listUtil.Contains(StaticWebObjects.FormGroupTypeControls, controlConfig.controlType) && controlConfig.controls) {
                 // Build FormGroup based on comma-delimited child controls
-                const controlGroup = this.buildFormGroupFromControls(controlConfig.childControls);
+                const controlGroup = this.buildFormGroupFromControls(controlConfig.controls);
                 (panelPart as FormGroup).addControl(controlID, controlGroup);
             } else if (this.listUtil.Contains(StaticWebObjects.FormControlTypeControls, controlConfig.controlType)) {
                 const controlForm = this.formBuilder.control(undefined);

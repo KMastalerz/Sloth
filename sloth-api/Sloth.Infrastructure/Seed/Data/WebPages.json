@@ -3,30 +3,20 @@
     "AppID": "sloth",
     "PageID": "main",
     "Label": "Main",
-    "SecurityTableID": null,
     "Description": "Main page",
     "Panels": "sideNav, header",
     "Orientation": "horizontal",
     "Background": "standard",
-    "Position": null,
-    "Class": null,
-    "Style": null,
-    "HasRouter": true,
     "MetaData": "{\"columns\":2,\"rows\":2,\"columnsRatio\":[\"auto\",1],\"rowsRatio\":[\"auto\",1],\"gridSpans\":[{\"type\":\"column\",\"id\":1,\"spanFrom\":1,\"spanTo\":2}]}"
   },
   {
     "AppID": "sloth",
     "PageID": "auth",
     "Label": "Login",
-    "SecurityTableID": null,
     "Description": "Login page",
     "Panels": "login",
     "Orientation": "vertical",
     "Background": "primary",
-    "Position": "center",
-    "Class": null,
-    "Style": null,
-    "HasRouter": false,
-    "MetaData": null
+    "Position": "center"
   }
 ]

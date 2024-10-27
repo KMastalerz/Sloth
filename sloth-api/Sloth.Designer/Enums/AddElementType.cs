@@ -3,6 +3,8 @@
 public enum AddElementType
 {
     Panel,
-    PanelChildren,
-    SectionControl
+    PanelOption,
+    SectionControl,
+    PanelControl,
+    Section
 }

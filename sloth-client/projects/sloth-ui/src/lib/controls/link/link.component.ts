@@ -1,12 +1,9 @@
-import { Component, computed, DestroyRef, effect, inject, Injector, signal, WritableSignal } from '@angular/core';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
 import { MatBadge } from '@angular/material/badge';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BaseControl } from '../../base/base-control/base-control.component';
 import { LinkMetadata } from '../../models/meta-data.types';
-import { Observable } from 'rxjs';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { C } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'sl-link',
@@ -17,12 +14,11 @@ import { C } from '@angular/cdk/keycodes';
 })
 export class LinkComponent extends BaseControl {
   destroyRef = inject(DestroyRef)
-  private metaData = computed<LinkMetadata>(() => this.jsonUtil.tryParse(this.config()?.metaData));
+  private metaData = computed<LinkMetadata | undefined | null>(() => this.jsonUtil.tryParse(this.config()?.metaData));
   private isSideNav = computed(() => this.pageSync().getWebPanelByID(this.config().panelID).panelType === 'sideNav');
   private isSideNavCollapsedState = computed(() => this.isSideNav() ? this.navCollapsed() : true);
   
-  private counterSubject = computed<string | undefined>(() => this.metaData().counterSubject ?? undefined);
-  protected tooltipPlacement = computed<'above' | 'below' | 'left' | 'right'>(() => this.metaData().tooltipPlacement ?? 'left');
+  private counterSubject = computed<string | undefined>(() => this.metaData()?.counterSubject ?? undefined);
   protected warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);
   protected errorCount = computed<number | undefined>(()=>this.metaData()?.errorCount);
 

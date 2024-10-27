@@ -20,23 +20,23 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
     }
 
     // Public properties for state
-    private IEnumerable<string> _webApplications { get; set; } = [];
+    private IEnumerable<string> webApplications { get; set; } = [];
     public IEnumerable<string> WebApplications
     {
-        get => _webApplications;
+        get => webApplications;
         set
         {
-            _webApplications = value;
+            webApplications = value;
             NotifyStateChanged(value); // Notify when WebApplications changes
         }
     }
-    private IEnumerable<ListWebPageItem> _webPages { get; set; } = [];
+    private IEnumerable<ListWebPageItem> webPages { get; set; } = [];
     public IEnumerable<ListWebPageItem> WebPages
     {
-        get => _webPages;
+        get => webPages;
         set
         {
-            _webPages = value;
+            webPages = value;
             NotifyStateChanged(value); // Notify when WebPages changes
         }
     }
@@ -50,7 +50,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebPage changes
         }
     }
-    public WebPanelItem? webPanel { get; set; }
+    private WebPanelItem? webPanel { get; set; }
     public WebPanelItem? WebPanel
     {
         get => webPanel;
@@ -60,7 +60,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebPanel changes
         }
     }
-    public WebSectionItem? webSection { get; set; }
+    private WebSectionItem? webSection { get; set; }
     public WebSectionItem? WebSection
     {
         get => webSection;
@@ -70,7 +70,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             NotifyStateChanged(value); // Notify when WebSection changes
         }
     }
-    public AddElementType? addElementType { get; set; }
+    private AddElementType? addElementType { get; set; }
     public AddElementType? AddElementType
     {
         get => addElementType;
@@ -81,29 +81,29 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
         }
     }
 
-    public void AddPanel(NewElementItem param)
+    public void AddPanel(NewPanel panel)
     {
         if(WebPage == null) return;
         WebPage.WebPanels.Add(new()
         {
             AppID = WebPage.AppID,
             PageID = WebPage.PageID,
-            PanelID = param.ElementID,
-            PanelType = param.ElementType,
+            PanelID = panel.PanelID,
+            PanelType = panel.PanelType,
         });
     }
-    public void AddSection(NewElementItem param)
+    public void AddSection(NewSection section)
     {
-        if(WebPanel == null) return;
+        if (WebPanel == null) return;
         WebPanel.WebSections.Add(new()
         {
             AppID = WebPanel.AppID,
             PageID = WebPanel.PageID,
             PanelID = WebPanel.PanelID,
-            SectionID = param.ElementID
+            SectionID = section.SectionID
         });
     }
-    public void AddPanelControl(NewElementItem param)
+    public void AddPanelControl(NewControl control)
     {
         if (WebPanel == null) return;
         WebPanel.WebControls.Add(new()
@@ -112,11 +112,11 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             PageID = WebPanel.PageID,
             PanelID = WebPanel.PanelID,
             SectionID = null,
-            ControlID = param.ElementID,
-            ControlType = param.ElementType
+            ControlID = control.ControlID,
+            ControlType = control.ControlType
         });
     }
-    public void AddSectionControl(NewElementItem param)
+    public void AddSectionControl(NewControl control)
     {
         if (WebSection == null) return;
         WebSection.WebControls.Add(new()
@@ -125,8 +125,8 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             PageID = WebSection.PageID,
             PanelID = WebSection.PanelID,
             SectionID = WebSection.SectionID,
-            ControlID = param.ElementID,
-            ControlType = param.ElementType
+            ControlID = control.ControlID,
+            ControlType = control.ControlType
         });
     }
     public void DeletePanel(WebPanelItem panel)

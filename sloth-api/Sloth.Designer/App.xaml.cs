@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sloth.Designer.Core;
 using Sloth.Designer.Pages;
 using Sloth.Designer.Services;
+using System.Configuration;
 using System.IO;
 using System.Windows;
 
@@ -64,7 +65,9 @@ public partial class App : Application
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IDesignerService, DesignerService>();
         services.AddSingleton<IWebPageStateService, WebPageStateService>();
-        services.AddSingleton<IMainWindowService, MainWindowService>();
+        services.AddSingleton<IWindowService, WindowService>();
+        services.AddSingleton<IMainPageService, MainPageService>();
+        services.AddSingleton<IWebPageEditService, WebPageEditService>();
     }
     private void ConfigureViewModels(ServiceCollection services)
     {
@@ -73,10 +76,14 @@ public partial class App : Application
         services.AddSingleton<MainPageViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<WebPageSearchViewModel>();
-        services.AddSingleton<WebPageListViewModel>();
         services.AddTransient<WebPageEditViewModel>();
-        services.AddTransient<AddElementViewModel>();
+        services.AddTransient<AddPanelViewModel>();
+        services.AddTransient<AddSectionViewModel>();
+        services.AddTransient<AddControlViewModel>();
+        services.AddTransient<SelectPanelOptionViewModel>();
     }
+
+    // TODO: Probably for removal? 
     private void ConfigureViews(ServiceCollection services)
     {
         // Register Views
@@ -84,37 +91,43 @@ public partial class App : Application
         services.AddSingleton<MainPage>();
         services.AddSingleton<Login>();
         services.AddSingleton<WebPageSearch>();
-        services.AddSingleton<WebPageList>();
         services.AddTransient<WebPageEdit>();
-        services.AddTransient<AddElement>();
+        services.AddTransient<AddPanel>();
+        services.AddTransient<AddSection>();
+        services.AddTransient<AddControl>();
+        services.AddTransient<SelectPanelOption>();
     }
-    private async Task InitialRouting()
+    private void InitialRouting()
     {
         var userSettingsService = ServiceProvider.GetRequiredService<IUserSettingsService>();
         var authService = ServiceProvider.GetRequiredService<IAuthService>();
-        var mainWindowService = ServiceProvider.GetRequiredService<IMainWindowService>();
+        var windowService = ServiceProvider.GetRequiredService<IWindowService>();
+        var mainPageService = ServiceProvider.GetRequiredService<IMainPageService>();
 
-        if(userSettingsService.IsLoogedIn())
+        if (userSettingsService.IsLoogedIn())
         {
             var token = userSettingsService.GetRefreshToken();
             var username = userSettingsService.GetUserName();
 
             if(token is null || username is null)
             {
-                mainWindowService.LoadPage(new Login());
+                windowService.LoadPage(new Login());
                 return;
             }
 
-            await authService.Refreshtoken(username, token);
+            Task.Run( async () => await authService.Refreshtoken(username, token));
 
             if (userSettingsService.IsLoogedIn())
-                mainWindowService.LoadPage(new MainPage());
+            {
+                windowService.LoadPage(new MainPage());
+                mainPageService.LoadPage(new WebPageSearch());
+            }
             else
-                mainWindowService.LoadPage(new Login());
+                windowService.LoadPage(new Login());
         }
         else
         {
-            mainWindowService.LoadPage(new Login());
+            windowService.LoadPage(new Login());
         }
 
     }

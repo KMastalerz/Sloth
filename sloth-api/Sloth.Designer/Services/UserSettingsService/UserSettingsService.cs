@@ -51,8 +51,12 @@ public class UserSettingsService : IUserSettingsService
     {
         var tokenString = EncryptionHelper.EncryptObject(token);
         userSettings.Token = tokenString;
-        var json = JsonConvert.SerializeObject(userSettings);
-        File.WriteAllText(userSettingJsonPath, json);
+
+        if (userSettings.RememberMe)
+        {
+            var json = JsonConvert.SerializeObject(userSettings);
+            File.WriteAllText(userSettingJsonPath, json);
+        }
     }
 
     public void SaveRememberMe(bool rememberMe)

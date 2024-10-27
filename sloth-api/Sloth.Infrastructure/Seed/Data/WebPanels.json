@@ -5,19 +5,14 @@
     "PanelID": "sideNav",
     "PanelType": "sideNav",
     "Sections": "main,admin,user,info",
-    "Controls": "logout",
-    "Label": null,
-    "MetaData": null
+    "Controls": "logout"
   },
   {
     "AppID": "sloth",
     "PageID": "main",
     "PanelID": "header",
     "PanelType": "header",
-    "Sections": null,
-    "Controls": "messages, account, setttings",
-    "Label": null,
-    "MetaData": null
+    "Controls": "messages, account, setttings"
   },
   {
     "AppID": "sloth",
@@ -25,8 +20,6 @@
     "PanelID": "login",
     "PanelType": "form",
     "Sections": "login",
-    "Controls": "login, password, process, forgotPassword",
-    "Label": null,
-    "MetaData": null
+    "Controls": "login, password, process, forgotPassword"
   }
 ]

@@ -2,12 +2,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Sloth.Application.DTO.Security;
 using Sloth.Domain.Constants;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Services;
 using Sloth.Domain.Repositories;
+using Sloth.Domain.DTO;
 
 namespace Sloth.Application.Services.Security;
 public class LoginCommandHandler(
@@ -15,7 +15,6 @@ public class LoginCommandHandler(
     IMapper mapper, 
     ISecurityRepository securityRepository, 
     IPasswordHasher<User> passwordHasher,
-    IConfigurationService configurationService,
     ISecurityService securityService) : IRequestHandler<LoginCommand, AccessTokenResponse>
 {
     public async Task<AccessTokenResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -33,23 +32,15 @@ public class LoginCommandHandler(
             throw new InvalidLoginException();
 
         // TO DO: Check if Password is expired
+        var accessToken = securityService.GenerateAcesssTokenResponse(user);
+        accessToken.User = mapper.Map<AccessUser>(user);
 
-        // Create Reponse 
-        var result = new AccessTokenResponse()
-        {
-            TokenType = AuthScheme.Bearer,
-            AccessToken = securityService.GenerateToken(user),
-            ExpiresAt = DateTime.Now.AddMinutes(configurationService.SecurityConfig!.TokenLifetime),
-            RefreshToken = securityService.GenerateRefreshToken(user),
-            RefreshExpiresAt = DateTime.Now.AddMinutes(configurationService.SecurityConfig!.RefreshTokenLifetime),
-            User = mapper.Map<AccessUser>(user)
-        };
 
         // Store Refresh Token
-        await securityRepository.AddRefreshTokenAsync(result.RefreshToken, user.UserID, result.RefreshExpiresAt);
+        await securityRepository.AddRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.RefreshExpiresAt);
 
         logger.LogInformation("User {UserID} Logged In", user.UserID);
 
-        return result;
+        return accessToken;
     }
 }

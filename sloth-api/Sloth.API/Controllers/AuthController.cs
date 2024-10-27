@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Sloth.Application.DTO.Security;
 using Sloth.Application.Services.Security;
+using Sloth.Domain.DTO;
 
 namespace Sloth.API.Controllers;
 

@@ -11,7 +11,6 @@ public class WebPage
     public string? Background { get; set; } = null;
     public string? Position { get; set; } = null;
     public string? Class { get; set; } = null;
-    public string? Style { get; set; } = null;
     public bool HasRouter { get; set; } = default!;
     public string? SecurityTableID { get; set; } = null;
     public string? Description { get; set; } = null;

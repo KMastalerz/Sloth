@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Sloth.Designer.Core;
+﻿using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using System.Windows.Input;
 using static Sloth.Designer.Pages.LoginCommands;
@@ -9,11 +8,11 @@ namespace Sloth.Designer.Pages;
 public class LoginViewModel : BaseViewModel
 {
     private readonly IUserSettingsService userSettingsService;
-    public LoginViewModel(IAuthService authService, IMainWindowService mainWindowService, IUserSettingsService userSettingsService)
+    public LoginViewModel(IAuthService authService, IWindowService windowService, IUserSettingsService userSettingsService)
     {
         this.userSettingsService = userSettingsService;
         rememberMe = userSettingsService.GetRememberMe();
-        Login = new LoginCommand(authService, mainWindowService, userSettingsService);
+        Login = new LoginCommand(authService, windowService);
         Close = new CloseCommand();
     }
 

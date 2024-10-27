@@ -31,6 +31,9 @@
     </Style>
     
     <!-- TextBlock Global Style -->
+    <Style x:Key="SlothTextBlock" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
     <Style x:Key="SlothTextBlockHeadline" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline5TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>

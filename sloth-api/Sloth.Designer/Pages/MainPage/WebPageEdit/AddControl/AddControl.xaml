@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Sloth.Designer.Pages.AddControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:AddControlViewModel, IsDesignTimeCreatable=False}">
+    <StackPanel Margin="20 20">
+        <TextBlock  Text="Add new control"
+                    Style="{StaticResource SlothTextBlock}"/>
+        <TextBox    materialDesign:HintAssist.Hint="Name"
+                    Text="{Binding ControlName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothTextBox}"/>
+        <ComboBox   materialDesign:HintAssist.Hint="Control type"
+                    ItemsSource="{Binding ControlTypes}"
+                    SelectedItem="{Binding ControlType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothComboBox}"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 12">
+            <Button Content="Add control"
+                    Command="{Binding AddControlCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource SlothButton}"/>
+            <Button Content="Cancel"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource SlothButtonNeutral}"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

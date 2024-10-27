@@ -6,21 +6,13 @@ using Sloth.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Has to be before as database connection is needed
-builder.ReadConfiguration();
-
-// Needed before adding other layers as it defines the configuration of the application
-var configuration = builder.Services.InitializeInfrastucture(builder.Configuration);
-
-// Declare configured authentication 
-builder.Services.AddConfiguredAuthentication(configuration);
-
 // Register API Layer
 builder.AddPresentation();
+builder.AddAuthentication(builder.Configuration);
 // Register Application Layer
 builder.Services.AddApplication();
 // Register Infrastructure Layer
-builder.Services.AddInfractructure();
+builder.Services.AddInfractructure(builder.Configuration);
 
 var app = builder.Build();
 
@@ -29,12 +21,7 @@ await app.RunSeed();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-// TO DO: Add table that will define allowed origins
-app.UseCors(builder =>
-    builder.WithOrigins("http://localhost:4200")
-           .AllowAnyMethod()
-           .AllowAnyHeader()
-           .AllowCredentials());
+app.AddCors();
 
 app.UseSerilogRequestLogging();
 

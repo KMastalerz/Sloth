@@ -6,7 +6,6 @@ export interface WebPage {
     orientation?: string | null;
     position?: string | null;
     background?: string | null;
-    style?: string | null;
     class?: string | null;
     hasRouter: boolean;
     metaData?: string;
@@ -19,7 +18,6 @@ export interface WebPanel {
     panelType: string;
     sections?: string | null;
     controls: string;
-    style?: string | null;
     class?: string | null;
     label?: string;
     metaData?: string;
@@ -45,10 +43,13 @@ export interface WebControl {
     controlID: string;
     controlType: string;
     innerType?: string | null;
-    childControls?: string | null;
-    controlLabel?: string | null;
-    controlPlaceholder?: string | null;
-    controlTooltip?: string | null;
+    style?: string | null;
+    size?: string | null;
+    controls?: string | null;
+    label?: string | null;
+    placeholder?: string | null;
+    tooltip?: string | null;
+    tooltipPosition?: 'above' | 'below' | 'left' | 'right' | null;
     route?: string | null;
     routePageID?: string | null;
     action?: string | null;

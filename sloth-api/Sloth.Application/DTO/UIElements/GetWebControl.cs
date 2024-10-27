@@ -6,10 +6,13 @@ public class GetWebControl
     public string ControlID { get; set; } = default!;
     public string ControlType { get; set; } = default!;
     public string? InnerType { get; set; } = null;
-    public string? ChildControls { get; set; } = null;
-    public string? ControlLabel { get; set; }
-    public string? ControlPlaceholder { get; set; }
-    public string? ControlTooltip { get; set; }
+    public string? Style { get; set; } = null;
+    public string? Size { get; set; } = null;
+    public string? Controls { get; set; } = null;
+    public string? Label { get; set; }
+    public string? Placeholder { get; set; }
+    public string? Tooltip { get; set; }
+    public string? TooltipPosition { get; set; } = null;
     public string? Route { get; set; } = null;
     public string? RoutePageID { get; set; } = null;
     public string? Action { get; set; } = null;

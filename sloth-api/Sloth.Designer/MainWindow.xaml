@@ -20,6 +20,6 @@
                                DialogTheme="Inherit"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch">
-        <ContentControl Content="{Binding UserControl, UpdateSourceTrigger=PropertyChanged}"/>
+        <ContentControl Content="{Binding WindowControl, UpdateSourceTrigger=PropertyChanged}"/>
     </materialDesign:DialogHost>
 </Window>

@@ -1,0 +1,41 @@
+﻿using Sloth.Designer.Constants;
+using Sloth.Designer.Core;
+using Sloth.Designer.Services;
+using System.Windows.Input;
+using static Sloth.Designer.Pages.AddControlCommands;
+
+namespace Sloth.Designer.Pages;
+public class AddControlViewModel:BaseViewModel
+{
+    public AddControlViewModel(IWebPageStateService webPageStateService)
+    {
+        AddControlCommand = new AddControlCommand(webPageStateService);
+    }
+
+    private string? controlName = null;
+    public string? ControlName
+    {
+        get => controlName;
+        set => SetProperty(ref controlName, value);
+    }
+
+    private List<string> controlTypes = ControlConstants.ControlTypes.Select(x => x.ControlName).ToList();
+    public List<string> ControlTypes
+    {
+        get => controlTypes;
+        set => SetProperty(ref controlTypes, value);
+    }
+
+    private string? controlType = null;
+    public string? ControlType
+    {
+        get => controlType;
+        set 
+        {
+            var type = ControlConstants.ControlTypes.FirstOrDefault(x => x.ControlName == value)?.ControlType;
+            SetProperty(ref controlType, type);
+        }
+    }
+
+    public ICommand AddControlCommand { get; }
+}

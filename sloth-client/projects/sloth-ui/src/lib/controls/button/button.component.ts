@@ -1,10 +1,10 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatBadge } from '@angular/material/badge';
 import { BaseControl } from '../../base/base-control/base-control.component';
 import { Action, ActionType } from '../../page-sync/action';
-import { ButtonInnerType, ButtonMetadata } from '../../models/meta-data.types';
+import { ButtonMetadata } from '../../models/meta-data.types';
 
 @Component({
   selector: 'sl-button',
@@ -14,30 +14,18 @@ import { ButtonInnerType, ButtonMetadata } from '../../models/meta-data.types';
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent extends BaseControl {
-  private metaData = computed<ButtonMetadata>(() => this.jsonUtil.tryParse(this.config()?.metaData));
-  private defaultType: 'text' = 'text'
-  private defaultSize: 'medium' = 'medium'
-  private defaultStyle: 'neutral' = 'neutral'
+  private metaData = computed<ButtonMetadata | undefined | null>(() => this.jsonUtil.tryParse(this.config()?.metaData));
   private isSideNav = computed(() => this.pageSync().getWebPanelByID(this.config().panelID).panelType === 'sideNav');
   private isSideNavCollapsedState = computed(() => this.isSideNav() ? this.navCollapsed() : true);
-  private castType = computed<ButtonInnerType>(() => this.type() ? this.jsonUtil.tryParse(this.type()!) : {
-    style: this.defaultStyle,
-    type: this.defaultType,
-    size: this.defaultSize
-  });
   
-  private counterSubject = computed<string | undefined>(() => this.metaData().counterSubject ?? undefined);
-  protected tooltipPlacement = computed<'above' | 'below' | 'left' | 'right'>(() => this.metaData().tooltipPlacement ?? 'left');
+  private counterSubject = computed<string | undefined>(() => this.metaData()?.counterSubject ?? undefined);
   protected warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);
   protected errorCount = computed<number | undefined>(()=>this.metaData()?.errorCount);
 
-  protected showIcon = computed(() => !(!this.config().icon) && this.btnType() !== 'text');
-  protected showLabel = computed(() => !(!this.label())  && this.btnType() !== 'icon' && !this.isSideNavCollapsedState());
+  protected showIcon = computed(() => !(!this.config().icon) );
+  protected showLabel = computed(() => !(!this.label()) && !this.isSideNavCollapsedState());
   protected showTooltip = computed(() => !(!this.tooltip()) && this.isSideNavCollapsedState());
   protected showBagde = computed(() => this.count());
-  protected btnStyle = computed(() => this.castType()?.style ?? this.defaultStyle);
-  protected btnType = computed(() => this.castType()?.type ?? this.defaultType);
-  protected btnSize = computed(() => this.castType()?.size ?? this.defaultSize);
 
   protected count = computed<number | undefined>(() => {
     if(this.counterSubject()) {

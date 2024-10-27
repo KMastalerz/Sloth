@@ -28,7 +28,7 @@
         </materialDesign:ColorZone>
 
         <ContentControl Grid.Row="1"
-                        Content="{Binding UserControl}"/>
+                        Content="{Binding MainPageControl}"/>
     </Grid>
 
 </UserControl>

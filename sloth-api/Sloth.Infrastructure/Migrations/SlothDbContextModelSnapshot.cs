@@ -361,20 +361,11 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<Guid>("ChangeUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ChildControls")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ControlLabel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ControlPlaceholder")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ControlTooltip")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ControlType")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Controls")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
@@ -383,7 +374,13 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("InnerType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Label")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MetaData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Placeholder")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Route")
@@ -396,6 +393,18 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SecurityTableID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tooltip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TooltipPosition")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Validation")
@@ -481,9 +490,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("AppID", "PageID");
 
                     b.ToTable("WebPage");
@@ -564,9 +570,6 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppID", "PageID", "PanelID");

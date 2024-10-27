@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Sloth.Domain.Constants;
+using Sloth.Domain.DTO;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Services;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,9 +12,11 @@ internal class SecurityService(IConfigurationService configurationService) : ISe
 {
     public string GenerateToken(User user)
     {
-        var secConfig = configurationService.SecurityConfig!;
+        // read object from IConfiguration
 
-        //TO DO: Add Claims about what team does user belongs to.
+        var secConfig = configurationService.GetAppSettings.Configuration;
+
+        // TODO: Add Claims about what team does user belongs to.
         var claims = new List<Claim> {
             new(ClaimTypes.NameIdentifier, user.UserID.ToString()),
             new(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
@@ -27,9 +30,21 @@ internal class SecurityService(IConfigurationService configurationService) : ISe
 
     public string GenerateRefreshToken(User user)
     {
-        var secConfig = configurationService.SecurityConfig!;
+        var secConfig = configurationService.GetAppSettings.Configuration!;
 
         return TokenGenerator(secConfig.TokenKey, secConfig.RefreshTokenLifetime, secConfig.TokenIssuer);
+    }
+
+    public AccessTokenResponse GenerateAcesssTokenResponse(User user)
+    {
+        return new AccessTokenResponse()
+        {
+            TokenType = AuthScheme.Bearer,
+            AccessToken = GenerateToken(user),
+            ExpiresAt = DateTime.Now.AddMinutes(configurationService.GetAppSettings.Configuration.TokenLifetime),
+            RefreshToken = GenerateRefreshToken(user),
+            RefreshExpiresAt = DateTime.Now.AddMinutes(configurationService.GetAppSettings.Configuration.RefreshTokenLifetime),
+        };
     }
 
     private string TokenGenerator(string tokenKey, int tokenLifetime, string tokenIssuer, List<Claim>? claims = null)
@@ -51,4 +66,6 @@ internal class SecurityService(IConfigurationService configurationService) : ISe
         return tokenHandler.WriteToken(token);
 
     }
+
+
 }
