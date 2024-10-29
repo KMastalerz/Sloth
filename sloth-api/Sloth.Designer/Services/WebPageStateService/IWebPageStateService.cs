@@ -12,6 +12,7 @@ public interface IWebPageStateService: IBaseStateService
     WebPageItem? WebPage { get; set; }
     WebPanelItem? WebPanel { get; set; }
     WebSectionItem? WebSection { get; set; }
+    WebControlItem? WebControl { get; set; }
     AddElementType? AddElementType { get; set; }
     void AddPanel(NewPanel panel);
     void AddSection(NewSection section);

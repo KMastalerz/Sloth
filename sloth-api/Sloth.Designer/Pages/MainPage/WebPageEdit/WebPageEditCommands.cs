@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using Sloth.Designer.Enums;
 using Sloth.Designer.Core;
+using Sloth.Designer.Constants;
 
 namespace Sloth.Designer.Pages;
 public class WebPageEditCommands
@@ -529,9 +530,22 @@ public class WebPageEditCommands
 
         protected override void ExecuteSync(object? parameter = null)
         {
-            webPageStateService.AddElementType = AddElementType.PanelOption;
-            webPageStateService.WebPanel = parameter as WebPanelItem;
-            windowService.ShowDialog(new SelectPanelOption());
+            if (parameter is not WebPanelItem panel) return;
+
+            var panelSectionType = PanelConstants.PanelTypes.FirstOrDefault(p => p.PanelType == panel.PanelType)?.SectionType ?? null;
+
+            if(panelSectionType == PanelSectionType.StaticSections)
+            {
+                webPageStateService.AddElementType = AddElementType.PanelControl;
+                webPageStateService.WebPanel = panel;
+                windowService.ShowDialog(new AddControl());
+            } 
+            else
+            {
+                webPageStateService.AddElementType = AddElementType.PanelOption;
+                webPageStateService.WebPanel = panel;
+                windowService.ShowDialog(new SelectPanelOption());
+            }
         }
     }
     public class AddSectionControlCommand(IWindowService windowService, IWebPageStateService webPageStateService) : SyncCommand
@@ -540,9 +554,41 @@ public class WebPageEditCommands
 
         protected override void ExecuteSync(object? parameter = null)
         {
+
+            if(parameter is not TwoLevelBindingParameter parms) return;
+            if(parms.Child is not WebSectionItem section) return;
+
             webPageStateService.AddElementType = AddElementType.SectionControl;
-            webPageStateService.WebSection = parameter as WebSectionItem;
+            webPageStateService.WebSection = section;
             windowService.ShowDialog(new AddControl());
+        }
+    }
+    #endregion
+
+    #region [Delete Items]
+    public class EditControlCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is not WebControlItem control) return;
+
+            webPageStateService.WebControl = control;
+            webPageEditViewModel.EditControl = new BaseControl();
+            var baseControl = webPageEditViewModel.EditControl.DataContext as BaseControlViewModel ?? null;
+            switch (control.ControlType)
+            {
+                case ControlTypes.Button:
+                    baseControl!.MetadataControl = new Button();
+                    break;
+                case ControlTypes.Link:
+                    baseControl!.MetadataControl = new Link();
+                    break;
+                default:
+                    webPageEditViewModel.EditControl = null;
+                    webPageStateService.WebControl = null;
+                    break;
+            }
         }
     }
     #endregion
@@ -560,12 +606,24 @@ public class WebPageEditCommands
     }
     public class DeleteSectionCommand(IWebPageStateService webPageStateService) : SyncCommand
     {
-        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override bool CanExecuteSync(object? parameter = null) 
+        {
+            if (parameter is not TwoLevelBindingParameter parms) return false;
+            if (parms.Parent is not WebPanelItem panel) return false;
+
+            var panelSectionType = PanelConstants.PanelTypes.FirstOrDefault(p => p.PanelType == panel.PanelType)?.SectionType ?? null;
+
+            if (panelSectionType is null) return false;
+
+            return panelSectionType != PanelSectionType.StaticSections;
+        }
 
         protected override void ExecuteSync(object? parameter = null)
         {
-            if (parameter is WebSectionItem panel)
-                webPageStateService.DeleteSection(panel);
+            if (parameter is not TwoLevelBindingParameter parms) return;
+            if (parms.Child is not WebSectionItem section) return;
+
+            webPageStateService.DeleteSection(section);
         }
     }
     public class DeletePanelControlCommand(IWebPageStateService webPageStateService) : SyncCommand

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace Sloth.Designer.Pages;
 /// <summary>
@@ -9,5 +10,6 @@ public partial class BaseControl : UserControl
     public BaseControl()
     {
         InitializeComponent();
+        DataContext = App.ServiceProvider.GetRequiredService<BaseControlViewModel>();
     }
 }

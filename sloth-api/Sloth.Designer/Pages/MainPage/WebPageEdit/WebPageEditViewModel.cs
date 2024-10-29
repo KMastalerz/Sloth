@@ -34,6 +34,11 @@ public class WebPageEditViewModel : BaseViewModel
         DeletePanelControlCommand = new DeletePanelControlCommand(webPageStateService);
         DeleteSectionControlCommand = new DeleteSectionControlCommand(webPageStateService);
 
+        //EditPageCommand = new EditPageCommand(webPageStateService, this);
+        //EditPanelCommand = new EditPanelCommand(webPageStateService, this);
+        //EditSectionCommand = new EditSectionCommand(webPageStateService, this);
+        EditControlCommand = new EditControlCommand(webPageStateService, this);
+
         WebPage = webPageStateService.WebPage;
     }
 
@@ -85,4 +90,8 @@ public class WebPageEditViewModel : BaseViewModel
     public ICommand DeleteSectionCommand { get; }
     public ICommand DeletePanelControlCommand { get; }
     public ICommand DeleteSectionControlCommand { get; }
+    public ICommand EditPageCommand { get; }
+    public ICommand EditPanelCommand { get; }
+    public ICommand EditSectionCommand { get; }
+    public ICommand EditControlCommand { get; }
 }

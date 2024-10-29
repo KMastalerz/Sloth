@@ -30,11 +30,7 @@ public class AddControlViewModel:BaseViewModel
     public string? ControlType
     {
         get => controlType;
-        set 
-        {
-            var type = ControlConstants.ControlTypes.FirstOrDefault(x => x.ControlName == value)?.ControlType;
-            SetProperty(ref controlType, type);
-        }
+        set => SetProperty(ref controlType, value);
     }
 
     public ICommand AddControlCommand { get; }

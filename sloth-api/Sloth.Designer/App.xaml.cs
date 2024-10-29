@@ -81,6 +81,10 @@ public partial class App : Application
         services.AddTransient<AddSectionViewModel>();
         services.AddTransient<AddControlViewModel>();
         services.AddTransient<SelectPanelOptionViewModel>();
+        services.AddTransient<BasePageViewModel>();
+        services.AddTransient<BaseControlViewModel>();
+        services.AddTransient<ButtonViewModel>();
+        services.AddTransient<LinkViewModel>();
     }
 
     // TODO: Probably for removal? 
@@ -96,6 +100,9 @@ public partial class App : Application
         services.AddTransient<AddSection>();
         services.AddTransient<AddControl>();
         services.AddTransient<SelectPanelOption>();
+        services.AddTransient<BasePage>();
+        services.AddTransient<Button>();
+        services.AddTransient<Link>();
     }
     private void InitialRouting()
     {

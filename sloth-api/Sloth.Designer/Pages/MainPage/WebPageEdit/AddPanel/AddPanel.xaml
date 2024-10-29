@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:AddPanelViewModel, IsDesignTimeCreatable=False}">
-    <Grid>
-            
-    </Grid>
+    <StackPanel Margin="20 20">
+        <TextBlock  Text="Select panel"
+                    Style="{StaticResource SlothTextBlock}"/>
+        <TextBox    materialDesign:HintAssist.Hint="Panel name"
+                    Visibility="{Binding ShowSectionInsert, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Text="{Binding PanelID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothTextBox}"/>
+        <ComboBox   materialDesign:HintAssist.Hint="Panel type"
+                    ItemsSource="{Binding PanelTypes}"
+                    SelectedItem="{Binding PanelType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothComboBox}"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 12">
+            <Button Content="Add panel"
+                    Command="{Binding AddPanelCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource SlothButton}"/>
+            <Button Content="Cancel"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource SlothButtonNeutral}"/>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

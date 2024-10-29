@@ -7,6 +7,14 @@ public static class ControlConstants
         new("Link", "link"),
         new("Password", "password")
     ];
+
+    public static Dictionary<string, string> TooltipPlacements = new()
+    {
+        { "Top", "top" },
+        { "Right", "right" },
+        { "Bottom", "bottom" },
+        { "Left", "left" }
+    };
 }
 
 public class ControlElement(string controlName, string controlType)
@@ -15,12 +23,20 @@ public class ControlElement(string controlName, string controlType)
     public string ControlType { get; set; } = controlType;
 }
 
+public static class ControlTypes
+{
+    public const string Button = "button";
+    public const string Input = "input";
+    public const string Link = "link";
+    public const string Password = "password";
+}
+
 public static class ControlInnerTypes
 {
     public static Dictionary<string, string> Button = new()
     {
         { "Icon", "icon" },
-        { "textIcon", "textIcon" },
+        { "Text Icon", "textIcon" },
         { "Text", "text" }
     };
     public static Dictionary<string, string> Link = new()

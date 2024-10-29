@@ -4,15 +4,19 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:core="clr-namespace:Sloth.Designer.Core">
+             xmlns:core="clr-namespace:Sloth.Designer.Core"
+             xmlns:converters="clr-namespace:Sloth.Designer.Converters">
     <UserControl.Resources>
-        <Style x:Key="BorderBaseStyle" TargetType="Border">
-            <Setter Property="BorderBrush" Value="#FFD8D8D8" />
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Margin" Value="0 12 0 0"/>
-            <Setter Property="Padding" Value="12 12 12 12"/>
-        </Style>
+        <ResourceDictionary>
+            <Style x:Key="BorderBaseStyle" TargetType="Border">
+                <Setter Property="BorderBrush" Value="#FFD8D8D8" />
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Margin" Value="0 12 0 0"/>
+                <Setter Property="Padding" Value="12 12 12 12"/>
+            </Style>
+            <converters:TwoLevelBindingConverter x:Key="TwoLevelBinding"/>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
@@ -87,7 +91,7 @@
                                                                         EditTooltip="Edit panel"
                                                                         DeleteTooltip="Delete panel"
                                                                         IsExpanded="False"
-                                                                        Add="{Binding DataContext.AddPanelChildrenCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        Add="{Binding DataContext.AddPanelOptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         Delete="{Binding DataContext.DeletePanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         CommandParameter ="{Binding}"
                                                                         Icon="ViewDashboard"/>
@@ -127,8 +131,15 @@
                                                                                         IsExpanded="False"
                                                                                         Add="{Binding DataContext.AddSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Delete="{Binding DataContext.DeleteSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                        CommandParameter ="{Binding}"
-                                                                                        Icon="VectorIntersection"/>
+                                                                                        Icon="VectorIntersection">
+                                                                    <!-- CommandParameter using MultiBinding -->
+                                                                    <local:WebPageListItem.CommandParameter>
+                                                                        <MultiBinding Converter="{StaticResource TwoLevelBinding}">
+                                                                            <Binding />
+                                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                                                        </MultiBinding>
+                                                                    </local:WebPageListItem.CommandParameter>
+                                                                </local:WebPageListItem>
                                                                 <b:Interaction.Triggers>
                                                                     <b:EventTrigger EventName="MouseMove">
                                                                         <core:CustomInvokeCommandAction Command="{Binding DataContext.MoveSection, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -153,13 +164,14 @@
                                                                     <DataTemplate >
                                                                         <StackPanel>
                                                                             <local:WebPageListItem   Label="{Binding ControlID}"
-                                                                                                 CanEdit="True"
-                                                                                                 CanDelete="True"
-                                                                                                 EditTooltip="Edit control"
-                                                                                                 DeleteTooltip="Delete control"
-                                                                                                 Delete="{Binding DataContext.DeleteSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                                 CommandParameter ="{Binding}"
-                                                                                                 Icon="FormTextbox"/>
+                                                                                                     CanEdit="True"
+                                                                                                     CanDelete="True"
+                                                                                                     EditTooltip="Edit control"
+                                                                                                     DeleteTooltip="Delete control"
+                                                                                                     Delete="{Binding DataContext.DeleteSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                     Edit="{Binding DataContext.EditControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                     CommandParameter ="{Binding}"
+                                                                                                     Icon="FormTextbox"/>
                                                                             <b:Interaction.Triggers>
                                                                                 <b:EventTrigger EventName="MouseMove">
                                                                                     <core:CustomInvokeCommandAction Command="{Binding DataContext.MoveSectionControl, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -191,13 +203,14 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <local:WebPageListItem  Label="{Binding ControlID}"
-                                                                                CanEdit="True"
-                                                                                CanDelete="True"
-                                                                                EditTooltip="Edit control"
-                                                                                DeleteTooltip="Delete control"
-                                                                                Delete="{Binding DataContext.DeletePanelControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                CommandParameter ="{Binding}"
-                                                                                Icon="FormTextbox"/>
+                                                                                    CanEdit="True"
+                                                                                    CanDelete="True"
+                                                                                    EditTooltip="Edit control"
+                                                                                    DeleteTooltip="Delete control"
+                                                                                    Delete="{Binding DataContext.DeletePanelControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                    Edit="{Binding DataContext.EditControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                    CommandParameter ="{Binding}"
+                                                                                    Icon="FormTextbox"/>
                                                             <b:Interaction.Triggers>
                                                                 <b:EventTrigger EventName="MouseMove">
                                                                     <core:CustomInvokeCommandAction Command="{Binding DataContext.MovePanelControl, RelativeSource={RelativeSource AncestorType=UserControl}}"

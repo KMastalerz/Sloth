@@ -53,7 +53,7 @@
                                                     ToolTip="Edit"
                                                     Width="24"
                                                     Height="24"
-                                                    Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
+                                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
                                         <Button     Content="{materialDesign:PackIcon Kind=GarbageCan, Size=14}"
                                                     Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                     CommandParameter="{Binding}"

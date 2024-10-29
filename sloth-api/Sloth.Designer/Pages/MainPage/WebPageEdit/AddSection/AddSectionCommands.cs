@@ -20,7 +20,7 @@ public static class AddSectionCommands
         {
             if(parameter is not AddSectionViewModel addSectionViewModel) return;
             
-            var newSection = new NewSection(addSectionViewModel.SectionID);
+            var newSection = new NewSection(addSectionViewModel.SectionID!);
 
             webPageStateService.AddSection(newSection);
         }

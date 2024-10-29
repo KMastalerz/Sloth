@@ -24,16 +24,35 @@
                 <StackPanel>
                     <!--type-->
                     <ComboBox   materialDesign:HintAssist.Hint="Type"
+                                ItemsSource="{Binding Types}"
+                                DisplayMemberPath="ControlName"
+                                SelectedValuePath="ControlType"
+                                SelectedValue="{Binding Type}"
                                 Style="{StaticResource SlothComboBox}"/>
                     <!--innertype (besides button)-->
                     <ComboBox   materialDesign:HintAssist.Hint="Inner Type"
-                                Style="{StaticResource SlothComboBox}"/>
+                                ItemsSource="{Binding InnerTypes}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding InnerType}"
+                                Style="{StaticResource SlothComboBox}"
+                                Visibility="{Binding ShowInnerType, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!--style-->
                     <ComboBox   materialDesign:HintAssist.Hint="Style"
-                                Style="{StaticResource SlothComboBox}"/>
+                                ItemsSource="{Binding Styles}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding Style}"
+                                Style="{StaticResource SlothComboBox}"
+                                 Visibility="{Binding ShowStyle, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!--size-->
                     <ComboBox   materialDesign:HintAssist.Hint="Size"
-                                Style="{StaticResource SlothComboBox}"/>
+                                ItemsSource="{Binding Sizes}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding Size}"
+                                Style="{StaticResource SlothComboBox}"
+                                Visibility="{Binding ShowSize, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
             </Border>
 
@@ -73,7 +92,7 @@
                                 Style="{StaticResource SlothTextBox}"/>
                 </StackPanel>
             </Border>
-            
+
             <ContentControl Content="{Binding MetadataControl}"/>
         </WrapPanel>
 
