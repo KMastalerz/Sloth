@@ -27,7 +27,7 @@ public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsReposito
 
             result.WebPanels.ToList().ForEach(panel =>
             {
-                var orderedControls = panel.Controls.Split(',');
+                var orderedControls = panel.Controls?.Split(',') ?? [];
                 if (ListHelpers.HasElements(orderedControls))
                 {
                     panel.WebControls = new(orderedControls

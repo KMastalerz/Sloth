@@ -8,11 +8,11 @@ namespace Sloth.Designer.Pages;
 public class LoginViewModel : BaseViewModel
 {
     private readonly IUserSettingsService userSettingsService;
-    public LoginViewModel(IAuthService authService, IWindowService windowService, IUserSettingsService userSettingsService)
+    public LoginViewModel(IAuthService authService, IWindowService windowService, IUserSettingsService userSettingsService, MainPageViewModel mainPageViewModel)
     {
         this.userSettingsService = userSettingsService;
         rememberMe = userSettingsService.GetRememberMe();
-        Login = new LoginCommand(authService, windowService);
+        Login = new LoginCommand(authService, windowService, mainPageViewModel);
         Close = new CloseCommand();
     }
 

@@ -1,4 +1,5 @@
-﻿using Sloth.Designer.Core;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
 using System.Collections.ObjectModel;
@@ -9,12 +10,13 @@ namespace Sloth.Designer.Pages;
 
 public class WebPageSearchViewModel: BaseViewModel
 {
-    public WebPageSearchViewModel(IDesignerService designerService, IWebPageStateService webPageStateService, IMainPageService mainPageService)
+    public WebPageSearchViewModel(IDesignerService designerService, IWebPageStateService webPageStateService)
     {
+        var mainPageViewModel = App.ServiceProvider.GetRequiredService<MainPageViewModel>();
         webPageStateService.RegisterCallback<IEnumerable<string>>(OnWebApplicationsUpdated);
         webPageStateService.RegisterCallback<IEnumerable<ListWebPageItem>>(OnWebPagesUpdated);
         SearchPages = new SearchPages(designerService, webPageStateService);
-        EditPage = new EditPage(designerService, webPageStateService, mainPageService);
+        EditPage = new EditPage(designerService, webPageStateService, mainPageViewModel);
     }
     private void OnWebApplicationsUpdated(IEnumerable<string> webApplications)
     {

@@ -66,7 +66,6 @@ public partial class App : Application
         services.AddSingleton<IDesignerService, DesignerService>();
         services.AddSingleton<IWebPageStateService, WebPageStateService>();
         services.AddSingleton<IWindowService, WindowService>();
-        services.AddSingleton<IMainPageService, MainPageService>();
         services.AddSingleton<IWebPageEditService, WebPageEditService>();
     }
     private void ConfigureViewModels(ServiceCollection services)
@@ -82,12 +81,13 @@ public partial class App : Application
         services.AddTransient<AddControlViewModel>();
         services.AddTransient<SelectPanelOptionViewModel>();
         services.AddTransient<BasePageViewModel>();
+        services.AddTransient<BasePanelViewModel>();
+        services.AddTransient<BaseSectionViewModel>();
         services.AddTransient<BaseControlViewModel>();
         services.AddTransient<ButtonViewModel>();
         services.AddTransient<LinkViewModel>();
     }
 
-    // TODO: Probably for removal? 
     private void ConfigureViews(ServiceCollection services)
     {
         // Register Views
@@ -101,6 +101,9 @@ public partial class App : Application
         services.AddTransient<AddControl>();
         services.AddTransient<SelectPanelOption>();
         services.AddTransient<BasePage>();
+        services.AddTransient<BasePanel>();
+        services.AddTransient<BaseSection>();
+        services.AddTransient<BaseControl>();
         services.AddTransient<Button>();
         services.AddTransient<Link>();
     }
@@ -109,7 +112,7 @@ public partial class App : Application
         var userSettingsService = ServiceProvider.GetRequiredService<IUserSettingsService>();
         var authService = ServiceProvider.GetRequiredService<IAuthService>();
         var windowService = ServiceProvider.GetRequiredService<IWindowService>();
-        var mainPageService = ServiceProvider.GetRequiredService<IMainPageService>();
+        var mainPageViewModel = ServiceProvider.GetRequiredService<MainPageViewModel>();
 
         if (userSettingsService.IsLoogedIn())
         {
@@ -124,10 +127,14 @@ public partial class App : Application
 
             Task.Run( async () => await authService.Refreshtoken(username, token));
 
+            // initialize main page, and main page service
+            var initMainPage = new MainPage();
+            var initPageSearch = new WebPageSearch();
+
             if (userSettingsService.IsLoogedIn())
             {
-                windowService.LoadPage(new MainPage());
-                mainPageService.LoadPage(new WebPageSearch());
+                windowService.LoadPage(initMainPage);
+                mainPageViewModel.MainPageControl = initPageSearch;
             }
             else
                 windowService.LoadPage(new Login());

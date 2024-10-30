@@ -5,7 +5,11 @@
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:core="clr-namespace:Sloth.Designer.Core"
-             xmlns:converters="clr-namespace:Sloth.Designer.Converters">
+             xmlns:converters="clr-namespace:Sloth.Designer.Converters"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:WebPageEditViewModel, IsDesignTimeCreatable=False}">
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="BorderBaseStyle" TargetType="Border">
@@ -37,9 +41,10 @@
                 </StackPanel>
             </Button>
             <Button Content="Save changes"
-                        Style="{StaticResource SlothButton}"/>
+                    Command="{Binding SaveWebPage}"
+                    Style="{StaticResource SlothButton}"/>
             <Button Content="Delete page"
-                        Style="{StaticResource SlothButtonNeutral}"/>
+                    Style="{StaticResource SlothButtonNeutral}"/>
         </StackPanel>
 
         <Grid   Grid.Row="1"
@@ -69,6 +74,7 @@
                                                         EditTooltip="Edit page"
                                                         IsExpanded="False"
                                                         Add="{Binding AddPanelCommand}"
+                                                        Edit="{Binding EditPageCommand}"
                                                         Icon="PageLayoutBody"/>
                         </StackPanel>
                             <!--panels-->
@@ -93,6 +99,7 @@
                                                                         IsExpanded="False"
                                                                         Add="{Binding DataContext.AddPanelOptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         Delete="{Binding DataContext.DeletePanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        Edit="{Binding DataContext.EditPanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         CommandParameter ="{Binding}"
                                                                         Icon="ViewDashboard"/>
                                                 <b:Interaction.Triggers>
@@ -131,6 +138,7 @@
                                                                                         IsExpanded="False"
                                                                                         Add="{Binding DataContext.AddSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Delete="{Binding DataContext.DeleteSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                        Edit="{Binding DataContext.EditSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Icon="VectorIntersection">
                                                                     <!-- CommandParameter using MultiBinding -->
                                                                     <local:WebPageListItem.CommandParameter>

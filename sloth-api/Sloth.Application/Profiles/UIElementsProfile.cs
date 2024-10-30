@@ -23,7 +23,7 @@ public class UIElementsProfile : Profile
         CreateMap<WebPanel, WebPanelItem>().ReverseMap();
 
         CreateMap<WebPanel, WebPanelItem>()
-            .ForMember(dest => dest.WebControls, opt => opt.MapFrom(src => src.WebControls.Where(c => c.SectionID == null))) // Map controls without SectionID
+            .ForMember(dest => dest.WebControls, opt => opt.MapFrom(src => src.WebControls)) // Map controls without SectionID
             .ForMember(dest => dest.WebSections, opt => opt.MapFrom(src => src.WebSections));
 
         CreateMap<WebSection, GetWebSection>().ReverseMap();

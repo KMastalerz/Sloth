@@ -10,17 +10,17 @@
     <Border Style="{StaticResource SlothBorder}">
         <StackPanel>
             <!--counter subject-->
-            <TextBox   materialDesign:HintAssist.Hint="Counter Subject"
-                           Text="{Binding CounterSubject, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
+            <TextBox    materialDesign:HintAssist.Hint="Counter Subject"
+                        Text="{Binding CounterSubject, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
             <!--warning count-->
-            <TextBox   materialDesign:HintAssist.Hint="Warning Count"
-                           Text="{Binding WarningCount, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
+            <TextBox    materialDesign:HintAssist.Hint="Warning Count"
+                        Text="{Binding WarningCount, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
             <!--Error count-->
-            <TextBox   materialDesign:HintAssist.Hint="Error Count"
-                           Text="{Binding ErrorCount, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
+            <TextBox    materialDesign:HintAssist.Hint="Error Count"
+                        Text="{Binding ErrorCount, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
         </StackPanel>
     </Border>
 </UserControl>

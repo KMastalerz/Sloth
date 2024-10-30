@@ -9,14 +9,40 @@ using Sloth.Designer.Constants;
 namespace Sloth.Designer.Pages;
 public class WebPageEditCommands
 {
-    public class GoBack(IWebPageStateService webPageStateService, IMainPageService mainPageService) : SyncCommand
+    public class GoBack(IWebPageStateService webPageStateService, MainPageViewModel mainPageViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
         protected override void ExecuteSync(object? parameter = null)
         {
             webPageStateService.WebPage = null;
-            mainPageService.LoadPage(new WebPageSearch());
+            mainPageViewModel.MainPageControl = new WebPageSearch();
+        }
+    }
+    public class SaveWebPage(IWebPageStateService webPageStateService, IDesignerService designerService) : AsyncCommand
+    {
+        public override bool CanExecute(object? parameter = null) => webPageStateService.WebPage is not null;
+
+        public override async Task ExecuteAsync(object? parameter = null)
+        {
+            if (webPageStateService.WebPage is null) return;
+            var webPage = webPageStateService.WebPage;
+
+            webPage.Panels = string.Join(',', webPage.WebPanels.Select(p => p.PanelID));
+
+            foreach (var panel in webPage.WebPanels)
+            {
+                panel.Sections = string.Join(',', panel.WebSections.Select(s => s.SectionID));
+                panel.Controls = string.Join(',', panel.WebControls.Select(c => c.ControlID));
+
+                foreach (var section in panel.WebSections)
+                {
+                    section.Controls = string.Join(',', section.WebControls.Select(c => c.ControlID));
+                }
+            }
+
+            var response = await designerService.SaveFullWebPage(webPage);
+            MessageBox.Show(response ?? "Failed to save web page.");
         }
     }
 
@@ -565,7 +591,7 @@ public class WebPageEditCommands
     }
     #endregion
 
-    #region [Delete Items]
+    #region [Edit Items]
     public class EditControlCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
@@ -589,6 +615,39 @@ public class WebPageEditCommands
                     webPageStateService.WebControl = null;
                     break;
             }
+        }
+    }
+
+    public class EditSectionCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is not TwoLevelBindingParameter parms) return;
+
+            webPageStateService.WebSection = parms.Child as WebSectionItem;
+            webPageEditViewModel.EditControl = new BaseSection();
+        }
+    }
+
+    public class EditPanelCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is not WebPanelItem panel) return;
+
+            webPageStateService.WebPanel = panel;
+            webPageEditViewModel.EditControl = new BasePanel();
+        }
+    }
+
+    public class EditPageCommand(WebPageEditViewModel webPageEditViewModel) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            webPageEditViewModel.EditControl = new BasePage();
         }
     }
     #endregion

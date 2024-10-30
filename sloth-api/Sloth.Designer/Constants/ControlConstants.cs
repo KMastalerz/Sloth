@@ -8,11 +8,11 @@ public static class ControlConstants
         new("Password", "password")
     ];
 
-    public static Dictionary<string, string> TooltipPlacements = new()
+    public static Dictionary<string, string> TooltipPositions = new()
     {
-        { "Top", "top" },
+        { "Above", "above" },
         { "Right", "right" },
-        { "Bottom", "bottom" },
+        { "Below", "below" },
         { "Left", "left" }
     };
 }

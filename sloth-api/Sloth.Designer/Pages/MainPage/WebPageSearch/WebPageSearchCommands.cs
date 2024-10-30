@@ -17,7 +17,7 @@ public class WebPageSearchCommands
             }
         }
     }
-    public class EditPage(IDesignerService designerService, IWebPageStateService webPageStateService, IMainPageService mainPageService) : AsyncCommand
+    public class EditPage(IDesignerService designerService, IWebPageStateService webPageStateService, MainPageViewModel mainPageViewModel) : AsyncCommand
     {
         public override bool CanExecute(object? parameter = null) => true;
         public override async Task ExecuteAsync(object? parameter = null)
@@ -27,7 +27,7 @@ public class WebPageSearchCommands
 
             webPageStateService.WebPage = await designerService.GetFullWebPage(parms.AppID, parms.PageID);
 
-            mainPageService.LoadPage(new WebPageEdit());
+            mainPageViewModel.MainPageControl = new WebPageEdit();
         }
     }
 }

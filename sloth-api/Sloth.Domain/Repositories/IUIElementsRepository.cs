@@ -11,4 +11,5 @@ public interface IUIElementsRepository
     Task<IEnumerable<WebSection>?> ListWebSectionAsync(string appID, string pageID);
     Task<IEnumerable<WebPage>?> ListWebPageByIDAsync(string? appID, string? pageID);
     Task<IEnumerable<string>?> ListWebApplicationIDsAsync();
+    Task SaveFullWebPageAsync(WebPage webPage);
 }

@@ -10,63 +10,45 @@ public class BaseControlViewModel : BaseViewModel
     public BaseControlViewModel(IWebPageStateService webPageStateService)
     {
         // set default values 
-        WebControl = webPageStateService.WebControl!;
+        webControl = webPageStateService.WebControl!;
         Types = ControlConstants.ControlTypes;
-        Type = webPageStateService.WebControl!.ControlType;
-        InnerType = webPageStateService.WebControl!.InnerType;
-        Style = webPageStateService.WebControl!.Style;
-        Size = webPageStateService.WebControl!.Size;
-        SetVisibilities(type ?? string.Empty);
+        SetVisibilities(webControl.ControlType ?? string.Empty);
+        SetComboboxes(webControl.ControlType ?? string.Empty);
     }
 
-    private List<ControlElement> types;
+
+    private WebControlItem webControl = default!;
+    public WebControlItem WebControl
+    {
+        get => webControl;
+        set => SetProperty(ref webControl, value);
+    }
+
+    #region [Type]
+
+    private List<ControlElement> types = default!;
     public List<ControlElement> Types
     {
         get => types;
         set => SetProperty(ref types, value);
     }
 
-
-    private WebControlItem WebControl { get; set; }
-
-    private string type;
     public string Type
     {
-        get => type;
-        set 
+        get => WebControl.ControlType;
+        set
         {
-            SetProperty(ref type, value);
             WebControl.ControlType = value;
-
-            // Set InnerTypes based on ControlType
-            InnerTypes = value switch
-            {
-                ControlTypes.Button => ControlInnerTypes.Button,
-                ControlTypes.Link => ControlInnerTypes.Link,
-                _ => null
-            };
-
-            // Set Styles based on ControlType
-            Styles = value switch
-            {
-                ControlTypes.Button => ControlStyles.Button,
-                _ => null
-            };
-
-            // Set Styles based on ControlType
-            Sizes = value switch
-            {
-                ControlTypes.Button => ControlSizes.Button,
-                _ => null
-            };
-
             SetVisibilities(value);
+            SetComboboxes(value);
         }
     }
 
+    #endregion
+
     #region [Inner Type]
 
-    private bool showInnerType;
+    private bool showInnerType = default!;
     public bool ShowInnerType
     {
         get => showInnerType;
@@ -80,22 +62,11 @@ public class BaseControlViewModel : BaseViewModel
         set => SetProperty(ref innerTypes, value);
     }
 
-    private string? innerType;
-    public string? InnerType
-    {
-        get => innerType;
-        set
-        {
-            SetProperty(ref innerType, value);
-            WebControl.InnerType = value;
-        }
-    }
-
     #endregion
 
     #region [Style]
 
-    private bool showStyle;
+    private bool showStyle = default!;
     public bool ShowStyle
     {
         get => showStyle;
@@ -109,22 +80,11 @@ public class BaseControlViewModel : BaseViewModel
         set => SetProperty(ref styles, value);
     }
 
-    private string? style;
-    public string? Style
-    {
-        get => style;
-        set
-        {
-            SetProperty(ref style, value);
-            WebControl.Style = value;
-        }
-    }
-
     #endregion
 
     #region [Size]
 
-    private bool showSize;
+    private bool showSize = default!;
     public bool ShowSize
     {
         get => showSize;
@@ -138,15 +98,26 @@ public class BaseControlViewModel : BaseViewModel
         set => SetProperty(ref sizes, value);
     }
 
-    private string? size;
-    public string? Size
+    #endregion
+
+    #region [Routing]
+
+    private bool showRouting = default!;
+    public bool ShowRouting
     {
-        get => size;
-        set
-        {
-            SetProperty(ref size, value);
-            WebControl.Size = value;
-        }
+        get => showRouting;
+        set => SetProperty(ref showRouting, value);
+    }
+
+    #endregion
+
+    #region [Tooltip]
+
+    private Dictionary<string, string> tooltipPositions = default!;
+    public Dictionary<string, string> TooltipPositions
+    {
+        get => tooltipPositions;
+        set => SetProperty(ref tooltipPositions, value);
     }
 
     #endregion
@@ -165,6 +136,48 @@ public class BaseControlViewModel : BaseViewModel
         ShowInnerType = ((List<string>)[ControlTypes.Button, ControlTypes.Link]).Contains(type);
         ShowStyle = ((List<string>)[ControlTypes.Button]).Contains(type);
         ShowSize = ((List<string>)[ControlTypes.Button]).Contains(type);
+        ShowRouting = ((List<string>)[ControlTypes.Link]).Contains(type);
+    }
+
+    private void SetComboboxes(string type)
+    {
+        TooltipPositions = ControlConstants.TooltipPositions;
+        // set comboboxes based on ControlType
+        switch (type)
+        {
+            case ControlTypes.Button:
+                InnerTypes = ControlInnerTypes.Button;
+                Styles = ControlStyles.Button;
+                Sizes = ControlSizes.Button;
+                break;
+            case ControlTypes.Link:
+                InnerTypes = ControlInnerTypes.Link;
+                Styles = null;
+                Sizes = null;
+                break;
+            default:
+                InnerTypes = null;
+                Styles = null;
+                Sizes = null;
+                break;
+        }
+    }
+
+    private void SetMetadataControl(string type)
+    {
+        // set metadata control based on ControlType
+        switch (type)
+        {
+            case ControlTypes.Button:
+                MetadataControl = new Button();
+                break;
+            case ControlTypes.Link:
+                MetadataControl = new Link();
+                break;
+            default:
+                MetadataControl = null;
+                break;
+        }
     }
 
 }

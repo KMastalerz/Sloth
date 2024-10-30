@@ -67,4 +67,13 @@ public class UIElementsController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new GetFullWebPageQuery(appID, pageID));
         return Ok(result);
     }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
+    public async Task<ActionResult<string?>> SaveFullWebPage([FromBody] WebPageItem webPage)
+    {
+        var result = await mediator.Send(new SaveFullWebPageCommand(webPage));
+        return Ok(result);
+    }
 }

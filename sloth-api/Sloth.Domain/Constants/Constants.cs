@@ -33,3 +33,9 @@ public static class WebSecurity
     ];
 }
 
+public static class SaveMessages
+{
+    public const string SaveSuccess = "Save successful";
+    public const string SaveFailed = "Save failed";
+}
+

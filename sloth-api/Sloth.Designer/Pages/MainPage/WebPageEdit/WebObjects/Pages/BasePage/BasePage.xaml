@@ -3,10 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:BasePageViewModel, IsDesignTimeCreatable=False}">
-    <Grid>
-            
+    <Grid Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="{Binding WebPage.PageID}"
+                       Style="{StaticResource SlothTextBlockHeadline}"/>
+
+            <Separator Style="{StaticResource MaterialDesignSeparator}"/>
+        </StackPanel>
+
+        <WrapPanel Grid.Row="1">
+            <Border Style="{StaticResource SlothBorder}">
+                <StackPanel>
+                    <ComboBox   materialDesign:HintAssist.Hint="Orientation"
+                                ItemsSource="{Binding Orientations}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding WebPage.Orientation}"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <ComboBox   materialDesign:HintAssist.Hint="Position"
+                                ItemsSource="{Binding Positions}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding WebPage.Position}"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <ComboBox   materialDesign:HintAssist.Hint="Background"
+                                ItemsSource="{Binding Backgrounds}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding WebPage.Background}"
+                                Style="{StaticResource SlothComboBox}"/>
+                    <TextBox    materialDesign:HintAssist.Hint="Class"
+                                Text="{Binding WebPage.Class}"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <TextBox    materialDesign:HintAssist.Hint="Label"
+                                Text="{Binding WebPage.Label}"
+                                Style="{StaticResource SlothTextBox}"/>
+                    <CheckBox   IsChecked="{Binding WebPage.HasRouter}"
+                                Content="Has Router"
+                                Style="{StaticResource SlothCheckBox}"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource SlothBorder}">
+                <TextBox    materialDesign:HintAssist.Hint="Security Table"
+                            Text="{Binding WebPage.SecurityTableID}"
+                            Style="{StaticResource SlothTextBox}"/>
+            </Border>
+
+            <ContentControl Content="{Binding MetadataPage}"/>
+        </WrapPanel>
     </Grid>
 </UserControl>

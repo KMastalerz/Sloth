@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <TextBlock Text="Accounts"
+            <TextBlock Text="{Binding WebControl.ControlID}"
                        Style="{StaticResource SlothTextBlockHeadline}"/>
             
             <Separator Style="{StaticResource MaterialDesignSeparator}"/>
@@ -34,7 +34,7 @@
                                 ItemsSource="{Binding InnerTypes}"
                                 DisplayMemberPath="Key"
                                 SelectedValuePath="Value"
-                                SelectedValue="{Binding InnerType}"
+                                SelectedValue="{Binding WebControl.InnerType}"
                                 Style="{StaticResource SlothComboBox}"
                                 Visibility="{Binding ShowInnerType, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!--style-->
@@ -42,7 +42,7 @@
                                 ItemsSource="{Binding Styles}"
                                 DisplayMemberPath="Key"
                                 SelectedValuePath="Value"
-                                SelectedValue="{Binding Style}"
+                                SelectedValue="{Binding WebControl.Style}"
                                 Style="{StaticResource SlothComboBox}"
                                  Visibility="{Binding ShowStyle, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!--size-->
@@ -50,7 +50,7 @@
                                 ItemsSource="{Binding Sizes}"
                                 DisplayMemberPath="Key"
                                 SelectedValuePath="Value"
-                                SelectedValue="{Binding Size}"
+                                SelectedValue="{Binding WebControl.Size}"
                                 Style="{StaticResource SlothComboBox}"
                                 Visibility="{Binding ShowSize, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
@@ -59,6 +59,7 @@
             <!--security table id-->
             <Border Style="{StaticResource SlothBorder}">
                 <TextBox    materialDesign:HintAssist.Hint="Security Table"
+                            Text="{Binding WebControl.SecurityTableID}"
                             Style="{StaticResource SlothTextBox}"/>
             </Border>
 
@@ -66,29 +67,40 @@
                 <StackPanel>
                     <!--label-->
                     <TextBox    materialDesign:HintAssist.Hint="Label"
+                                Text="{Binding WebControl.Label}"
                                 Style="{StaticResource SlothTextBox}"/>
                     <!--placeholder-->
                     <TextBox    materialDesign:HintAssist.Hint="Placeholder"
+                                Text="{Binding WebControl.Placeholder}"
                                 Style="{StaticResource SlothTextBox}"/>
                     <!--tooltip-->
                     <TextBox    materialDesign:HintAssist.Hint="Tooltip"
+                                Text="{Binding WebControl.Tooltip}"
                                 Style="{StaticResource SlothTextBox}"/>
                     <!--tooltip placement-->
                     <ComboBox   materialDesign:HintAssist.Hint="Tooltip Placement"
-                            Style="{StaticResource SlothComboBox}"/>
+                                ItemsSource="{Binding TooltipPositions}"
+                                DisplayMemberPath="Key"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding WebControl.TooltipPosition}"
+                                Style="{StaticResource SlothComboBox}"/>
                     <!--icon-->
                     <TextBox    materialDesign:HintAssist.Hint="Icon"
-                            Style="{StaticResource SlothTextBox}"/>
+                                Text="{Binding WebControl.Icon}"
+                                Style="{StaticResource SlothTextBox}"/>
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource SlothBorder}">
+            <Border Style="{StaticResource SlothBorder}"
+                    Visibility="{Binding ShowRouting, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <StackPanel>
                     <!--route-->
                     <TextBox    materialDesign:HintAssist.Hint="Route"
+                                Text="{Binding WebControl.Route}"
                                 Style="{StaticResource SlothTextBox}"/>
                     <!--route page id-->
                     <TextBox    materialDesign:HintAssist.Hint="Route Page ID"
+                                Text="{Binding WebControl.RoutePageID}"
                                 Style="{StaticResource SlothTextBox}"/>
                 </StackPanel>
             </Border>

@@ -34,4 +34,10 @@ internal class DesignerService(IHttpServices httpServices) : IDesignerService
         var response = await httpServices.GetAsync<WebPageItem>(HttpServicePaths.UIElements, "GetFullWebPage", parms);
         return response.Data is null ? null : response.Data;
     }
+
+    public async Task<string?> SaveFullWebPage(WebPageItem webPage)
+    {
+        var response = await httpServices.PostAsync<string>(HttpServicePaths.UIElements, "SaveFullWebPage", webPage);
+        return response.Data is null ? null : response.Data;
+    }
 }

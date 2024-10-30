@@ -109,35 +109,31 @@ internal class HttpServices : IHttpServices
 
             if (response.IsSuccessStatusCode)
             {
-                result.Data = await response.Content.ReadFromJsonAsync<T>();
+                // Handle string responses differently from JSON-deserializable types
+                if (typeof(T) == typeof(string))
+                {
+                    result.Data = (T)(object)(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    result.Data = await response.Content.ReadFromJsonAsync<T>();
+                }
             }
             else
             {
                 result.Error = await response.Content.ReadAsStringAsync();
             }
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException || ex is AggregateException)
         {
-            result.Error = $"Request error: {ex.Message}";
-            result.ResponseCode = 500;
-            result.Success = false;
-        }
-        catch (TaskCanceledException ex)
-        {
-            result.Error = $"Request timed out: {ex.Message}";
-            result.ResponseCode = 408; // Request Timeout
-            result.Success = false;
-        }
-        catch (AggregateException ex) // Specific handling for wrapped exceptions
-        {
-            result.Error = $"Aggregate exception: {ex.Flatten().Message}";
-            result.ResponseCode = 500;
-            result.Success = false;
-        }
-        catch (Exception ex)
-        {
-            result.Error = $"Unexpected error: {ex.Message}";
-            result.ResponseCode = 500;
+            result.Error = ex switch
+            {
+                HttpRequestException => $"Request error: {ex.Message}",
+                TaskCanceledException => $"Request timed out: {ex.Message}",
+                AggregateException ae => $"Aggregate exception: {ae.Flatten().Message}",
+                _ => $"Unexpected error: {ex.Message}"
+            };
+            result.ResponseCode = ex is TaskCanceledException ? 408 : 500;
             result.Success = false;
         }
 

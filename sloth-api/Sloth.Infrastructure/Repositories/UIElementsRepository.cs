@@ -43,4 +43,22 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     {
         return await dbContext.WebPage.Select(p => p.AppID).Distinct().ToListAsync();
     }
+
+    public async Task SaveFullWebPageAsync(WebPage webPage)
+    {
+        dbContext.WebPage.Update(webPage);
+        
+        webPage.WebPanels.ForEach(p =>
+        {
+            dbContext.WebPanel.Update(p);
+            p.WebSections.ForEach(s =>
+            {
+                dbContext.WebSection.Update(s);
+                s.WebControls.ForEach(c => dbContext.WebControl.Update(c));
+            });
+            p.WebControls.ForEach(c => dbContext.WebControl.Update(c));
+        });
+
+        await dbContext.SaveChangesAsync();
+    }
 }

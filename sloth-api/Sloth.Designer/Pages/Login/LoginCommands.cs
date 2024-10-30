@@ -6,7 +6,7 @@ namespace Sloth.Designer.Pages;
 
 public static class LoginCommands
 {
-    public class LoginCommand(IAuthService authService, IWindowService windowService) : AsyncCommand
+    public class LoginCommand(IAuthService authService, IWindowService windowService, MainPageViewModel mainPageViewModel) : AsyncCommand
     {
         public override bool CanExecute(object? parameter = null)
         {
@@ -22,6 +22,7 @@ public static class LoginCommands
             if (loggedIn)
             {
                 windowService.LoadPage(new MainPage());
+                mainPageViewModel.MainPageControl = new WebPageSearch();
                 return;
             } else Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error));
         }

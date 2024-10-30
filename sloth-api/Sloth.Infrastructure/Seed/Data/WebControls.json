@@ -11,7 +11,7 @@
     "Icon": "bar_chart_4_bars",
     "Label": "Dashboard",
     "Tooltip": "Dashboard",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -24,7 +24,7 @@
     "Icon": "view_kanban",
     "Label": "Kanban",
     "Tooltip": "Kanban",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -37,7 +37,7 @@
     "Icon": "bug_report",
     "Label": "Bugs",
     "Tooltip": "Bugs",
-    "TooltipPlacement": "right",
+    "TooltipPosition": "right",
     "MetaData": "{\"counterSubject\":\"bugCount\",\"warningCount\":50,\"errorCount\":100}"
   },
   {
@@ -51,7 +51,7 @@
     "Icon": "tactic",
     "Label": "Projects",
     "Tooltip": "Projects",
-    "TooltipPlacement": "right",
+    "TooltipPosition": "right",
     "MetaData": "{\"counterSubject\":\"projectCount\",\"warningCount\":null,\"errorCount\":null}"
   },
   {
@@ -65,7 +65,7 @@
     "Icon": "keep",
     "Label": "Tasks",
     "Tooltip": "Tasks",
-    "TooltipPlacement": "right",
+    "TooltipPosition": "right",
     "MetaData": "{\"counterSubject\":\"taskCount\",\"warningCount\":10,\"errorCount\":20}"
   },
   {
@@ -79,7 +79,7 @@
     "Icon": "calendar_month",
     "Label": "Timesheet",
     "Tooltip": "Timesheet",
-    "TooltipPlacement": "right",
+    "TooltipPosition": "right",
   },
   {
     "AppID": "sloth",
@@ -92,7 +92,7 @@
     "Icon": "rocket_launch",
     "Label": "Releases",
     "Tooltip": "Releases",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -105,7 +105,7 @@
     "Icon": "book_5",
     "Label": "Documentation",
     "Tooltip": "Documentation",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -119,7 +119,7 @@
     "Label": "Project Management",
     "Tooltip": "Project Management",
     "Route": "project-management",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -132,7 +132,7 @@
     "Icon": "diversity_3",
     "Label": "Team Management",
     "Tooltip": "Team Management",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -145,7 +145,7 @@
     "Icon": "manage_accounts",
     "Label": "User Management",
     "Tooltip": "User Management",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -159,7 +159,7 @@
     "Icon": "logout",
     "Label": "Logout",
     "Tooltip": "Logout",
-    "TooltipPlacement": "right"
+    "TooltipPosition": "right"
   },
   {
     "AppID": "sloth",
@@ -173,7 +173,7 @@
     "Icon": "mail",
     "Label": "Messages",
     "Tooltip": "Messages",
-    "TooltipPlacement": "below",
+    "TooltipPosition": "below",
     "MetaData": "{\"counterSubject\":\"unreadMessageCount\",\"warningCount\":30,\"errorCount\":90}"
   },
   {
@@ -188,7 +188,7 @@
     "Icon": "account_circle",
     "Label": "Account",
     "Tooltip": "Account",
-    "TooltipPlacement": "below"
+    "TooltipPosition": "below"
   },
   {
     "AppID": "sloth",
@@ -202,7 +202,7 @@
     "Icon": "settings",
     "Label": "Setttings",
     "Tooltip": "Setttings",
-    "TooltipPlacement": "below"
+    "TooltipPosition": "below"
   },
 
 

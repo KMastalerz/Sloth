@@ -19,10 +19,14 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Margin="16 0 16 12">
+                <Button     Content="Export to json"
+                            Style="{StaticResource SlothButtonHeader}"/>
+                
+                <Button     Content="Account settings"
+                            Style="{StaticResource SlothButtonHeader}"/>
+
                 <Button     Content="Logoff"
                             Command="{Binding Logoff}"
-                            Style="{StaticResource SlothButtonHeader}"/>
-                <Button     Content="Account"
                             Style="{StaticResource SlothButtonHeader}"/>
             </StackPanel>
         </materialDesign:ColorZone>

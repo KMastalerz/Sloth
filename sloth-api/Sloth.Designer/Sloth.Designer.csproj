@@ -26,11 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\MainPage\WebPageEdit\WebObjects\Sections\" />
-    <Folder Include="Pages\MainPage\WebPageEdit\WebObjects\Panels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Sloth.Shared\Sloth.Shared.csproj" />
   </ItemGroup>
 
