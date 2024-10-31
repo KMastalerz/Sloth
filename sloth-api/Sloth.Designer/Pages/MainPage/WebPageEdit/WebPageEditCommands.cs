@@ -19,7 +19,7 @@ public class WebPageEditCommands
             mainPageViewModel.MainPageControl = new WebPageSearch();
         }
     }
-    public class SaveWebPage(IWebPageStateService webPageStateService, IDesignerService designerService) : AsyncCommand
+    public class SaveWebPage(IWebPageStateService webPageStateService, IDesignerService designerService, IWindowService windowService) : AsyncCommand
     {
         public override bool CanExecute(object? parameter = null) => webPageStateService.WebPage is not null;
 
@@ -42,7 +42,39 @@ public class WebPageEditCommands
             }
 
             var response = await designerService.SaveFullWebPage(webPage);
-            MessageBox.Show(response ?? "Failed to save web page.");
+
+            if (response?.Success ?? false)
+            {
+                await windowService.ShowSuccessAsync("Page saved successfully!");
+            }
+            else
+            {
+                await windowService.ShowErrorAsync("Cannot save page!");
+            }
+        }
+    }
+    public class DeleteWebPage(IWebPageStateService webPageStateService, IDesignerService designerService, IWindowService windowService, MainPageViewModel mainPageViewModel) : AsyncCommand
+    {
+        public override bool CanExecute(object? parameter = null) => webPageStateService.WebPage is not null;
+
+        public override async Task ExecuteAsync(object? parameter = null)
+        {
+            if (webPageStateService.WebPage is null) return;
+            var webPage = webPageStateService.WebPage;
+
+            var response = await designerService.DeleteWebPage(webPage.AppID, webPage.PageID);
+
+            if (response?.Success ?? false)
+            {
+                await windowService.ShowSuccessAsync("Page removed");
+                mainPageViewModel.MainPageControl = new WebPageSearch();
+            }
+            else
+            {
+                await windowService.ShowErrorAsync("Cannot delete page!");
+            }
+
+            await webPageStateService.TaskRefreshWebApplications();
         }
     }
 

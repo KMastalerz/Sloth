@@ -16,8 +16,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
 
         Task.Run(async () =>
         {
-            WebApplications = await designerService.ListWebApplicationIDs() ?? [];
-            NotifyStateChanged(WebApplications);
+            await TaskRefreshWebApplications();
         });
     }
 
@@ -181,4 +180,18 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
         webControls?.Remove(control);
     }
 
+    public async Task TaskRefreshWebApplications()
+    {
+        var response = await designerService.ListWebApplicationIDs();
+
+        if (response?.Success == true)
+        {
+            WebApplications = response.Data!;
+        }
+        else
+        {
+            WebApplications = [];
+        }
+        NotifyStateChanged(WebApplications);
+    }
 }

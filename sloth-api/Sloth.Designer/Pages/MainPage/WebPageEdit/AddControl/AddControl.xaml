@@ -15,7 +15,9 @@
                     Style="{StaticResource SlothTextBox}"/>
         <ComboBox   materialDesign:HintAssist.Hint="Control type"
                     ItemsSource="{Binding ControlTypes}"
-                    SelectedItem="{Binding ControlType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    DisplayMemberPath="ControlName"
+                    SelectedValuePath="ControlType"
+                    SelectedValue="{Binding ControlType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Style="{StaticResource SlothComboBox}"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0 12">

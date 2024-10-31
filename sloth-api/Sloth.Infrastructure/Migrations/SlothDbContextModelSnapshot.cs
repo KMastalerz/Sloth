@@ -112,13 +112,14 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserID", "Token", "ExpirationDate");
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
 
                     b.ToTable("RefreshToken");
                 });

@@ -13,7 +13,16 @@ public class WebPageSearchCommands
         {
             if (parameter is WebPageSearchViewModel param)
             {
-                webPageStateService.WebPages = await designerService.ListWebPageByID(param.AppID, param.PageID) ?? new();
+                var response = await designerService.ListWebPageByID(param.AppID, param.PageID);
+
+                if (response?.Success == true)
+                {
+                    webPageStateService.WebPages = response.Data!;
+                }
+                else
+                {
+                    webPageStateService.WebPages = [];
+                }
             }
         }
     }
@@ -25,9 +34,18 @@ public class WebPageSearchCommands
             var parms = parameter as ListWebPageItem;
             if (parms is null) return;
 
-            webPageStateService.WebPage = await designerService.GetFullWebPage(parms.AppID, parms.PageID);
+            var response = await designerService.GetFullWebPage(parms.AppID, parms.PageID);
 
-            mainPageViewModel.MainPageControl = new WebPageEdit();
+            if (response?.Success == true)
+            {
+                webPageStateService.WebPage = response.Data!;
+                mainPageViewModel.MainPageControl = new WebPageEdit();
+            }
+            else
+            {
+                webPageStateService.WebPage = null;
+                mainPageViewModel.MainPageControl = null;
+            }
         }
     }
 }

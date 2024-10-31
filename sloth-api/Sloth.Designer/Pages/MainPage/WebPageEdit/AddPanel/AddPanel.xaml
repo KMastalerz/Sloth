@@ -16,7 +16,9 @@
                     Style="{StaticResource SlothTextBox}"/>
         <ComboBox   materialDesign:HintAssist.Hint="Panel type"
                     ItemsSource="{Binding PanelTypes}"
-                    SelectedItem="{Binding PanelType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    DisplayMemberPath="PanelName"
+                    SelectedValuePath="PanelType"
+                    SelectedValue="{Binding PanelType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Style="{StaticResource SlothComboBox}"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0 12">

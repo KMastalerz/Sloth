@@ -19,8 +19,8 @@ public class AddPanelViewModel:BaseViewModel
         set => SetProperty(ref panelID, value);
     }
 
-    private List<string> panelTypes = PanelConstants.PanelTypes.Select(p => p.PanelName).ToList();
-    public List<string> PanelTypes
+    private List<PanelElement> panelTypes = PanelConstants.PanelTypes;
+    public List<PanelElement> PanelTypes
     {
         get => panelTypes;
         set => SetProperty(ref panelTypes, value);

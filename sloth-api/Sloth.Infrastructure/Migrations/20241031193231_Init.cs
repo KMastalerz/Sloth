@@ -342,12 +342,12 @@ public partial class Init : Migration
             columns: table => new
             {
                 UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                Token = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_RefreshToken", x => new { x.UserID, x.Token, x.ExpirationDate });
+                table.PrimaryKey("PK_RefreshToken", x => x.UserID);
                 table.ForeignKey(
                     name: "FK_RefreshToken_User_UserID",
                     column: x => x.UserID,

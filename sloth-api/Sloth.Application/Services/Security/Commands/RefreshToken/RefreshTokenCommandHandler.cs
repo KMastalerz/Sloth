@@ -28,11 +28,11 @@ public class RefreshTokenCommandHandler(
         var accessToken = securityService.GenerateAcesssTokenResponse(user);
         accessToken.User = mapper.Map<AccessUser>(user);
 
-        // Store Refresh Token
-        await securityRepository.AddRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.RefreshExpiresAt);
-
         // Removed old token as it was used
         await securityRepository.RemoveRefreshTokenAsync(refreshToken);
+
+        // Store new refresh token
+        await securityRepository.AddRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.RefreshExpiresAt);
 
         logger.LogInformation("User {UserID} Refreshed Token", user.UserID);
 

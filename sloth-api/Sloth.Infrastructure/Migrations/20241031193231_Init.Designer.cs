@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20241027123304_Init")]
+    [Migration("20241031193231_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -115,13 +115,14 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserID", "Token", "ExpirationDate");
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
 
                     b.ToTable("RefreshToken");
                 });

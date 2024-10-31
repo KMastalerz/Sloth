@@ -46,25 +46,13 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button     Content="{materialDesign:PackIcon Kind=Edit, Size=14}"
-                                                    Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding}"
-                                                    ToolTip="Edit"
-                                                    Width="24"
-                                                    Height="24"
-                                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
-                                        <Button     Content="{materialDesign:PackIcon Kind=GarbageCan, Size=14}"
-                                                    Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                    CommandParameter="{Binding}"
-                                                    ToolTip="Delete"
-                                                    Width="24"
-                                                    Height="24"
-                                                    Margin="10 0"
-                                                    Background="DarkGray"
-                                                    BorderBrush="DarkGray"
-                                                    Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}"/>
-                                    </StackPanel>
+                                    <Button     Content="{materialDesign:PackIcon Kind=Edit, Size=14}"
+                                                Command="{Binding DataContext.EditPage, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip="Edit"
+                                                Width="24"
+                                                Height="24"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

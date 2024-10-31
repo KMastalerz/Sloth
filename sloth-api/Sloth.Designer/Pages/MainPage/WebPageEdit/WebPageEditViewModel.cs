@@ -12,7 +12,8 @@ public class WebPageEditViewModel : BaseViewModel
     public WebPageEditViewModel(IDesignerService designerService, IWebPageStateService webPageStateService, IWindowService windowService, MainPageViewModel mainPageViewModel)
     {
         GoBack = new GoBack(webPageStateService, mainPageViewModel);
-        SaveWebPage = new SaveWebPage(webPageStateService, designerService);
+        SaveWebPage = new SaveWebPage(webPageStateService, designerService, windowService);
+        DeleteWebPage = new DeleteWebPage(webPageStateService, designerService, windowService, mainPageViewModel);
         MoveSectionControl = new MoveSectionControl(this);
         DragSectionControl = new DragSectionControl(this);
         DropSectionControl = new DropSectionControl(this);
@@ -73,6 +74,7 @@ public class WebPageEditViewModel : BaseViewModel
 
     public ICommand GoBack { get; }
     public IAsyncCommand SaveWebPage { get; }
+    public IAsyncCommand DeleteWebPage { get; }
     public ICommand MoveSectionControl { get; }
     public ICommand DragSectionControl { get; }
     public ICommand DropSectionControl { get; }

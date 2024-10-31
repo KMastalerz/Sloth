@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Sloth.Domain.Constants;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Services;
@@ -35,9 +34,8 @@ public class LoginCommandHandler(
         var accessToken = securityService.GenerateAcesssTokenResponse(user);
         accessToken.User = mapper.Map<AccessUser>(user);
 
-
         // Store Refresh Token
-        await securityRepository.AddRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.RefreshExpiresAt);
+        await securityRepository.ReplaceRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.RefreshExpiresAt);
 
         logger.LogInformation("User {UserID} Logged In", user.UserID);
 

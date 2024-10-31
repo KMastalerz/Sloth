@@ -1,50 +1,35 @@
-﻿using Sloth.Designer.Core;
+﻿using Sloth.Designer.Constants;
+using Sloth.Designer.Helpers;
 using Sloth.Designer.Models;
+using System.Net.Http;
 
 namespace Sloth.Designer.Services;
 
-internal class AuthService(IHttpServices httpServices, IUserSettingsService userSettingsService) : IAuthService
+internal class AuthService : IAuthService
 {
-   
-    public async Task<bool> Login(string login, string password)
+    private readonly HttpClient httpClient;
+    public AuthService(IHttpClientFactory httpClientFactory)
     {
-        var response = await httpServices.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "Login", new
+        httpClient = httpClientFactory.CreateClient("ApiBaseClient");
+    }
+
+    public async Task<ServiceReturnValue<AccessTokenItem>?> Login(string login, string password)
+    {
+
+        return await httpClient.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "Login", new
         {
             Login = login,
             Password = password
         });
-
-
-        if (response.Success)
-        {
-            var token = response.Data;
-
-            userSettingsService.SaveToken(token!);
-
-            return true;
-        }
-
-        return false;
     }
 
-    public async Task Refreshtoken(string username, string refreshToken)
+    public async Task<ServiceReturnValue<AccessTokenItem>?> Refreshtoken(string username, string refreshToken)
     {
-        var response = await httpServices.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "RefreshToken", new
+
+        return await httpClient.PostAsync<AccessTokenItem>(HttpServicePaths.Auth, "RefreshToken", new
         {
             UserName = username,
             RefreshToken = refreshToken
         });
-
-        if (response.Success)
-        {
-            var token = response.Data;
-
-            userSettingsService.SaveToken(token!);
-        }
-    }
-
-    public void Logoff()
-    {
-        userSettingsService.ClearToken();
     }
 }

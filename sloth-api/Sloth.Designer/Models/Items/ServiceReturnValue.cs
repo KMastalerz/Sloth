@@ -1,4 +1,4 @@
-﻿namespace Sloth.Designer.Core;
+﻿namespace Sloth.Designer.Models;
 
 public class ServiceReturnValue<T>
 {

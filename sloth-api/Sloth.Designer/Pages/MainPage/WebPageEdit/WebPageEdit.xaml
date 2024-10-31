@@ -44,6 +44,7 @@
                     Command="{Binding SaveWebPage}"
                     Style="{StaticResource SlothButton}"/>
             <Button Content="Delete page"
+                    Command="{Binding DeleteWebPage}"
                     Style="{StaticResource SlothButtonNeutral}"/>
         </StackPanel>
 

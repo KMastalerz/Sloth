@@ -249,7 +249,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
         // RefreshToken Configuration
         builder.Entity<RefreshToken>(entity =>
         {
-            entity.HasKey(e => new {e.UserID, e.Token, e.ExpirationDate});
+            entity.HasKey(e => e.UserID);
 
             entity.HasOne<User>()
                   .WithMany()
@@ -269,8 +269,5 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options): DbConte
         });
 
         #endregion
-
-       
-
     }
 }

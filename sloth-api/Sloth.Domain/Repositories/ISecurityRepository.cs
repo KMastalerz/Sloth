@@ -10,6 +10,7 @@ public interface ISecurityRepository
     Task<UserRole?> GetUserRoleAsync(Guid roleID);
     Task<UserGroup?> GetUserGroupAsync(Guid groupID);
     Task AddRefreshTokenAsync(string refreshToken, Guid userID, DateTime expirationDate);
+    Task ReplaceRefreshTokenAsync(string refreshToken, Guid userID, DateTime expirationDate);
     Task<RefreshToken?> GetRefreshTokenAsync(Guid userID, string refreshToken);
     Task RemoveRefreshTokenAsync(RefreshToken refreshToken);
     Task<WebPageSecurity?> GetWebPageSecurityAsync(string pageID, string userGroup);

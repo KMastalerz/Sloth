@@ -6,7 +6,7 @@ namespace Sloth.Designer.Pages;
 
 public static class LoginCommands
 {
-    public class LoginCommand(IAuthService authService, IWindowService windowService, MainPageViewModel mainPageViewModel) : AsyncCommand
+    public class LoginCommand(IAuthService authService, IWindowService windowService, MainPageViewModel mainPageViewModel, IUserSettingsService userSettingsService) : AsyncCommand
     {
         public override bool CanExecute(object? parameter = null)
         {
@@ -17,14 +17,19 @@ public static class LoginCommands
         {
             if (parameter is not LoginViewModel parameters) return;
 
-            var loggedIn = await authService.Login(parameters.UserName, parameters.Password);
+            var response = await authService.Login(parameters.UserName, parameters.Password);
 
-            if (loggedIn)
+            if (response?.Success ?? false)
             {
                 windowService.LoadPage(new MainPage());
                 mainPageViewModel.MainPageControl = new WebPageSearch();
+                userSettingsService.SaveToken(response?.Data!);
                 return;
-            } else Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error));
+            } 
+            else
+            {
+                await windowService.ShowErrorAsync(response?.Error!);
+            }
         }
     }
 

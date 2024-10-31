@@ -1,11 +1,12 @@
-﻿using Sloth.Shared.Models;
-using System.Collections.ObjectModel;
+﻿using Sloth.Designer.Models;
+using Sloth.Shared.Models;
 
 namespace Sloth.Designer.Services;
 public interface IDesignerService
 {
-    Task<ObservableCollection<ListWebPageItem>?> ListWebPageByID(string? appID, string? pageID);
-    Task<IEnumerable<string>?> ListWebApplicationIDs();
-    Task<WebPageItem?> GetFullWebPage(string appID, string pageID);
-    Task<string?> SaveFullWebPage(WebPageItem webPage);
+    Task<ServiceReturnValue<IEnumerable<ListWebPageItem>>?> ListWebPageByID(string? appID, string? pageID);
+    Task<ServiceReturnValue<IEnumerable<string>>?> ListWebApplicationIDs();
+    Task<ServiceReturnValue<WebPageItem>?> GetFullWebPage(string appID, string pageID);
+    Task<ServiceReturnValue<string>?> SaveFullWebPage(WebPageItem webPage);
+    Task<ServiceReturnValue<string>?> DeleteWebPage(string appID, string pageID);
 }

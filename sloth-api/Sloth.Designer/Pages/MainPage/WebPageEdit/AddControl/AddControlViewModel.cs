@@ -19,8 +19,8 @@ public class AddControlViewModel:BaseViewModel
         set => SetProperty(ref controlName, value);
     }
 
-    private List<string> controlTypes = ControlConstants.ControlTypes.Select(x => x.ControlName).ToList();
-    public List<string> ControlTypes
+    private List<ControlElement> controlTypes = ControlConstants.ControlTypes;
+    public List<ControlElement> ControlTypes
     {
         get => controlTypes;
         set => SetProperty(ref controlTypes, value);

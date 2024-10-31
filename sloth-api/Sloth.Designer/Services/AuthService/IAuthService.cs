@@ -1,9 +1,9 @@
-﻿
+﻿using Sloth.Designer.Models;
+
 namespace Sloth.Designer.Services;
 
 public interface IAuthService
 {
-    Task<bool> Login(string username, string password);
-    Task Refreshtoken(string username, string password);
-    void Logoff();
+    Task<ServiceReturnValue<AccessTokenItem>?> Login(string username, string password);
+    Task<ServiceReturnValue<AccessTokenItem>?> Refreshtoken(string username, string password);
 }

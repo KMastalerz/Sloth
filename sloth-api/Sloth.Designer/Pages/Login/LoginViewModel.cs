@@ -12,7 +12,7 @@ public class LoginViewModel : BaseViewModel
     {
         this.userSettingsService = userSettingsService;
         rememberMe = userSettingsService.GetRememberMe();
-        Login = new LoginCommand(authService, windowService, mainPageViewModel);
+        Login = new LoginCommand(authService, windowService, mainPageViewModel, userSettingsService);
         Close = new CloseCommand();
     }
 

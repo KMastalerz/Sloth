@@ -32,13 +32,13 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    //TO DO: Add Forgot Password
+    // TODO: Add Forgot Password
 
-    //TO DO: Add Reset Password
+    // TODO: Add Reset Password
 
-    //TO DO: Add Change Password
+    // TODO: Add Change Password
 
-    //TO DO: Add Change User Details
+    // TODO: Add Change User Details
 
-    //TO DO: Add 2FA
+    // TODO: Add 2FA
 }

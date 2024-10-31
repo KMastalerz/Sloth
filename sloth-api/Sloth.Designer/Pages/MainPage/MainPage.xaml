@@ -13,8 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <materialDesign:ColorZone Mode="PrimaryDark"
-                                  CornerRadius="0 0 12 12">
+        <materialDesign:ColorZone Mode="PrimaryDark">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"

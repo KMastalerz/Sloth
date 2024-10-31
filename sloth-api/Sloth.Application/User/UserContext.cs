@@ -23,7 +23,13 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
         var userName = user.FindFirst(c => c.Type == ClaimTypes.Name)!.Value;
         var userGroup = user.FindFirst(c => c.Type == SlothClaimTypes.Group)?.Value;
         var userRole = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault();
+        var userGuid = Guid.Empty;
 
-        return new CurrentUser(userID, email, userName, userGroup, userRole);
+        if (Guid.TryParse(userID, out Guid guid))
+        {
+            userGuid = guid;
+        }
+            
+        return new CurrentUser(userID, email, userName, userGroup, userRole, userGuid);
     }
 }

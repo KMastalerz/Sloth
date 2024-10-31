@@ -5,6 +5,7 @@ using Sloth.Designer.Pages;
 using Sloth.Designer.Services;
 using System.Configuration;
 using System.IO;
+using System.Net.Http;
 using System.Windows;
 
 namespace Sloth.Designer;
@@ -43,24 +44,35 @@ public partial class App : Application
 
         ServiceProvider = services.BuildServiceProvider();
 
-        InitialRouting();
-
+        // Call base OnStartup synchronously to ensure WPF initializes properly
         base.OnStartup(e);
+
+        // Schedule InitialRouting to run on the UI thread after startup
+        Dispatcher.InvokeAsync(async () =>
+        {
+            await InitialRouting();
+        });
     }
 
     // This method is used to register services in the DI container
     private void ConfigureServices(ServiceCollection services)
     {
         // Register HttpClient with the API base address from appsettings
+        services.AddTransient<AuthenticatedHttpClientHandler>();
         services.AddHttpClient("ApiClient", client =>
         {
-            var apiBaseAddress = Configuration!.GetValue<string>("ApiBaseAddress");
-            if (apiBaseAddress is not null)
+            var apiBaseAddress = Configuration.GetValue<string>("ApiBaseAddress");
+            if (!string.IsNullOrEmpty(apiBaseAddress))
+                client.BaseAddress = new Uri(apiBaseAddress);
+        }).AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+
+        services.AddHttpClient("ApiBaseClient", client =>
+        {
+            var apiBaseAddress = Configuration.GetValue<string>("ApiBaseAddress");
+            if (!string.IsNullOrEmpty(apiBaseAddress))
                 client.BaseAddress = new Uri(apiBaseAddress);
         });
 
-        // Register other services if needed
-        services.AddSingleton<IHttpServices, HttpServices>();
         services.AddSingleton<IUserSettingsService, UserSettingsService>();
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IDesignerService, DesignerService>();
@@ -107,7 +119,7 @@ public partial class App : Application
         services.AddTransient<Button>();
         services.AddTransient<Link>();
     }
-    private void InitialRouting()
+    private async Task InitialRouting()
     {
         var userSettingsService = ServiceProvider.GetRequiredService<IUserSettingsService>();
         var authService = ServiceProvider.GetRequiredService<IAuthService>();
@@ -121,29 +133,38 @@ public partial class App : Application
 
             if(token is null || username is null)
             {
-                windowService.LoadPage(new Login());
+                await windowService.LoadPageAsync(new Login());
                 return;
             }
 
-            Task.Run( async () => await authService.Refreshtoken(username, token));
+            var response = await authService.Refreshtoken(username, token);
 
             // initialize main page, and main page service
-            var initMainPage = new MainPage();
-            var initPageSearch = new WebPageSearch();
-
-            if (userSettingsService.IsLoogedIn())
+            if (response?.Success ?? false)
             {
-                windowService.LoadPage(initMainPage);
-                mainPageViewModel.MainPageControl = initPageSearch;
+                userSettingsService.SaveToken(response.Data!);
+                await windowService.LoadPageAsync(new MainPage());
+                Dispatcher.Invoke(() =>
+                {
+                    mainPageViewModel.MainPageControl = new WebPageSearch();
+                });
+                return;
             }
             else
-                windowService.LoadPage(new Login());
+            {
+                //windowService.LoadPageFromAsync(new Login());
+                await windowService.LoadPageAsync(new Login());
+                return;
+            }
         }
         else
         {
-            windowService.LoadPage(new Login());
+            //Dispatcher.Invoke(() =>
+            //{
+            //    windowService.LoadPage(new Login());
+            //});
+            await windowService.LoadPageAsync(new Login());
         }
-
     }
 }
 

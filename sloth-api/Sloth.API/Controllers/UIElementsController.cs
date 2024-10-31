@@ -10,8 +10,7 @@ namespace Sloth.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-// TODO: Authorize controller
-//[Authorize]
+[Authorize]
 public class UIElementsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
@@ -44,6 +43,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<GetWebPage>>?> ListWebPageByID([FromQuery] string? appID = null, [FromQuery] string? pageID = null)
     {
@@ -52,6 +52,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<string>>?> ListWebApplicationIDs()
     {
@@ -61,6 +62,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebPageItem?>> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
     {
@@ -69,11 +71,21 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
-    public async Task<ActionResult<string?>> SaveFullWebPage([FromBody] WebPageItem webPage)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> SaveFullWebPage([FromBody] WebPageItem webPage)
     {
-        var result = await mediator.Send(new SaveFullWebPageCommand(webPage));
-        return Ok(result);
+        await mediator.Send(new SaveFullWebPageCommand(webPage));
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteWebPage([FromQuery] string appID, [FromQuery] string pageID)
+    {
+        await mediator.Send(new DeleteWebPageCommand(appID, pageID));
+        return NoContent();
     }
 }

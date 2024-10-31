@@ -22,4 +22,5 @@ public interface IWebPageStateService: IBaseStateService
     void DeleteSection(WebSectionItem panel);
     void DeletePanelControl(WebControlItem panel);
     void DeleteSectionControl(WebControlItem panel);
+    Task TaskRefreshWebApplications();
 }

@@ -20,6 +20,20 @@
                                DialogTheme="Inherit"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch">
-        <ContentControl Content="{Binding WindowControl, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid>
+            <ContentControl Content="{Binding WindowControl, UpdateSourceTrigger=PropertyChanged}"/>
+            <materialDesign:Snackbar    MessageQueue="{Binding SnackbarMessage}"
+                                        Style="{Binding SnackbarStyle}"
+                                        IsActive="{Binding IsSnackbarActive, Mode=OneWay}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Bottom"
+                                        Margin="16"
+                                        Width="300">
+                <materialDesign:SnackbarMessage>
+                    <TextBlock Text="{Binding SnackbarMessage}" Style="{Binding Foreground}"/>
+                </materialDesign:SnackbarMessage>
+            </materialDesign:Snackbar>
+        </Grid>
+
     </materialDesign:DialogHost>
 </Window>

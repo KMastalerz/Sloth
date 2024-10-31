@@ -8,9 +8,9 @@ namespace Sloth.Designer.Pages;
 
 public class MainPageViewModel : BaseViewModel
 {
-    public MainPageViewModel(IAuthService authService, IWindowService windowService)
+    public MainPageViewModel(IUserSettingsService userSettingsService, IWindowService windowService)
     {
-        Logoff = new Logoff(authService, windowService);
+        Logoff = new Logoff(userSettingsService, windowService);
     }
     private UserControl? mainPageControl = null;
     public UserControl? MainPageControl
