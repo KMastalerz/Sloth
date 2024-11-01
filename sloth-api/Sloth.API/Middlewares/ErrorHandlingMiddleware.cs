@@ -38,9 +38,9 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
 
     private async Task HandleExceptionAsync(HttpContext context, Exception ex, int statusCode, string message)
     {
-        logger.LogError(ex, message);
+        logger.LogError(message);
         context.Response.StatusCode = statusCode;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsJsonAsync(new { error = message });
+        await context.Response.WriteAsJsonAsync(message);
     }
 }

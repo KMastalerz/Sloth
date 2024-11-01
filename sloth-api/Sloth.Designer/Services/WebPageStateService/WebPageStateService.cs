@@ -3,6 +3,7 @@ using Sloth.Designer.Enums;
 using Sloth.Designer.Models;
 using Sloth.Shared.Models;
 using Sloth.Shared.Helpers;
+using System.Windows;
 
 
 namespace Sloth.Designer.Services;
@@ -14,9 +15,10 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
     {
         this.designerService = designerService;
 
-        Task.Run(async () =>
+        // Schedule InitialRouting to run on the UI thread after startup
+        Application.Current.Dispatcher.InvokeAsync(async () =>
         {
-            await TaskRefreshWebApplications();
+            await RefreshWebApplications();
         });
     }
 
@@ -95,28 +97,13 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
     public void AddPanel(NewPanel panel)
     {
         if(WebPage == null) return;
-
-        var webPanel = new WebPanelItem()
+        WebPage.WebPanels.Add(new()
         {
             AppID = WebPage.AppID,
             PageID = WebPage.PageID,
             PanelID = panel.PanelID.ToCamelCase(),
             PanelType = panel.PanelType,
-        };
-
-        if(panel.Sections is not null)
-            foreach(var section in panel.Sections)
-            {
-                webPanel.WebSections.Add(new()
-                {
-                    AppID = webPanel!.AppID,
-                    PageID = webPanel!.PageID,
-                    PanelID = webPanel!.PanelID,
-                    SectionID = section.ToCamelCase()
-                });
-            }
-
-        WebPage.WebPanels.Add(webPanel);
+        });
     }
     public void AddSection(NewSection section)
     {
@@ -129,20 +116,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
             SectionID = section.SectionID.ToCamelCase()
         });
     }
-    public void AddPanelControl(NewControl control)
-    {
-        if (WebPanel == null) return;
-        WebPanel.WebControls.Add(new()
-        {
-            AppID = WebPanel.AppID,
-            PageID = WebPanel.PageID,
-            PanelID = WebPanel.PanelID,
-            SectionID = null,
-            ControlID = control.ControlID.ToCamelCase(),
-            ControlType = control.ControlType
-        });
-    }
-    public void AddSectionControl(NewControl control)
+    public void AddControl(NewControl control)
     {
         if (WebSection == null) return;
         WebSection.WebControls.Add(new()
@@ -166,13 +140,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
         var webSections = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == section.PanelID)?.WebSections;
         webSections?.Remove(section);
     }
-    public void DeletePanelControl(WebControlItem control)
-    {
-        if (WebPage == null) return;
-        var webControls = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == control.PanelID)?.WebControls;
-        webControls?.Remove(control);
-    }
-    public void DeleteSectionControl(WebControlItem control)
+    public void DeleteControl(WebControlItem control)
     {
         if (WebPage == null) return;
         var webControls = WebPage.WebPanels.FirstOrDefault(p => p.PanelID == control.PanelID)?
@@ -180,7 +148,7 @@ internal class WebPageStateService : BaseStateService, IWebPageStateService
         webControls?.Remove(control);
     }
 
-    public async Task TaskRefreshWebApplications()
+    public async Task RefreshWebApplications()
     {
         var response = await designerService.ListWebApplicationIDs();
 

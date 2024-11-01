@@ -350,6 +350,9 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("PanelID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("SectionID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ControlID")
                         .HasColumnType("nvarchar(450)");
 
@@ -364,9 +367,6 @@ namespace Sloth.Infrastructure.Migrations
 
                     b.Property<string>("ControlType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Controls")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
@@ -390,9 +390,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("RoutePageID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SectionID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("SecurityTableID")
                         .HasColumnType("nvarchar(max)");
 
@@ -411,9 +408,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Validation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AppID", "PageID", "PanelID", "ControlID");
-
-                    b.HasIndex("AppID", "PageID", "PanelID", "SectionID");
+                    b.HasKey("AppID", "PageID", "PanelID", "SectionID", "ControlID");
 
                     b.ToTable("WebControl");
                 });
@@ -472,7 +467,6 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Label")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaData")
@@ -482,7 +476,6 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Panels")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
@@ -553,10 +546,6 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Class")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Controls")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
@@ -599,13 +588,15 @@ namespace Sloth.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Controls")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppID", "PageID", "PanelID", "SectionID");
@@ -687,16 +678,11 @@ namespace Sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebControl", b =>
                 {
-                    b.HasOne("Sloth.Domain.Entities.WebPanel", null)
-                        .WithMany("WebControls")
-                        .HasForeignKey("AppID", "PageID", "PanelID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Sloth.Domain.Entities.WebSection", null)
                         .WithMany("WebControls")
                         .HasForeignKey("AppID", "PageID", "PanelID", "SectionID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebPageSecurity", b =>
@@ -733,8 +719,6 @@ namespace Sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("Sloth.Domain.Entities.WebPanel", b =>
                 {
-                    b.Navigation("WebControls");
-
                     b.Navigation("WebSections");
                 });
 

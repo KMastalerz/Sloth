@@ -7,9 +7,9 @@ using static Sloth.Designer.Pages.AddPanelCommands;
 namespace Sloth.Designer.Pages;
 public class AddPanelViewModel:BaseViewModel
 {
-    public AddPanelViewModel(IWebPageStateService webPageStateService)
+    public AddPanelViewModel(IWebPageStateService webPageStateService, IWindowService windowService)
     {
-        AddPanelCommand = new AddPanelCommand(webPageStateService);
+        AddPanelCommand = new AddPanelCommand(webPageStateService, windowService);
     }
 
     private string? panelID = null;

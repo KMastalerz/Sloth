@@ -15,5 +15,4 @@ export class BasePanel {
   gridArea = model.required<string | undefined>();
   metaData = computed<any>(() => this.jsonUtil.tryParse(this.config().metaData));
   sections = computed<WebSection[]>(() => this.config().webSections ?? []);
-  controls = computed<WebControl[]>(() => this.config().webControls ?? []);
 }

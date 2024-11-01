@@ -13,10 +13,10 @@ public class DeleteWebPageCommandHandler(ILogger<DeleteWebPageCommandHandler> lo
         var user = userContext.GetCurrentUser()!;
         logger.LogInformation("User: {UserID} attempts to remove page: {PageID} for application: {AppID}", user.UserID, request.PageID, request.AppID);
 
-        var checkWebPage = await uIElementsRepository.GetWebPageAsync(request.AppID, request.PageID) ??
+        var deleteWebPage = await uIElementsRepository.GetWebPageAsync(request.AppID, request.PageID) ??
             throw new NotFoundException(nameof(WebPage), request.PageID);
 
-        await uIElementsRepository.RemoveWebPageAsync(checkWebPage);
+        await uIElementsRepository.RemoveWebPageAsync(deleteWebPage);
 
         logger.LogInformation("Page: {PageID} for application: {AppID} was successfully removed!", request.PageID, request.AppID);
     }

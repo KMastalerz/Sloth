@@ -1,5 +1,7 @@
 <header class="sl-header-panel right">
-    @for(control of config().webControls; track $index) {
-        <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control"></ng-container>
+    @for(section of config().webSections; track $index) {
+        @for(control of section.webControls; track $index) {
+            <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
+        }
     }
 </header>

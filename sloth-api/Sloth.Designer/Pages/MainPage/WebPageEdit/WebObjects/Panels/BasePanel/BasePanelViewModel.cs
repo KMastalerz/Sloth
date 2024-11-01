@@ -2,7 +2,6 @@
 using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
-using System.Windows.Controls;
 
 namespace Sloth.Designer.Pages;
 public class BasePanelViewModel: BaseViewModel
@@ -28,12 +27,4 @@ public class BasePanelViewModel: BaseViewModel
         set => SetProperty(ref types, value);
     }
     #endregion
-
-    private UserControl? metadataPanel = null;
-
-    public UserControl? MetadataPanel
-    {
-        get => metadataPanel;
-        set => SetProperty(ref metadataPanel, value);
-    }
 }

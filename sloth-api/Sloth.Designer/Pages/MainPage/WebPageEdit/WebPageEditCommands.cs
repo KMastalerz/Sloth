@@ -33,7 +33,6 @@ public class WebPageEditCommands
             foreach (var panel in webPage.WebPanels)
             {
                 panel.Sections = string.Join(',', panel.WebSections.Select(s => s.SectionID));
-                panel.Controls = string.Join(',', panel.WebControls.Select(c => c.ControlID));
 
                 foreach (var section in panel.WebSections)
                 {
@@ -66,15 +65,33 @@ public class WebPageEditCommands
 
             if (response?.Success ?? false)
             {
+                await Application.Current.Dispatcher.InvokeAsync(async () =>
+                {
+                    mainPageViewModel.MainPageControl = new WebPageSearch();
+
+                    var parms = (mainPageViewModel.MainPageControl.DataContext as WebPageSearchViewModel)!;
+
+
+                    var response = await designerService.ListWebPageByID(parms.AppID, parms.PageID);
+
+                    if (response?.Success == true)
+                    {
+                        webPageStateService.WebPages = response.Data!;
+                    }
+                    else
+                    {
+                        webPageStateService.WebPages = [];
+                    }
+                });
+
                 await windowService.ShowSuccessAsync("Page removed");
-                mainPageViewModel.MainPageControl = new WebPageSearch();
             }
             else
             {
                 await windowService.ShowErrorAsync("Cannot delete page!");
             }
 
-            await webPageStateService.TaskRefreshWebApplications();
+            await webPageStateService.RefreshWebApplications();
         }
     }
 
@@ -265,41 +282,6 @@ public class WebPageEditCommands
                 {
                     dragEventArgs!.Effects = DragDropEffects.None;
                     return;
-                }
-
-
-                dragEventArgs!.Effects = DragDropEffects.Move;
-                if (dragEventArgs != null)
-                {
-                    if (control != movedControl)
-                    {
-
-                        var observableControlList = webPageEditViewModel.ParentPanel.WebControls;
-
-                        var indexMoved = observableControlList.IndexOf(movedControl);
-                        var indexOver = observableControlList.IndexOf(control);
-
-                        // replace the control in the list
-                        observableControlList.Remove(movedControl);
-                        observableControlList.Remove(control);
-
-                        if (indexOver < indexMoved)
-                        {
-                            observableControlList.Insert(indexOver, movedControl);
-                            observableControlList.Insert(indexMoved, control);
-                        }
-                        else
-                        {
-                            observableControlList.Insert(indexMoved, control);
-                            observableControlList.Insert(indexOver, movedControl);
-                        }
-                    }
-
-                    // Set the effect for the drag operation
-                    dragEventArgs.Effects = DragDropEffects.Move;
-
-                    // Optionally, you can handle hover logic here (e.g., showing a visual indicator)
-                    dragEventArgs.Handled = true;
                 }
             }
         }
@@ -582,7 +564,7 @@ public class WebPageEditCommands
             windowService.ShowDialog(new AddPanel());
         }
     }
-    public class AddPanelOptionCommand(IWindowService windowService, IWebPageStateService webPageStateService) : SyncCommand
+    public class AddSectionCommand(IWindowService windowService, IWebPageStateService webPageStateService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
@@ -590,23 +572,12 @@ public class WebPageEditCommands
         {
             if (parameter is not WebPanelItem panel) return;
 
-            var panelSectionType = PanelConstants.PanelTypes.FirstOrDefault(p => p.PanelType == panel.PanelType)?.SectionType ?? null;
-
-            if(panelSectionType == PanelSectionType.StaticSections)
-            {
-                webPageStateService.AddElementType = AddElementType.PanelControl;
-                webPageStateService.WebPanel = panel;
-                windowService.ShowDialog(new AddControl());
-            } 
-            else
-            {
-                webPageStateService.AddElementType = AddElementType.PanelOption;
-                webPageStateService.WebPanel = panel;
-                windowService.ShowDialog(new SelectPanelOption());
-            }
+            webPageStateService.AddElementType = AddElementType.Section;
+            webPageStateService.WebPanel = panel;
+            windowService.ShowDialog(new AddSection());
         }
     }
-    public class AddSectionControlCommand(IWindowService windowService, IWebPageStateService webPageStateService) : SyncCommand
+    public class AddControlCommand(IWindowService windowService, IWebPageStateService webPageStateService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
@@ -616,7 +587,7 @@ public class WebPageEditCommands
             if(parameter is not TwoLevelBindingParameter parms) return;
             if(parms.Child is not WebSectionItem section) return;
 
-            webPageStateService.AddElementType = AddElementType.SectionControl;
+            webPageStateService.AddElementType = AddElementType.Control;
             webPageStateService.WebSection = section;
             windowService.ShowDialog(new AddControl());
         }
@@ -633,23 +604,8 @@ public class WebPageEditCommands
 
             webPageStateService.WebControl = control;
             webPageEditViewModel.EditControl = new BaseControl();
-            var baseControl = webPageEditViewModel.EditControl.DataContext as BaseControlViewModel ?? null;
-            switch (control.ControlType)
-            {
-                case ControlTypes.Button:
-                    baseControl!.MetadataControl = new Button();
-                    break;
-                case ControlTypes.Link:
-                    baseControl!.MetadataControl = new Link();
-                    break;
-                default:
-                    webPageEditViewModel.EditControl = null;
-                    webPageStateService.WebControl = null;
-                    break;
-            }
         }
     }
-
     public class EditSectionCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
@@ -661,7 +617,6 @@ public class WebPageEditCommands
             webPageEditViewModel.EditControl = new BaseSection();
         }
     }
-
     public class EditPanelCommand(IWebPageStateService webPageStateService, WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
@@ -673,7 +628,6 @@ public class WebPageEditCommands
             webPageEditViewModel.EditControl = new BasePanel();
         }
     }
-
     public class EditPageCommand(WebPageEditViewModel webPageEditViewModel) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
@@ -697,17 +651,7 @@ public class WebPageEditCommands
     }
     public class DeleteSectionCommand(IWebPageStateService webPageStateService) : SyncCommand
     {
-        protected override bool CanExecuteSync(object? parameter = null) 
-        {
-            if (parameter is not TwoLevelBindingParameter parms) return false;
-            if (parms.Parent is not WebPanelItem panel) return false;
-
-            var panelSectionType = PanelConstants.PanelTypes.FirstOrDefault(p => p.PanelType == panel.PanelType)?.SectionType ?? null;
-
-            if (panelSectionType is null) return false;
-
-            return panelSectionType != PanelSectionType.StaticSections;
-        }
+        protected override bool CanExecuteSync(object? parameter = null) => true;
 
         protected override void ExecuteSync(object? parameter = null)
         {
@@ -717,24 +661,14 @@ public class WebPageEditCommands
             webPageStateService.DeleteSection(section);
         }
     }
-    public class DeletePanelControlCommand(IWebPageStateService webPageStateService) : SyncCommand
+    public class DeleteControlCommand(IWebPageStateService webPageStateService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null) => true;
 
         protected override void ExecuteSync(object? parameter = null)
         {
             if (parameter is WebControlItem panel)
-                webPageStateService.DeletePanelControl(panel);
-        }
-    }
-    public class DeleteSectionControlCommand(IWebPageStateService webPageStateService) : SyncCommand
-    {
-        protected override bool CanExecuteSync(object? parameter = null) => true;
-
-        protected override void ExecuteSync(object? parameter = null)
-        {
-            if (parameter is WebControlItem panel)
-                webPageStateService.DeleteSectionControl(panel);
+                webPageStateService.DeleteControl(panel);
         }
     }
     #endregion

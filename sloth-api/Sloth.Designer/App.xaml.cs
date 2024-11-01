@@ -88,10 +88,11 @@ public partial class App : Application
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<WebPageSearchViewModel>();
         services.AddTransient<WebPageEditViewModel>();
+        services.AddTransient<AccountSettingsViewModel>();
+        services.AddTransient<AddPageViewModel>();
         services.AddTransient<AddPanelViewModel>();
         services.AddTransient<AddSectionViewModel>();
         services.AddTransient<AddControlViewModel>();
-        services.AddTransient<SelectPanelOptionViewModel>();
         services.AddTransient<BasePageViewModel>();
         services.AddTransient<BasePanelViewModel>();
         services.AddTransient<BaseSectionViewModel>();
@@ -108,10 +109,11 @@ public partial class App : Application
         services.AddSingleton<Login>();
         services.AddSingleton<WebPageSearch>();
         services.AddTransient<WebPageEdit>();
+        services.AddTransient<AccountSettings>();
+        services.AddTransient<AddPage>();
         services.AddTransient<AddPanel>();
         services.AddTransient<AddSection>();
         services.AddTransient<AddControl>();
-        services.AddTransient<SelectPanelOption>();
         services.AddTransient<BasePage>();
         services.AddTransient<BasePanel>();
         services.AddTransient<BaseSection>();

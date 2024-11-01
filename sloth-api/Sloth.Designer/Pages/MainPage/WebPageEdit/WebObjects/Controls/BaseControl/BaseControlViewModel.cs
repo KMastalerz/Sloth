@@ -2,16 +2,19 @@
 using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
-using System.Windows.Controls;
+using System.Windows.Input;
+using static Sloth.Designer.Pages.BaseControlCommands;
 
 namespace Sloth.Designer.Pages;
 public class BaseControlViewModel : BaseViewModel
 {
-    public BaseControlViewModel(IWebPageStateService webPageStateService)
+    public BaseControlViewModel(IWebPageStateService webPageStateService, IWindowService windowService)
     {
         // set default values 
         webControl = webPageStateService.WebControl!;
         Types = ControlConstants.ControlTypes;
+        SetMetadata = new SetMetadata(windowService);
+
         SetVisibilities(webControl.ControlType ?? string.Empty);
         SetComboboxes(webControl.ControlType ?? string.Empty);
     }
@@ -121,14 +124,7 @@ public class BaseControlViewModel : BaseViewModel
     }
 
     #endregion
-
-    private UserControl? metadataControl = null;
-
-    public UserControl? MetadataControl
-    {
-        get => metadataControl;
-        set => SetProperty(ref metadataControl, value);
-    }
+    public ICommand SetMetadata { get; }
 
     private void SetVisibilities(string type)
     {
@@ -162,22 +158,4 @@ public class BaseControlViewModel : BaseViewModel
                 break;
         }
     }
-
-    private void SetMetadataControl(string type)
-    {
-        // set metadata control based on ControlType
-        switch (type)
-        {
-            case ControlTypes.Button:
-                MetadataControl = new Button();
-                break;
-            case ControlTypes.Link:
-                MetadataControl = new Link();
-                break;
-            default:
-                MetadataControl = null;
-                break;
-        }
-    }
-
 }

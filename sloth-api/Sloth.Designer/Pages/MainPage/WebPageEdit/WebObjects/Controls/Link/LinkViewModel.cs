@@ -1,6 +1,7 @@
 ﻿using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Helpers;
+using Sloth.Shared.Models;
 
 namespace Sloth.Designer.Pages;
 public class LinkViewModel: BaseViewModel
@@ -9,6 +10,7 @@ public class LinkViewModel: BaseViewModel
     public LinkViewModel(IWebPageStateService webPageStateService)
     {
         this.webPageStateService = webPageStateService;
+        webControl = webPageStateService.WebControl!;
 
         if (!string.IsNullOrEmpty(webPageStateService.WebControl!.MetaData))
         {
@@ -21,6 +23,13 @@ public class LinkViewModel: BaseViewModel
                 ErrorCount = metaData.ErrorCount;
             }
         }
+    }
+
+    private WebControlItem webControl;
+    public WebControlItem WebControl
+    {
+        get => webControl;
+        set => SetProperty(ref webControl, value);
     }
 
     private string? counterSubject = null;

@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sloth.Application.UserIdentity;
 using Sloth.Domain.Entities;
-using Sloth.Domain.Extensions;
 using Sloth.Domain.Repositories;
 using System.Transactions;
 
@@ -23,105 +22,15 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
         {
             try
             {
-                var checkWebPage = await uIElementsRepository.GetFullWebPageAsync(request.WebPage.AppID, request.WebPage.PageID) ?? null;
+                var checkWebPage = await uIElementsRepository.CheckWebPageExistsAsync(request.WebPage.AppID, request.WebPage.PageID);
 
                 var webPage = mapper.Map<WebPage>(request.WebPage);
 
-                if (checkWebPage is not null)
-                    await uIElementsRepository.SaveWebPageAsync(checkWebPage.Update(webPage, user.UserGuid));
-                else
-                    await uIElementsRepository.AddWebPageAsync(webPage);
-
-                // Update and Add
-                foreach (var panel in webPage.WebPanels)
+                if (checkWebPage)
                 {
-                    var checkWebPanel = checkWebPage?.WebPanels.FirstOrDefault(p => p.PanelID == panel.PanelID) ?? null;
-
-                    if (checkWebPanel is not null)
-                        await uIElementsRepository.SaveWebPanelAsync(checkWebPanel.Update(panel, user.UserGuid));
-                    else
-                        await uIElementsRepository.AddWebPanelAsync(panel);
-
-
-                    foreach (var section in panel.WebSections)
-                    {
-                        var checkWebSections = checkWebPanel?.WebSections.FirstOrDefault(s => s.SectionID == section.SectionID) ?? null;
-
-                        if (checkWebSections is not null)
-                            await uIElementsRepository.SaveWebSectionAsync(checkWebSections.Update(section, user.UserGuid));
-                        else
-                            await uIElementsRepository.AddWebSectionAsync(section);
-
-                        foreach (var control in section.WebControls)
-                        {
-                            var checkWebControl = checkWebSections?.WebControls.FirstOrDefault(c => c.ControlID == control.ControlID) ?? null;
-
-                            if (checkWebControl is not null)
-                                await uIElementsRepository.SaveWebControlAsync(checkWebControl.Update(control, user.UserGuid));
-                            else
-                                await uIElementsRepository.AddWebControlAsync(control);
-                        }
-                    }
-                    foreach (var control in panel.WebControls)
-                    {
-                        var checkWebControl = checkWebPanel?.WebControls.FirstOrDefault(c => c.ControlID == control.ControlID) ?? null;
-
-                        if (checkWebControl is not null)
-                            await uIElementsRepository.SaveWebControlAsync(checkWebControl.Update(control, user.UserGuid));
-                        else
-                            await uIElementsRepository.AddWebControlAsync(control);
-                    }
+                    await uIElementsRepository.SaveWebPageAsync(webPage);
                 }
-
-                // Remove elements missing in new model
-                foreach (var panel in checkWebPage?.WebPanels ?? [])
-                {
-                    // Find corresponding panel in the new model
-                    var checkWebPanel = webPage.WebPanels.FirstOrDefault(p => p.PanelID == panel.PanelID);
-
-                    // If the panel does not exist in the new model, remove it
-                    if (checkWebPanel is null)
-                    {
-                        await uIElementsRepository.RemoveWebPanelAsync(panel);
-                        continue; // Skip further checks for this panel since it's removed
-                    }
-
-                    // Remove sections missing in the new model
-                    foreach (var section in panel.WebSections ?? [])
-                    {
-                        // Find corresponding section in the new model
-                        var checkWebSection = checkWebPanel.WebSections.FirstOrDefault(s => s.SectionID == section.SectionID);
-
-                        // If the section does not exist in the new model, remove it
-                        if (checkWebSection is null)
-                        {
-                            await uIElementsRepository.RemoveWebSectionAsync(section);
-                            continue; // Skip further checks for this section since it's removed
-                        }
-
-                        // Remove section controls missing in the new model
-                        foreach (var sectionControl in section.WebControls ?? [])
-                        {
-                            // Only remove if the control is missing in the new model's section controls
-                            var checkWebControl = checkWebSection.WebControls.FirstOrDefault(c => c.ControlID == sectionControl.ControlID);
-                            if (checkWebControl is null && sectionControl.SectionID is not null)
-                            {
-                                await uIElementsRepository.RemoveWebControlAsync(sectionControl);
-                            }
-                        }
-                    }
-
-                    // Remove panel controls missing in the new model
-                    foreach (var panelControl in panel.WebControls ?? [])
-                    {
-                        // Only remove if the control is missing in the new model's panel controls (not section-bound)
-                        var checkWebControl = checkWebPanel.WebControls.FirstOrDefault(c => c.ControlID == panelControl.ControlID);
-                        if (checkWebControl is null && panelControl.SectionID is null)
-                        {
-                            await uIElementsRepository.RemoveWebControlAsync(panelControl);
-                        }
-                    }
-                }
+                else await uIElementsRepository.AddWebPageAsync(webPage);
 
                 transaction.Complete();
                 logger.LogInformation("Page: {PageID} was successfully changed!", request.WebPage.PageID);

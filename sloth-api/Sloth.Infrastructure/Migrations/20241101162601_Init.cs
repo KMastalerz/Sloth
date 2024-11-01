@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -148,8 +147,8 @@ public partial class Init : Migration
             {
                 AppID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                Panels = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Panels = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Orientation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Background = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -244,7 +243,6 @@ public partial class Init : Migration
                 PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PanelType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 Sections = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Controls = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -364,7 +362,8 @@ public partial class Init : Migration
                 PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 SectionID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Controls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Controls = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -388,13 +387,12 @@ public partial class Init : Migration
                 AppID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 PanelID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                SectionID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 ControlID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                SectionID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                 ControlType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 InnerType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Style = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Controls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Placeholder = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -411,18 +409,13 @@ public partial class Init : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_WebControl", x => new { x.AppID, x.PageID, x.PanelID, x.ControlID });
-                table.ForeignKey(
-                    name: "FK_WebControl_WebPanel_AppID_PageID_PanelID",
-                    columns: x => new { x.AppID, x.PageID, x.PanelID },
-                    principalTable: "WebPanel",
-                    principalColumns: new[] { "AppID", "PageID", "PanelID" },
-                    onDelete: ReferentialAction.Cascade);
+                table.PrimaryKey("PK_WebControl", x => new { x.AppID, x.PageID, x.PanelID, x.SectionID, x.ControlID });
                 table.ForeignKey(
                     name: "FK_WebControl_WebSection_AppID_PageID_PanelID_SectionID",
                     columns: x => new { x.AppID, x.PageID, x.PanelID, x.SectionID },
                     principalTable: "WebSection",
-                    principalColumns: new[] { "AppID", "PageID", "PanelID", "SectionID" });
+                    principalColumns: new[] { "AppID", "PageID", "PanelID", "SectionID" },
+                    onDelete: ReferentialAction.Cascade);
             });
 
         migrationBuilder.CreateIndex(
@@ -449,11 +442,6 @@ public partial class Init : Migration
             name: "IX_User_ThemeID",
             table: "User",
             column: "ThemeID");
-
-        migrationBuilder.CreateIndex(
-            name: "IX_WebControl_AppID_PageID_PanelID_SectionID",
-            table: "WebControl",
-            columns: new[] { "AppID", "PageID", "PanelID", "SectionID" });
     }
 
     /// <inheritdoc />

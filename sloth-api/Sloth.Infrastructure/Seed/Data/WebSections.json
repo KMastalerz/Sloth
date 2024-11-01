@@ -5,7 +5,7 @@
     "PanelID": "sideNav",
     "SectionID": "main",
     "Label": "Main",
-    "Controls": "dashboard,kanban,bugs,projects,tasks, timesheet"
+    "Controls": "dashboard,kanban,bugs,projects,tasks,timesheet"
   },
   {
     "AppID": "sloth",
@@ -22,5 +22,27 @@
     "SectionID": "admin",
     "Label": "Admin",
     "Controls": "projectManagement,teamManagement,userManagement"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "logout",
+    "Position": "bottom",
+    "Controls": "logout"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "main",
+    "PanelID": "header",
+    "SectionID": "header",
+    "Controls": "messages, account, setttings"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "auth",
+    "PanelID": "login",
+    "SectionID": "login",
+    "Controls": "login, password, process, forgotPassword"
   }
 ]

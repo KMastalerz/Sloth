@@ -1,10 +1,10 @@
 ﻿namespace Sloth.Shared.Models;
-public class WebPageRawItem
+public class WebPageFull
 {
     public string AppID { get; set; } = default!;
     public string PageID { get; set; } = default!;
-    public string Label { get; set; } = default!;
-    public string Panels { get; set; } = default!;
+    public string? Label { get; set; } = null;
+    public string? Panels { get; set; } = null;
     public string? Orientation { get; set; } = null;
     public string? Background { get; set; } = null;
     public string? Position { get; set; } = null;

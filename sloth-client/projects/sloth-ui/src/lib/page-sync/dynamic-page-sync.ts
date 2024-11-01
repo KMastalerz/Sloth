@@ -23,11 +23,6 @@ export class DynamicPageSync {
         return this.webControlMap.get(`${panelID}_${controlID}`)!; 
     }
 
-    getWebControlsByID(panelID: string, controlID: string): WebControl[] {
-        const panel = this.webPanelMap.get(`${panelID}`)!;
-        return panel.webControls!;
-    }
-
     getWebPanelByID(panelID: string): WebPanel {
         return this.webPanelMap.get(panelID)!;
     }
@@ -35,13 +30,12 @@ export class DynamicPageSync {
     getPanelForm(panelID: string): FormGroup | FormArray {
         const panel = this.pageForm.get(panelID);
         if(panel instanceof FormGroup) {
-            return panel as FormGroup;
+            return panel;
         } 
         return panel as FormArray;
     }
 
-    getFormControl(panelID: string, controlID: string, index?: number | undefined): FormControl | FormGroup {
-        // Retrieve the correct control (FormControl or FormGroup) based on its type and index if applicable
+    getFormControl(panelID: string, controlID: string, index?: number): FormControl | FormGroup {
         const panelForm = this.getPanelForm(panelID);
         if (panelForm instanceof FormArray && typeof index !== 'undefined') {
             const group = panelForm.at(index) as FormGroup;
@@ -52,40 +46,26 @@ export class DynamicPageSync {
         return null as any;
     }
     
-    /**
-     * Populates data at page, panel, or control level.
-     * 
-     * @param panelID Optional panel ID to populate a specific panel.
-     * @param controlID Optional control ID to populate a specific control.
-     * @param data The data to be set in the form.
-     * @param index Optional index if the panel is a FormArray.
-     */
     populateData(data: any, panelID?: string, index?: number, controlID?: string): void {
         if (!panelID) {
-            // Populate at the page level (entire pageForm)
             if (this.pageForm) {
                 this.pageForm.patchValue(data);
             }
         } else if (!controlID) {
-            // Populate at the panel level
             const panelForm = this.getPanelForm(panelID);
             if (panelForm instanceof FormArray && Array.isArray(data)) {
                 data.forEach((item, i) => {
                     let group = panelForm.at(i) as FormGroup;
-
-                    // If FormGroup doesn't exist, create and add a new one
                     if (!group) {
                         group = this.buildPanelFormGroup(panelID);
                         (panelForm as FormArray).insert(i, group);
                     }
-
                     group.patchValue(item);
                 });
             } else if (panelForm instanceof FormGroup) {
                 panelForm.patchValue(data);
             }
         } else {
-            // Populate at the control level
             const control = this.getFormControl(panelID, controlID, index);
             if (control) {
                 control.setValue(data);
@@ -95,77 +75,80 @@ export class DynamicPageSync {
 
     buildForm(): void {
         const formGroup = this.formBuilder.group({});
+        const orderedPanels = this.pageConfig.panels?.split(',') || [];
 
-        const orderedPanels = this.pageConfig.panels.split(',');
-
-        orderedPanels.forEach(panel => {
-            const panelID = panel.trim();
-            const panelConfig = this.pageConfig.webPanels?.find(panel => panel.panelID === panelID)!;
+        orderedPanels.forEach(panelID => {
+            const panelConfig = this.pageConfig.webPanels?.find(panel => panel.panelID === panelID.trim())!;
             const panelForm = this.buildPanel(panelConfig);
-            this.webPanelMap.set(panelID, panelConfig);
-            formGroup.addControl(panelID, panelForm);
+            this.webPanelMap.set(panelID.trim(), panelConfig);
+            formGroup.addControl(panelID.trim(), panelForm);
         });
 
         this.pageForm = formGroup;
     }
 
     private buildPanel(panel: WebPanel): FormGroup | FormArray {
-        let panelPart: FormGroup | FormArray;
+        let panelForm: FormGroup | FormArray;
 
         if (this.listUtil.Contains(StaticWebObjects.ArrayTypePanels, panel.panelType)) {
-            panelPart = this.formBuilder.array([]);
-            return panelPart; // Return FormArray as it will be populated later
+            panelForm = this.formBuilder.array([]);
         } else {
-            panelPart = this.formBuilder.group([]);
+            panelForm = this.formBuilder.group({});
         }
+        
+        const orderedSections = panel.sections.split(',');
 
-        const orderedControls = panel.controls.split(',');
+        orderedSections.forEach(sectionID => {
+            sectionID = sectionID.trim();
+            const sectionConfig = panel.webSections?.find(section => section.sectionID === sectionID.trim())!;
+            const orderedControls = sectionConfig.controls?.split(',') || [];
 
-        orderedControls.forEach(control => {
-            const controlID = control.trim();
-            const controlConfig = panel.webControls?.find(control => control.controlID === controlID)!;
-            if (!controlConfig) {
-                return;
-            }
-            
-           // Check if control holds FormControl or FormGroup
-           if (this.listUtil.Contains(StaticWebObjects.FormGroupTypeControls, controlConfig.controlType) && controlConfig.controls) {
-                // Build FormGroup based on comma-delimited child controls
-                const controlGroup = this.buildFormGroupFromControls(controlConfig.controls);
-                (panelPart as FormGroup).addControl(controlID, controlGroup);
-            } else if (this.listUtil.Contains(StaticWebObjects.FormControlTypeControls, controlConfig.controlType)) {
-                const controlForm = this.formBuilder.control(undefined);
-                (panelPart as FormGroup).addControl(controlID, controlForm);
-            }
+            orderedControls.forEach(controlID => {
+                controlID = controlID.trim();
+                const controlConfig = sectionConfig.webControls?.find(control => control.controlID === controlID.trim());
+                if (controlConfig) {
+                    if (this.listUtil.Contains(StaticWebObjects.FormGroupTypeControls, controlConfig.controlType) && controlConfig.controls) {
+                        const controlGroup = this.buildFormGroupFromControls(controlConfig.controls);
+                        (panelForm as FormGroup).addControl(controlID.trim(), controlGroup);
+                    } else if (this.listUtil.Contains(StaticWebObjects.FormControlTypeControls, controlConfig.controlType)) {
+                        const controlForm = this.formBuilder.control(undefined);
+                        (panelForm as FormGroup).addControl(controlID.trim(), controlForm);
+                    }
 
-            this.webControlMap.set(`${panel.panelID}_${controlID}`, controlConfig);
+                    this.webControlMap.set(`${panel.panelID}_${controlID.trim()}`, controlConfig);
+                }
+            });
         });
 
-        return panelPart;
+        return panelForm;
     }
 
     private buildFormGroupFromControls(childControls: string): FormGroup {
         const controlGroup = this.formBuilder.group({});
         const controlsArray = childControls.split(',');
 
-        controlsArray.forEach(childControl => {
-            const childControlID = childControl.trim();
-            // Create a FormControl for each child control
+        controlsArray.forEach(childControlID => {
             const controlForm = this.formBuilder.control(undefined);
-            controlGroup.addControl(childControlID, controlForm);
+            controlGroup.addControl(childControlID.trim(), controlForm);
         });
 
         return controlGroup;
     }
 
     private buildPanelFormGroup(panelID: string): FormGroup {
-        // Create a FormGroup based on the panel's web controls
         const controlGroup = this.formBuilder.group({});
         const panelConfig = this.getWebPanelByID(panelID);
-        panelConfig.webControls?.forEach(control => {
-            const controlForm = this.formBuilder.control(undefined);
-            controlGroup.addControl(control.controlID, controlForm);
+    
+        // Iterate through each section in the panel
+        panelConfig.webSections?.forEach(section => {
+            section.webControls?.forEach(control => {
+                // For each control in the section, create a FormControl and add it to the group
+                const controlForm = this.formBuilder.control(undefined);
+                controlGroup.addControl(control.controlID, controlForm);
+                this.webControlMap.set(`${panelID}_${control.controlID}`, control);
+            });
         });
+    
         return controlGroup;
     }
 }

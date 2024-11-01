@@ -12,23 +12,11 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     }
     public async Task<WebPage?> GetFullWebPageAsync(string appID, string pageID)
     {
-        var webPage =  await dbContext.WebPage
-            .Include(p => p.WebPanels)
-                .ThenInclude(pa => pa.WebControls) // Include only controls without SectionID
+        return await dbContext.WebPage
             .Include(p => p.WebPanels)
                 .ThenInclude(pa => pa.WebSections) // Include sections inside panels
                     .ThenInclude(s => s.WebControls) // Include controls inside sections
             .FirstOrDefaultAsync(p => p.AppID == appID && p.PageID == pageID);
-
-        if (webPage != null)
-        {
-            foreach (var panel in webPage.WebPanels)
-            {
-                panel.WebControls = panel.WebControls.Where(c => c.SectionID == null).ToList();
-            }
-        }
-
-        return webPage;
     }
     public async Task<IEnumerable<WebControl>?> ListWebControlAsync(string appID, string pageID)
     {
@@ -42,9 +30,11 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     {
         return await dbContext.WebSection.Where(p => p.AppID == appID && p.PageID == pageID).ToListAsync(); ;
     }
+
+    #region [Designer]
     public async Task<IEnumerable<WebPage>?> ListWebPageByIDAsync(string? appID, string? pageID)
     {
-        var records = await dbContext.WebPage.Where(p => (appID == null || p.AppID.Contains(appID)) && (pageID == null || p.PageID.Contains(pageID))).ToListAsync();
+        var records = await dbContext.WebPage.Where(p => (appID == null || p.AppID.Contains(appID)) && (pageID == null || p.PageID.Contains(pageID))).ToListAsync();await dbContext.SaveChangesAsync();
         return await dbContext.WebPage.Where(p => (appID == null || p.AppID.Contains(appID)) && (pageID == null || p.PageID.Contains(pageID))).ToListAsync();
     }
 
@@ -59,69 +49,96 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
         await dbContext.SaveChangesAsync();
     }
 
-    public Task SaveWebPanelAsync(WebPanel webPanel)
+    public async Task SaveWebPanelAsync(WebPanel webPanel)
     {
         dbContext.WebPanel.Update(webPanel);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task SaveWebSectionAsync(WebSection webSection)
+    public async Task SaveWebSectionAsync(WebSection webSection)
     {
         dbContext.WebSection.Update(webSection);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task SaveWebControlAsync(WebControl webControl)
+    public async Task SaveWebControlAsync(WebControl webControl)
     {
         dbContext.WebControl.Update(webControl);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task AddWebPageAsync(WebPage webPage)
+    public async Task AddWebPageAsync(WebPage webPage)
     {
         dbContext.WebPage.Add(webPage);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task AddWebPanelAsync(WebPanel webPanel)
+    public async Task AddWebPanelAsync(WebPanel webPanel)
     {
         dbContext.WebPanel.Add(webPanel);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task AddWebSectionAsync(WebSection webSection)
+    public async Task AddWebSectionAsync(WebSection webSection)
     {
         dbContext.WebSection.Add(webSection);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task AddWebControlAsync(WebControl webControl)
+    public async Task AddWebControlAsync(WebControl webControl)
     {
         dbContext.WebControl.Add(webControl);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task RemoveWebPageAsync(WebPage webPage)
+    public async Task RemoveWebPageAsync(WebPage webPage)
     {
         dbContext.WebPage.Remove(webPage);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task RemoveWebPanelAsync(WebPanel webPanel)
+    public async Task RemoveWebPanelAsync(WebPanel webPanel)
     {
         dbContext.WebPanel.Remove(webPanel);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task RemoveWebSectionAsync(WebSection webSection)
+    public async Task RemoveWebSectionAsync(WebSection webSection)
     {
         dbContext.WebSection.Remove(webSection);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task RemoveWebControlAsync(WebControl webControl)
+    public async Task RemoveWebControlAsync(WebControl webControl)
     {
         dbContext.WebControl.Remove(webControl);
-        return dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
+
+    public async Task<bool> CheckWebPageExistsAsync(string appID, string pageID)
+    {
+        return await dbContext.WebPage.AnyAsync(p => p.AppID == appID && p.PageID == pageID);
+    }
+
+    public async Task<IEnumerable<WebPage>> ListAllWebPage()
+    {
+        return await dbContext.WebPage.ToListAsync();
+    }
+
+    public async Task<IEnumerable<WebPanel>> ListAllWebPanel()
+    {
+        return await dbContext.WebPanel.ToListAsync();
+    }
+
+    public async Task<IEnumerable<WebSection>> ListAllWebSection()
+    {
+        return await dbContext.WebSection.ToListAsync();
+    }
+
+    public async Task<IEnumerable<WebControl>> ListAllWebControl()
+    {
+        return await dbContext.WebControl.ToListAsync();
+    }
+
+    #endregion
 }

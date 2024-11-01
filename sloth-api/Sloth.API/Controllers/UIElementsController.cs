@@ -88,4 +88,14 @@ public class UIElementsController(IMediator mediator) : ControllerBase
         await mediator.Send(new DeleteWebPageCommand(appID, pageID));
         return NoContent();
     }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<WebPageItem>>?> ListWebPages()
+    {
+        var result = await mediator.Send(new ListWebPagesQuery());
+        return Ok(result);
+    }
 }

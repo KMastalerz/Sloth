@@ -14,4 +14,27 @@ public static class MainPageCommands
             windowService.LoadPage(new Login());
         }
     }
+
+    public class OpenAccountSettings : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is not MainPageViewModel mainPageViewModel) return;
+         
+            mainPageViewModel.MainPageControl = new AccountSettings();
+        }
+    }
+
+    public class OpenDesigner : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            if (parameter is not MainPageViewModel mainPageViewModel) return;
+
+            mainPageViewModel.MainPageControl = new WebPageSearch();
+        }
+    }
 }

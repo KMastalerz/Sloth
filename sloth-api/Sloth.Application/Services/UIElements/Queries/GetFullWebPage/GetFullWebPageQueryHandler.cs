@@ -15,56 +15,49 @@ public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsReposito
 
         if (result is null) return null;
 
-        var orderedPanels = result.Panels.Split(',');
+        var orderedPanels = result.Panels?.Split(',');
 
-        if (ListHelpers.HasElements(orderedPanels))
-        {
-            result.WebPanels = new(orderedPanels
-                .Select(order => result.WebPanels
-                .FirstOrDefault(panel => panel.PanelID == order.Trim()))
-                   .Where(panel => panel != null)
-                   .Cast<WebPanelItem>());
-
-            result.WebPanels.ToList().ForEach(panel =>
+        if(orderedPanels is not null) 
+            if (ListHelpers.HasElements(orderedPanels))
             {
-                var orderedControls = panel.Controls?.Split(',') ?? [];
-                if (ListHelpers.HasElements(orderedControls))
-                {
-                    panel.WebControls = new(orderedControls
-                        .Select(order => panel.WebControls
-                        .FirstOrDefault(control => control.ControlID == order.Trim()))
-                           .Where(control => control != null)
-                           .Cast<WebControlItem>());
-                }
+                result.WebPanels = new(orderedPanels
+                    .Select(order => result.WebPanels
+                    .FirstOrDefault(panel => panel.PanelID == order.Trim()))
+                       .Where(panel => panel != null)
+                       .Cast<WebPanelItem>());
 
-                // check if panel has sections, as section can be null
-                if (!string.IsNullOrEmpty(panel.Sections))
+                result.WebPanels.ToList().ForEach(panel =>
                 {
-                    var orderedSections = panel.Sections.Split(',');
-                    if (ListHelpers.HasElements(orderedSections))
+                    // check if panel has sections, as section can be null
+                    if (!string.IsNullOrEmpty(panel.Sections))
                     {
-                        panel.WebSections = new(orderedSections
-                            .Select(order => panel.WebSections
-                            .FirstOrDefault(section => section.SectionID == order.Trim()))
-                               .Where(section => section != null)
-                               .Cast<WebSectionItem>());
-                    }
-
-                    panel.WebSections.ToList().ForEach(section =>
-                    {
-                        var orderedControls = section.Controls.Split(',');
-                        if (ListHelpers.HasElements(orderedControls))
+                        var orderedSections = panel.Sections.Split(',');
+                        if (ListHelpers.HasElements(orderedSections))
                         {
-                            section.WebControls = new(orderedControls
-                                .Select(order => section.WebControls
-                                .FirstOrDefault(control => control.ControlID == order.Trim()))
-                                   .Where(control => control != null)
-                                   .Cast<WebControlItem>());
+                            panel.WebSections = new(orderedSections
+                                .Select(order => panel.WebSections
+                                .FirstOrDefault(section => section.SectionID == order.Trim()))
+                                   .Where(section => section != null)
+                                   .Cast<WebSectionItem>());
                         }
-                    });
-                }
-            });
-        }
+
+                        panel.WebSections.ToList().ForEach(section =>
+                        {
+                            var orderedControls = section.Controls?.Split(',');
+
+                            if(orderedControls is not null)
+                                if (ListHelpers.HasElements(orderedControls))
+                                {
+                                    section.WebControls = new(orderedControls
+                                        .Select(order => section.WebControls
+                                        .FirstOrDefault(control => control.ControlID == order.Trim()))
+                                           .Where(control => control != null)
+                                           .Cast<WebControlItem>());
+                                }
+                        });
+                    }
+                });
+            }
 
         return result;
     }

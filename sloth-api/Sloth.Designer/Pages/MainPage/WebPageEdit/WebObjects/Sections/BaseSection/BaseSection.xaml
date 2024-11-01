@@ -12,14 +12,16 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    Margin="40 12 0 0">
             <TextBlock Text="{Binding WebSection.SectionID}"
                        Style="{StaticResource SlothTextBlockHeadline}"/>
 
             <Separator Style="{StaticResource MaterialDesignSeparator}"/>
         </StackPanel>
 
-        <WrapPanel Grid.Row="1">
+        <WrapPanel Grid.Row="1"
+                   Margin=" 0 0 16 0">
             <Border Style="{StaticResource SlothBorder}">
                 <StackPanel>
                     <TextBox    materialDesign:HintAssist.Hint="Label"
@@ -27,8 +29,6 @@
                                 Style="{StaticResource SlothTextBox}"/>
                 </StackPanel>
             </Border>
-
-            <ContentControl Content="{Binding MetadataSection}"/>
         </WrapPanel>
     </Grid>
 </UserControl>

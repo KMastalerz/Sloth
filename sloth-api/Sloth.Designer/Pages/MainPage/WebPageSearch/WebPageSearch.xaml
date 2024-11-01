@@ -34,6 +34,7 @@
                         CommandParameter="{Binding }"
                         Style="{StaticResource SlothButton}"/>
                 <Button     Content="Add new page"
+                            Command="{Binding AddNewPage}"
                             Style="{StaticResource SlothButtonNeutral}"/>
             </StackPanel>
             <Grid Grid.Row="1">

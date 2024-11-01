@@ -5,7 +5,7 @@ using Sloth.Designer.Services;
 namespace Sloth.Designer.Pages;
 public static class AddSectionCommands
 {
-    public class AddSectionCommand(IWebPageStateService webPageStateService) : SyncCommand
+    public class AddSectionCommand(IWebPageStateService webPageStateService, IWindowService windowService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null)
         {
@@ -23,6 +23,8 @@ public static class AddSectionCommands
             var newSection = new NewSection(addSectionViewModel.SectionID!);
 
             webPageStateService.AddSection(newSection);
+
+            windowService.CloseDialog();
         }
     }
 }

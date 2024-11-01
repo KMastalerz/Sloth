@@ -16,11 +16,9 @@ public interface IWebPageStateService: IBaseStateService
     AddElementType? AddElementType { get; set; }
     void AddPanel(NewPanel panel);
     void AddSection(NewSection section);
-    void AddPanelControl(NewControl control);
-    void AddSectionControl(NewControl control);
+    void AddControl(NewControl control);
     void DeletePanel(WebPanelItem panel);
     void DeleteSection(WebSectionItem panel);
-    void DeletePanelControl(WebControlItem panel);
-    void DeleteSectionControl(WebControlItem panel);
-    Task TaskRefreshWebApplications();
+    void DeleteControl(WebControlItem panel);
+    Task RefreshWebApplications();
 }

@@ -13,6 +13,8 @@ import { DynamicControlDirective } from '../../directives/dynamic-control/dynami
 export class SideNavComponent extends BasePanel {
   collapsed = signal<boolean>(true);
   toggleIcon = computed<string>(()=>this.collapsed() ? 'chevron_left' : 'chevron_right');
+  navSections = computed(()=>this.sections().filter(s => s.position !== 'bottom'));
+  bottomSections = computed(()=>this.sections().filter(s => s.position === 'bottom'));
   onClick() {
     this.collapsed.set(!this.collapsed());
   }

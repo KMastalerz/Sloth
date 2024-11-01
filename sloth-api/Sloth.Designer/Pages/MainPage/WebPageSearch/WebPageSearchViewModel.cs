@@ -4,19 +4,21 @@ using Sloth.Designer.Services;
 using Sloth.Shared.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using static Sloth.Designer.Pages.WebPageSearchCommands;
 
 namespace Sloth.Designer.Pages;
 
 public class WebPageSearchViewModel: BaseViewModel
 {
-    public WebPageSearchViewModel(IDesignerService designerService, IWebPageStateService webPageStateService)
+    public WebPageSearchViewModel(IDesignerService designerService, IWebPageStateService webPageStateService, IWindowService windowService)
     {
         var mainPageViewModel = App.ServiceProvider.GetRequiredService<MainPageViewModel>();
         webPageStateService.RegisterCallback<IEnumerable<string>>(OnWebApplicationsUpdated);
         webPageStateService.RegisterCallback<IEnumerable<ListWebPageItem>>(OnWebPagesUpdated);
         SearchPages = new SearchPages(designerService, webPageStateService);
         EditPage = new EditPage(designerService, webPageStateService, mainPageViewModel);
+        AddNewPage = new AddNewPage(windowService);
     }
     private void OnWebApplicationsUpdated(IEnumerable<string> webApplications)
     {
@@ -25,7 +27,6 @@ public class WebPageSearchViewModel: BaseViewModel
             WebApps = new(webApplications);
         });
     }
-
     private void OnWebPagesUpdated(IEnumerable<ListWebPageItem> webPages)
     {
         Application.Current.Dispatcher.Invoke(() =>
@@ -70,4 +71,5 @@ public class WebPageSearchViewModel: BaseViewModel
 
     public IAsyncCommand SearchPages { get; }
     public IAsyncCommand EditPage { get; }
+    public ICommand AddNewPage { get; }
 }

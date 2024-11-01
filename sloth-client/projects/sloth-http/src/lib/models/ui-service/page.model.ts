@@ -16,12 +16,10 @@ export interface WebPanel {
     pageID: string;
     panelID: string;
     panelType: string;
-    sections?: string | null;
-    controls: string;
+    sections: string;
     class?: string | null;
     label?: string;
     metaData?: string;
-    webControls?: WebControl[];
     webSections?: WebSection[];
 }
 
@@ -30,6 +28,7 @@ export interface WebSection {
     panelID: string;
     sectionID: string;
     controls: string;
+    position?: string | null;
     label?: string;
     metaData?: string;
     webControls?: WebControl[];

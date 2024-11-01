@@ -18,10 +18,17 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Margin="16 0 16 12">
-                <Button     Content="Export to json"
+                <Button     Content="Designer"
+                            Command="{Binding OpenDesigner}"
+                            CommandParameter="{Binding}"
                             Style="{StaticResource SlothButtonHeader}"/>
                 
+                <Button     Content="Export seed"
+                            Style="{StaticResource SlothButtonHeader}"/>
+
                 <Button     Content="Account settings"
+                            Command="{Binding OpenAccountSettings}"
+                            CommandParameter="{Binding}"
                             Style="{StaticResource SlothButtonHeader}"/>
 
                 <Button     Content="Logoff"

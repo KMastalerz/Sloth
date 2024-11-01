@@ -2,7 +2,6 @@
 using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
-using System.Windows.Controls;
 
 namespace Sloth.Designer.Pages;
 public class BasePageViewModel: BaseViewModel
@@ -22,33 +21,24 @@ public class BasePageViewModel: BaseViewModel
         set => SetProperty(ref webPage, value);
     }
 
-    private Dictionary<string, string?> orientations;
+    private Dictionary<string, string?> orientations = default!;
     public Dictionary<string, string?> Orientations
     {
         get => orientations;
         set => SetProperty(ref orientations, value);
     }
 
-    private Dictionary<string, string?> positions;
+    private Dictionary<string, string?> positions = default!;
     public Dictionary<string, string?> Positions
     {
         get => positions;
         set => SetProperty(ref positions, value);
     }
 
-    private Dictionary<string, string?> backgrounds;
+    private Dictionary<string, string?> backgrounds = default!;
     public Dictionary<string, string?> Backgrounds
     {
         get => backgrounds;
         set => SetProperty(ref backgrounds, value);
     }
-
-    private UserControl? metadataPage = null;
-
-    public UserControl? MetadataPage
-    {
-        get => metadataPage;
-        set => SetProperty(ref metadataPage, value);
-    }
-
 }

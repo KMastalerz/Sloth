@@ -1,13 +1,12 @@
 ﻿
 using Sloth.Designer.Core;
-using Sloth.Designer.Enums;
 using Sloth.Designer.Models;
 using Sloth.Designer.Services;
 
 namespace Sloth.Designer.Pages;
 public static class AddControlCommands
 {
-    public class AddControlCommand(IWebPageStateService webPageStateService) : SyncCommand
+    public class AddControlCommand(IWebPageStateService webPageStateService, IWindowService windowService) : SyncCommand
     {
         protected override bool CanExecuteSync(object? parameter = null)
         {
@@ -24,15 +23,9 @@ public static class AddControlCommands
 
             var control = new NewControl(addControlViewModel.ControlName!, addControlViewModel.ControlType!);
 
-            switch (webPageStateService.AddElementType)
-            {
-                case AddElementType.SectionControl:
-                    webPageStateService.AddSectionControl(control);
-                    break;
-                case AddElementType.PanelControl:
-                    webPageStateService.AddPanelControl(control);
-                    break;
-            }
+            webPageStateService.AddControl(control);
+
+            windowService.CloseDialog();
         }
     }
 }

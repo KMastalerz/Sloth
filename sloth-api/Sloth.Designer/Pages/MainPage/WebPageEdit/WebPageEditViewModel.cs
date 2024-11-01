@@ -28,13 +28,12 @@ public class WebPageEditViewModel : BaseViewModel
         DropPanel = new DropPanel();
 
         AddPanelCommand = new AddPanelCommand(windowService, webPageStateService);
-        AddPanelOptionCommand = new AddPanelOptionCommand(windowService, webPageStateService);
-        AddSectionControlCommand = new AddSectionControlCommand(windowService, webPageStateService);
+        AddSectionCommand = new AddSectionCommand(windowService, webPageStateService);
+        AddControlCommand = new AddControlCommand(windowService, webPageStateService);
 
         DeletePanelCommand = new DeletePanelCommand(webPageStateService);
         DeleteSectionCommand = new DeleteSectionCommand(webPageStateService);
-        DeletePanelControlCommand = new DeletePanelControlCommand(webPageStateService);
-        DeleteSectionControlCommand = new DeleteSectionControlCommand(webPageStateService);
+        DeleteControlCommand = new DeleteControlCommand(webPageStateService);
 
         EditPageCommand = new EditPageCommand(this);
         EditPanelCommand = new EditPanelCommand(webPageStateService, this);
@@ -88,12 +87,11 @@ public class WebPageEditViewModel : BaseViewModel
     public ICommand DragPanel { get; }
     public ICommand DropPanel { get; }
     public ICommand AddPanelCommand { get; }
-    public ICommand AddPanelOptionCommand { get; }
-    public ICommand AddSectionControlCommand { get; }
+    public ICommand AddSectionCommand { get; }
+    public ICommand AddControlCommand { get; }
     public ICommand DeletePanelCommand { get; }
     public ICommand DeleteSectionCommand { get; }
-    public ICommand DeletePanelControlCommand { get; }
-    public ICommand DeleteSectionControlCommand { get; }
+    public ICommand DeleteControlCommand { get; }
     public ICommand EditPageCommand { get; }
     public ICommand EditPanelCommand { get; }
     public ICommand EditSectionCommand { get; }

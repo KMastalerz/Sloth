@@ -7,20 +7,43 @@
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:LinkViewModel, IsDesignTimeCreatable=False}">
-    <Border Style="{StaticResource SlothBorder}">
-        <StackPanel>
-            <!--counter subject-->
-            <TextBox   materialDesign:HintAssist.Hint="Counter Subject"
-                           Text="{Binding CounterSubject, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
-            <!--warning count-->
-            <TextBox   materialDesign:HintAssist.Hint="Warning Count"
-                           Text="{Binding WarningCount, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
-            <!--Error count-->
-            <TextBox   materialDesign:HintAssist.Hint="Error Count"
-                           Text="{Binding ErrorCount, UpdateSourceTrigger=PropertyChanged}"
-                           Style="{StaticResource SlothTextBox}"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Center"
+                    Margin="0 12">
+            <TextBlock Text="{Binding WebControl.ControlID}"
+                       Margin="0"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource SlothTextBlockHeadline}"/>
         </StackPanel>
-    </Border>
+
+        <StackPanel Grid.Row="1"
+                    Margin="16 0">
+            <!--counter subject-->
+            <TextBox    materialDesign:HintAssist.Hint="Counter Subject"
+                        Text="{Binding CounterSubject, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
+            <!--warning count-->
+            <TextBox    materialDesign:HintAssist.Hint="Warning Count"
+                        Text="{Binding WarningCount, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
+            <!--Error count-->
+            <TextBox    materialDesign:HintAssist.Hint="Error Count"
+                        Text="{Binding ErrorCount, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource SlothTextBox}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    Margin="16 12"
+                    Orientation="Horizontal">
+            <Button Content="Close"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource SlothButton}"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

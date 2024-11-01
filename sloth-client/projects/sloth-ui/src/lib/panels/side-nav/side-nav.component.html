@@ -9,7 +9,7 @@
     </button>
     <div class="sl-panel-base">
         <sl-branding-section [showTitle]="!collapsed()"></sl-branding-section>
-        @for(section of sections(); track $index) {
+        @for(section of navSections(); track $index) {
             <div class="sl-side-nav-section">
                 @if(!collapsed()){
                     <span class="sl-title-section">{{ section.label }}</span>
@@ -21,9 +21,11 @@
         }
 
         <div class="sl-side-nav-section bottom">
-            @for(control of controls(); track $index) {
-                <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
-               }
+            @for(section of bottomSections(); track $index) {
+                @for(control of section.webControls; track $index) {
+                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
+                }
+            }
         </div>
     </div>
 </nav>

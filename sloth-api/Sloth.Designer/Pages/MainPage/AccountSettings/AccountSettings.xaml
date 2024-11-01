@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Sloth.Designer.Pages.AccountSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:AccountSettingsViewModel, IsDesignTimeCreatable=False}">
+    <StackPanel HorizontalAlignment="Left">
+        <TextBlock Text="Account Settings"
+                   Margin="16 12"
+                   HorizontalAlignment="Left"
+                   Style="{StaticResource SlothTextBlockHeadline}"/>
+        <TextBox    materialDesign:HintAssist.Hint="Seed Path"
+                    Width="360"
+                    Text="{Binding SeedPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothTextBox}"/>
+        <Button HorizontalAlignment="Left"
+                Content="Save"
+                Command="{Binding SaveCommand}"
+                CommandParameter="{Binding}"
+                Width="140"
+                Style="{StaticResource SlothButton}"/>
+    </StackPanel>
+</UserControl>

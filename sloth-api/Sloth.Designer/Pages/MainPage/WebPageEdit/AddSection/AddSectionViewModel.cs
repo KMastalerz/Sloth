@@ -6,9 +6,9 @@ using static Sloth.Designer.Pages.AddSectionCommands;
 namespace Sloth.Designer.Pages;
 public class AddSectionViewModel : BaseViewModel
 {
-    public AddSectionViewModel(IWebPageStateService webPageStateService)
+    public AddSectionViewModel(IWebPageStateService webPageStateService, IWindowService windowService)
     {
-        AddSectionCommand = new AddSectionCommand(webPageStateService);
+        AddSectionCommand = new AddSectionCommand(webPageStateService, windowService);
     }
 
     private string? sectionID = null;

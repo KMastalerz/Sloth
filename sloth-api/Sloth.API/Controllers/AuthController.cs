@@ -19,6 +19,7 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<AccessTokenResponse>> Login(LoginCommand command)
     {
         var result = await mediator.Send(command);

@@ -23,4 +23,9 @@ public interface IUIElementsRepository
     Task RemoveWebPanelAsync(WebPanel webPanel);
     Task RemoveWebSectionAsync(WebSection webSection);
     Task RemoveWebControlAsync(WebControl webControl);
+    Task<bool> CheckWebPageExistsAsync(string appID, string pageID);
+    Task<IEnumerable<WebPage>> ListAllWebPage();
+    Task<IEnumerable<WebPanel>> ListAllWebPanel();
+    Task<IEnumerable<WebSection>> ListAllWebSection();
+    Task<IEnumerable<WebControl>> ListAllWebControl();
 }

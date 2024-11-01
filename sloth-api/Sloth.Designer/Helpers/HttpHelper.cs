@@ -63,8 +63,7 @@ public static class HttpHelper
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                var errorMessage = JsonSerializer.Deserialize<Dictionary<string, string>>(errorContent)?["error"];
-                result.Error = errorMessage; // Assign only the message part
+                result.Error = errorContent; // Assign only the message part
             }
         }
         catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException || ex is AggregateException)

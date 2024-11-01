@@ -11,6 +11,8 @@ public class MainPageViewModel : BaseViewModel
     public MainPageViewModel(IUserSettingsService userSettingsService, IWindowService windowService)
     {
         Logoff = new Logoff(userSettingsService, windowService);
+        OpenAccountSettings = new OpenAccountSettings();
+        OpenDesigner = new OpenDesigner();
     }
     private UserControl? mainPageControl = null;
     public UserControl? MainPageControl
@@ -20,4 +22,6 @@ public class MainPageViewModel : BaseViewModel
     }
 
     public ICommand Logoff { get; }
+    public ICommand OpenAccountSettings { get; }
+    public ICommand OpenDesigner { get; }
 }

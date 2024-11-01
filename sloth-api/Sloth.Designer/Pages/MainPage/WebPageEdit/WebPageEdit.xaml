@@ -98,7 +98,7 @@
                                                                         EditTooltip="Edit panel"
                                                                         DeleteTooltip="Delete panel"
                                                                         IsExpanded="False"
-                                                                        Add="{Binding DataContext.AddPanelOptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        Add="{Binding DataContext.AddSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         Delete="{Binding DataContext.DeletePanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         Edit="{Binding DataContext.EditPanelCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         CommandParameter ="{Binding}"
@@ -137,7 +137,7 @@
                                                                                         EditTooltip="Edit section"
                                                                                         DeleteTooltip="Delete section"
                                                                                         IsExpanded="False"
-                                                                                        Add="{Binding DataContext.AddSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                        Add="{Binding DataContext.AddControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Delete="{Binding DataContext.DeleteSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Edit="{Binding DataContext.EditSectionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                         Icon="VectorIntersection">
@@ -177,7 +177,7 @@
                                                                                                      CanDelete="True"
                                                                                                      EditTooltip="Edit control"
                                                                                                      DeleteTooltip="Delete control"
-                                                                                                     Delete="{Binding DataContext.DeleteSectionControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                                     Delete="{Binding DataContext.DeleteControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                                      Edit="{Binding DataContext.EditControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                                                      CommandParameter ="{Binding}"
                                                                                                      Icon="FormTextbox"/>
@@ -203,42 +203,6 @@
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
-                                            <!--panel controls-->
-                                            <ItemsControl   ItemsSource="{Binding WebControls}" 
-                                                            Margin="24 0 0 0"
-                                                            AllowDrop="True"
-                                                            Visibility="{Binding IsExpanded, ElementName=ExpandPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <local:WebPageListItem  Label="{Binding ControlID}"
-                                                                                    CanEdit="True"
-                                                                                    CanDelete="True"
-                                                                                    EditTooltip="Edit control"
-                                                                                    DeleteTooltip="Delete control"
-                                                                                    Delete="{Binding DataContext.DeletePanelControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                    Edit="{Binding DataContext.EditControlCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                    CommandParameter ="{Binding}"
-                                                                                    Icon="FormTextbox"/>
-                                                            <b:Interaction.Triggers>
-                                                                <b:EventTrigger EventName="MouseMove">
-                                                                    <core:CustomInvokeCommandAction Command="{Binding DataContext.MovePanelControl, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                                    CommandParameter="{Binding}"/>
-                                                                </b:EventTrigger>
-                                                                <b:EventTrigger EventName="DragOver">
-                                                                    <core:CustomInvokeCommandAction Command="{Binding DataContext.DragPanelControl, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                                    CommandParameter="{Binding}"/>
-                                                                </b:EventTrigger>
-                                                                <b:EventTrigger EventName="Drop">
-                                                                    <core:CustomInvokeCommandAction Command="{Binding DataContext.DropPanelControl, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                                    CommandParameter="{Binding}"/>
-                                                                </b:EventTrigger>
-                                                            </b:Interaction.Triggers>
-                                                        </StackPanel>
-
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -247,6 +211,7 @@
                     </Grid>
 
                     <ContentControl Grid.Column="1"
+                                    HorizontalAlignment="Center"
                                     Content="{Binding EditControl}"/>
                 </Grid>
             </ScrollViewer>

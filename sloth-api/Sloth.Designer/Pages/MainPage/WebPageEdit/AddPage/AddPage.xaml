@@ -1,23 +1,28 @@
-﻿<UserControl x:Class="Sloth.Designer.Pages.SelectPanelOption"
+﻿<UserControl x:Class="Sloth.Designer.Pages.AddPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Sloth.Designer.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=local:SelectPanelOptionViewModel, IsDesignTimeCreatable=False}">
+             d:DataContext="{d:DesignInstance Type=local:AddPageViewModel, IsDesignTimeCreatable=False}">
     <StackPanel Margin="20 20">
-        <TextBlock  Text="Select panel element"
+        <TextBlock  Text="Add page"
                     Style="{StaticResource SlothTextBlock}"/>
-        <ComboBox   materialDesign:HintAssist.Hint="Option"
-                    ItemsSource="{Binding PanelOptions}"
-                    SelectedItem="{Binding PanelOption, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    Style="{StaticResource SlothComboBox}"/>
+        <ComboBox   materialDesign:HintAssist.Hint="Application name"
+                    ItemsSource="{Binding Applications}"
+                    SelectedValue="{Binding AppID}"
+                    Text="{Binding AppID}"
+                    Style="{StaticResource SlothComboBox}"
+                    IsEditable="True"/>
+        <TextBox    materialDesign:HintAssist.Hint="Page name"
+                    Text="{Binding PageID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Style="{StaticResource SlothTextBox}"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0 12">
-            <Button Content="Next"
-                    Command="{Binding LoadSelectedOption}"
+            <Button Content="Add page"
+                    Command="{Binding AddPageCommand}"
                     CommandParameter="{Binding}"
                     Style="{StaticResource SlothButton}"/>
             <Button Content="Cancel"

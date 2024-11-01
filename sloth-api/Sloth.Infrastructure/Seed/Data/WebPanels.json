@@ -4,22 +4,20 @@
     "PageID": "main",
     "PanelID": "sideNav",
     "PanelType": "sideNav",
-    "Sections": "main,admin,user,info",
-    "Controls": "logout"
+    "Sections": "main,admin,user,info,logout"
   },
   {
     "AppID": "sloth",
     "PageID": "main",
     "PanelID": "header",
     "PanelType": "header",
-    "Controls": "messages, account, setttings"
+    "Sections": "header"
   },
   {
     "AppID": "sloth",
     "PageID": "auth",
     "PanelID": "login",
     "PanelType": "form",
-    "Sections": "login",
-    "Controls": "login, password, process, forgotPassword"
+    "Sections": "login"
   }
 ]

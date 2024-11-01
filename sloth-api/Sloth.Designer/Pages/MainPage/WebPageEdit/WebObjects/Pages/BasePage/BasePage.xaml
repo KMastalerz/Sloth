@@ -10,16 +10,31 @@
     <Grid Width="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Left"
+                    Margin="40 12 0 0">
             <TextBlock Text="{Binding WebPage.PageID}"
                        Style="{StaticResource SlothTextBlockHeadline}"/>
 
             <Separator Style="{StaticResource MaterialDesignSeparator}"/>
         </StackPanel>
 
-        <WrapPanel Grid.Row="1">
+        <WrapPanel Grid.Row="1"
+                   Margin="16 0 0 0">
+            <!--security table id-->
+            <TextBox    materialDesign:HintAssist.Hint="Security Table"
+                        Text="{Binding WebPage.SecurityTableID}"
+                        Style="{StaticResource SlothTextBox}"/>
+            <!--<Button Content="Set Metadata"
+                    Style="{StaticResource SlothButton}"/>
+            <Button Content="Set Validations"
+                    Style="{StaticResource SlothButton}"/>-->
+        </WrapPanel>
+        
+        <WrapPanel Grid.Row="2"
+                   Margin=" 0 0 16 0">
             <Border Style="{StaticResource SlothBorder}">
                 <StackPanel>
                     <ComboBox   materialDesign:HintAssist.Hint="Orientation"
@@ -51,14 +66,6 @@
                                 Style="{StaticResource SlothCheckBox}"/>
                 </StackPanel>
             </Border>
-
-            <Border Style="{StaticResource SlothBorder}">
-                <TextBox    materialDesign:HintAssist.Hint="Security Table"
-                            Text="{Binding WebPage.SecurityTableID}"
-                            Style="{StaticResource SlothTextBox}"/>
-            </Border>
-
-            <ContentControl Content="{Binding MetadataPage}"/>
         </WrapPanel>
     </Grid>
 </UserControl>

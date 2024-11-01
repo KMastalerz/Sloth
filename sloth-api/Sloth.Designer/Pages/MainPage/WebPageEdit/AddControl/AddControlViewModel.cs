@@ -7,9 +7,9 @@ using static Sloth.Designer.Pages.AddControlCommands;
 namespace Sloth.Designer.Pages;
 public class AddControlViewModel:BaseViewModel
 {
-    public AddControlViewModel(IWebPageStateService webPageStateService)
+    public AddControlViewModel(IWebPageStateService webPageStateService, IWindowService windowService)
     {
-        AddControlCommand = new AddControlCommand(webPageStateService);
+        AddControlCommand = new AddControlCommand(webPageStateService, windowService);
     }
 
     private string? controlName = null;

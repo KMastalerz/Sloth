@@ -48,4 +48,14 @@ public class WebPageSearchCommands
             }
         }
     }
+
+    public class AddNewPage(IWindowService windowService) : SyncCommand
+    {
+        protected override bool CanExecuteSync(object? parameter = null) => true;
+
+        protected override void ExecuteSync(object? parameter = null)
+        {
+            windowService.ShowDialog(new AddPage());
+        }
+    }
 }
