@@ -78,11 +78,17 @@ public static class MainPageCommands
                 var webSectionsPath = Path.Combine(seedPath!, "WebSections.json");
                 var webControlsPath = Path.Combine(seedPath!, "WebControls.json");
 
-                // Serialize each list to JSON and save to files
-                await File.WriteAllTextAsync(webPagesPath, JsonSerializer.Serialize(seedData.WebPages));
-                await File.WriteAllTextAsync(webPanelsPath, JsonSerializer.Serialize(seedData.WebPanels));
-                await File.WriteAllTextAsync(webSectionsPath, JsonSerializer.Serialize(seedData.WebSections));
-                await File.WriteAllTextAsync(webControlsPath, JsonSerializer.Serialize(seedData.WebControls));
+                // Set up JSON serializer options for formatting
+                var jsonOptions = new JsonSerializerOptions
+                {
+                    WriteIndented = true // Enables pretty printing with indentation and new lines
+                };
+
+                // Serialize each list to JSON with formatting options and save to files
+                await File.WriteAllTextAsync(webPagesPath, JsonSerializer.Serialize(seedData.WebPages, jsonOptions));
+                await File.WriteAllTextAsync(webPanelsPath, JsonSerializer.Serialize(seedData.WebPanels, jsonOptions));
+                await File.WriteAllTextAsync(webSectionsPath, JsonSerializer.Serialize(seedData.WebSections, jsonOptions));
+                await File.WriteAllTextAsync(webControlsPath, JsonSerializer.Serialize(seedData.WebControls, jsonOptions));
 
                 await windowService.ShowSuccessAsync("Seed data exported successfully!");
             }

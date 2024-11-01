@@ -13,6 +13,7 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
     public async Task<WebPage?> GetFullWebPageAsync(string appID, string pageID)
     {
         return await dbContext.WebPage
+            .AsNoTracking() // Ensure the query result is not tracked
             .Include(p => p.WebPanels)
                 .ThenInclude(pa => pa.WebSections) // Include sections inside panels
                     .ThenInclude(s => s.WebControls) // Include controls inside sections

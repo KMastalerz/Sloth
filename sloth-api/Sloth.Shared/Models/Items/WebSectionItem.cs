@@ -12,7 +12,5 @@ public class WebSectionItem
     public string? Position { get; set; } = null;
     public string? Label { get; set; } = null;
     public string? MetaData { get; set; } = null;
-    public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
-    public Guid ChangeUser { get; set; } = default!;
     public ObservableCollection<WebControlItem> WebControls { get; set; } = [];
 }

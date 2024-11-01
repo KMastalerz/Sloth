@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Sloth.Application.UserIdentity;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Repositories;
+using Sloth.Shared.Helpers;
 using System.Transactions;
 
 namespace Sloth.Application.Services.UIElements;
@@ -14,33 +15,57 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
         var user = userContext.GetCurrentUser()!;
         logger.LogInformation("{UserID} attempts to save changes for page: {PageID}", user.UserID, request.WebPage.PageID);
 
-        using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions
+        var originalWebPage = await uIElementsRepository.GetFullWebPageAsync(request.WebPage.AppID, request.WebPage.PageID);
+
+        var webPage = mapper.Map<WebPage>(request.WebPage);
+
+        if (originalWebPage is null)
         {
-            IsolationLevel = IsolationLevel.ReadCommitted,
-            Timeout = TransactionManager.MaximumTimeout
-        }, TransactionScopeAsyncFlowOption.Enabled))
+            await uIElementsRepository.AddWebPageAsync(webPage);
+            logger.LogInformation("Page: {PageID} was successfully changed!", request.WebPage.PageID);
+            return;
+        }
+
+        if (webPage.HasChanges(originalWebPage, ["WebPanels", "ChangeUser", "ChangeDate"]))
         {
-            try
+            webPage.ChangeUser = user.UserGuid;
+            webPage.ChangeDate = DateTime.UtcNow;
+        }
+
+
+        foreach (var panel in webPage.WebPanels)
+        {
+            var originalPanel = originalWebPage.WebPanels.FirstOrDefault(x => x.PanelID == panel.PanelID);
+
+            if(originalPanel is null || panel.HasChanges(originalPanel, ["WebSections", "ChangeUser", "ChangeDate"]))
             {
-                var checkWebPage = await uIElementsRepository.CheckWebPageExistsAsync(request.WebPage.AppID, request.WebPage.PageID);
-
-                var webPage = mapper.Map<WebPage>(request.WebPage);
-
-                if (checkWebPage)
-                {
-                    await uIElementsRepository.SaveWebPageAsync(webPage);
-                }
-                else await uIElementsRepository.AddWebPageAsync(webPage);
-
-                transaction.Complete();
-                logger.LogInformation("Page: {PageID} was successfully changed!", request.WebPage.PageID);
+                panel.ChangeUser = user.UserGuid;
+                panel.ChangeDate = DateTime.UtcNow;
             }
-            catch(Exception ex)
+
+            foreach (var section in panel.WebSections)
             {
-                logger.LogError(ex, "An error occurred while saving changes for page {PageID}", request.WebPage.PageID);
-                throw; 
+                var originalSection = originalPanel?.WebSections.FirstOrDefault(x => x.SectionID == section.SectionID);
+
+                if (originalSection is null || section.HasChanges(originalSection, ["WebControls", "ChangeUser", "ChangeDate"]))
+                {
+                    section.ChangeUser = user.UserGuid;
+                    section.ChangeDate = DateTime.UtcNow;
+                }
+
+                foreach (var control in section.WebControls)
+                {
+                    var originalControl = originalSection?.WebControls.FirstOrDefault(x => x.ControlID == control.ControlID);
+
+                    if (originalControl is null || control.HasChanges(originalControl, ["ChangeUser", "ChangeDate"]))
+                    {
+                        control.ChangeUser = user.UserGuid;
+                        control.ChangeDate = DateTime.UtcNow;
+                    }
+                }
             }
         }
 
+        await uIElementsRepository.SaveWebPageAsync(webPage);
     }
 }

@@ -8,11 +8,12 @@ namespace Sloth.Designer.Pages;
 
 public class MainPageViewModel : BaseViewModel
 {
-    public MainPageViewModel(IUserSettingsService userSettingsService, IWindowService windowService)
+    public MainPageViewModel(IDesignerService designerService,IUserSettingsService userSettingsService, IWindowService windowService)
     {
         Logoff = new Logoff(userSettingsService, windowService);
         OpenAccountSettings = new OpenAccountSettings();
         OpenDesigner = new OpenDesigner();
+        ExportSeed = new ExportSeed(designerService, windowService, userSettingsService);
     }
     private UserControl? mainPageControl = null;
     public UserControl? MainPageControl
@@ -24,4 +25,5 @@ public class MainPageViewModel : BaseViewModel
     public ICommand Logoff { get; }
     public ICommand OpenAccountSettings { get; }
     public ICommand OpenDesigner { get; }
+    public ICommand ExportSeed { get; }
 }

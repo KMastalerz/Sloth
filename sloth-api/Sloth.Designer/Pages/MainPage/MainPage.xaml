@@ -24,6 +24,7 @@
                             Style="{StaticResource SlothButtonHeader}"/>
                 
                 <Button     Content="Export seed"
+                            Command="{Binding ExportSeed}"
                             Style="{StaticResource SlothButtonHeader}"/>
 
                 <Button     Content="Account settings"

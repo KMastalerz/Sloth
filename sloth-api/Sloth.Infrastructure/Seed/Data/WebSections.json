@@ -1,48 +1,68 @@
 [
   {
     "AppID": "sloth",
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "SectionID": "main",
-    "Label": "Main",
-    "Controls": "dashboard,kanban,bugs,projects,tasks,timesheet"
-  },
-  {
-    "AppID": "sloth",
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "SectionID": "info",
-    "Label": "Info",
-    "Controls": "releases,documentation"
-  },
-  {
-    "AppID": "sloth",
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "SectionID": "admin",
-    "Label": "Admin",
-    "Controls": "projectManagement,teamManagement,userManagement"
-  },
-  {
-    "AppID": "sloth",
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "SectionID": "logout",
-    "Position": "bottom",
-    "Controls": "logout"
+    "PageID": "auth",
+    "PanelID": "login",
+    "SectionID": "login",
+    "Controls": "login,password,process,forgotPassword",
+    "Position": null,
+    "Label": null,
+    "MetaData": null,
+    "WebControls": []
   },
   {
     "AppID": "sloth",
     "PageID": "main",
     "PanelID": "header",
     "SectionID": "header",
-    "Controls": "messages, account, setttings"
+    "Controls": "messages,account,setttings",
+    "Position": null,
+    "Label": null,
+    "MetaData": null,
+    "WebControls": []
   },
   {
     "AppID": "sloth",
-    "PageID": "auth",
-    "PanelID": "login",
-    "SectionID": "login",
-    "Controls": "login, password, process, forgotPassword"
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "admin",
+    "Controls": "projectManagement,teamManagement,userManagement",
+    "Position": null,
+    "Label": "Admin",
+    "MetaData": null,
+    "WebControls": []
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "info",
+    "Controls": "releases,documentation",
+    "Position": null,
+    "Label": "Info",
+    "MetaData": null,
+    "WebControls": []
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "logout",
+    "Controls": "logout",
+    "Position": "bottom",
+    "Label": null,
+    "MetaData": null,
+    "WebControls": []
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "SectionID": "main",
+    "Controls": "dashboard,kanban,bugs,projects,tasks,timesheet",
+    "Position": null,
+    "Label": "Main",
+    "MetaData": null,
+    "WebControls": []
   }
 ]

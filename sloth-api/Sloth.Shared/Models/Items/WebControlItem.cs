@@ -23,6 +23,4 @@ public class WebControlItem
     public string? Icon { get; set; } = null;
     public string? MetaData { get; set; } = null;
     public string? Validation { get; set; } = null;
-    public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
-    public Guid ChangeUser { get; set; } = default!;
 }

@@ -1,23 +1,38 @@
 [
   {
     "AppID": "sloth",
-    "PageID": "main",
-    "PanelID": "sideNav",
-    "PanelType": "sideNav",
-    "Sections": "main,admin,user,info,logout"
+    "PageID": "auth",
+    "PanelID": "login",
+    "PanelType": "form",
+    "Sections": "login",
+    "Class": null,
+    "SecurityTableID": null,
+    "Label": null,
+    "MetaData": null,
+    "WebSections": []
   },
   {
     "AppID": "sloth",
     "PageID": "main",
     "PanelID": "header",
     "PanelType": "header",
-    "Sections": "header"
+    "Sections": "header",
+    "Class": null,
+    "SecurityTableID": null,
+    "Label": null,
+    "MetaData": null,
+    "WebSections": []
   },
   {
     "AppID": "sloth",
-    "PageID": "auth",
-    "PanelID": "login",
-    "PanelType": "form",
-    "Sections": "login"
+    "PageID": "main",
+    "PanelID": "sideNav",
+    "PanelType": "sideNav",
+    "Sections": "main,admin,info,logout",
+    "Class": null,
+    "SecurityTableID": null,
+    "Label": null,
+    "MetaData": null,
+    "WebSections": []
   }
 ]

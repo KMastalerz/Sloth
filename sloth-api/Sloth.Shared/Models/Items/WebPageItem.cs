@@ -16,7 +16,5 @@ public class WebPageItem
     public string? SecurityTableID { get; set; } = null;
     public string? Description { get; set; } = null;
     public string? MetaData { get; set; } = null;
-    public DateTime ChangeDate { get; set; } = DateTime.UtcNow!;
-    public Guid ChangeUser { get; set; } = default!;
     public ObservableCollection<WebPanelItem> WebPanels { get; set; } = [];
 }
