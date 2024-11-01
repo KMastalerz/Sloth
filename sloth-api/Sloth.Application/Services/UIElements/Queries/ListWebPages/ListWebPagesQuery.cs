@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Sloth.Shared.Models.Items;
+using Sloth.Shared.Models;
 
 namespace Sloth.Application.Services.UIElements;
-public class ListWebPagesQuery: IRequest<ListWebPageFull>;
+public class ListWebPagesQuery: IRequest<ListWebPagesItem>;

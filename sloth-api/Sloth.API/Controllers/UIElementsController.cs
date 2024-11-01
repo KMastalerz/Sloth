@@ -93,7 +93,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<WebPageItem>>?> ListWebPages()
+    public async Task<ActionResult<ListWebPagesItem>> ListWebPages()
     {
         var result = await mediator.Send(new ListWebPagesQuery());
         return Ok(result);

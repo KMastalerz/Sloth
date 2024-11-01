@@ -3,9 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sloth.Designer.Core;
 using Sloth.Designer.Pages;
 using Sloth.Designer.Services;
-using System.Configuration;
 using System.IO;
-using System.Net.Http;
 using System.Windows;
 
 namespace Sloth.Designer;

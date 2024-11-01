@@ -120,24 +120,24 @@ internal class UIElementsRepository(SlothDbContext dbContext) : IUIElementsRepos
         return await dbContext.WebPage.AnyAsync(p => p.AppID == appID && p.PageID == pageID);
     }
 
-    public async Task<IEnumerable<WebPage>> ListAllWebPage()
+    public async Task<IEnumerable<WebPage>> ListAllWebPageAsync()
     {
-        return await dbContext.WebPage.ToListAsync();
+        return await dbContext.WebPage.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<WebPanel>> ListAllWebPanel()
+    public async Task<IEnumerable<WebPanel>> ListAllWebPanelAsync()
     {
-        return await dbContext.WebPanel.ToListAsync();
+        return await dbContext.WebPanel.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<WebSection>> ListAllWebSection()
+    public async Task<IEnumerable<WebSection>> ListAllWebSectionAsync()
     {
-        return await dbContext.WebSection.ToListAsync();
+        return await dbContext.WebSection.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<WebControl>> ListAllWebControl()
+    public async Task<IEnumerable<WebControl>> ListAllWebControlAsync()
     {
-        return await dbContext.WebControl.ToListAsync();
+        return await dbContext.WebControl.AsNoTracking().ToListAsync();
     }
 
     #endregion

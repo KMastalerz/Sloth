@@ -9,4 +9,5 @@ public interface IDesignerService
     Task<ServiceReturnValue<WebPageItem>?> GetFullWebPage(string appID, string pageID);
     Task<ServiceReturnValue<string>?> SaveFullWebPage(WebPageItem webPage);
     Task<ServiceReturnValue<string>?> DeleteWebPage(string appID, string pageID);
+    Task<ServiceReturnValue<ListWebPagesItem>?> ListWebPages();
 }

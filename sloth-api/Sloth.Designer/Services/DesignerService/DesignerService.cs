@@ -59,4 +59,9 @@ internal class DesignerService : IDesignerService
         var response = await httpClient.DeleteAsync<string>(HttpServicePaths.UIElements, "DeleteWebPage", parms);
         return response;
     }
+
+    public async Task<ServiceReturnValue<ListWebPagesItem>?> ListWebPages()
+    {
+        return await httpClient.GetAsync<ListWebPagesItem>(HttpServicePaths.UIElements, "ListWebPages");
+    }
 }
