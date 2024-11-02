@@ -7,9 +7,15 @@
         <Setter Property="Margin" Value="12 12 0 0"/>
         <Setter Property="Padding" Value="12 12"/>
         <Setter Property="FontSize" Value="12"/>
-        
     </Style>
 
+    <Style x:Key="SlothComboBoxSmall" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Margin" Value="12 12 0 0"/>
+        <Setter Property="Padding" Value="12 12"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+    
     <!-- TextBox Global Style -->
     <Style x:Key="SlothTextBox" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
         <Setter Property="Width" Value="220" />
@@ -17,7 +23,14 @@
         <Setter Property="Padding" Value="12 12"/>
         <Setter Property="FontSize" Value="12"/>
     </Style>
-    
+
+    <Style x:Key="SlothTextBoxSmall" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Margin" Value="12 12 0 0"/>
+        <Setter Property="Padding" Value="12 12"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
 
     <Style x:Key="SlothTextBoxIcon" TargetType="TextBox" BasedOn="{StaticResource SlothTextBox}">
         <Setter Property="Padding" Value="12 8"/>
@@ -34,6 +47,11 @@
     <!-- TextBlock Global Style -->
     <Style x:Key="SlothTextBlock" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="SlothTextBlockLight" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+        <Setter Property="Margin" Value="16 16 0 0"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontSize" Value="18"/>
     </Style>
     <Style x:Key="SlothTextBlockHeadline" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline5TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -164,6 +182,18 @@
     </Style>
 
     <Style x:Key="SlothButtonSecondary" TargetType="Button" BasedOn="{StaticResource SlothButtonOutlinedSecondaryDark}">
+    </Style>
+
+    <Style x:Key="SlothButtonError" TargetType="Button" BasedOn="{StaticResource SlothButtonDark}">
+        <Setter Property="Background" Value="#851d22"/>
+        <Setter Property="BorderBrush" Value="#851d22"/>
+        <Setter Property="Foreground" Value="#F6F6F6"/>
+    </Style>
+
+
+    <Style x:Key="SlothButtonOutlinedError" TargetType="Button" BasedOn="{StaticResource SlothOutlinedButtonDark}">
+        <Setter Property="BorderBrush" Value="#851d22"/>
+        <Setter Property="Foreground" Value="#851d22"/>
     </Style>
 
     <Style x:Key="SlothButtonNeutral" TargetType="Button" BasedOn="{StaticResource SlothFlatButtonDark}">

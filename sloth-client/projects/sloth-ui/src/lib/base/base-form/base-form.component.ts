@@ -21,7 +21,7 @@ export class BaseForm {
   config = computed(()=> this.pageSync().pageConfig);
   hasRouter = computed(()=> this.config().hasRouter);
   panels = computed(()=> this.config().webPanels);
-  metaData = computed<any>(() => this.jsonUtil.tryParse(this.config()?.metaData));
+  metadata = computed<any>(() => this.jsonUtil.tryParse(this.config()?.metadata));
   actionEvent = output<Action>();
 
   ngOnInit(): void {

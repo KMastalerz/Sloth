@@ -12,15 +12,15 @@ public class LinkViewModel: BaseViewModel
         this.webPageStateService = webPageStateService;
         webControl = webPageStateService.WebControl!;
 
-        if (!string.IsNullOrEmpty(webPageStateService.WebControl!.MetaData))
+        if (!string.IsNullOrEmpty(webPageStateService.WebControl!.Metadata))
         {
-            var metaData = JsonHelper.TryConvert(webPageStateService.WebControl.MetaData, new ButtonMetadata());
+            var metadata = JsonHelper.TryConvert(webPageStateService.WebControl.Metadata, new ButtonMetadata());
 
-            if (metaData != null)
+            if (metadata != null)
             {
-                CounterSubject = metaData.CounterSubject;
-                WarningCount = metaData.WarningCount;
-                ErrorCount = metaData.ErrorCount;
+                CounterSubject = metadata.CounterSubject;
+                WarningCount = metadata.WarningCount;
+                ErrorCount = metadata.ErrorCount;
             }
         }
     }
@@ -40,7 +40,7 @@ public class LinkViewModel: BaseViewModel
         {
             var newValue = string.IsNullOrWhiteSpace(value) ? null : value;
             if (SetProperty(ref counterSubject, newValue))
-                UpdateMetaData();
+                UpdateMetadata();
         }
     }
 
@@ -51,7 +51,7 @@ public class LinkViewModel: BaseViewModel
         set
         {
             if (SetProperty(ref warningCount, value))
-                UpdateMetaData();
+                UpdateMetadata();
         }
     }
 
@@ -62,19 +62,19 @@ public class LinkViewModel: BaseViewModel
         set
         {
             if (SetProperty(ref errorCount, value))
-                UpdateMetaData();
+                UpdateMetadata();
         }
     }
 
-    private void UpdateMetaData()
+    private void UpdateMetadata()
     {
-        var metaData = new ButtonMetadata
+        var metadata = new ButtonMetadata
         {
             CounterSubject = CounterSubject,
             WarningCount = WarningCount,
             ErrorCount = ErrorCount
         };
 
-        webPageStateService.WebControl!.MetaData = metaData.SerializeToCamelCase();
+        webPageStateService.WebControl!.Metadata = metadata.SerializeToCamelCase();
     }
 }

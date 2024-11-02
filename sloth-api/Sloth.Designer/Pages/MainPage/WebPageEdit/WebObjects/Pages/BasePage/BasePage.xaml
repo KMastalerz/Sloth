@@ -27,9 +27,10 @@
             <TextBox    materialDesign:HintAssist.Hint="Security Table"
                         Text="{Binding WebPage.SecurityTableID}"
                         Style="{StaticResource SlothTextBox}"/>
-            <!--<Button Content="Set Metadata"
+            <Button Content="Set Layout"
+                    Command="{Binding SetLayout}"
                     Style="{StaticResource SlothButton}"/>
-            <Button Content="Set Validations"
+            <!--<Button Content="Set Metadata"
                     Style="{StaticResource SlothButton}"/>-->
         </WrapPanel>
         
@@ -37,24 +38,15 @@
                    Margin=" 0 0 16 0">
             <Border Style="{StaticResource SlothBorder}">
                 <StackPanel>
-                    <ComboBox   materialDesign:HintAssist.Hint="Orientation"
-                                ItemsSource="{Binding Orientations}"
-                                DisplayMemberPath="Key"
-                                SelectedValuePath="Value"
-                                SelectedValue="{Binding WebPage.Orientation}"
-                                Style="{StaticResource SlothComboBox}"/>
-                    <ComboBox   materialDesign:HintAssist.Hint="Position"
-                                ItemsSource="{Binding Positions}"
-                                DisplayMemberPath="Key"
-                                SelectedValuePath="Value"
-                                SelectedValue="{Binding WebPage.Position}"
-                                Style="{StaticResource SlothComboBox}"/>
                     <ComboBox   materialDesign:HintAssist.Hint="Background"
                                 ItemsSource="{Binding Backgrounds}"
                                 DisplayMemberPath="Key"
                                 SelectedValuePath="Value"
                                 SelectedValue="{Binding WebPage.Background}"
                                 Style="{StaticResource SlothComboBox}"/>
+                    <TextBox    materialDesign:HintAssist.Hint="Description"
+                                Text="{Binding WebPage.Description}"
+                                Style="{StaticResource SlothTextBox}"/>
                     <TextBox    materialDesign:HintAssist.Hint="Class"
                                 Text="{Binding WebPage.Class}"
                                 Style="{StaticResource SlothTextBox}"/>

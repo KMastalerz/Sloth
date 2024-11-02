@@ -92,6 +92,7 @@ public partial class App : Application
         services.AddTransient<AddSectionViewModel>();
         services.AddTransient<AddControlViewModel>();
         services.AddTransient<BasePageViewModel>();
+        services.AddTransient<PageLayoutViewModel>();
         services.AddTransient<BasePanelViewModel>();
         services.AddTransient<BaseSectionViewModel>();
         services.AddTransient<BaseControlViewModel>();
@@ -113,6 +114,7 @@ public partial class App : Application
         services.AddTransient<AddSection>();
         services.AddTransient<AddControl>();
         services.AddTransient<BasePage>();
+        services.AddTransient<PageLayout>();
         services.AddTransient<BasePanel>();
         services.AddTransient<BaseSection>();
         services.AddTransient<BaseControl>();

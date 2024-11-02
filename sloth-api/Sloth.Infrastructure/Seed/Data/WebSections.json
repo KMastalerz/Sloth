@@ -7,7 +7,7 @@
     "Controls": "login,password,process,forgotPassword",
     "Position": null,
     "Label": null,
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   },
   {
@@ -18,7 +18,7 @@
     "Controls": "messages,account,setttings",
     "Position": null,
     "Label": null,
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   },
   {
@@ -29,7 +29,7 @@
     "Controls": "projectManagement,teamManagement,userManagement",
     "Position": null,
     "Label": "Admin",
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   },
   {
@@ -40,7 +40,7 @@
     "Controls": "releases,documentation",
     "Position": null,
     "Label": "Info",
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   },
   {
@@ -51,7 +51,7 @@
     "Controls": "logout",
     "Position": "bottom",
     "Label": null,
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   },
   {
@@ -62,7 +62,7 @@
     "Controls": "dashboard,kanban,bugs,projects,tasks,timesheet",
     "Position": null,
     "Label": "Main",
-    "MetaData": null,
+    "Metadata": null,
     "WebControls": []
   }
 ]

@@ -12,7 +12,7 @@ using Sloth.Infrastructure.DatabaseContext;
 namespace Sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20241101162601_Init")]
+    [Migration("20241102200203_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -381,7 +381,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaData")
+                    b.Property<string>("Metadata")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Placeholder")
@@ -472,16 +472,13 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaData")
+                    b.Property<string>("Layout")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Orientation")
+                    b.Property<string>("Metadata")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Panels")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityTableID")
@@ -552,7 +549,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaData")
+                    b.Property<string>("Metadata")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PanelType")
@@ -596,7 +593,7 @@ namespace Sloth.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaData")
+                    b.Property<string>("Metadata")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")

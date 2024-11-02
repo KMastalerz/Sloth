@@ -12,9 +12,9 @@ public class ButtonViewModel : BaseViewModel
         this.webPageStateService = webPageStateService;
         webControl = webPageStateService.WebControl!;
 
-        if (!string.IsNullOrEmpty(webPageStateService.WebControl!.MetaData))
+        if (!string.IsNullOrEmpty(webPageStateService.WebControl!.Metadata))
         {
-            var metaData = JsonHelper.TryConvert(webPageStateService.WebControl.MetaData, new ButtonMetadata());
+            var metaData = JsonHelper.TryConvert(webPageStateService.WebControl.Metadata, new ButtonMetadata());
 
             if (metaData != null)
             {
@@ -75,6 +75,6 @@ public class ButtonViewModel : BaseViewModel
             ErrorCount = ErrorCount
         };
 
-        webPageStateService.WebControl!.MetaData = metaData.SerializeToCamelCase();
+        webPageStateService.WebControl!.Metadata = metaData.SerializeToCamelCase();
     }
 }

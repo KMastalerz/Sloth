@@ -3,12 +3,11 @@ export interface WebPage {
     pageID: string;
     label: string;
     panels: string;
-    orientation?: string | null;
-    position?: string | null;
     background?: string | null;
     class?: string | null;
     hasRouter: boolean;
-    metaData?: string;
+    layout?: string | null;
+    metadata?: string;
     webPanels?: WebPanel[];
 }
 
@@ -19,7 +18,7 @@ export interface WebPanel {
     sections: string;
     class?: string | null;
     label?: string;
-    metaData?: string;
+    metadata?: string;
     webSections?: WebSection[];
 }
 
@@ -30,7 +29,7 @@ export interface WebSection {
     controls: string;
     position?: string | null;
     label?: string;
-    metaData?: string;
+    metadata?: string;
     webControls?: WebControl[];
 }
 
@@ -53,7 +52,7 @@ export interface WebControl {
     routePageID?: string | null;
     action?: string | null;
     icon?: string | null;
-    metaData?: string | null;
+    metadata?: string | null;
     validation?: string | null;
     isHidden: boolean;
     isReadOnly: boolean;

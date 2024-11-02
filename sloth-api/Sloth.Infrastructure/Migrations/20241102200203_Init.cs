@@ -149,14 +149,13 @@ public partial class Init : Migration
                 PageID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Panels = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Orientation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Background = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 HasRouter = table.Column<bool>(type: "bit", nullable: false),
                 SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Layout = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                 ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
             },
@@ -246,7 +245,7 @@ public partial class Init : Migration
                 Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 SecurityTableID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                 ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
             },
@@ -365,7 +364,7 @@ public partial class Init : Migration
                 Controls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                 ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
             },
@@ -402,7 +401,7 @@ public partial class Init : Migration
                 RoutePageID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Action = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                MetaData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Validation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                 ChangeUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

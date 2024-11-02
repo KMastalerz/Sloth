@@ -2,16 +2,20 @@
 using Sloth.Designer.Core;
 using Sloth.Designer.Services;
 using Sloth.Shared.Models;
+using System.Windows.Input;
+using static Sloth.Designer.Pages.BasePageCommands;
 
 namespace Sloth.Designer.Pages;
 public class BasePageViewModel: BaseViewModel
 {
-    public BasePageViewModel(IWebPageStateService webPageStateService)
+    public BasePageViewModel(IWebPageStateService webPageStateService, IWindowService windowService)
     {
         WebPage = webPageStateService.WebPage!;
         Orientations = PageConstants.Orientation;
         Positions = PageConstants.Position;
         Backgrounds = PageConstants.Background;
+
+        SetLayout = new SetLayout(windowService);
     }
 
     private WebPageItem webPage = default!;
@@ -41,4 +45,6 @@ public class BasePageViewModel: BaseViewModel
         get => backgrounds;
         set => SetProperty(ref backgrounds, value);
     }
+
+    public ICommand SetLayout { get; }
 }

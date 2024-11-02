@@ -8,6 +8,6 @@ public class GetWebPanel
     public string? Sections { get; set; } = null;
     public string? Class { get; set; } = null;
     public string? Label { get; set; } = null;
-    public string? MetaData { get; set; } = null;
+    public string? Metadata { get; set; } = null;
     public List<GetWebSection> WebSections { get; set; } = [];
 }
