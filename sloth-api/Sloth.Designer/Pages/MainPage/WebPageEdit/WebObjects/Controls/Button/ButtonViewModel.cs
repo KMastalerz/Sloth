@@ -14,13 +14,13 @@ public class ButtonViewModel : BaseViewModel
 
         if (!string.IsNullOrEmpty(webPageStateService.WebControl!.Metadata))
         {
-            var metaData = JsonHelper.TryConvert(webPageStateService.WebControl.Metadata, new ButtonMetadata());
+            var metadata = JsonHelper.TryConvert(webPageStateService.WebControl.Metadata, new ButtonMetadata());
 
-            if (metaData != null)
+            if (metadata != null)
             {
-                CounterSubject = metaData.CounterSubject;
-                WarningCount = metaData.WarningCount;
-                ErrorCount = metaData.ErrorCount;
+                CounterSubject = metadata.CounterSubject;
+                WarningCount = metadata.WarningCount;
+                ErrorCount = metadata.ErrorCount;
             }
         }
     }
@@ -68,13 +68,13 @@ public class ButtonViewModel : BaseViewModel
 
     private void UpdateMetaData()
     {
-        var metaData = new ButtonMetadata
+        var metadata = new ButtonMetadata
         {
             CounterSubject = CounterSubject,
             WarningCount = WarningCount,
             ErrorCount = ErrorCount
         };
 
-        webPageStateService.WebControl!.Metadata = metaData.SerializeToCamelCase();
+        webPageStateService.WebControl!.Metadata = metadata.SerializeToCamelCase();
     }
 }

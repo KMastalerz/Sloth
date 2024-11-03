@@ -23,7 +23,7 @@
     "HasRouter": true,
     "SecurityTableID": null,
     "Description": "Main page",
-    "Layout": "{\u0022columns\u0022:2,\u0022rows\u0022:2,\u0022columnsRatio\u0022:[\u0022auto\u0022,1],\u0022rowsRatio\u0022:[\u0022auto\u0022,1],\u0022gridSpans\u0022:[{\u0022type\u0022:\u0022column\u0022,\u0022id\u0022:1,\u0022spanFrom\u0022:1,\u0022spanTo\u0022:2}]}",
+    "Layout": "{\u0022columns\u0022:2,\u0022rows\u0022:2,\u0022columnsRatio\u0022:[\u0022auto\u0022,1],\u0022rowsRatio\u0022:[\u0022auto\u0022,1],\u0022gridAreas\u0022:[{\u0022type\u0022:\u0022row\u0022,\u0022id\u0022:1,\u0022spanFrom\u0022:1,\u0022spanTo\u0022:2}]}",
     "Metadata": null,
     "WebPanels": []
   }

@@ -1,12 +1,12 @@
-export type GridMetadata = {
+export type PageLayoutMetadata = {
     columns?: number;
     rows?: number;
     columnsRatio?: (string | number)[];
     rowsRatio?: (string | number)[];
-    gridSpans?: GridSpan[];
+    gridAreas?: GridArea[];
 };
 
-export type GridSpan = {
+export type GridArea = {
     type: 'column' | 'row';
     id: number;
     spanFrom: number;

@@ -1,12 +1,12 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, AuthStateService, LoginCommand } from '@sloth-http';
-import { Action, BrandingSectionComponent, DynamicFormComponent, DynamicPageSync } from '@sloth-ui';
+import { Action, BrandingSectionComponent, DynamicGridComponent, DynamicPageSync } from '@sloth-ui';
 
 @Component({
   selector: 'sl-auth',
   standalone: true,
-  imports: [DynamicFormComponent, BrandingSectionComponent],
+  imports: [DynamicGridComponent, BrandingSectionComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })

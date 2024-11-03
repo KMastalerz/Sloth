@@ -14,13 +14,13 @@ import { LinkMetadata } from '../../models/meta-data.types';
 })
 export class LinkComponent extends BaseControl {
   destroyRef = inject(DestroyRef)
-  private metaData = computed<LinkMetadata | undefined | null>(() => this.jsonUtil.tryParse(this.config()?.metaData));
+  private metadata = computed<LinkMetadata | undefined | null>(() => this.jsonUtil.tryParse(this.config()?.metadata));
   private isSideNav = computed(() => this.pageSync().getWebPanelByID(this.config().panelID).panelType === 'sideNav');
   private isSideNavCollapsedState = computed(() => this.isSideNav() ? this.navCollapsed() : true);
   
-  private counterSubject = computed<string | undefined>(() => this.metaData()?.counterSubject ?? undefined);
-  protected warningCount = computed<number | undefined>(()=>this.metaData()?.warningCount);
-  protected errorCount = computed<number | undefined>(()=>this.metaData()?.errorCount);
+  private counterSubject = computed<string | undefined>(() => this.metadata()?.counterSubject ?? undefined);
+  protected warningCount = computed<number | undefined>(()=>this.metadata()?.warningCount);
+  protected errorCount = computed<number | undefined>(()=>this.metadata()?.errorCount);
 
   protected showIcon = computed(() => !(!this.config().icon));
   protected showLabel = computed(() => !(!this.label())  && !this.isSideNavCollapsedState());

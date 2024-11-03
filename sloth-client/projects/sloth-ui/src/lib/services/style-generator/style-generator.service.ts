@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GeneratedGrid, GridStyle } from '../../models/forms.types';
-import { GridMetadata } from '../../models/meta-data.types';
+import { PageLayoutMetadata } from '../../models/meta-data.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StyleGeneratorService {
-  generateGrid(metadata: GridMetadata): GeneratedGrid {
+  generateGrid(metadata: PageLayoutMetadata | null): GeneratedGrid {
     const convertToCssValue = (value: string | number): string => {
       if (value === 'auto') {
         return 'auto';
@@ -17,26 +17,37 @@ export class StyleGeneratorService {
       }
     };
 
+    if(metadata === null) {
+      const areas = ['sl-grid-area-1']
+      const styles: GridStyle = {
+        'grid-template-columns': '1',
+        'grid-template-rows': '1',
+        'grid-template-areas': '{sl-grid-area-1}'
+      };
+    
+      return {styles, areas} as GeneratedGrid;
+    }
+
     const areas: string[] = [];
-    const gridTemplateColumns = metadata.columnsRatio?.map(convertToCssValue).join(' ');
-    const gridTemplateRows = metadata.rowsRatio?.map(convertToCssValue).join(' ');
+    const gridTemplateColumns = metadata!.columnsRatio?.map(convertToCssValue).join(' ');
+    const gridTemplateRows = metadata!.rowsRatio?.map(convertToCssValue).join(' ');
   
     // Initialize styles for grid-template-areas
-    const gridAreaMatrix: string[][] = Array(metadata.rows).fill(null).map(() => Array(metadata.columns).fill('.'));
+    const gridAreaMatrix: string[][] = Array(metadata!.rows).fill(null).map(() => Array(metadata!.columns).fill('.'));
   
-    if (metadata.gridSpans) {
-      metadata.gridSpans.forEach(span => {
+    if (metadata!.gridAreas) {
+      metadata!.gridAreas.forEach(span => {
         const areaName = `sl-grid-area-${span.id}`;
         areas.push(areaName);
-        // For each column span, place the area in the matrix
-        if (span.type === 'column') {
+        // For each row span, place the area in the matrix
+        if (span.type === 'row') {
           for (let row = span.spanFrom; row <= span.spanTo; row++) {
             gridAreaMatrix[row-1][span.id-1] = areaName;
           }
         }
         
-        // For row spans, similar logic applies (if needed)
-        if (span.type === 'row') {
+        // For column spans, similar logic applies (if needed)
+        if (span.type === 'column') {
           for (let col = span.spanFrom; col <= span.spanTo; col++) {
             gridAreaMatrix[span.id-1][col-1] = areaName;
           }
@@ -45,10 +56,10 @@ export class StyleGeneratorService {
     }
   
     // Ensure that any remaining empty areas get unique names
-    let areaCounter = metadata.gridSpans?.length; 
+    let areaCounter = metadata!.gridAreas?.length; 
     areaCounter = areaCounter ? areaCounter + 1 : 1;
-    for (let row = 0; row < metadata.rows!; row++) {
-      for (let col = 0; col < metadata.columns!; col++) {
+    for (let row = 0; row < metadata!.rows!; row++) {
+      for (let col = 0; col < metadata!.columns!; col++) {
         if (gridAreaMatrix[row][col] === '.') {
           const areaName = `sl-grid-area-${areaCounter++}`;
           areas.push(areaName);

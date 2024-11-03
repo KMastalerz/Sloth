@@ -4,7 +4,7 @@
     "PageID": "auth",
     "PanelID": "login",
     "SectionID": "login",
-    "Controls": "login,password,process,forgotPassword",
+    "Controls": "login,forgotPassword,password,process",
     "Position": null,
     "Label": null,
     "Metadata": null,

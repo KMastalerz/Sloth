@@ -4,6 +4,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { JsonService } from '@sloth-shared';
 import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
 import { Action } from '../../page-sync/action';
+import { PageLayoutMetadata } from '../../models/meta-data.types';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +22,7 @@ export class BaseForm {
   config = computed(()=> this.pageSync().pageConfig);
   hasRouter = computed(()=> this.config().hasRouter);
   panels = computed(()=> this.config().webPanels);
+  layout = computed<PageLayoutMetadata>(()=> this.jsonUtil.tryParse(this.config()?.layout));
   metadata = computed<any>(() => this.jsonUtil.tryParse(this.config()?.metadata));
   actionEvent = output<Action>();
 

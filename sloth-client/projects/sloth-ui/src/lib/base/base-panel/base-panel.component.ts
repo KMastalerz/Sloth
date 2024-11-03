@@ -13,6 +13,6 @@ export class BasePanel {
   pageSync = model.required<DynamicPageSync>();
   config = model.required<WebPanel>();
   gridArea = model.required<string | undefined>();
-  metaData = computed<any>(() => this.jsonUtil.tryParse(this.config().metaData));
+  metadata = computed<any>(() => this.jsonUtil.tryParse(this.config().metadata));
   sections = computed<WebSection[]>(() => this.config().webSections ?? []);
 }

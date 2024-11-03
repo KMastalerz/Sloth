@@ -40,4 +40,28 @@ public static class GenericHelper
 
         return newValue.Equals(originalValue); // Use Equals to compare values
     }
+
+    public static void CopyProperties<T>(this T newObject, T originalObject, List<string>? excludedProperties = null)
+    {
+        if (newObject == null || originalObject == null)
+            throw new ArgumentNullException("Objects to copy cannot be null.");
+
+        excludedProperties ??= new List<string>();
+
+        // Get all properties of the object type
+        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (var property in properties)
+        {
+            // Skip excluded properties and read-only properties
+            if (excludedProperties.Contains(property.Name) || !property.CanWrite)
+                continue;
+
+            // Get the value from the new object
+            var newValue = property.GetValue(newObject);
+
+            // Set the value to the original object
+            property.SetValue(originalObject, newValue);
+        }
+    }
 }

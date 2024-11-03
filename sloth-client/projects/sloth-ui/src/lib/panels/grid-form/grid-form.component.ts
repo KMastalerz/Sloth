@@ -13,13 +13,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class GridFormComponent extends BasePanel {
   columns  = computed<string>(()=> {
-    const count = this.metaData()?.columns ?? 1;
+    const count = this.metadata()?.columns ?? 1;
     return `repeat(${count}, minmax(calc(100% / ${count} - 1rem), 1fr))`
   });
   
   protected getSectionGroupedControls(section: WebSection): string[] | undefined {
-    if(section.metaData) {
-      const metaData = this.jsonUtil.tryParse(section.metaData);
+    if(section.metadata) {
+      const metaData = this.jsonUtil.tryParse(section.metadata);
 
       if(metaData.groupedControls) {
         return metaData.groupedControls;

@@ -21,7 +21,6 @@ export * from './lib/page-sync/action';
 export * from './lib/page-sync/dynamic-page-sync';
 
 // forms
-export * from './lib/forms/dynamic-form/dynamic-form.component';
 export * from './lib/forms/dynamic-grid/dynamic-grid.component';
 
 // models 

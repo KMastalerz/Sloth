@@ -12,10 +12,10 @@
         <TextBlock Text="Page layout"
                    Style="{StaticResource SlothTextBlock}"/>
         <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding ColumnCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            <TextBox Text="{Binding Columns, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      materialDesign:HintAssist.Hint="Columns"
                      Style="{StaticResource SlothTextBoxSmall}"/>
-            <TextBox Text="{Binding RowCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            <TextBox Text="{Binding Rows, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      materialDesign:HintAssist.Hint="Rows"
                      Style="{StaticResource SlothTextBoxSmall}"/>
         </StackPanel>
@@ -36,7 +36,7 @@
 
                 <ScrollViewer  MaxHeight="180"
                                VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Columns}">
+                    <ItemsControl ItemsSource="{Binding ColumnsRatio}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -71,7 +71,7 @@
 
                 <ScrollViewer  MaxHeight="180"
                                VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Rows}">
+                    <ItemsControl ItemsSource="{Binding RowsRatio}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -104,33 +104,38 @@
                            Style="{StaticResource SlothTextBlockLight}"/>
                 <Button Content="Add custom area"
                         Command="{Binding AddArea}"
+                        CommandParameter="{Binding}"
                         Style="{StaticResource SlothButtonNeutral}"/>
             </StackPanel>
 
             <Separator Style="{StaticResource MaterialDesignDarkSeparator}"
                        Margin="12 0"/>
 
-            <ItemsControl ItemsSource="{Binding Areas}">
+            <ItemsControl ItemsSource="{Binding GridAreas}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock  Text="Area 1"
-                                        FontSize="14"
+                            <TextBlock  FontSize="14"
                                         VerticalAlignment="Center"
                                         Margin="16 10 0 0"
-                                        Style="{StaticResource SlothTextBlockLight}"/>
+                                        Style="{StaticResource SlothTextBlockLight}">
+                                    <Run>Area</Run>
+                                    <Run Text="{Binding ID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Run>
+                            </TextBlock>
                             <ComboBox materialDesign:HintAssist.Hint="Type"
                                       Margin="16 10 0 0"
-                                      ItemsSource="{Binding AreaTypes}"
-                                      SelectedValue="{Binding Type}"
+                                      ItemsSource="{Binding DataContext.AreaTypes, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                       Style="{StaticResource SlothComboBoxSmall}"/>
                             <TextBox materialDesign:HintAssist.Hint="Span from"
                                      Margin="16 10 0 0"
-                                     Text="{Binding Start}"
+                                     Text="{Binding SpanFrom, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                      Style="{StaticResource SlothTextBoxSmall}"/>
                             <TextBox materialDesign:HintAssist.Hint="Span to"
                                      Margin="16 10 0 0"
-                                     Text="{Binding End}"
+                                     Text="{Binding SpanTo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                      Style="{StaticResource SlothTextBoxSmall}"/>
                             <Button Content="{materialDesign:PackIcon Kind=Delete, Size=14}"
                                     Margin="16 10 0 0"
@@ -149,10 +154,11 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Stretch">
             <Button Content="Save"
-                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Command="{Binding Save}"
+                    CommandParameter="{Binding}"
                     Style="{StaticResource SlothButton}"/>
             <Button Content="Clear"
-                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Command="{Binding Clear}"
                     Style="{StaticResource SlothButtonError}"/>
             <Button Content="Close"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"

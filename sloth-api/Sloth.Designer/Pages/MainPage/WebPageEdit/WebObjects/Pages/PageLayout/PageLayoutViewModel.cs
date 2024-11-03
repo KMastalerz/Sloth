@@ -1,43 +1,97 @@
-﻿using Sloth.Designer.Core;
+﻿using Sloth.Designer.Constants;
+using Sloth.Designer.Core;
 using Sloth.Designer.Services;
+using Sloth.Shared.Helpers;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Windows.Input;
+using static Sloth.Designer.Pages.PageLayoutCommands;
 
 namespace Sloth.Designer.Pages;
 public class PageLayoutViewModel : BaseViewModel
 {
     public PageLayoutViewModel(IWindowService windowService, IWebPageStateService webPageStateService)
     {
-        
+        AddArea = new AddArea();
+        Clear = new Clear(webPageStateService, windowService);
+        DeleteArea = new DeleteArea(this);
+        Save = new Save(webPageStateService, windowService);
+
+        Initialize(webPageStateService);
     }
 
-    private int columnCount = 1;
-    public int ColumnCount
+    private void Initialize(IWebPageStateService webPageStateService)
     {
-        get => columnCount;
-        set => ValidateCount(ref columnCount, value, rowCount);
+        var layout = JsonHelper.TryConvert(webPageStateService.WebPage?.Layout ?? "", new PageLayoutMatadata())!;
+
+        columns = layout.Columns;
+        rows = layout.Rows;
+
+        for (int i = 0; i < layout.ColumnsRatio.Count(); i++)
+        {
+
+            ColumnsRatio.Add(new(i + 1, layout.ColumnsRatio[i]));
+        }
+
+        for (int i = 0; i < layout.RowsRatio.Count(); i++)
+        {
+            RowsRatio.Add(new(i + 1, layout.RowsRatio[i]));
+        }
+
+        if (layout.GridAreas is not null)
+        {
+            GridAreas = new(layout.GridAreas);
+        }
+
+        SetColumns();
+        SetRows();
     }
 
-    private int rowCount = 1;
-    public int RowCount
-    {
-        get => rowCount;
-        set => ValidateCount(ref rowCount, value, rowCount);
-    }
-
-    private ObservableCollection<LayoutColumn> columns = [];
-    public ObservableCollection<LayoutColumn> Columns
+    private int columns;
+    public int Columns
     {
         get => columns;
-        set => SetProperty(ref columns, value);
+        set => ValidateCount(ref columns, value, columns);
     }
 
-    private ObservableCollection<LayoutRow> rows = [];
-    public ObservableCollection<LayoutRow> Rows
+    private int rows;
+    public int Rows
     {
         get => rows;
-        set => SetProperty(ref rows, value);
+        set => ValidateCount(ref rows, value, rows);
     }
+
+    private ObservableCollection<LayoutColumn> columnsRatio = [];
+    public ObservableCollection<LayoutColumn> ColumnsRatio
+    {
+        get => columnsRatio;
+        set => SetProperty(ref columnsRatio, value);
+    }
+
+    private ObservableCollection<LayoutRow> rowsRatio = [];
+    public ObservableCollection<LayoutRow> RowsRatio
+    {
+        get => rowsRatio;
+        set => SetProperty(ref rowsRatio, value);
+    }
+
+    private ObservableCollection<GridArea> gridAreas = [];
+    public ObservableCollection<GridArea> GridAreas
+    {
+        get => gridAreas;
+        set => SetProperty(ref gridAreas, value);
+    }
+
+    private Dictionary<string, string> areaTypes = PageConstants.AreaTypes;
+    public Dictionary<string, string> AreaTypes
+    {
+        get => areaTypes;
+        set => SetProperty(ref areaTypes, value);
+    }
+
+    public ICommand AddArea { get; }
+    public ICommand Clear { get; }
+    public ICommand DeleteArea { get; }
+    public ICommand Save { get; }
 
     private bool ValidateCount(ref int backingField, int newValue, int oldValue)
     {
@@ -50,33 +104,30 @@ public class PageLayoutViewModel : BaseViewModel
         SetRows();
         return prop;
     }
-
     private void SetColumns()
     {
-        if (columnCount > Columns.Count)
-            for (int i = Columns.Count; i < columnCount; i++)
+        if (Columns > ColumnsRatio.Count)
+            for (int i = ColumnsRatio.Count; i < Columns; i++)
             {
-                Columns.Add(new(i+1, "1"));
+                ColumnsRatio.Add(new(i+1, "1"));
             }
-        else if (columnCount < Columns.Count)
-            for (int i = Columns.Count; i > columnCount; i--) 
-            { 
-                Columns.Remove(Columns[i-1]);
+        else if (Columns < ColumnsRatio.Count)
+            for (int i = ColumnsRatio.Count; i > Columns; i--) 
+            {
+                ColumnsRatio.Remove(ColumnsRatio[i-1]);
             }
     }
-
     private void SetRows()
     {
-        if (rowCount > rows.Count)
-            for (int i = rows.Count; i < rowCount; i++)
+        if (Rows > RowsRatio.Count)
+            for (int i = RowsRatio.Count; i < Rows; i++)
             {
-                Rows.Add(new(i+1, "1"));
+                RowsRatio.Add(new(i+1, "1"));
             }
-        else if (rowCount < rows.Count)
-            for (int i = rows.Count; i > rowCount; i--)
+        else if (Rows < RowsRatio.Count)
+            for (int i = RowsRatio.Count; i > Rows; i--)
             {
-                Rows.Remove(rows[i-1]);
+                RowsRatio.Remove(RowsRatio[i-1]);
             }
     }
-
 }       

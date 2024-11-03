@@ -5,7 +5,6 @@ using Sloth.Application.UserIdentity;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Repositories;
 using Sloth.Shared.Helpers;
-using System.Transactions;
 
 namespace Sloth.Application.Services.UIElements;
 public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler> logger, IUIElementsRepository uIElementsRepository, IMapper mapper, IUserContext userContext) : IRequestHandler<SaveFullWebPageCommand>
@@ -31,7 +30,6 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
             webPage.ChangeUser = user.UserGuid;
             webPage.ChangeDate = DateTime.UtcNow;
         }
-
 
         foreach (var panel in webPage.WebPanels)
         {
@@ -66,6 +64,7 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
             }
         }
 
-        await uIElementsRepository.SaveWebPageAsync(webPage);
+        webPage.CopyProperties(originalWebPage);
+        await uIElementsRepository.SaveWebPageAsync(originalWebPage);
     }
 }

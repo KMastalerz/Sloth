@@ -16,7 +16,7 @@ import { GeneratedGrid } from '../../models/forms.types';
 export class DynamicGridComponent extends BaseForm {
   styleGenerator = inject(StyleGeneratorService)
   generatedGrid = computed<GeneratedGrid>(() => {
-    const style = this.styleGenerator.generateGrid(this.metaData())
+    const style = this.styleGenerator.generateGrid(this.layout())
     console.log('gridStyle', style);
     
     return style;
