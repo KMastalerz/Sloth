@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sloth.Designer.Core;
+using Sloth.Designer.Models;
 using Sloth.Designer.Services;
-using Sloth.Shared.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;

@@ -17,7 +17,10 @@ export const routes: Routes = [
     },   
     {   
         path: 'test', 
-        component: TestComponent
+        component: TestComponent,
+        resolve: {
+            pageSync: pageResolver
+        }
     },
     {   
         path: 'auth', 

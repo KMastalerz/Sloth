@@ -5,7 +5,7 @@
         }
         @for(section of config().webSections; track $index) {
             @for(control of section.webControls; track $index) {
-                <ng-container slDynamicControl [config]="control" [pageSync]="pageSync()"></ng-container>
+                <ng-container slDynamicControl [config]="control" [opCom]="opCom()"></ng-container>
             }
         }
     </form>

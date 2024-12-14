@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sloth.Shared\Sloth.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

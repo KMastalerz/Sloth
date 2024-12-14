@@ -10,9 +10,20 @@ import { FormControlComponent } from '../../base/form-control/form-control.compo
   styleUrl: './password.component.scss'
 })
 export class PasswordComponent extends FormControlComponent{
-  protected show = signal<boolean>(false);
-  showHide = computed(()=> this.show() ? 'visibility_off' : 'visibility');
+  constructor(){
+    super();
+    this.prompts.set(this.controlPrompts);
+  }
 
+  public prompts = signal<any>(undefined);
+  protected show = signal<boolean>(false);
+  buttonIcon = computed(()=> this.show() ? 'visibility_off' : 'visibility');
+  currentType = computed(()=> this.show() ? 'text' : 'password')
+
+  private controlPrompts: any = {
+    required: 'Required',
+  }
+  
   protected toggleVisibility(): void {
     this.show.set(!this.show());
   }

@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sloth.Shared.DTO;
 using Sloth.Application.UserIdentity;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Repositories;
 using Sloth.Shared.Helpers;
-
 namespace Sloth.Application.Services.UIElements;
-public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler> logger, IUIElementsRepository uIElementsRepository, IMapper mapper, IUserContext userContext) : IRequestHandler<SaveFullWebPageCommand>
+public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler> logger, IUIElementsRepository uIElementsRepository, IMapper mapper, IUserContext userContext) : IRequestHandler<SaveFullWebPageCommand, GetWebPageFull>
 {
-    public async Task Handle(SaveFullWebPageCommand request, CancellationToken cancellationToken)
+    public async Task<GetWebPageFull> Handle(SaveFullWebPageCommand request, CancellationToken cancellationToken)
     {
         var user = userContext.GetCurrentUser()!;
         logger.LogInformation("{UserID} attempts to save changes for page: {PageID}", user.UserID, request.WebPage.PageID);
@@ -22,7 +22,7 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
         {
             await uIElementsRepository.AddWebPageAsync(webPage);
             logger.LogInformation("Page: {PageID} was successfully changed!", request.WebPage.PageID);
-            return;
+            return request.WebPage;
         }
 
         if (webPage.HasChanges(originalWebPage, ["WebPanels", "ChangeUser", "ChangeDate"]))
@@ -66,5 +66,7 @@ public class SaveFullWebPageCommandHandler(ILogger<SaveFullWebPageCommandHandler
 
         webPage.CopyProperties(originalWebPage);
         await uIElementsRepository.SaveWebPageAsync(originalWebPage);
+
+        return mapper.Map<GetWebPageFull>(originalWebPage); 
     }
 }

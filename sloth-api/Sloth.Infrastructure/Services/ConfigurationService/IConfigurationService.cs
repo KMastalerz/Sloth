@@ -1,4 +1,4 @@
-﻿using Sloth.Application.DTO;
+﻿using Sloth.Application.Models;
 
 namespace Sloth.Infrastructure.Services;
 public interface IConfigurationService

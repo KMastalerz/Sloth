@@ -12,7 +12,7 @@
                             <div class="sl-grid-form-cell">
                             @for(control of grouped.split(','); track $index) {
                                 <ng-container >
-                                    <ng-container slDynamicControl [config]="getControl(section, control)" [pageSync]="pageSync()">
+                                    <ng-container slDynamicControl [config]="getControl(section, control)" [opCom]="opCom()">
                                     </ng-container>
                                 </ng-container>
                             }

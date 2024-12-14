@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sloth.Domain.DTO;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;

@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Sloth.Application.DTO;
+using Sloth.Shared.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Sloth.Domain.Constants;
 using Sloth.Application.Services.UIElements;
-using Sloth.Shared.Models;
 
 namespace Sloth.API.Controllers;
 
@@ -64,7 +63,7 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebPageItem?>> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
+    public async Task<ActionResult<GetWebPageFull?>> GetFullWebPage([FromQuery] string appID, [FromQuery] string pageID)
     {
         var result = await mediator.Send(new GetFullWebPageQuery(appID, pageID));
         return Ok(result);
@@ -73,10 +72,10 @@ public class UIElementsController(IMediator mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> SaveFullWebPage([FromBody] WebPageItem webPage)
+    public async Task<ActionResult<GetWebPageFull>> SaveFullWebPage([FromBody] GetWebPageFull webPage)
     {
-        await mediator.Send(new SaveFullWebPageCommand(webPage));
-        return NoContent();
+        var result = await mediator.Send(new SaveFullWebPageCommand(webPage));
+        return Ok(result);
     }
 
     [HttpDelete]

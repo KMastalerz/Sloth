@@ -1,6 +1,7 @@
 ﻿using Sloth.Designer.Core;
+using Sloth.Designer.Models;
 using Sloth.Designer.Services;
-using Sloth.Shared.Models;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static Sloth.Designer.Pages.WebPageEditCommands;
@@ -41,6 +42,15 @@ public class WebPageEditViewModel : BaseViewModel
         EditControlCommand = new EditControlCommand(webPageStateService, this);
 
         WebPage = webPageStateService.WebPage;
+        webPageStateService.RegisterCallback<WebPageItem>(OnWebPageChange);
+    }
+
+    private void OnWebPageChange(WebPageItem webPage)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            WebPage = webPage;
+        });
     }
 
     private WebPageItem? webPage;

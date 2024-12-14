@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Sloth.Application.DTO;
+using Sloth.Shared.DTO;
 
 namespace Sloth.Application.Services.UIElements;
 public class GetWebPageQuery(string appID, string pageID) : IRequest<GetWebPage>

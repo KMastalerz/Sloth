@@ -1,7 +1,7 @@
-import { Component, computed, inject, model } from '@angular/core';
-import { WebControl, WebPanel, WebSection } from '@sloth-http';
+import { Component, computed, inject, input, model } from '@angular/core';
+import { WebPanel, WebSection } from '@sloth-http';
 import { JsonService } from '@sloth-shared';
-import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
+import { OpCom } from '../../op-com/op-com';
 
 @Component({
   selector: 'sl-base-panel',
@@ -10,9 +10,9 @@ import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
 })
 export class BasePanel {
   protected jsonUtil = inject(JsonService);
-  pageSync = model.required<DynamicPageSync>();
   config = model.required<WebPanel>();
   gridArea = model.required<string | undefined>();
   metadata = computed<any>(() => this.jsonUtil.tryParse(this.config().metadata));
+  opCom = input<OpCom>();
   sections = computed<WebSection[]>(() => this.config().webSections ?? []);
 }

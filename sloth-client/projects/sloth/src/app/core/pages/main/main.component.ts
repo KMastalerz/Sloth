@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { BasePage, DynamicGridComponent} from '@sloth-ui';
+import { BasePage, DynamicFormComponent} from '@sloth-ui';
 import { interval, map } from 'rxjs';
 
 @Component({
   selector: 'sl-main',
   standalone: true,
-  imports: [RouterOutlet, DynamicGridComponent],
+  imports: [DynamicFormComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })

@@ -1,0 +1,18 @@
+<div class="control-container">
+    @if(hasLabel() || isRequired()) {
+        <div class="control-label">
+            @if(hasLabel()) {
+                <label class="label">{{label()}}</label>
+            }
+            @if(isRequired()) {
+                <span class="required-tag">{{prompts().required}}</span>
+            }
+        </div>
+    }
+    <div class="input">
+        @if(hasIcon()) {
+            <span class="control-icon">{{icon()}}</span>
+        }
+        <input type="text" [placeholder]="placeholder()"/>
+    </div>
+</div>    

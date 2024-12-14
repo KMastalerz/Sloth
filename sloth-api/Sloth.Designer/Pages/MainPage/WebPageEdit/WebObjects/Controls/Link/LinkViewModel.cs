@@ -1,7 +1,7 @@
 ﻿using Sloth.Designer.Core;
+using Sloth.Designer.Models;
 using Sloth.Designer.Services;
 using Sloth.Shared.Helpers;
-using Sloth.Shared.Models;
 
 namespace Sloth.Designer.Pages;
 public class LinkViewModel: BaseViewModel

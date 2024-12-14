@@ -15,7 +15,7 @@
                     <span class="sl-title-section">{{ section.label }}</span>
                 }
                 @for(control of section.webControls; track $index) {
-                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
+                    <ng-container slDynamicControl [config]="control" [opCom]="opCom()"></ng-container>
                 }
             </div>
         }
@@ -23,7 +23,7 @@
         <div class="sl-side-nav-section bottom">
             @for(section of bottomSections(); track $index) {
                 @for(control of section.webControls; track $index) {
-                    <ng-container slDynamicControl [pageSync]="pageSync()" [config]="control" [navCollapsed]="collapsed()"></ng-container>
+                    <ng-container slDynamicControl [config]="control" [opCom]="opCom()"></ng-container>
                 }
             }
         </div>

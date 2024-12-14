@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Sloth.Domain.DTO;
+using Sloth.Shared.DTO;
 
 namespace Sloth.Application.Services.Security;
 public class LoginCommand: IRequest<AccessTokenResponse>

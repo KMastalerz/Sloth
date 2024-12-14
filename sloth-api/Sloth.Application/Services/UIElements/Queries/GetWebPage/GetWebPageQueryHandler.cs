@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sloth.Application.UserIdentity;
 using Sloth.Domain.Constants;
-using Sloth.Application.DTO;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Repositories;

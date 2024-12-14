@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Sloth.Shared.Models;
+using Sloth.Shared.DTO;
 
 namespace Sloth.Application.Services.UIElements;
 public class ListWebPageByIDQuery(string? appID, string? pageID) : IRequest<IEnumerable<ListWebPageItem>?>

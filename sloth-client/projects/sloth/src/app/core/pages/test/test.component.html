@@ -1,67 +1,166 @@
+<sl-dynamic-form [pageSync]="pageSync()" [pageInstance]="this"></sl-dynamic-form>
+<!-- 
+<h3>Select</h3>
+<div class="row-wrapper">
+    <div class="control-wrapper">
+        <div class="select-container">
+            <div class="control-label">
+                <label class="label" for="input-select1">Label</label>
+                <span class="required-tag">Required</span>
+            </div>
+            <div class="input select">
+                <input id="input-select1" type="text" value="Option 1, Option 2, Option 3..." disabled />
+                <button type="button">
+                    <span class="control-icon">keyboard_arrow_down</span>
+                </button>
+            </div>
+            <div class="select-options-container">
+                <div class="select-option">
+                    <input type="checkbox" [checked]="true" id="input1"/>
+                    <label for="input1">Option 1</label>
+                </div>
+                <div class="select-option">
+                    <input type="checkbox" [checked]="true" id="input2"/>
+                    <label for="input2">Option 2</label>
+                </div>
+                <div class="select-option">
+                    <input type="checkbox" [checked]="true" id="input3"/>
+                    <label for="input3">Option 3</label>
+                </div>
+                <div class="select-option">
+                    <input type="checkbox" [checked]="false" id="input4"/>
+                    <label for="input3">Option 4</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="control-wrapper">
+        <div class="select-container">
+            <div class="control-label">
+                <label class="label" for="input-select1">Label</label>
+                <span class="required-tag">Required</span>
+            </div>
+            <div class="input select">
+                <input id="input-select1" type="text" value="Option 1" disabled />
+                <button type="button">
+                    <span class="control-icon">keyboard_arrow_down</span>
+                </button>
+            </div>
+            <div class="select-options-container">
+                <div class="select-option">
+                    <label>Option 1</label>
+                </div>
+                <div class="select-option">
+                    <label>Option 2</label>
+                </div>
+                <div class="select-option">
+                    <label>Option 3</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- text-input -->
-<h3>Text input</h3>
+
+<h3 style="margin-top: 130px;">Chips</h3>
 <div class="control-wrapper">
-    <div class="text-input-container">
+    <div class="chip-container">
+        <div class="control-label">
+            <label class="label" for="input-select1">Label</label>
+            <span class="required-tag">Required</span>
+        </div>
+        <div class="chips">
+            <div class="chip">Option 1</div>
+            <div class="chip low">Option 2</div>
+            <div class="chip medium">Option 3</div>
+            <div class="chip high">Option 4</div>
+            <div class="chip critical">Option 5</div>
+        </div>
+    </div>
+</div>
+
+
+<h3>Date time picker</h3>
+<div class="control-wrapper">
+    <div class="date-time-container">
         <div class="control-label">
             <label class="label">Label</label>
             <span class="required-tag">Required</span>
         </div>
         <div class="input">
-            <span class="control-icon">home</span>
+            <span class="control-icon">bookmark_flag</span>
             <input type="text"/>
+            <button type="button">
+                <span class="control-icon">calendar_month</span>
+            </button>
         </div>
-    </div>    
-</div>
+        <div class="date-time-select">
+            <div class="day-select">
+                <div class="select-header">
+                    <div class="year">2024</div>
+                    <div class="month-select">
+                        <span class="control-icon">chevron_left</span>
+                        <span>December</span>
+                        <span class="control-icon">chevron_right</span>
+                    </div>
+                </div>  
+                <div class="calendar">
+                    <div class="day">Mon</div>
+                    <div class="day">Tue</div>
+                    <div class="day">Wed</div>
+                    <div class="day">Thu</div>
+                    <div class="day">Fri</div>
+                    <div class="day">Sat</div>
+                    <div class="day">Sun</div>
 
-<!-- password -->
-<h3>Password</h3>
-<div class="control-wrapper">
-    <div class="password-container">
-        <div class="control-label">
-            <label class="label">Label</label>
-            <span class="required-tag">Required</span>
-        </div>
-        <div class="input">
-            <span class="control-icon">key</span>
-            <input type="password"/>
-            <span class="control-icon">visibility</span>
-        </div>
-    </div>    
-</div>
-
-<!-- text-area -->
-<h3>Text area</h3>
-<div class="control-wrapper">
-    <div class="text-area-container">
-        <div class="control-label">
-            <label class="label">Label</label>
-            <span class="required-tag">Required</span>
-        </div>
-        <div class="text-area">
-            <div class="header">
-                <div class="toggles">
-                    <button type="button" class="toggle active">Write</button>
-                    <button type="button" class="toggle">Preview</button>
-                </div>
-                <div class="helpers">
-                    <button class="helper"><span>format_h1</span></button>
-                    <button class="helper hover"><span>format_bold</span></button>
-                    <button class="helper"><span>format_italic</span></button>
-                    <button class="helper"><span>format_quote</span></button>
-                    <button class="helper"><span>code</span></button>
-                    <button class="helper"><span class="transform-negative-45">link</span></button>
-                    <hr>
-                    <button class="helper"><span>format_list_numbered</span></button>
-                    <button class="helper"><span>format_list_bulleted</span></button>
-                    <hr>
-                    <button class="helper"><span class="transform-45">attach_file</span></button>
-                    <button class="helper"><span>add_photo_alternate</span></button>
+                    <div class="date muted">25</div>
+                    <div class="date muted">26</div>
+                    <div class="date muted">27</div>
+                    <div class="date muted">28</div>
+                    <div class="date muted">29</div>
+                    <div class="date muted">30</div>
+                    <div class="date">01</div>
+                    <div class="date">02</div>
+                    <div class="date">03</div>
+                    <div class="date">04</div>
+                    <div class="date">05</div>
+                    <div class="date">06</div>
+                    <div class="date">07</div>
+                    <div class="date">08</div>
+                    <div class="date">09</div>
+                    <div class="date">10</div>
+                    <div class="date">11</div>
+                    <div class="date">12</div>
+                    <div class="date">13</div>
+                    <div class="date">14</div>
+                    <div class="date">15</div>
+                    <div class="date">16</div>
+                    <div class="date">17</div>
+                    <div class="date">18</div>
+                    <div class="date">19</div>
+                    <div class="date">20</div>
+                    <div class="date">21</div>
+                    <div class="date">22</div>
+                    <div class="date">23</div>
+                    <div class="date">24</div>
+                    <div class="date highlighted">25</div>
+                    <div class="date">26</div>
+                    <div class="date">27</div>
+                    <div class="date">28</div>
+                    <div class="date">29</div>
+                    <div class="date">30</div>
+                    <div class="date">31</div>
+                    <div class="date muted">01</div>
+                    <div class="date muted">02</div>
+                    <div class="date muted">03</div>
+                    <div class="date muted">04</div>
+                    <div class="date muted">05</div>
                 </div>
             </div>
-            <div class="input">
-                <textarea></textarea>
+            <div class="year-select">
+                
             </div>
         </div>
     </div>    
-</div>
+</div> -->

@@ -1,7 +1,8 @@
 import { Directive, inject, input, ViewContainerRef } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { WebControl } from '@sloth-http';
 import { DynamicDirectoryService } from '../../directories/dynamic-directory/dynamic-directory.service';
-import { DynamicPageSync } from '../../page-sync/dynamic-page-sync';
+import { OpCom } from '../../op-com/op-com';
 
 @Directive({
   selector: '[slDynamicControl]',
@@ -11,20 +12,20 @@ export class DynamicControlDirective {
   private container = inject(ViewContainerRef);
   private directory = inject(DynamicDirectoryService);
 
-  pageSync = input.required<DynamicPageSync>();
   config = input.required<WebControl>();
   index = input<number | undefined>(undefined);
-  navCollapsed = input<boolean>(false);
+  
+  mainForm = input<FormGroup>();
+  panelForm = input<FormGroup | FormArray>();
+  opCom = input<OpCom>();
+
 
   ngOnInit(): void {  
     const component = this.directory.getControl(this.config().controlType);
     if(component) { 
       const componentRef: any = this.container.createComponent(component);
       componentRef.instance.config = this.config;
-      componentRef.instance.pageSync = this.pageSync;
       componentRef.instance.index = this.index;
-      if(this.navCollapsed() !== undefined && this.navCollapsed() !== null)
-        componentRef.instance.navCollapsed = this.navCollapsed;
     }
   }
 }

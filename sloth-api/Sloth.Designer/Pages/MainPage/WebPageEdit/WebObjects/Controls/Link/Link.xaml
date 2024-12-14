@@ -23,7 +23,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1"
-                    Margin="16 0">
+                    Margin="16 0 28 0">
             <!--counter subject-->
             <TextBox    materialDesign:HintAssist.Hint="Counter Subject"
                         Text="{Binding CounterSubject, UpdateSourceTrigger=PropertyChanged}"

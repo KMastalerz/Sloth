@@ -1,10 +1,9 @@
 ﻿using Sloth.Designer.Services;
-using Sloth.Shared.Models;
 using System.Windows;
 using System.Windows.Input;
 using Sloth.Designer.Enums;
 using Sloth.Designer.Core;
-using Sloth.Designer.Constants;
+using Sloth.Designer.Models;
 
 namespace Sloth.Designer.Pages;
 public class WebPageEditCommands
@@ -26,6 +25,7 @@ public class WebPageEditCommands
         public override async Task ExecuteAsync(object? parameter = null)
         {
             if (webPageStateService.WebPage is null) return;
+            if (parameter is not WebPageEditViewModel webPageEditViewModel) return;
             var webPage = webPageStateService.WebPage;
 
             webPage.Panels = string.Join(',', webPage.WebPanels.Select(p => p.PanelID));
@@ -44,6 +44,7 @@ public class WebPageEditCommands
 
             if (response?.Success ?? false)
             {
+                webPageStateService.WebPage = response.Data;
                 await windowService.ShowSuccessAsync("Page saved successfully!");
             }
             else

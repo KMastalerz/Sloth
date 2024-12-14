@@ -11,7 +11,9 @@
     "Description": "Login page",
     "Layout": null,
     "Metadata": null,
-    "WebPanels": []
+    "WebPanels": [],
+    "ChangeDate": "2024-11-20T18:46:33.1710984",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -25,6 +27,24 @@
     "Description": "Main page",
     "Layout": "{\u0022columns\u0022:2,\u0022rows\u0022:2,\u0022columnsRatio\u0022:[\u0022auto\u0022,1],\u0022rowsRatio\u0022:[\u0022auto\u0022,1],\u0022gridAreas\u0022:[{\u0022type\u0022:\u0022row\u0022,\u0022id\u0022:1,\u0022spanFrom\u0022:1,\u0022spanTo\u0022:2}]}",
     "Metadata": null,
-    "WebPanels": []
+    "WebPanels": [],
+    "ChangeDate": "2024-11-20T18:46:33.1799755",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "test",
+    "Label": null,
+    "Panels": "test",
+    "Background": null,
+    "Class": null,
+    "HasRouter": false,
+    "SecurityTableID": null,
+    "Description": null,
+    "Layout": null,
+    "Metadata": null,
+    "WebPanels": [],
+    "ChangeDate": "2024-11-21T13:10:29.579639",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   }
 ]

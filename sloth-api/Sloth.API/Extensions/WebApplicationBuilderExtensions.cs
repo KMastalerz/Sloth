@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Sloth.API.Middlewares;
-using Sloth.Application.DTO;
+using Sloth.Application.Models;
 using Sloth.Domain.Constants;
 using System.Text;
 

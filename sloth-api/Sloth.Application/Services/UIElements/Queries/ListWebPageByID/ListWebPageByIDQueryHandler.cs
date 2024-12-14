@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Repositories;
-using Sloth.Shared.Models;
 
 namespace Sloth.Application.Services.UIElements;
 public class ListWebPageByIDQueryHandler(IUIElementsRepository uIElementsRepository, IMapper mapper) : IRequestHandler<ListWebPageByIDQuery, IEnumerable<ListWebPageItem>?>

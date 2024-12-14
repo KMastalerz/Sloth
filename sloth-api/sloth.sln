@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Infrastructure", "Slo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Shared", "Sloth.Shared\Sloth.Shared.csproj", "{E3B7824B-8007-4852-91AC-6BAE4948D815}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sloth.Designer", "Sloth.Designer\Sloth.Designer.csproj", "{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sloth.Designer", "Sloth.Designer\Sloth.Designer.csproj", "{77F7BE8C-BA05-4073-BCB3-8BE66426A5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

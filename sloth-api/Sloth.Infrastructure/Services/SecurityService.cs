@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Sloth.Domain.Constants;
-using Sloth.Domain.DTO;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Entities;
 using Sloth.Domain.Services;
 using System.IdentityModel.Tokens.Jwt;

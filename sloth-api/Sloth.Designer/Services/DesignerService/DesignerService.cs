@@ -1,7 +1,6 @@
 ﻿using Sloth.Designer.Constants;
 using Sloth.Designer.Helpers;
 using Sloth.Designer.Models;
-using Sloth.Shared.Models;
 using System.Net.Http;
 
 namespace Sloth.Designer.Services;
@@ -42,9 +41,9 @@ internal class DesignerService : IDesignerService
         return response;
     }
 
-    public async Task<ServiceReturnValue<string>?> SaveFullWebPage(WebPageItem webPage)
+    public async Task<ServiceReturnValue<WebPageItem>?> SaveFullWebPage(WebPageItem webPage)
     {
-        var response = await httpClient.PostAsync<string>(HttpServicePaths.UIElements, "SaveFullWebPage", webPage);
+        var response = await httpClient.PostAsync<WebPageItem>(HttpServicePaths.UIElements, "SaveFullWebPage", webPage);
         return response;
     }
 

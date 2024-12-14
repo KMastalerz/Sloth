@@ -1,4 +1,4 @@
-﻿using Sloth.Domain.DTO;
+﻿using Sloth.Shared.DTO;
 using Sloth.Domain.Entities;
 
 namespace Sloth.Domain.Services;

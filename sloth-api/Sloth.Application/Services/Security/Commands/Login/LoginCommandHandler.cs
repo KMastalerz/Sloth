@@ -6,7 +6,7 @@ using Sloth.Domain.Entities;
 using Sloth.Domain.Exceptions;
 using Sloth.Domain.Services;
 using Sloth.Domain.Repositories;
-using Sloth.Domain.DTO;
+using Sloth.Shared.DTO;
 
 namespace Sloth.Application.Services.Security;
 public class LoginCommandHandler(

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Repositories;
-using Sloth.Shared.Models;
 
 namespace Sloth.Application.Services.UIElements;
 public class ListWebPagesQueryHandler(IUIElementsRepository uIElementsRepository, IMapper mapper) : IRequestHandler<ListWebPagesQuery, ListWebPagesItem>
@@ -16,10 +16,10 @@ public class ListWebPagesQueryHandler(IUIElementsRepository uIElementsRepository
         //return mapper.Map<IEnumerable<WebPageItem>>(webPages);
         return new ListWebPagesItem
         {
-            WebPages = mapper.Map<IEnumerable<WebPageItem>>(webPages),
-            WebPanels = mapper.Map<IEnumerable<WebPanelItem>>(webPanels),
-            WebSections = mapper.Map<IEnumerable<WebSectionItem>>(webSections),
-            WebControls = mapper.Map<IEnumerable<WebControlItem>>(webControls)
+            WebPages = mapper.Map<IEnumerable<GetWebPageFull>>(webPages),
+            WebPanels = mapper.Map<IEnumerable<GetWebPanelFull>>(webPanels),
+            WebSections = mapper.Map<IEnumerable<GetWebSectionFull>>(webSections),
+            WebControls = mapper.Map<IEnumerable<GetWebControlFull>>(webControls)
         };
     }
 }

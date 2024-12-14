@@ -1,1 +1,57 @@
-<textarea name="" id=""></textarea>
+<div class="control-container">
+    @if(hasLabel() || isRequired()) {
+        <div class="control-label">
+            @if(hasLabel()) {
+                <label class="label">{{label()}}</label>
+            }
+            @if(isRequired()) {
+                <span class="required-tag">{{prompts().required}}</span>
+            }
+        </div>
+    }
+    <div class="text-area">
+        <div class="header">
+            <div class="toggles">
+                <button type="button" class="toggle active">{{prompts().write}}</button>
+                <button type="button" class="toggle">{{prompts().preview}}</button>
+            </div>
+            <div class="helpers">
+                <button class="helper"    
+                        [matTooltip]="prompts().header"
+                        matTooltipPosition="below"><span>format_h1</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().bold"
+                        matTooltipPosition="below"><span>format_bold</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().italic"
+                        matTooltipPosition="below"><span>format_italic</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().quote"
+                        matTooltipPosition="below"><span>format_quote</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().codeBlock"
+                        matTooltipPosition="below"><span>code</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().url"
+                        matTooltipPosition="below"><span class="transform-negative-45">link</span></button>
+                <hr>
+                <button class="helper"
+                        [matTooltip]="prompts().numberedList"
+                        matTooltipPosition="below"><span>format_list_numbered</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().bulletList"
+                        matTooltipPosition="below"><span>format_list_bulleted</span></button>
+                <hr>
+                <button class="helper"
+                        [matTooltip]="prompts().addFile"
+                        matTooltipPosition="below"><span class="transform-45">attach_file</span></button>
+                <button class="helper"
+                        [matTooltip]="prompts().addImage"
+                        matTooltipPosition="below"><span>add_photo_alternate</span></button>
+            </div>
+        </div>
+        <div class="input">
+            <textarea [placeholder]="placeholder()"></textarea>
+        </div>
+    </div>
+</div>  

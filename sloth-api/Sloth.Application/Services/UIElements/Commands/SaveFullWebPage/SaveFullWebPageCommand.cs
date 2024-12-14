@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Sloth.Shared.Models;
+using Sloth.Shared.DTO;
 
 namespace Sloth.Application.Services.UIElements;
-public class SaveFullWebPageCommand(WebPageItem webPage) : IRequest
+public class SaveFullWebPageCommand(GetWebPageFull webPage) : IRequest<GetWebPageFull>
 {
-    public WebPageItem WebPage { get; set; } = webPage;
+    public GetWebPageFull WebPage { get; set; } = webPage;
 }

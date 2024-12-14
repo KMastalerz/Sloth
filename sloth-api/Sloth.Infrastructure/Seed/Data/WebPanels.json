@@ -9,7 +9,9 @@
     "SecurityTableID": null,
     "Label": null,
     "Metadata": null,
-    "WebSections": []
+    "WebSections": [],
+    "ChangeDate": "2024-11-20T18:46:33.268738",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -21,7 +23,9 @@
     "SecurityTableID": null,
     "Label": null,
     "Metadata": null,
-    "WebSections": []
+    "WebSections": [],
+    "ChangeDate": "2024-11-20T18:46:33.2704936",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -33,6 +37,22 @@
     "SecurityTableID": null,
     "Label": null,
     "Metadata": null,
-    "WebSections": []
+    "WebSections": [],
+    "ChangeDate": "2024-11-20T18:46:33.2705056",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "test",
+    "PanelID": "test",
+    "PanelType": "form",
+    "Sections": "test",
+    "Class": null,
+    "SecurityTableID": null,
+    "Label": null,
+    "Metadata": null,
+    "WebSections": [],
+    "ChangeDate": "2024-11-21T13:10:40.6745752",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   }
 ]

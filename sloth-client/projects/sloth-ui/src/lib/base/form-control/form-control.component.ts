@@ -21,15 +21,18 @@ export class FormControlComponent extends BaseControl implements ControlValueAcc
   
   registerOnTouched(fn: any): void {}
 
-  setDisabledState?(isDisabled: boolean): void {}
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled.set(true);
+  }
 
-  ngOnInit(): void {
-    const formControl = this.pageSync()?.getFormControl(this.config().panelID, this.config().controlID, this.index());
-    if(formControl instanceof FormControl) 
-      this.formControl = formControl
+  override ngOnInit(): void {
+    super.ngOnInit();
+    // const formControl = this.pageSync()?.getFormControl(this.config()!.panelID, this.config()!.controlID, 0);
+    // if(formControl instanceof FormControl) 
+    //   this.formControl = formControl
 
-    this.value.subscribe(value => {
-      this.writeValue(value);
-    });
+    // this.value.subscribe(value => {
+    //   this.writeValue(value);
+    // });
   }
 }

@@ -46,12 +46,6 @@ button {
     cursor: pointer;
 }
 
-p,
-input {
-    all: unset;
-}
-
-
 input[type="password"]::-ms-reveal, /* For Edge */
 input[type="password"]::-ms-clear,   /* For Edge */
 input[type="password"]::-webkit-textfield-decoration-container {

@@ -3,9 +3,10 @@ public static class ControlConstants
 {
     public static List<ControlElement> ControlTypes = [
         new("Button", "button"),
-        new("Input", "input"),
         new("Link", "link"),
-        new("Password", "password")
+        new("Password", "password"),
+        new("Text area", "textArea"),
+        new("Text input", "textInput")
     ];
 
     public static Dictionary<string, string> TooltipPositions = new()
@@ -26,9 +27,10 @@ public class ControlElement(string controlName, string controlType)
 public static class ControlTypes
 {
     public const string Button = "button";
-    public const string Input = "input";
     public const string Link = "link";
     public const string Password = "password";
+    public const string TextArea = "textArea";
+    public const string TextInput = "textInput";
 }
 
 public static class ControlInnerTypes

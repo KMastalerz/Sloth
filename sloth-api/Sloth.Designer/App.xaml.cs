@@ -98,6 +98,7 @@ public partial class App : Application
         services.AddTransient<BaseControlViewModel>();
         services.AddTransient<ButtonViewModel>();
         services.AddTransient<LinkViewModel>();
+        services.AddTransient<TextInputViewModel>();
     }
 
     private void ConfigureViews(ServiceCollection services)
@@ -120,6 +121,7 @@ public partial class App : Application
         services.AddTransient<BaseControl>();
         services.AddTransient<Button>();
         services.AddTransient<Link>();
+        services.AddTransient<TextInput>();
     }
     private async Task InitialRouting()
     {

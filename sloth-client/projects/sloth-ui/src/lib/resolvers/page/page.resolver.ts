@@ -17,7 +17,7 @@ export const pageResolver: ResolveFn<DynamicPageSync> = async (route, state) => 
     const webPage = results.data;
     pageSync.pageConfig = webPage;
     // Build the form for page
-    pageSync.buildForm(); 
+    pageSync.initialize(); 
     return pageSync;
   } else if (results.responseCode === 400) {
     throw console.error(`Requested page: ${destination} was not found!`);

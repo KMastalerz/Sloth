@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Sloth.Application.DTO;
+using Sloth.Application.Models;
 using Sloth.Domain.Constants;
 
 namespace Sloth.Infrastructure.Services;

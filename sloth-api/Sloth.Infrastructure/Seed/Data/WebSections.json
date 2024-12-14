@@ -4,11 +4,13 @@
     "PageID": "auth",
     "PanelID": "login",
     "SectionID": "login",
-    "Controls": "login,forgotPassword,password,process",
+    "Controls": "forgotPassword,password,login,process",
     "Position": null,
     "Label": null,
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:47:00.5418242",
+    "ChangeUser": "ec76827a-0059-44ac-8255-08dcfb796c0d"
   },
   {
     "AppID": "sloth",
@@ -19,7 +21,9 @@
     "Position": null,
     "Label": null,
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:46:33.3007032",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -30,7 +34,9 @@
     "Position": null,
     "Label": "Admin",
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:46:33.3007158",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -41,7 +47,9 @@
     "Position": null,
     "Label": "Info",
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:46:33.3007216",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -52,7 +60,9 @@
     "Position": "bottom",
     "Label": null,
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:46:33.3007898",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
   },
   {
     "AppID": "sloth",
@@ -63,6 +73,21 @@
     "Position": null,
     "Label": "Main",
     "Metadata": null,
-    "WebControls": []
+    "WebControls": [],
+    "ChangeDate": "2024-11-20T18:46:33.3007952",
+    "ChangeUser": "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "AppID": "sloth",
+    "PageID": "test",
+    "PanelID": "test",
+    "SectionID": "test",
+    "Controls": "textInputTest,passwordTest,textAreaTest",
+    "Position": null,
+    "Label": null,
+    "Metadata": null,
+    "WebControls": [],
+    "ChangeDate": "2024-11-21T14:14:25.2047125",
+    "ChangeUser": "ec76827a-0059-44ac-8255-08dcfb796c0d"
   }
 ]

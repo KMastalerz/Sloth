@@ -3,6 +3,6 @@ export type GridStyle = {
 }
 
 export type GeneratedGrid = { 
+    areas : string[],
     styles: GridStyle,
-    areas : string[];
 }

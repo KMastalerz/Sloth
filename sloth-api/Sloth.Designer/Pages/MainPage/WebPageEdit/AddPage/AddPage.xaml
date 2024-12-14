@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:AddPageViewModel, IsDesignTimeCreatable=False}">
-    <StackPanel Margin="20 20">
+    <StackPanel Margin="20 20 32 20">
         <TextBlock  Text="Add page"
                     Style="{StaticResource SlothTextBlock}"/>
         <ComboBox   materialDesign:HintAssist.Hint="Application name"

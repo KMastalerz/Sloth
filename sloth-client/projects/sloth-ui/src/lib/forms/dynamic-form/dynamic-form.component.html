@@ -1,0 +1,14 @@
+<div class="sl-dynamic-form" [ngStyle]="generatedGrid().styles">
+    <form [formGroup]="mainForm()">
+        @for(panel of panels(); track $index) {
+            <ng-container slDynamicPanel 
+                [config]="panel" 
+                [mainForm]="mainForm()"
+                [opCom]="opCom()"
+                [gridArea]="generatedGrid().areas[$index]"></ng-container>
+        }
+        @if(hasRouter()) {
+            <router-outlet></router-outlet>
+        }
+    </form>
+</div>

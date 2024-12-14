@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Sloth.Application.DTO;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Entities;
-using Sloth.Shared.Models;
 
 namespace Sloth.Application.Profiles;
 
@@ -11,20 +10,20 @@ public class UIElementsProfile : Profile
     {
         CreateMap<WebPage, GetWebPage>().ReverseMap();
 
-        CreateMap<WebPage, WebPageItem>().ReverseMap();
+        CreateMap<WebPage, GetWebPageFull>().ReverseMap();
 
         CreateMap<WebPage, ListWebPageItem>().ReverseMap();
 
         CreateMap<WebPanel, GetWebPanel>().ReverseMap();
 
-        CreateMap<WebPanel, WebPanelItem>().ReverseMap();
+        CreateMap<WebPanel, GetWebPanelFull>().ReverseMap();
 
         CreateMap<WebSection, GetWebSection>().ReverseMap();
 
-        CreateMap<WebSection, WebSectionItem>().ReverseMap();
+        CreateMap<WebSection, GetWebSectionFull>().ReverseMap();
 
         CreateMap<WebControl, GetWebControl>().ReverseMap();
 
-        CreateMap<WebControl, WebControlItem>().ReverseMap();
+        CreateMap<WebControl, GetWebControlFull>().ReverseMap();
     }
 }

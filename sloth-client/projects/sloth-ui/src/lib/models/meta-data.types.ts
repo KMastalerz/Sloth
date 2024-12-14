@@ -1,26 +1,26 @@
 export type PageLayoutMetadata = {
     columns?: number;
-    rows?: number;
     columnsRatio?: (string | number)[];
-    rowsRatio?: (string | number)[];
     gridAreas?: GridArea[];
+    rows?: number;
+    rowsRatio?: (string | number)[];    
 };
 
 export type GridArea = {
-    type: 'column' | 'row';
     id: number;
     spanFrom: number;
     spanTo: number;
+    type: 'column' | 'row';    
 }
 
 export type LinkMetadata = {
     counterSubject?: string,
-    warningCount?: number,
     errorCount?: number
+    warningCount?: number,
 }
 
 export type ButtonMetadata = {
     counterSubject?: string,
-    warningCount?: number,
     errorCount?: number
+    warningCount?: number,
 }

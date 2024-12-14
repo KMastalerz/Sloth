@@ -1,7 +1,7 @@
 export interface RGB {
-	red: number;
-	green: number;
 	blue: number;
+	green: number;
+	red: number;
 }
 
 export interface HSL {

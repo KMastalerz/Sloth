@@ -42,6 +42,7 @@
             </Button>
             <Button Content="Save changes"
                     Command="{Binding SaveWebPage}"
+                    CommandParameter="{Binding}"
                     Style="{StaticResource SlothButton}"/>
             <Button Content="Delete page"
                     Command="{Binding DeleteWebPage}"

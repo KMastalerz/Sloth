@@ -20,6 +20,9 @@ public static class BaseControlCommands
                 case ControlTypes.Link:
                     windowService.ShowDialog(new Link());
                     break;
+                case ControlTypes.TextInput:
+                    windowService.ShowDialog(new TextInput());
+                    break;
                 default:
                     windowService.CloseDialog();
                     break;

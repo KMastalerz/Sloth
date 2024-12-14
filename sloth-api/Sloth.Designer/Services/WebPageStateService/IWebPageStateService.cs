@@ -1,7 +1,6 @@
 ﻿using Sloth.Designer.Core;
 using Sloth.Designer.Enums;
 using Sloth.Designer.Models;
-using Sloth.Shared.Models;
 
 namespace Sloth.Designer.Services;
 

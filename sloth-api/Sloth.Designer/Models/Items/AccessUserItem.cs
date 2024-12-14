@@ -1,5 +1,4 @@
 ﻿namespace Sloth.Designer.Models;
-
 public class AccessUserItem
 {
     public string UserName { get; set; } = default!;

@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using MediatR;
+using Sloth.Shared.DTO;
 using Sloth.Domain.Repositories;
 using Sloth.Shared.Helpers;
-using Sloth.Shared.Models;
 
 namespace Sloth.Application.Services.UIElements;
-public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsRepository, IMapper mapper) : IRequestHandler<GetFullWebPageQuery, WebPageItem?>
+public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsRepository, IMapper mapper) : IRequestHandler<GetFullWebPageQuery, GetWebPageFull?>
 {
-    public async Task<WebPageItem?> Handle(GetFullWebPageQuery request, CancellationToken cancellationToken)
+    public async Task<GetWebPageFull?> Handle(GetFullWebPageQuery request, CancellationToken cancellationToken)
     {
         var webPage = await uIElementsRepository.GetFullWebPageAsync(request.AppID, request.PageID);
 
-        var result = mapper.Map<WebPageItem>(webPage);
+        var result = mapper.Map<GetWebPageFull>(webPage);
 
         if (result is null) return null;
 
@@ -24,7 +24,7 @@ public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsReposito
                     .Select(order => result.WebPanels
                     .FirstOrDefault(panel => panel.PanelID == order.Trim()))
                        .Where(panel => panel != null)
-                       .Cast<WebPanelItem>());
+                       .Cast<GetWebPanelFull>());
 
                 result.WebPanels.ToList().ForEach(panel =>
                 {
@@ -38,7 +38,7 @@ public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsReposito
                                 .Select(order => panel.WebSections
                                 .FirstOrDefault(section => section.SectionID == order.Trim()))
                                    .Where(section => section != null)
-                                   .Cast<WebSectionItem>());
+                                   .Cast<GetWebSectionFull>());
                         }
 
                         panel.WebSections.ToList().ForEach(section =>
@@ -52,7 +52,7 @@ public class GetFullWebPageQueryHandler(IUIElementsRepository uIElementsReposito
                                         .Select(order => section.WebControls
                                         .FirstOrDefault(control => control.ControlID == order.Trim()))
                                            .Where(control => control != null)
-                                           .Cast<WebControlItem>());
+                                           .Cast<GetWebControlFull>());
                                 }
                         });
                     }
