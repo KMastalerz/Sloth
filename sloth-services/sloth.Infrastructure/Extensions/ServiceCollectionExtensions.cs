@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using sloth.Domain.Cache;
 using sloth.Domain.Entities;
 using sloth.Domain.Repositories;
+using sloth.Infrastructure.Cache;
 using sloth.Infrastructure.DatabaseContext;
 using sloth.Infrastructure.Repositories;
 using sloth.Infrastructure.Seed;
@@ -32,5 +34,9 @@ public static class ServiceCollectionExtensions
 
         // Register domain repositories
         services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IUserSettingsRepository, UserSettingsRepository>();
+
+        // Register Caches
+        services.AddScoped<IRoleCache, RoleCache>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using sloth.Utilities.Constants;
 using System.Security.Claims;
 
 namespace sloth.Application.UserIdentity;
@@ -19,6 +20,8 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
 
         var userID = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
         var email = user.FindFirst(c => c.Type == ClaimTypes.Email)!.Value;
+        var firstName = user.FindFirst(c => c.Type == SlothClaimTypes.FirstName)!.Value;
+        var lastName = user.FindFirst(c => c.Type == SlothClaimTypes.LastName)!.Value;
         var userName = user.FindFirst(c => c.Type == ClaimTypes.Name)!.Value;
         var userRoles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
         var userGuid = Guid.Empty;
@@ -28,6 +31,6 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
             userGuid = guid;
         }
 
-        return new CurrentUser(userID, email, userName, userRoles, userGuid);
+        return new CurrentUser(userID, email, firstName, lastName, userName, userRoles, userGuid);
     }
 }

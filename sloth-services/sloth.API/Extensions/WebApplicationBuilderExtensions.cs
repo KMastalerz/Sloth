@@ -44,7 +44,12 @@ public static class WebApplicationBuilderExtensions
             {
                 ValidIssuer = appSettings.TokenConfiguration.TokenIssuer,
                 ValidAudience = appSettings.TokenConfiguration.TokenIssuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.TokenConfiguration.TokenKey))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.TokenConfiguration.TokenKey)),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
         });
     }

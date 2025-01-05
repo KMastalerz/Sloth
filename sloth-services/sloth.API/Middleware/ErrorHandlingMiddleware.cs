@@ -1,4 +1,5 @@
 ﻿
+using sloth.API.Extensions;
 using sloth.Domain.Exceptions;
 
 namespace sloth.API.Middleware;
@@ -27,6 +28,18 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         {
             await HandleExceptionAsync(context, ex, 423, "User account is locked.");
         }
+        catch (UserAlreadyExistsException ex)
+        {
+            await HandleExceptionAsync(context, ex, 409, "User already exists.");
+        }
+        catch (InvalidUserException ex)
+        {
+            await HandleExceptionAsync(context, ex, 400, "Invalid user.");
+        }
+        catch (InvalidTokenException ex)
+        {
+            await HandleExceptionAsync(context, ex, 400, "Invalid token.");
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex, 500, "An unexpected error occurred.");
@@ -39,8 +52,13 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
 
         var errorResponse = new
         {
-            ErrorCode = statusCode,
-            ErrorMessage = message
+            type = statusCode.GetStatusTypeLink(),
+            title = "Request exception occured.",
+            status = statusCode,
+            errors = new Dictionary<string, string[]>
+            {
+                { "Request", new[] { ex.Message } } // Correctly initialize the dictionary
+            }
         };
 
         context.Response.StatusCode = statusCode;

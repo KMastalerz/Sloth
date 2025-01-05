@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using sloth.Application.Services.Auth;
 using sloth.Application.UserIdentity;
 
 namespace sloth.Application.Extensions;
@@ -18,6 +19,7 @@ public static class ServiceCollectionExtensions
             .AddFluentValidationAutoValidation();
 
         services.AddScoped<IUserContext, UserContext>();
+        services.AddSingleton<IAuthService, AuthService>();
 
         services.AddHttpContextAccessor();
     }

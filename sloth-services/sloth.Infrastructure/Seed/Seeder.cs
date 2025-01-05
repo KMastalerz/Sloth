@@ -1,13 +1,11 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using sloth.Domain.Entities;
 using sloth.Infrastructure.DatabaseContext;
 using System.Text.Json;
 
 namespace sloth.Infrastructure.Seed;
-internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext, IMapper mapper) : ISeeder
+internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeeder
 {
     public async Task Seed()
     {

@@ -27,7 +27,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("LockExpiration")
+                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
@@ -44,7 +44,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("LockExpirationDate")
+                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserID");
@@ -145,6 +145,12 @@ namespace sloth.Infrastructure.Migrations
 
                     b.Property<Guid>("RoleID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("UserID", "RoleID");
 

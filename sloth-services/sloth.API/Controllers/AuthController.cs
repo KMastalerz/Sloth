@@ -20,10 +20,10 @@ public class AuthController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(command);
         return Ok(result);
     }
-    //[HttpPost]
-    //public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
-    //{
-    //    var result = await mediator.Send(command);
-    //    return Ok(result);
-    //}
+    [HttpPost]
+    public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
+    {
+        var result = await mediator.Send(command);
+        return Ok(result);
+    }
 }

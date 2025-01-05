@@ -20,13 +20,20 @@ internal class RegisterCommandHandler(
         // Fix strings formattings
         request = FixRequest(request);
 
+        var user = await authRepository.GetUserAsync(request.UserName)
+            ?? await authRepository.GetUserAsync(request.Email);
+
+        if (user is not null)
+            throw new UserAlreadyExistsException();
+
         // Create a new user
-        var user = mapper.Map<User>(request);
+        user = mapper.Map<User>(request);
 
         // Hash the password
         user.PasswordHash = passwordHasher.HashPassword(user, request.Password);
 
-        var userRole = await authRepository.GetUserRoleByNameAsync(request.RoleCode)
+        // Invalid user role should not happen, it's checked in validation
+        var userRole = await authRepository.GetUserRoleAsync(request.RoleCode)
             ?? throw new InvalidUserRoleException();
 
         await authRepository.RegisterUserAsync(user, userRole);
