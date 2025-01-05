@@ -1,0 +1,31 @@
+# Ignore all bin directories at any depth
+bin/
+
+# Ignore all obj directories at any depth
+obj/
+
+# Ignore all .vs directories at any depth
+.vs/
+
+# Ignore all appsettings.json files at any depth
+**/appsettings.json
+
+# Visual Studio Code
+.vscode/*
+
+# Miscellaneous
+**/.angular/cache
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# NPM Packages
+node_modules/
+package-lock.json
+yarn.lock
+
+# Backup
+*.bkp

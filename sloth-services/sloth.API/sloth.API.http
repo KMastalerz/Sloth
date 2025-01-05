@@ -1,0 +1,6 @@
+@sloth.API_HostAddress = http://localhost:5229
+
+GET {{sloth.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

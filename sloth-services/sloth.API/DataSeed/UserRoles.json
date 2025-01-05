@@ -1,0 +1,27 @@
+[
+  {
+    "RoleName": "Admin",
+    "RoleCode": "ADMIN",
+    "RoleDescription": "Administrator with full access to the entire application and all resources."
+  },
+  {
+    "RoleName": "Software Engineer",
+    "RoleCode": "SOFTWARE_ENG",
+    "RoleDescription": "Responsible for developing new features, fixing bugs, and maintaining the software."
+  },
+  {
+    "RoleName": "QA Engineer",
+    "RoleCode": "QA_ENG",
+    "RoleDescription": "Ensures the quality of applications through rigorous testing and reporting."
+  },
+  {
+    "RoleName": "Support Staff",
+    "RoleCode": "SUPPORT",
+    "RoleDescription": "Acts as the first point of contact for client inquiries and provides initial support."
+  },
+  {
+    "RoleName": "Project Manager",
+    "RoleCode": "PROJECT_MGR",
+    "RoleDescription": "Oversees and manages projects within their assigned scope and ensures timely delivery."
+  }
+]
