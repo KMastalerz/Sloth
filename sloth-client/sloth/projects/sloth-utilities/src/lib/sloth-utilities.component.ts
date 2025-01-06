@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lib-sloth-utilities',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'lib-sloth-utilities',
+    imports: [],
+    template: `
     <p>
       sloth-utilities works!
     </p>
   `,
-  styles: ``
+    styles: ``
 })
 export class SlothUtilitiesComponent {
 

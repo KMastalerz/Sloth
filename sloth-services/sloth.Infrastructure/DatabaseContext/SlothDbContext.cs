@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sloth.Domain.Entities;
-using System.Data;
 
 namespace sloth.Infrastructure.DatabaseContext;
 internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbContext(options)
@@ -9,12 +8,11 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<LockedPassword> LockedPassword { get; set; }
     internal DbSet<LockedUser> LockedUser { get; set; }
     internal DbSet<RefreshToken> RefreshToken { get; set; }
+    internal DbSet<ResetSecurityCode> ResetSecurityCode { get; set; }
     internal DbSet<User> User { get; set; }
     internal DbSet<UserRole> UserRole { get; set; }
     internal DbSet<UserRoleLink> UserRoleLink { get; set; }
     #endregion
-
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -94,6 +92,15 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
             refreshToken.HasOne<User>()
                 .WithOne()
                 .HasForeignKey<RefreshToken>(rt => rt.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<ResetSecurityCode>(resetSecurityCode =>
+        {
+            resetSecurityCode.HasKey(rsc => rsc.UserID);
+            resetSecurityCode.HasOne<User>()
+                .WithOne()
+                .HasForeignKey<ResetSecurityCode>(rsc => rsc.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

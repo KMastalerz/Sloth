@@ -1,0 +1,85 @@
+<mat-drawer-container hasBackdrop="true" class="drawer-containter">
+    <mat-drawer #drawer mode="over" class="drawer">
+        <div class="drawer-content">
+            <span class="application-name center"> Sloth </span>
+            <a mat-button>
+                <mat-icon>space_dashboard</mat-icon>
+                Dashboard
+            </a>
+            <a mat-button>
+                <mat-icon>view_kanban</mat-icon>
+                Kanban
+                <span class="tag">160</span>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-button>
+                <mat-icon>bug_report</mat-icon>
+                Bugs
+                <span class="tag">100</span>
+            </a>
+            <a mat-button>
+                <mat-icon>help</mat-icon>
+                Queries
+            </a>
+            <a mat-button>
+                <mat-icon>emoji_objects</mat-icon>
+                Projects
+            </a>
+            <a mat-button>
+                <mat-icon>hardware</mat-icon>
+                Tests
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-button>
+                <mat-icon>category</mat-icon>
+                Products
+            </a>
+            <a mat-button>
+                <mat-icon>rocket_launch</mat-icon>
+                Releases
+            </a>
+            <a mat-button>
+                <mat-icon>handshake</mat-icon>
+                SLAs
+            </a>
+            <a mat-button>
+                <mat-icon>manage_accounts</mat-icon>
+                Users
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-button>
+                <mat-icon>calendar_month</mat-icon>
+                Timesheet
+            </a>
+            <a mat-button>
+                <mat-icon>book_ribbon</mat-icon>
+                Documentation
+            </a>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar class="toolbar">
+            <button mat-icon-button 
+                    aria-label="button to open side-navigation panel"
+                    (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="application-name"> Sloth </span>
+            <span class="toolbar-spacer"></span>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>person</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="account-menu">
+                <button mat-menu-item>
+                  <mat-icon>settings</mat-icon>
+                  <span>Account settings</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>logout</mat-icon>
+                  <span>Logout</span>
+                </button>
+              </mat-menu>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
