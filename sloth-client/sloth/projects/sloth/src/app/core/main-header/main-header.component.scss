@@ -1,0 +1,28 @@
+mat-toolbar {
+    gap: 1.2rem;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.menu-button {
+    padding: 0;
+    mat-icon,
+    span {
+        align-content: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    span {
+        font-size: 0.8rem !important;
+        margin-left: 0.2rem;
+    }
+
+    mat-icon {
+        font-size: 1.2rem !important;
+    }
+
+}
+

@@ -8,13 +8,19 @@ body {
 }
 
 html {
-  color-scheme: light dark;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
   @include mat.theme((
     color: mat.$azure-palette,
     typography: Roboto,
     density: 0
   ));
 }
+
+html {
+  color-scheme: dark;
+};
 
 * {
   padding: 0;
@@ -23,41 +29,22 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
-html {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  box-sizing: border-box;
-}
-
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-*:focus {
-  outline: none;
-}
 
-::placeholder {
-  opacity: 0.7; 
-}
+// input[type="password"]::-ms-reveal, /* For Edge */
+// input[type="password"]::-ms-clear,   /* For Edge */
+// input[type="password"]::-webkit-textfield-decoration-container {
+//   display: none;
+//   appearance: none;
+// }
 
 
-input[type="password"]::-ms-reveal, /* For Edge */
-input[type="password"]::-ms-clear,   /* For Edge */
-input[type="password"]::-webkit-textfield-decoration-container {
-  display: none;
-  appearance: none;
-}
-
-svg {
-  width: 100%;  /* Or any desired width */
-  height: 100%; /* Or any desired height */
-  display: block; /* Ensures the SVG respects the container's dimensions */
-}
-
-// overrite angular material badge
+// overrite angular material
 .mat-badge-content {
   font-size: 1.0rem !important;
   padding: 0.05rem 0.4rem !important;
@@ -71,4 +58,8 @@ mat-tooltip-component .mdc-tooltip__surface {
 
 .mat-mdc-menu-panel {
   border-radius: 0.8rem !important;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
 }

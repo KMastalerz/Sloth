@@ -1,0 +1,7 @@
+<a mat-button class="side-navigation-link">
+    <mat-icon>{{icon()}}</mat-icon>
+    {{label()}}
+    @if(value()) {
+        <span class="tag">{{value()}}</span>
+    }
+</a>

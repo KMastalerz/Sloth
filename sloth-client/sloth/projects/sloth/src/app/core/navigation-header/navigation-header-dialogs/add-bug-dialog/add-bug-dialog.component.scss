@@ -1,0 +1,40 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+p {
+    margin-bottom: 0.4rem;
+}
+
+.critical.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    --mat-sys-on-secondary-container: #fafafa;
+    background-color: light-dark(#9D4A4E, #851d22);
+}
+
+.high.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    --mat-sys-on-secondary-container: light-dark(#121212, #fafafa);
+    background-color: light-dark(#af7f3c, #71532a);
+}
+
+.medium.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    --mat-sys-on-secondary-container: #121212;
+    background-color: #f0ad4e;
+}
+
+.low.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    --mat-sys-on-secondary-container: #121212;
+    background-color: light-dark(#4DBC7B, #009f42);
+}
+
+.lowest.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    --mat-sys-on-secondary-container: #121212;
+    background-color: light-dark(#60A3FB, #388cfa);
+}

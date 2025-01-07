@@ -1,0 +1,49 @@
+<h2 mat-dialog-title class="center">Create a new bug!</h2>
+<mat-dialog-content>
+    <p>Provide bug description</p>
+    <form>
+        <section>
+            <mat-form-field>
+                <mat-label>Header</mat-label>
+                <input matInput [(ngModel)]="bugHeader" name="bugHeader"/>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea  matInput [(ngModel)]="bugDescription" name="bugDescription"></textarea>
+            </mat-form-field>
+        </section>
+        <section>
+            <p>Bug priority</p>
+            <mat-button-toggle-group [(ngModel)]="bugPriority" name="bugPriority">
+                <mat-button-toggle value="lowest" class="lowest">Lowest</mat-button-toggle>
+                <mat-button-toggle value="low" class="low">Low</mat-button-toggle>
+                <mat-button-toggle value="medium" class="medium">Medium</mat-button-toggle>
+                <mat-button-toggle value="high" class="high">High</mat-button-toggle>
+                <mat-button-toggle value="critical" class="critical">Critical</mat-button-toggle>
+            </mat-button-toggle-group>
+        </section>
+        <section>
+            <mat-form-field>
+                <mat-label>Projects</mat-label>
+                <mat-select multiple [(ngModel)]="bugProjects" name="bugProjects">
+                    @for (project of projects(); track project) {
+                    <mat-option [value]="project">{{project}}</mat-option>
+                  }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select>
+                    @for (type of types(); track type) {
+                    <mat-option [value]="type">{{type}}</mat-option>
+                  }
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCloseDialog()">Close</button>
+    <!-- <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Ok</button> -->
+    <button mat-flat-button (click)="onSaveBug()">Add</button>
+</mat-dialog-actions>
