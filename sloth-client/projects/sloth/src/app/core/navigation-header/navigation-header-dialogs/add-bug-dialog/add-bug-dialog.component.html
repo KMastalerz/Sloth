@@ -1,7 +1,8 @@
-<h2 mat-dialog-title class="center">Create a new bug!</h2>
+<h2 mat-dialog-title class="center">Create new item</h2>
 <mat-dialog-content>
     <p>Provide bug description</p>
     <form>
+        <sl-list-select [items]="types()" label="Item type"/>
         <sl-section>
             <sl-text-input label="Header" placeholder="add descriptive header" [(value)]="bugHeader" name="bugHeader"/>
             <sl-markup-input label="Description" placeholder="insert description that will help identify the bug"/>
@@ -11,7 +12,6 @@
         </sl-section>
         <sl-section>
             <sl-list-select [items]="projects()" [multiple]="true" label="Projects"/>
-            <sl-list-select [items]="types()" label="Types"/>
         </sl-section>
     </form>
   </mat-dialog-content>

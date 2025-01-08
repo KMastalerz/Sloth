@@ -30,3 +30,4 @@ yarn.lock
 
 # Backup
 *.bkp
+/sloth-client/dist

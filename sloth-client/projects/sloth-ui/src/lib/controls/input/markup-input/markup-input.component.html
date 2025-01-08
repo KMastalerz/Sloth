@@ -5,7 +5,7 @@
         @if( label() ) {
             <mat-label>{{ label() }}</mat-label>
         }
-        <textarea matInput [(ngModel)]="value" [name]="name()!" [placeholder]="placeholder()">
+        <textarea matInput [(ngModel)]="value" [name]="name()!" [placeholder]="placeholder()" [disabled]="disabled()">
         </textarea>
     </mat-form-field>
 </sl-control>

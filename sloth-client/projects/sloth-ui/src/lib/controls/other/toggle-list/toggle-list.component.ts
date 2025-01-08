@@ -12,4 +12,5 @@ import { ToggleListItem } from '../../../models/toggle-list-item.model';
 })
 export class ToggleListComponent extends BaseFormControlComponent {
   items = input<ToggleListItem[]>([]);
+  hideIndicator = input<boolean>(true);
 }

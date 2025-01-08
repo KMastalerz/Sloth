@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, model } from '@angular/core';
 
 @Component({
   selector: 'sl-base-control',
@@ -11,6 +11,8 @@ export class BaseControlComponent {
   tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
   badge = input<number | string | null>(null);
 
+  disabled = model<boolean>(false);
+  
   hideTooltip = computed(() => !this.tooltip());
   hideBadge = computed(() => !this.badge());
 }

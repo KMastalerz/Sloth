@@ -5,7 +5,7 @@
         @if( label() ) {
             <mat-label>{{ label() }}</mat-label>
         }
-        <mat-select [multiple]="multiple()" [(ngModel)]="value" [name]="name()">
+        <mat-select [multiple]="multiple()" [(ngModel)]="value" [name]="name()" [disabled]="disabled()">
             @for (item of items(); track item) {
                 <mat-option [value]="item.value">{{item.display ?? item.value}}</mat-option>
             }

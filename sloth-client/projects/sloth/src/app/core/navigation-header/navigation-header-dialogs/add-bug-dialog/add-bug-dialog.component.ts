@@ -89,7 +89,13 @@ export class AddBugDialogComponent {
       value: "Bug"
     }, 
     {
-      value: "RTS"
+      value: "Query"
+    }, 
+    {
+      value: "Task"
+    }, 
+    {
+      value: "Project"
     }
   ]);
   bugHeader = signal<string>("");
