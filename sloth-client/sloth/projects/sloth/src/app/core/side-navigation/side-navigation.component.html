@@ -1,20 +1,20 @@
 <div class="side-navigation">
     <span class="application-name center"> Sloth </span>
-    <side-navigation-link icon="space_dashboard" label="Dashboard"/>
-    <side-navigation-link icon="view_kanban" label="Kanban"/>
+    <sl-navigation-link icon="space_dashboard" label="Dashboard"/>
+    <sl-navigation-link icon="view_kanban" label="Kanban"/>
     <mat-divider></mat-divider>
-    <side-navigation-link icon="bug_report" label="Bugs"/>
-    <side-navigation-link icon="help" label="Queries"/>
-    <side-navigation-link icon="emoji_objects" label="Projects"/>
-    <side-navigation-link icon="hardware" label="Tests"/>
+    <sl-navigation-link icon="bug_report" label="Bugs"/>
+    <sl-navigation-link icon="help" label="Queries"/>
+    <sl-navigation-link icon="emoji_objects" label="Projects"/>
+    <sl-navigation-link icon="hardware" label="Tests"/>
     <mat-divider></mat-divider>
-    <side-navigation-link icon="category" label="Products"/>
-    <side-navigation-link icon="rocket_launch" label="Releases"/>
-    <side-navigation-link icon="handshake" label="SLAs"/>
-    <side-navigation-link icon="manage_accounts" label="Users"/>
+    <sl-navigation-link icon="category" label="Products"/>
+    <sl-navigation-link icon="rocket_launch" label="Releases"/>
+    <sl-navigation-link icon="handshake" label="SLAs"/>
+    <sl-navigation-link icon="manage_accounts" label="Users"/>
     <mat-divider></mat-divider>
-    <side-navigation-link icon="calendar_month" label="Timesheet"/>
-    <side-navigation-link icon="book_ribbon" label="Documentation"/>
+    <sl-navigation-link icon="calendar_month" label="Timesheet"/>
+    <sl-navigation-link icon="book_ribbon" label="Documentation"/>
     
-    <mat-slide-toggle [checked]="checked()" (change)="onThemeToggle()"/>
+    <sl-toggle [(checked)]="isLight" (change)="onThemeToggle()" [trueIcon]="sun()" [falseIcon]="moon()" theme="theme-toggle"></sl-toggle>
 </div>

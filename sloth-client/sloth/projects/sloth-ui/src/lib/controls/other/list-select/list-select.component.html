@@ -1,0 +1,14 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    <mat-form-field appearance="outline">
+        @if( label() ) {
+            <mat-label>{{ label() }}</mat-label>
+        }
+        <mat-select [multiple]="multiple()" [(ngModel)]="value" [name]="name()">
+            @for (item of items(); track item) {
+                <mat-option [value]="item.value">{{item.display ?? item.value}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</sl-control>

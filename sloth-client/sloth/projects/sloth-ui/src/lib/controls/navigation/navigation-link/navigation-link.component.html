@@ -1,0 +1,13 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    <a mat-button>
+        <mat-icon>{{icon()}}</mat-icon>
+        @if(label()) {
+            {{label()}}
+        }
+        @if(value()) {
+            <span class="tag">{{ value() }}</span>
+        }
+    </a>
+</sl-control>

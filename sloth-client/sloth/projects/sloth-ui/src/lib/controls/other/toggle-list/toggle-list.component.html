@@ -1,0 +1,11 @@
+<div class="toggle-list-container">
+    @if(label()) {
+        <label>{{ label() }}</label>
+    }
+    
+    <mat-button-toggle-group [(ngModel)]="value" name="name()!">
+        @for(item of items(); track item) {
+            <mat-button-toggle [value]="item.value" [class]="item.class">{{ item.display ?? item.value }}</mat-button-toggle>
+        }
+    </mat-button-toggle-group>
+</div>

@@ -1,0 +1,9 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    <a mat-button>
+    @if(label()) {
+        {{ label() }}
+    }
+    </a>
+</sl-control>

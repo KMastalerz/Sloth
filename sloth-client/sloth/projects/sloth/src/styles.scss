@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@include mat.core();
 
 body {
   height: 100%;
@@ -52,8 +53,7 @@ html, body {
 }
 
 mat-tooltip-component .mdc-tooltip__surface {
-  font-size: 1.2rem;
-  padding: 0.8rem 1.2rem;
+  font-weight: bolder;
 }
 
 .mat-mdc-menu-panel {

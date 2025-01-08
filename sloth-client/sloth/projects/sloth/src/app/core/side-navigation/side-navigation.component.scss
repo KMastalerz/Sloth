@@ -12,21 +12,7 @@
     margin-bottom: 1.2rem;
 }
 
-.side-navigation mat-slide-toggle {
+.side-navigation sl-toggle {
     margin-top: auto;
     align-self: center;
-}
-
-.mat-mdc-slide-toggle {
-    --mdc-switch-selected-focus-state-layer-color: #D4AC0D;
-    --mdc-switch-selected-handle-color: #DDBD3D;
-    --mdc-switch-selected-hover-state-layer-color: #D4AC0D;
-    --mdc-switch-selected-pressed-state-layer-color: #D4AC0D;
-    --mdc-switch-selected-focus-handle-color: #D4AC0D;
-    --mdc-switch-selected-hover-handle-color: #D4AC0D;
-    --mdc-switch-selected-pressed-handle-color: #D4AC0D;
-    --mdc-switch-selected-focus-track-color: #A4DDEF;
-    --mdc-switch-selected-hover-track-color: #A4DDEF;
-    --mdc-switch-selected-pressed-track-color: #A4DDEF;
-    --mdc-switch-selected-track-color: #A4DDEF;
 }
