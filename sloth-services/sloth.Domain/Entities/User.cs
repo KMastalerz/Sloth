@@ -9,5 +9,6 @@ public class User
     public string PasswordHash { get; set; } = default!;
     public string LanguageCode { get; set; } = "en"; //ISO 639-1
     public int FailedLoginAttempts { get; set; }
+    public bool IsActive { get; set; }
     public List<UserRole> UserRoles { get; set; } = [];
 }

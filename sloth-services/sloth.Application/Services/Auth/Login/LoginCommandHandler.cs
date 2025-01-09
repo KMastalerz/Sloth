@@ -30,7 +30,7 @@ public class LoginCommandHandler (
         var appConfig = configuration.GetSection(ConfigurationKeys.Configuration).Get<Configuration>()!;
 
         // check if user is already locked
-        var isUserLocked = await authRepository.IsUserLockedAsync(user);
+        var isUserLocked = await authRepository.IsUserLockedAsync(user) || !user.IsActive;
 
         if(isUserLocked)
             throw new LockedUserException();

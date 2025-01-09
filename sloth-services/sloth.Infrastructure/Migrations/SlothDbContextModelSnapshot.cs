@@ -22,6 +22,273 @@ namespace sloth.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
+                {
+                    b.Property<int>("JobID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobID"));
+
+                    b.Property<DateTime?>("CloseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentJobStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CurrentOwnerID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentTeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("JobDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobHeader")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PriorityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobID");
+
+                    b.HasIndex("CurrentJobStatusID");
+
+                    b.HasIndex("CurrentOwnerID");
+
+                    b.HasIndex("CurrentTeamID");
+
+                    b.HasIndex("PriorityLevel");
+
+                    b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobAssignment", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("JobID", "TeamID");
+
+                    b.HasIndex("AssignedByID");
+
+                    b.HasIndex("TeamID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("JobAssignment");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobAssignmentHistory", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ChangedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CurrentOwnerID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PreviousOwnerID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("JobID", "ChangeDate");
+
+                    b.HasIndex("ChangedByID");
+
+                    b.HasIndex("CurrentOwnerID");
+
+                    b.HasIndex("PreviousOwnerID");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("JobAssignmentHistory");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
+                {
+                    b.Property<int>("CommentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CommentedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OriginalCommentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentID");
+
+                    b.HasIndex("CommentedByID");
+
+                    b.HasIndex("JobID");
+
+                    b.HasIndex("OriginalCommentID");
+
+                    b.ToTable("JobComment");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobPriority", b =>
+                {
+                    b.Property<int>("PriorityLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PriorityClass")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PriorityDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriorityLevel");
+
+                    b.ToTable("JobPriority");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ChangedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NewPriorityLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PreviousPriorityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobID", "ChangeDate");
+
+                    b.HasIndex("ChangedByID");
+
+                    b.HasIndex("NewPriorityLevel");
+
+                    b.HasIndex("PreviousPriorityLevel");
+
+                    b.ToTable("JobPriorityHistory");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobProductLink", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("JobProductLink");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobStatus", b =>
+                {
+                    b.Property<int>("JobStatusID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobStatusID"));
+
+                    b.Property<bool>("EndState")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("OwnerChange")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("JobStatusID");
+
+                    b.ToTable("JobStatus");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobStatusHistory", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ChangedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NewStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PreviousStatusID")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobID", "ChangeDate");
+
+                    b.HasIndex("ChangedByID");
+
+                    b.HasIndex("NewStatusID");
+
+                    b.HasIndex("PreviousStatusID");
+
+                    b.ToTable("JobStatusHistory");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.LockedPassword", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -52,6 +319,45 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("LockedUser");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.OwnerStatusMap", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("JobStatusID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeamID", "JobStatusID");
+
+                    b.HasIndex("JobStatusID");
+
+                    b.ToTable("OwnerStatusMap");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
+
+                    b.Property<string>("ProductDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("Product");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -67,6 +373,72 @@ namespace sloth.Infrastructure.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("RefreshToken");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.ResetSecurityCode", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SecurityCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("ResetSecurityCode");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Team", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TeamDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeamName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeamID");
+
+                    b.ToTable("Team");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.TeamProductLink", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeamID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("TeamProductLink");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.TeamStatusMap", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("JobStatusID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeamID", "JobStatusID");
+
+                    b.HasIndex("JobStatusID");
+
+                    b.ToTable("TeamStatusMap");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.User", b =>
@@ -85,6 +457,9 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LanguageCode")
                         .IsRequired()
@@ -146,10 +521,10 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("RoleID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ExpirationDate")
+                    b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FromDate")
+                    b.Property<DateTime?>("ToDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserID", "RoleID");
@@ -157,6 +532,237 @@ namespace sloth.Infrastructure.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("UserRoleLink");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.UserTeamLink", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TeamID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserTeamLink");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.JobStatus", "JobStatus")
+                        .WithMany()
+                        .HasForeignKey("CurrentJobStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
+                        .WithMany()
+                        .HasForeignKey("CurrentOwnerID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("sloth.Domain.Entities.Team", "CurrentTeam")
+                        .WithMany()
+                        .HasForeignKey("CurrentTeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("sloth.Domain.Entities.JobPriority", "JobPriority")
+                        .WithMany()
+                        .HasForeignKey("PriorityLevel")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CurrentOwner");
+
+                    b.Navigation("CurrentTeam");
+
+                    b.Navigation("JobPriority");
+
+                    b.Navigation("JobStatus");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobAssignment", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "AssignedBy")
+                        .WithMany()
+                        .HasForeignKey("AssignedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("JobAssignments")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("AssignedBy");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobAssignmentHistory", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "ChengedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
+                        .WithMany()
+                        .HasForeignKey("CurrentOwnerID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("JobAssignmentHistory")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.User", "PreviousOwner")
+                        .WithMany()
+                        .HasForeignKey("PreviousOwnerID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ChengedBy");
+
+                    b.Navigation("CurrentOwner");
+
+                    b.Navigation("PreviousOwner");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "CommentedBy")
+                        .WithMany()
+                        .HasForeignKey("CommentedByID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("JobComments")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.JobComment", null)
+                        .WithMany("PreviousEdits")
+                        .HasForeignKey("OriginalCommentID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CommentedBy");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedByID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("JobPriorityHistory")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.JobPriority", "NewPriority")
+                        .WithMany()
+                        .HasForeignKey("NewPriorityLevel")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.JobPriority", "PreviousPriority")
+                        .WithMany()
+                        .HasForeignKey("PreviousPriorityLevel")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ChangedBy");
+
+                    b.Navigation("NewPriority");
+
+                    b.Navigation("PreviousPriority");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobProductLink", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany()
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobStatusHistory", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedByID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("JobStatusHistory")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.JobStatus", "NewStatus")
+                        .WithMany()
+                        .HasForeignKey("NewStatusID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.JobStatus", "PreviousStatus")
+                        .WithMany()
+                        .HasForeignKey("PreviousStatusID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ChangedBy");
+
+                    b.Navigation("NewStatus");
+
+                    b.Navigation("PreviousStatus");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.LockedPassword", b =>
@@ -177,11 +783,65 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.OwnerStatusMap", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.JobStatus", null)
+                        .WithMany()
+                        .HasForeignKey("JobStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.User", null)
                         .WithOne()
                         .HasForeignKey("sloth.Domain.Entities.RefreshToken", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.ResetSecurityCode", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("sloth.Domain.Entities.ResetSecurityCode", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.TeamProductLink", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.TeamStatusMap", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.JobStatus", null)
+                        .WithMany()
+                        .HasForeignKey("JobStatusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -199,6 +859,39 @@ namespace sloth.Infrastructure.Migrations
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.UserTeamLink", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
+                {
+                    b.Navigation("JobAssignmentHistory");
+
+                    b.Navigation("JobAssignments");
+
+                    b.Navigation("JobComments");
+
+                    b.Navigation("JobPriorityHistory");
+
+                    b.Navigation("JobStatusHistory");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
+                {
+                    b.Navigation("PreviousEdits");
                 });
 #pragma warning restore 612, 618
         }

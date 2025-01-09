@@ -17,9 +17,6 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "paths": {
-      "sloth-dto": [
-        "./dist/sloth-dto"
-      ],
       "sloth-http": [
         "./dist/sloth-http"
       ],

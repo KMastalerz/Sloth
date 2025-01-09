@@ -26,7 +26,7 @@ internal class AuthRepository(SlothDbContext dbContext) : IAuthRepository
             UserID = user.UserID,
             RoleID = userRole.RoleID,
             FromDate = DateTime.UtcNow,
-            ExpirationDate = null
+            ToDate = null
         });
         await dbContext.SaveChangesAsync();
         return user;

@@ -32,6 +32,9 @@ internal class RegisterCommandHandler(
         // Hash the password
         user.PasswordHash = passwordHasher.HashPassword(user, request.Password);
 
+        // Set user as active
+        user.IsActive = true;
+
         // Invalid user role should not happen, it's checked in validation
         var userRole = await authRepository.GetUserRoleAsync(request.RoleCode)
             ?? throw new InvalidUserRoleException();
@@ -40,7 +43,6 @@ internal class RegisterCommandHandler(
 
         logger.LogInformation("User: {UserName} registered", user.UserName);
     }
-
     private RegisterCommand FixRequest(RegisterCommand request)
     {
         return new()
