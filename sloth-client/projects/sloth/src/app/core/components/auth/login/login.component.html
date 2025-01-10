@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="login-page">
+    <span class="application-name"> Sloth </span>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <sl-section>
+            <sl-text-input label="Username / Email" formControlName="login"/>
+            <sl-password-input label="Password" formControlName="password"/>
+        </sl-section>
+        <section>
+            <sl-button label="Login" type="submit"/>
+            <sl-button-link label="Register" displayType="flat"/>
+        </section>
+
+        @if(displayLoginError()) {
+            <p class="error-display">Invalid login details</p>
+        }
+
+        @if(displayServerError()) {
+            <p class="error-display">Server issue, please contact administrator</p>
+        }
+
+    </form>
+</div>

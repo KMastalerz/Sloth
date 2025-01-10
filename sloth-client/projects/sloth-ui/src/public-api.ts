@@ -3,12 +3,13 @@
  */
 
 /* Controls */
-export * from './lib/controls/button/flat-button/flat-button.component';
-export * from './lib/controls/button/flat-icon-button/flat-icon-button.component';
+export * from './lib/controls/button/button/button.component';
 export * from './lib/controls/button/icon-button/icon-button.component';
+export * from './lib/controls/button/text-icon-button/text-icon-button.component';
 export * from './lib/controls/input/date-picker/date-picker.component';
 export * from './lib/controls/input/date-time-picker/date-time-picker.component';
 export * from './lib/controls/input/email-input/email-input.component';
+export * from './lib/controls/input/file-input/file-input.component';
 export * from './lib/controls/input/markup-input/markup-input.component';
 export * from './lib/controls/input/number-input/number-input.component';
 export * from './lib/controls/input/password-input/password-input.component';
@@ -33,7 +34,3 @@ export * from './lib/icons/sun.icon';
 
 /* Wrappers */
 export * from  './lib/wrappers/section/section.component';
-
-/* Models */
-export * from  './lib/models/list-select-item.model';
-export * from  './lib/models/toggle-list-item.model';

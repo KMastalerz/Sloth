@@ -1,0 +1,27 @@
+[
+  {
+    "ProductName": "Mastermind Monitoring",
+    "ProductShortName": "mmm",
+    "ProductDescription": "Powerbuilder desktop application for dispatchers"
+  },
+  {
+    "ProductName": "Mastermind Business",
+    "ProductShortName": "mmb",
+    "ProductDescription": "Powerbuilder desktop application for dealers"
+  },
+  {
+    "ProductName": "Masterming EX",
+    "ProductShortName": "ex",
+    "ProductDescription": "WPF Application with WCF service layer for both business and monitoring"
+  },
+  {
+    "ProductName": "MASweb",
+    "ProductShortName": "mw",
+    "ProductDescription": "ASP.NET application for dealers"
+  },
+  {
+    "ProductName": "MASweb+",
+    "ProductShortName": "mw+",
+    "ProductDescription": "Angular application with WCF service layer for dealers"
+  }
+]

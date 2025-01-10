@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using sloth.Application.Models.Auth;
 using sloth.Domain.Exceptions;
@@ -7,6 +8,7 @@ using sloth.Domain.Repositories;
 namespace sloth.Application.Services.Auth;
 public class RefreshTokenCommandHandler(
     ILogger<RefreshTokenCommandHandler> logger,
+    IMapper mapper,
     IAuthRepository authRepository,
     IAuthService authService) 
     : IRequestHandler<RefreshTokenCommand, AccessTokenResponse>
@@ -31,6 +33,7 @@ public class RefreshTokenCommandHandler(
 
         // generate new AccessTokenResponse
         var accessToken = authService.GenerateAcesssTokenResponse(user);
+        accessToken.User = mapper.Map<AccessUser>(user);
 
         // refresh, refresh token
         await authRepository.UpdateRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.ExpiresAt);

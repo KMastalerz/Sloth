@@ -5,7 +5,9 @@
         @if( label() ) {
             <mat-label>{{ label() }}</mat-label>
         }
-        <input matInput [(ngModel)]="value" [name]="name()!" [placeholder]="placeholder()" [disabled]="disabled()"/>
+        <input  matInput 
+                [formControl]="$any(ngControl).control" 
+                [placeholder]="placeholder()"/>
     </mat-form-field>
 </sl-control>
 

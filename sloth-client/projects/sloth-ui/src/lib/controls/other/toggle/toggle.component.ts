@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, input, model, output, viewChild } from '@angular/core';
 import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BaseControlComponent } from '../../base-control.component';
 import { ControlComponent } from '../../control.component';
 
 @Component({
@@ -9,11 +8,12 @@ import { ControlComponent } from '../../control.component';
   templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.scss'
 })
-export class ToggleComponent extends BaseControlComponent implements AfterViewInit {
+export class ToggleComponent implements AfterViewInit {
   themeToggle = viewChild(MatSlideToggle, { read: ElementRef });
   checked = model<boolean>(false);
   change = output<boolean>();
   theme = input<'theme-toggle' | null>(null);
+  badge = input<number | string | null>(null);
 
   trueIcon = input<string | null>(null);
   falseIcon = input<string | null>(null);

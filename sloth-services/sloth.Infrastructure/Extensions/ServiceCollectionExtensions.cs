@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
 
         // Register domain repositories
         services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IJobRepository, JobRepository>();
         services.AddScoped<IUserSettingsRepository, UserSettingsRepository>();
 
         // Register Caches

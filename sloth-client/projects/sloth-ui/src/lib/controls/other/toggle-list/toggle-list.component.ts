@@ -1,12 +1,12 @@
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Component, input } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { BaseFormControlComponent } from '../../base-form-control.component'; 
-import { ToggleListItem } from '../../../models/toggle-list-item.model';
+import { ToggleListItem } from 'sloth-utilities';
+import { BaseFormControlComponent } from '../../base-form-control.component';
 
 @Component({
   selector: 'sl-toggle-list',
-  imports: [MatButtonToggleModule, FormsModule],
+  imports: [MatButtonToggleModule, ReactiveFormsModule],
   templateUrl: './toggle-list.component.html',
   styleUrl: './toggle-list.component.scss'
 })

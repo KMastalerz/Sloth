@@ -2,7 +2,7 @@
             [tooltipPosition]="tooltipPosition()"
             [badge]="badge()">
     <a mat-button
-       [disabled]="disabled()">
+       [disabled]="isDisabled()">
     @if(label()) {
         {{ label() }}
     }

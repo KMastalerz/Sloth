@@ -1,23 +1,19 @@
 ﻿namespace sloth.Domain.Entities;
 public class JobAssignmentHistory
 {
-    public int JobID { get; set; } // FK
-    public Guid PreviousOwnerID { get; set; } // FK
-    public Guid CurrentOwnerID { get; set; } // FK
-    public Guid TeamID { get; set; } // FK
-    public Guid ChangedByID { get; set; } // FK
+    public int JobID { get; set; }
+    public Guid PreviousOwnerID { get; set; }
+    public Guid CurrentOwnerID { get; set; }
+    public Guid TeamID { get; set; } 
+    public Guid ChangedByID { get; set; }
     public DateTime ChangeDate { get; set; }
 
     /// <summary>
-    /// external property
+    /// External properties
     /// </summary>
     
-    // FK: PreviousOwnerID
     public User PreviousOwner { get; set; } = default!;
-    // FK: CurrentOwnerID
     public User CurrentOwner { get; set; } = default!;
-    // FK: ChangedByID
     public User ChengedBy { get; set; } = default!;
-    // FK: TeamID
     public Team Team { get; set; } = default!;
 }

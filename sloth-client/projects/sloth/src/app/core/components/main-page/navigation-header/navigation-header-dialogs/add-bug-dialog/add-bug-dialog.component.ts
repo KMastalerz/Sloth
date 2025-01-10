@@ -1,120 +1,96 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSelectModule } from '@angular/material/select';
-import { ListSelectComponent, ListSelectItem, MarkupInputComponent, SectionComponent, TextInputComponent, ToggleListComponent, ToggleListItem } from 'sloth-ui';
+import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FileInputComponent, ListSelectComponent, MarkupInputComponent, SectionComponent, TextInputComponent, ToggleListComponent } from 'sloth-ui';
+import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
+import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
 
 @Component({
   selector: 'app-add-bug-dialog',
-  imports: [MatDialogTitle,
-    MatDialogActions,
-    MatDialogContent,
-    MatFormFieldModule,
-    FormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatButtonToggleModule,
-    MatSelectModule,
-    TextInputComponent,
-    MarkupInputComponent,
-    SectionComponent,
-    ToggleListComponent, 
-    ListSelectComponent],
+  imports: [MatDialogContent, SectionComponent, MatDialogActions,
+    MatButtonModule, ReactiveFormsModule, MatDialogTitle,
+    ListSelectComponent, MarkupInputComponent, ToggleListComponent,
+    TextInputComponent, FileInputComponent],
   templateUrl: './add-bug-dialog.component.html',
   styleUrl: './add-bug-dialog.component.scss'
 })
-export class AddBugDialogComponent {
+export class AddBugDialogComponent   {
   readonly dialogRef = inject(MatDialogRef<AddBugDialogComponent>);
+  readonly jobDataCacheService = inject(JobDataCacheService)
 
-  priotities = signal<ToggleListItem[]>([
-    {
-      value: 'lowest',
-      display: 'Lowest',
-      class: 'lowest'
-    },
-    {
-      value: 'low',
-      display: 'Low',
-      class: 'low'
-    },
-    {
-      value: 'medium',
-      display: 'Medium',
-      class: 'medium'
-    },
-    {
-      value: 'high',
-      display: 'High',
-      class: 'high'
-    },
-    {
-      value: 'critical',
-      display: 'Critical',
-      class: 'critical'
-    }
-    ,
-    {
-      value: 'regular',
-      display: 'Regular'
-    }
-  ])
-  projects = signal<ListSelectItem[]>([
-    {
-      value: "mw+",
-      display: "MASWeb+"
-    },
-    {
-      value: "ex",
-      display: "MASEX"
-    },
-    {
-      value: "mmm",
-      display: "Mastermind Monitoring"
-    },
-    {
-      value: "mmb",
-      display: "Mastermind Business"
-    },
-    {
-      value: "mw",
-      display: "MASWeb"
-    }
-  ]);
-  types = signal<ListSelectItem[]>([
-    {
-      value: "Bug"
-    }, 
-    {
-      value: "Query"
-    }, 
-    {
-      value: "Task"
-    }, 
-    {
-      value: "Project"
-    }
-  ]);
-  bugHeader = signal<string>("");
-  bugDescription = signal<string>("");
-  bugPriority = signal<string>("");
-  bugProjects = signal<string[]>([]);
+  constructor(){
+    this.jobDataCacheService.jobPriorities
+    .pipe(takeUntilDestroyed())
+    .subscribe((data) => 
+      this.priotities.set(data)
+    );
 
+    this.jobDataCacheService.products
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => 
+        this.products.set(data)
+    );
+
+    this.jobDataCacheService.quickJobTypes
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => 
+        this.quickJobTypes.set(data)
+    );
+  }
+
+  onStatusChange(status: any) {
+    console.log('status', status);
+    
+  }
+
+  protected jobForm = new FormGroup({
+    type: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    header: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    description: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    priority: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    products: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    file: new FormControl<File | null>(null), // Allow File objects
+  })
+
+
+  priotities = signal<ToggleListItem[]>([]);
+  products = signal<ListSelectItem[]>([]);
+  quickJobTypes = signal<ListSelectItem[]>([]);
+  
   onCloseDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(
+      null
+    );
   }
 
   onSaveBug(): void {
-    console.log('Clicked Add');
+    console.log('jobForm', this.jobForm);
     
-    this.dialogRef.close({
-      header: this.bugHeader(),
-      description: this.bugDescription(),
-      priority: this.bugPriority(),
-      projects: this.bugProjects()
-    });
+    if(this.jobForm.valid)
+      this.dialogRef.close(
+        this.jobForm.value
+      );
+    else 
+      this.dialogRef.close(
+        null
+      )
+  }
+
+  fileToUpload: File | null = null;
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 }

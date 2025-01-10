@@ -1,0 +1,24 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    <mat-form-field appearance="outline">
+        @if( label() ) {
+            <mat-label>{{ label() }}</mat-label>
+        }
+        <input type="file" 
+               [formControl]="$any(ngControl).control" 
+               #fileInput 
+               hidden 
+               (change)="innerOpenFile($event)"/>
+
+        <input matInput 
+            [value]="fileName()"
+            type="text"
+            [placeholder]="placeholder()"/>
+            
+        <button mat-icon-button matSuffix (click)="openFile()" type="button">
+            <mat-icon>file_upload</mat-icon>
+        </button>
+    </mat-form-field>
+</sl-control>
+

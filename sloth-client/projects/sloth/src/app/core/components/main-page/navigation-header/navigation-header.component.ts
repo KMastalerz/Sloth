@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { AddBugDialogComponent } from './navigation-header-dialogs/add-bug-dialog/add-bug-dialog.component';
-import { FlatButtonComponent, HeaderLinkComponent } from 'sloth-ui';
+import { ButtonComponent, HeaderLinkComponent } from 'sloth-ui';
 
 
 @Component({
   selector: 'navigation-header',
-  imports: [MatToolbar, FlatButtonComponent, HeaderLinkComponent],
+  imports: [MatToolbar, ButtonComponent, HeaderLinkComponent],
   templateUrl: './navigation-header.component.html',
   styleUrl: './navigation-header.component.scss'
 })

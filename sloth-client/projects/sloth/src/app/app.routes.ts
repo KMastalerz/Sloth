@@ -12,18 +12,16 @@ export const routes: Routes = [
       },          
       {
         path: 'auth',
-        loadChildren: () => import('./core/core.routes').then(m => m.coreRoutes),
-        canActivate: [authGuard]
+        loadChildren: () => import('./core/core.routes').then(m => m.coreRoutes)
       },
       {
         path: 'sloth',
         component: MainPageComponent,
-        pathMatch: 'full',
         children: [
           {
             path: '',
             redirectTo: 'dashboard',
-            pathMatch: 'prefix'
+            pathMatch: 'full'
           },      
           {
             path: 'dashboard',
@@ -59,8 +57,11 @@ export const routes: Routes = [
             path: 'tracker',
             loadChildren: () => import('./modules/tracker/tracker.routes').then(m => m.trackerRoutes),
             canActivate: [authGuard, accessGuard]
-          },
-          { path: '**', redirectTo: 'core/auth/invalid-page' } 
+          }
         ]
-      }
+      },
+      { 
+        path: '**', 
+        redirectTo: 'auth/invalid-page' 
+      } 
 ];

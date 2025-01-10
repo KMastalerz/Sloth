@@ -31,6 +31,7 @@ export class CacheService {
 
   // Save to LocalStorage
   saveToLocalStorage<T>(key: string, value: T): void {
+    this.removeFromLocalStorage(key);
     const encryptedValue = this.encryptData(value);
     localStorage.setItem(key, encryptedValue);
   }
@@ -43,6 +44,7 @@ export class CacheService {
 
   // Save to SessionStorage
   saveToSessionStorage<T>(key: string, value: T): void {
+    this.removeFromSessionStorage(key);  
     const encryptedValue = this.encryptData(value);
     sessionStorage.setItem(key, encryptedValue);
   }
@@ -55,6 +57,7 @@ export class CacheService {
 
   // Save to Cookies
   saveToCookies<T>(key: string, value: T, expiresDays: number = 7): void {
+    this.removeFromCookies(key);
     const encryptedValue = this.encryptData(value);
     const expirationDate = new Date();
     expirationDate.setTime(expirationDate.getTime() + (expiresDays * 24 * 60 * 60 * 1000)); // set expiration date
@@ -80,8 +83,18 @@ export class CacheService {
     return null;
   }
 
-  // Delete from Cookies
-  deleteCookie(key: string): void {
-    document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
-  }
+    // Remove from LocalStorage
+    removeFromLocalStorage(key: string): void {
+      localStorage.removeItem(key);
+    }
+  
+    // Remove from SessionStorage
+    removeFromSessionStorage(key: string): void {
+      sessionStorage.removeItem(key);
+    }
+  
+    // Remove from Cookies
+    removeFromCookies(key: string): void {
+      document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+    }
 }

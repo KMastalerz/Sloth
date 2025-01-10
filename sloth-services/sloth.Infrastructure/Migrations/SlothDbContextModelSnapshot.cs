@@ -22,6 +22,69 @@ namespace sloth.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("sloth.Domain.Entities.Client", b =>
+                {
+                    b.Property<Guid>("ClientID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApartmentNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuildingNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientNameAlias")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClientID");
+
+                    b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.ClientProductLink", b =>
+                {
+                    b.Property<Guid>("ClientID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ClientProductLink");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
                 {
                     b.Property<int>("JobID")
@@ -29,6 +92,9 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobID"));
+
+                    b.Property<Guid?>("ClientID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CloseDate")
                         .HasColumnType("datetime2");
@@ -44,6 +110,9 @@ namespace sloth.Infrastructure.Migrations
 
                     b.Property<Guid?>("CurrentTeamID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsClient")
+                        .HasColumnType("bit");
 
                     b.Property<string>("JobDescription")
                         .IsRequired()
@@ -64,6 +133,8 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("JobID");
+
+                    b.HasIndex("ClientID");
 
                     b.HasIndex("CurrentJobStatusID");
 
@@ -346,10 +417,10 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductDisplayName")
+                    b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductName")
+                    b.Property<string>("ProductShortName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -555,8 +626,27 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("UserTeamLink");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.ClientProductLink", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
                 {
+                    b.HasOne("sloth.Domain.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientID");
+
                     b.HasOne("sloth.Domain.Entities.JobStatus", "JobStatus")
                         .WithMany()
                         .HasForeignKey("CurrentJobStatusID")
@@ -578,6 +668,8 @@ namespace sloth.Infrastructure.Migrations
                         .HasForeignKey("PriorityLevel")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("CurrentOwner");
 

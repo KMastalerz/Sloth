@@ -8,11 +8,13 @@ internal class AuthRepository(SlothDbContext dbContext) : IAuthRepository
 {
     public async Task<User?> GetUserAsync(string login)
     {
-        return await dbContext.User.FirstOrDefaultAsync(u => u.UserName == login || u.Email == login);
+        return await dbContext.User.Include(u => u.UserRoles)
+            .FirstOrDefaultAsync(u => u.UserName == login || u.Email == login);
     }
     public async Task<User?> GetUserAsync(Guid userID)
     {
-        return await dbContext.User.FirstOrDefaultAsync(u => u.UserID == userID);
+        return await dbContext.User.Include(u => u.UserRoles)
+            .FirstOrDefaultAsync(u => u.UserID == userID);
     }
     public async Task<UserRole?> GetUserRoleAsync(string roleName)
     {

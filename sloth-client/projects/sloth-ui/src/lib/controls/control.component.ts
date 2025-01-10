@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule, MatTooltip } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
-import { BaseControlComponent } from './base-control.component';
 
 @Component({
   selector: 'sl-control',
@@ -11,5 +9,11 @@ import { BaseControlComponent } from './base-control.component';
   templateUrl: './control.component.html',
   styleUrl: './control.component.scss'
 })
-export class ControlComponent extends BaseControlComponent {
+export class ControlComponent {
+  label = input<string | null>(null);
+  tooltip = input<string | null>(null);
+  tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
+  badge = input<number | string | null>(null);
+  hideTooltip = computed(() => !this.tooltip());
+  hideBadge = computed(() => !this.badge());
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,8 @@ using sloth.Utilities.Constants;
 
 namespace sloth.Application.Services.Auth;
 public class LoginCommandHandler (
-    ILogger<LoginCommandHandler> logger, 
+    ILogger<LoginCommandHandler> logger,
+    IMapper mapper,
     IPasswordHasher<User> passwordHasher,
     IAuthRepository authRepository,
     IAuthService authService,
@@ -67,6 +69,7 @@ public class LoginCommandHandler (
 
         // generate access token
         var accessToken = authService.GenerateAcesssTokenResponse(user);
+        accessToken.User = mapper.Map<AccessUser>(user);
 
         // refresh, refresh token
         await authRepository.UpdateRefreshTokenAsync(accessToken.RefreshToken, user.UserID, accessToken.ExpiresAt);

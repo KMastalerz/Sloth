@@ -1,0 +1,26 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    @if(isFlatButton()) {
+        <button mat-flat-button
+                (click)="onClickEmit()"
+                [class]="
+                {
+                    'header-button': isHeader(),
+                    'add-button': displayType() === 'add',
+                    'delete-button': displayType() === 'delete',
+                }"
+                [disabled]="isDisabled()"
+                [type]="type()"> 
+            {{ label() }}
+        </button>
+    }
+    @else {
+        <button mat-button
+                (click)="onClickEmit()"
+                [disabled]="isDisabled()"
+                [type]="type()"> 
+            {{ label() }}
+        </button>
+    }
+</sl-control>

@@ -15,6 +15,7 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await SeedUserRoles(seedDataDirectory);
         await SeedJobPriorities(seedDataDirectory);
         await SeedJobStatuses(seedDataDirectory);
+        await SeedProducts(seedDataDirectory);
     }
 
     private async Task SeedUserRoles(string seedDataDirectory)
@@ -89,7 +90,7 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         // remove statuses that already exist in the database
         var existingStatuses = await dbContext.JobStatus.ToListAsync();
         statuses = statuses?.Where(
-            ur => !existingStatuses.Any(eur => eur.JobStatusID == ur.JobStatusID)).ToList();
+            ur => !existingStatuses.Any(eur => eur.Status == ur.Status)).ToList();
 
         if (!statuses?.Any() ?? true)
         {
@@ -100,5 +101,33 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await dbContext.JobStatus.AddRangeAsync(statuses!);
         await dbContext.SaveChangesAsync();
         logger.LogInformation("Added: {Count} job statuses", statuses!.Count);
+    }
+    private async Task SeedProducts(string seedDataDirectory)
+    {
+        string productsDirectory = Path.Combine(seedDataDirectory, "Products.json");
+
+        if (!File.Exists(productsDirectory))
+        {
+            logger.LogInformation("There are no products to seed");
+            return;
+        };
+
+        string productsJson = await File.ReadAllTextAsync(productsDirectory);
+        var products = JsonSerializer.Deserialize<List<Product>>(productsJson);
+
+        // remove products that already exist in the database
+        var existingProducts = await dbContext.Product.ToListAsync();
+        products = products?.Where(
+            ur => !existingProducts.Any(eur => eur.ProductName == ur.ProductName)).ToList();
+
+        if (!products?.Any() ?? true)
+        {
+            logger.LogInformation("There are no products to seed");
+            return;
+        }
+
+        await dbContext.Product.AddRangeAsync(products!);
+        await dbContext.SaveChangesAsync();
+        logger.LogInformation("Added: {Count} products", products!.Count);
     }
 }

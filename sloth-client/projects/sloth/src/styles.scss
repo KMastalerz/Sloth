@@ -37,12 +37,12 @@ html, body {
 }
 
 
-// input[type="password"]::-ms-reveal, /* For Edge */
-// input[type="password"]::-ms-clear,   /* For Edge */
-// input[type="password"]::-webkit-textfield-decoration-container {
-//   display: none;
-//   appearance: none;
-// }
+input[type="password"]::-ms-reveal, /* For Edge */
+input[type="password"]::-ms-clear,   /* For Edge */
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
+  appearance: none;
+}
 
 
 // overrite angular material

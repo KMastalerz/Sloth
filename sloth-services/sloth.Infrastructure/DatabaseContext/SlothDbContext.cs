@@ -16,6 +16,8 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     #endregion
 
     #region[Tracker]
+    internal DbSet<Client> Client { get; set; }
+    internal DbSet<ClientProductLink> ClientProductLink { get; set; }
     internal DbSet<Job> Job { get; set; }
     internal DbSet<JobAssignment> JobAssignment { get; set; }
     internal DbSet<JobAssignmentHistory> JobAssignmentHistory { get; set; }
@@ -128,6 +130,39 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
         #endregion
 
         #region [Tracker]
+        builder.Entity<Client>(client =>
+        {
+            client.HasKey(c => c.ClientID);
+
+            client.HasMany(t => t.Products)
+                .WithMany()
+                .UsingEntity<ClientProductLink>(
+                    link => link.HasOne<Product>().WithMany().HasForeignKey(l => l.ProductID),
+                    link => link.HasOne<Client>().WithMany().HasForeignKey(l => l.ClientID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.ClientID, l.ProductID }); // Composite Key
+                    });
+        });
+
+        builder.Entity<ClientProductLink>(link => {
+            // Composite Key
+            link.HasKey(l => new { l.ClientID, l.ProductID });
+
+            // Configuring relationships
+            link.HasOne<Client>()
+                .WithMany()
+                .HasForeignKey(l => l.ClientID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne<Product>()
+                .WithMany()
+                .HasForeignKey(l => l.ProductID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         builder.Entity<Job>(job =>
         {
             job.HasKey(j => j.JobID);
