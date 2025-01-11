@@ -2,9 +2,8 @@
 public class Client
 {
     public Guid ClientID { get; set; }
-    public string ClientName { get; set; } = default!;
-    public string ClientFullName { get; set; } = default!;
-    public string ClientNameAlias { get; set;} = default!;
+    public string Name { get; set; } = default!;
+    public string Alias { get; set;} = default!;
     public string Country { get; set; } = default!;
     public string City { get; set; } = default!;
     public string PostalCode { get; set; } = default!;

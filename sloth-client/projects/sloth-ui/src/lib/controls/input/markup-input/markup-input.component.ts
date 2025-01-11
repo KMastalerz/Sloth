@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ControlComponent } from '../../control.component';
-import { BaseFormControlComponent } from '../../base-form-control.component';
+import { BaseInputComponent } from '../base-input.component';
 
 @Component({
   selector: 'sl-markup-input',
-  imports: [ReactiveFormsModule, MatInputModule, ControlComponent],
+  imports: [ReactiveFormsModule, MatInputModule, ControlComponent, FormsModule],
   templateUrl: './markup-input.component.html',
-  styleUrl: './markup-input.component.scss'
+  styleUrl: './markup-input.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MarkupInputComponent),
+      multi: true
+    }
+  ],
 })
-export class MarkupInputComponent extends BaseFormControlComponent {}
+export class MarkupInputComponent extends BaseInputComponent {}

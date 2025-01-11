@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using sloth.Application.Models.Job;
+using sloth.Application.Models.Jobs;
 using sloth.Application.Models.Miscellaneous;
 using sloth.Domain.Repositories;
 
-namespace sloth.Application.Services.Job.ListJobDataCache;
+namespace sloth.Application.Services.Jobs.ListJobDataCache;
 public class ListJobDataCacheQueryHandler(
     ILogger<ListJobDataCacheQueryHandler> logger,
     IMapper mapper,

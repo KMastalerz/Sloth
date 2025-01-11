@@ -6,7 +6,7 @@
             <mat-label>{{ label() }}</mat-label>
         }
         <input type="file" 
-               [formControl]="$any(ngControl).control" 
+               [name]="name()"
                #fileInput 
                hidden 
                (change)="innerOpenFile($event)"/>
@@ -19,6 +19,12 @@
         <button mat-icon-button matSuffix (click)="openFile()" type="button">
             <mat-icon>file_upload</mat-icon>
         </button>
+        @if(isError()) {
+            <mat-error></mat-error>
+        } 
+        @else {
+            <mat-hint>{{ hint() }}</mat-hint>
+        }
     </mat-form-field>
 </sl-control>
 

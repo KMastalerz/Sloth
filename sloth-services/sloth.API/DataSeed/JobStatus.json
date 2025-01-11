@@ -1,74 +1,74 @@
 [
   {
     "Status": "New",
-    "StatusDescription": "Initial state of job"
+    "Description": "Initial state of job"
   },
   {
     "Status": "In review",
-    "StatusDescription": "Further job is reviewed",
+    "Description": "Further job is reviewed",
     "OwnerChange": false
   },
   {
     "Status": "In planning",
-    "StatusDescription": "Further job is planned",
+    "Description": "Further job is planned",
     "OwnerChange": false
   },
   {
     "Status": "In development",
-    "StatusDescription": "Job is in development",
+    "Description": "Job is in development",
     "OwnerChange": false
   },
   {
     "Status": "In testing",
-    "StatusDescription": "Job is in testing",
+    "Description": "Job is in testing",
     "OwnerChange": false
   },
   {
     "Status": "Checked-in",
-    "StatusDescription": "Job is staged for testing"
+    "Description": "Job is staged for testing"
   },
   {
     "Status": "Re-opened",
-    "StatusDescription": "Job is returned to development"
+    "Description": "Job is returned to development"
   },
   {
     "Status": "Queried with client",
-    "StatusDescription": "Query is sent to client",
+    "Description": "Query is sent to client",
     "OwnerChange": false
   },
   {
     "Status": "Queried with support",
-    "StatusDescription": "Query sent to support"
+    "Description": "Query sent to support"
   },
   {
     "Status": "Queried with development",
-    "StatusDescription": "Query sent to Engineers"
+    "Description": "Query sent to Engineers"
   },
   {
     "Status": "Queried with QA",
-    "StatusDescription": "Query sent to QA"
+    "Description": "Query sent to QA"
   },
   {
     "Status": "Completed",
-    "StatusDescription": "Job is marked as completed"
+    "Description": "Job is marked as completed"
   },
   {
     "Status": "Responded",
-    "StatusDescription": "Response provided to another stream"
+    "Description": "Response provided to another stream"
   },
   {
     "Status": "Answered",
-    "StatusDescription": "Response to query job type",
+    "Description": "Response to query job type",
     "EndState": true
   },
   {
     "Status": "Cancelled",
-    "StatusDescription": "Job is cancelled",
+    "Description": "Job is cancelled",
     "EndState": true
   },
   {
     "Status": "Closed",
-    "StatusDescription": "Job is closed",
+    "Description": "Job is closed",
     "EndState": true
   }
 ]

@@ -22,6 +22,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<JobAssignment> JobAssignment { get; set; }
     internal DbSet<JobAssignmentHistory> JobAssignmentHistory { get; set; }
     internal DbSet<JobComment> JobComment { get; set; }
+    internal DbSet<JobFile> JobFile { get; set; }
     internal DbSet<JobPriority> JobPriority { get; set; }
     internal DbSet<JobPriorityHistory> JobPriorityHistory { get; set; }
     internal DbSet<JobProductLink> JobProductLink { get; set; }
@@ -134,6 +135,9 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
         {
             client.HasKey(c => c.ClientID);
 
+            client.HasIndex(c => c.Alias)
+                .IsUnique();
+
             client.HasMany(t => t.Products)
                 .WithMany()
                 .UsingEntity<ClientProductLink>(
@@ -177,32 +181,22 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .HasForeignKey(j => j.CurrentTeamID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            job.HasOne(j => j.JobStatus)
-                .WithMany()
-                .HasForeignKey(j => j.CurrentJobStatusID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            job.HasOne(j => j.JobPriority)
-                .WithMany()
-                .HasForeignKey(j => j.PriorityLevel)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            job.HasMany(j => j.JobComments)
+            job.HasMany(j => j.Comments)
                 .WithOne()
                 .HasForeignKey(c => c.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            job.HasMany(j => j.JobStatusHistory)
+            job.HasMany(j => j.StatusHistory)
                 .WithOne()
                 .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            job.HasMany(j => j.JobAssignmentHistory)
+            job.HasMany(j => j.AssignmentHistory)
                 .WithOne()
                 .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            job.HasMany(j => j.JobPriorityHistory)
+            job.HasMany(j => j.PriorityHistory)
                 .WithOne()
                 .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -216,6 +210,21 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                     {
                         link.HasKey(l => new { l.JobID, l.ProductID }); // Composite Key
                     });
+
+            job.HasMany(j => j.Files)
+                .WithOne()
+                .HasForeignKey(f => f.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<JobFile>(file =>
+        {
+            file.HasKey(f => f.FileID);
+
+            file.HasOne<Job>()
+                .WithMany()
+                .HasForeignKey(f => f.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         builder.Entity<Team>(team =>
@@ -288,16 +297,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .WithMany()
                 .HasForeignKey(h => h.ChangedByID)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            history.HasOne(h => h.PreviousStatus)
-                .WithMany()
-                .HasForeignKey(h => h.PreviousStatusID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            history.HasOne(h => h.NewStatus)
-                .WithMany()
-                .HasForeignKey(h => h.NewStatusID)
-                .OnDelete(DeleteBehavior.Restrict);
         });
 
         builder.Entity<JobAssignmentHistory>(history =>
@@ -328,16 +327,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
         builder.Entity<JobPriorityHistory>(history =>
         {
             history.HasKey(h => new { h.JobID, h.ChangeDate });
-
-            history.HasOne(h => h.PreviousPriority)
-                .WithMany()
-                .HasForeignKey(h => h.PreviousPriorityLevel)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            history.HasOne(h => h.NewPriority)
-                .WithMany()
-                .HasForeignKey(h => h.NewPriorityLevel)
-                .OnDelete(DeleteBehavior.Restrict);
 
             history.HasOne(h => h.ChangedBy)
                 .WithMany()

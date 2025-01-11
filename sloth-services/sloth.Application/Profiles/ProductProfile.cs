@@ -9,6 +9,6 @@ public class ProductProfile : Profile
     {
         CreateMap<Product, ListItem>()
            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.ProductID))
-           .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.ProductName));
+           .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Name));
     }
 }

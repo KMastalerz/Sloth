@@ -118,7 +118,7 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         // remove products that already exist in the database
         var existingProducts = await dbContext.Product.ToListAsync();
         products = products?.Where(
-            ur => !existingProducts.Any(eur => eur.ProductName == ur.ProductName)).ToList();
+            ur => !existingProducts.Any(eur => eur.Name == ur.Name)).ToList();
 
         if (!products?.Any() ?? true)
         {

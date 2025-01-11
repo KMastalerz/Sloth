@@ -16,7 +16,7 @@ public class RegisterCommandValidaton : AbstractValidator<RegisterCommand>
 
         RuleFor(x => x.UserName)
             .NotEmpty()
-            .WithMessage("Username is required");
+            .WithMessage("UserName is required");
 
         RuleFor(x => x.Email)
             .NotEmpty().

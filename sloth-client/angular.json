@@ -34,7 +34,10 @@
             "styles": [
               "projects/sloth/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["dist"]
+            }
           },
           "configurations": {
             "production": {

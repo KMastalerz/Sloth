@@ -1,0 +1,67 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  @include mat.theme((
+    color: mat.$azure-palette,
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+html {
+  color-scheme: dark;
+};
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+input[type="password"]::-ms-reveal, /* For Edge */
+input[type="password"]::-ms-clear,   /* For Edge */
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
+  appearance: none;
+}
+
+
+// overrite angular material
+.mat-badge-content {
+  font-size: 1.0rem !important;
+  padding: 0.05rem 0.4rem !important;
+  font-weight: 700 !important;
+}
+
+mat-tooltip-component .mdc-tooltip__surface {
+  font-weight: bolder;
+}
+
+.mat-mdc-menu-panel {
+  border-radius: 0.8rem !important;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+@import "display";

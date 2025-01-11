@@ -16,5 +16,9 @@
     <sl-navigation-link icon="calendar_month" label="Timesheet"/>
     <sl-navigation-link icon="book_ribbon" label="Documentation"/>
     
-    <sl-toggle [(checked)]="isLight" (change)="onThemeToggle()" [trueIcon]="sun()" [falseIcon]="moon()" theme="theme-toggle"></sl-toggle>
+    <sl-toggle  [(value)]="isLight" 
+                (change)="onThemeToggle()" 
+                [trueIcon]="sun()" 
+                [falseIcon]="moon()" 
+                theme="theme-toggle"></sl-toggle>
 </div>

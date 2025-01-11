@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../base/base-service.class';
 import { ServiceReturnValue } from '../../dto/base/service-return-value.model';
 import { ListJobDataCacheItem } from '../../dto/job/list-job-data-cache.item';
+import { CreateQuickJobParam } from '../../dto/job/params/create-quick-job.param';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +16,9 @@ export class JobService extends BaseService {
 
   listJobDataCacheAsync(): Promise<ServiceReturnValue<ListJobDataCacheItem>> {
     return this.getAsync<ListJobDataCacheItem>("ListJobDataCache");
+  }
+
+  async createQuickJob(command: CreateQuickJobParam): Promise<ServiceReturnValue<any>> {
+    return await this.postAsync("CreateQuickJob", command, true);
   }
 }

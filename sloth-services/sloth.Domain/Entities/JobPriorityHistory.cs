@@ -2,8 +2,8 @@
 public class JobPriorityHistory
 {
     public int JobID { get; set; }
-    public int PreviousPriorityLevel { get; set; } 
-    public int NewPriorityLevel { get; set; }
+    public string PreviousPriority { get; set; } = default!;
+    public string NewPriority { get; set; } = default!;
     public Guid ChangedByID { get; set; }
     public DateTime ChangeDate { get; set; }
 
@@ -11,8 +11,5 @@ public class JobPriorityHistory
     /// <summary>
     /// External properties
     /// </summary>
-
-    public JobPriority PreviousPriority { get; set; } = default!;
-    public JobPriority NewPriority { get; set; } = default!;
     public User ChangedBy { get; set; } = default!;
 }

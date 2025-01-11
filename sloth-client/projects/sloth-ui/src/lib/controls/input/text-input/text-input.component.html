@@ -6,8 +6,15 @@
             <mat-label>{{ label() }}</mat-label>
         }
         <input  matInput 
-                [formControl]="$any(ngControl).control" 
+                [(ngModel)]="value"
+                [name]="name()"
                 [placeholder]="placeholder()"/>
+        @if(isError()) {
+            <mat-error></mat-error>
+        } 
+        @else {
+            <mat-hint>{{ hint() }}</mat-hint>
+        }
     </mat-form-field>
 </sl-control>
 

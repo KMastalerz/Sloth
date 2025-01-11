@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using sloth.Application.Services.Job;
+using sloth.Application.Services.Jobs;
 
 namespace sloth.API.Controllers;
 
@@ -15,5 +15,12 @@ public class JobController(IMediator mediator) : ControllerBase
     {
         var result = await mediator.Send(new ListJobDataCacheQuery());
         return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateQuickJob(CreateQuickJobCommand command)
+    {
+        await mediator.Send(command);
+        return Created();
     }
 }

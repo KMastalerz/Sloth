@@ -6,10 +6,17 @@
             <mat-label>{{ label() }}</mat-label>
         }
         <textarea matInput 
-                [formControl]="$any(ngControl).control" 
-                [name]="name()" 
+                [(ngModel)]="value"
+                [name]="name()"
                 [placeholder]="placeholder()">
         </textarea>
+        @if(isError()) {
+            <mat-error></mat-error>
+        } 
+        @else {
+            <mat-hint>{{ hint() }}</mat-hint>
+        }
     </mat-form-field>
+    
 </sl-control>
 

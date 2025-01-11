@@ -1,0 +1,9 @@
+
+<sl-control [badge]="badge()">
+    <mat-slide-toggle [(ngModel)]="value"
+                      [checked]="value()" 
+                      (change)="onToggle()"
+                      [class]="{
+                        'theme-toggle': theme() === 'theme-toggle',
+                      }"/>
+</sl-control>

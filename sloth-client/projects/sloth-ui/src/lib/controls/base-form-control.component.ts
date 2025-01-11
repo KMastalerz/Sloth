@@ -1,32 +1,47 @@
-import { Component, computed, input, model, output } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { Component, input, model, OnDestroy, OnInit, Optional, signal } from '@angular/core';
+import { ControlContainer, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sl-base-form-control',
   imports: [],
   template: ''
 })
-export class BaseFormControlComponent implements ControlValueAccessor {
+export class BaseFormControlComponent implements ControlValueAccessor, OnInit, OnDestroy {
+  isFormControl = false;
+  parentForm = signal<FormGroup | undefined>(undefined);
+  formControl = signal<FormControl | undefined>(undefined);
+  isError = signal<boolean>(false);
+  formControlName = input<string | undefined>(undefined);
   value = model<any | any[]>();
-  valueChanges = output<string | number | boolean | Date | File | FileList | null | undefined>();
-  name = input<string>('');
-  placeholder = input<string>('');
-  label = input<string | null>(null);
-  tooltip = input<string | null>(null);
-  tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
-  badge = input<number | string | null>(null);
-  hideTooltip = computed(() => !this.tooltip());
-  hideBadge = computed(() => !this.badge());
 
-  constructor(public ngControl: NgControl){
-    if(this.ngControl) 
-      this.ngControl.valueAccessor = this;    
+  constructor(@Optional() private controlContainer: ControlContainer) {}
 
-    this.value.subscribe((value)=> {
-        this.valueChanges.emit(value);
-    });
+  private valueChangeSub: Subscription | undefined = undefined;
+  ngOnInit() {
+    if (this.controlContainer) {
+      this.parentForm.set(<FormGroup>this.controlContainer.control);
+      if (this.parentForm()) {
+        this.isFormControl = true;
+        if (this.formControlName()) { 
+          this.formControl.set(this.parentForm()!.get(this.formControlName()!) as FormControl);
+          this.valueChangeSub = this.formControl()?.valueChanges.subscribe(() => {
+            if (this.formControl()?.invalid && this.formControl()?.touched) {
+              this.isError.set(true);
+            }
+          })
+        }
+      }
+    }
   }
-  
+
+  ngOnDestroy() {
+    if(this.valueChangeSub) {
+      this.valueChangeSub.unsubscribe();
+      this.valueChangeSub = undefined;
+    }
+  }
+
   writeValue(obj: any): void {
     this.value.update(() => obj);
   }

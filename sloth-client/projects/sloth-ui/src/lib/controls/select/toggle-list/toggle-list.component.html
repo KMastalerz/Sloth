@@ -1,0 +1,19 @@
+<div class="toggle-list-container">
+    @if(label()) {
+        <label>{{ label() }}</label>
+    }
+    <mat-button-toggle-group [(ngModel)]="value"
+                            [hideSingleSelectionIndicator]="hideIndicator()" 
+                            [hideMultipleSelectionIndicator]="hideIndicator()">
+        @for(item of items(); track item) {
+            <mat-button-toggle [value]="item.value" 
+                [class]="item.class">{{ item.label ?? item.value }}</mat-button-toggle>
+        }
+    </mat-button-toggle-group>
+    @if (isError()) {
+        <mat-error></mat-error>
+    }
+    @else {
+        <mat-hint>{{hint()}}</mat-hint>
+    }
+</div>

@@ -3,8 +3,8 @@ public class JobStatusHistory
 {
     public int JobID { get; set; }
     public Guid ChangedByID { get; set; }
-    public int PreviousStatusID { get; set; } = default!;
-    public int NewStatusID { get; set; } = default!;
+    public string PreviousStatus { get; set; } = default!;
+    public string NewStatus { get; set; } = default!;
     public DateTime ChangeDate { get; set; }
 
 
@@ -13,6 +13,4 @@ public class JobStatusHistory
     /// </summary>
 
     public User ChangedBy { get; set; } = default!;
-    public JobStatus PreviousStatus { get; set; } = default!;
-    public JobStatus NewStatus { get; set;} = default!;
 }

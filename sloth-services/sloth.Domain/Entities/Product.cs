@@ -2,7 +2,7 @@
 public class Product
 {
     public int ProductID { get; set; }
-    public string ProductShortName { get; set; } = default!;
-    public string? ProductName { get; set; } = null;
-    public string ProductDescription { get; set;} = default!;
+    public string Alias { get; set; } = default!;
+    public string? Name { get; set; } = null;
+    public string Description { get; set;} = default!;
 }

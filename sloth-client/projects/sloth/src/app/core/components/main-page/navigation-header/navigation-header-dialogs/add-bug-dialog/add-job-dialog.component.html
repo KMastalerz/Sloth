@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="center">Create new job</h2>
+<mat-dialog-content>
+    <p>Provide job description</p>
+    <form [formGroup]="jobForm">
+
+        <sl-section>
+            <sl-list-select [items]="quickJobTypes()" 
+                            label="Job type" 
+                            formControlName="type"/>
+            <sl-text-input  label="Header" 
+                            formControlName="header"/> 
+            <sl-markup-input label="Description" 
+                            formControlName="description"/>
+            <sl-toggle-list [items]="priotities()" 
+                            label="Bug priority"
+                            formControlName="priority"/>
+            <sl-list-select [items]="products()" 
+                            [multiple]="true" 
+                            label="Product"
+                            formControlName="products"/>
+            <sl-checkbox    label="Raised by client?"
+                            formControlName="isClient"/>
+            <sl-file-input  label="File"
+                            formControlName="file" />
+        </sl-section> 
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCloseDialog()">Close</button>
+    <button mat-flat-button (click)="onSaveBug()">Add</button>
+</mat-dialog-actions>

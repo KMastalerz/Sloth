@@ -70,7 +70,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         );
       }
       // If any other error occurs, propagate it 
-      router.navigate(['auth', 'login'])
       return throwError(() => error);
     })
   );

@@ -2,19 +2,20 @@ import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from "@angula
 import { catchError, lastValueFrom, map, Observable, of, throwError } from "rxjs";
 import { inject } from "@angular/core";
 
+import { FormDataService } from "sloth-utilities";
 import { HttpConfigService } from "../config/http-config/http-config.service";
 import { ServiceReturnValue } from "../dto/base/service-return-value.model";
 
 export abstract class BaseService {
     constructor(private controller: string){}
-    
+    private formDataService = inject(FormDataService);
     private httpClient = inject(HttpClient);
     private httpConfig = inject(HttpConfigService);
     private getUrl = (action: string) => `${this.httpConfig.apiUrl}/${this.controller}/${action}`;
 
 
     //#region [async]
-    protected async getAsync<T>(action: string, query?: any): Promise<ServiceReturnValue<T>> {        
+    protected async getAsync<T>(action: string, query?: any): Promise<ServiceReturnValue<T>> {    
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
@@ -40,11 +41,14 @@ export abstract class BaseService {
         }
     }
 
-    protected async postAsync<T>(action: string, query: any): Promise<ServiceReturnValue<T>> {
+    protected async postAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+        
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
-                this.httpClient.post<T>(url, query, {
+                this.httpClient.post<T>(url, command, {
                     observe: 'response' // Get full HttpResponse
                 }).pipe(
                     // Map the response in case of success
@@ -65,11 +69,14 @@ export abstract class BaseService {
         }
     }
 
-    protected async putAsync<T>(action: string, query: any): Promise<ServiceReturnValue<T>> {
+    protected async putAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
-                this.httpClient.put<T>(url, query, {
+                this.httpClient.put<T>(url, command, {
                     observe: 'response' // Get full HttpResponse
                 }).pipe(
                     // Map the response in case of success
@@ -90,12 +97,12 @@ export abstract class BaseService {
         }
     }
 
-    protected async deleteAsync<T>(action: string, query?: any): Promise<ServiceReturnValue<T>> {
+    protected async deleteAsync<T>(action: string, command?: any): Promise<ServiceReturnValue<T>> {
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
                 this.httpClient.delete<T>(url, {
-                    params: query ? new HttpParams({ fromObject: query }) : undefined, 
+                    params: command ? new HttpParams({ fromObject: command }) : undefined, 
                     observe: 'response' // Get full HttpResponse
                 }).pipe(
                     // Map the response in case of success
@@ -116,11 +123,14 @@ export abstract class BaseService {
         }
     }
 
-    protected async patchAsync<T>(action: string, query: any): Promise<ServiceReturnValue<T>> {
+    protected async patchAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
-                this.httpClient.patch<T>(url, query, {
+                this.httpClient.patch<T>(url, command, {
                     observe: 'response' // Get full HttpResponse
                 }).pipe(
                     // Map the response in case of success
@@ -157,9 +167,12 @@ export abstract class BaseService {
         );
     }
 
-    protected post<T>(action: string, query: any): Observable<ServiceReturnValue<T>> {
+    protected post<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+
         const url = this.getUrl(action);
-        return this.httpClient.post<T>(url, query, { observe: 'response' }).pipe(
+        return this.httpClient.post<T>(url, command, { observe: 'response' }).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);
@@ -168,9 +181,12 @@ export abstract class BaseService {
         );
     }
 
-    protected put<T>(action: string, query: any): Observable<ServiceReturnValue<T>> {
+    protected put<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+
         const url = this.getUrl(action);
-        return this.httpClient.put<T>(url, query, { observe: 'response' }).pipe(
+        return this.httpClient.put<T>(url, command, { observe: 'response' }).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);
@@ -179,10 +195,10 @@ export abstract class BaseService {
         );
     }
 
-    protected delete<T>(action: string, query?: any): Observable<ServiceReturnValue<T>> {
+    protected delete<T>(action: string, command?: any): Observable<ServiceReturnValue<T>> {
         const url = this.getUrl(action);
         return this.httpClient.delete<T>(url, {
-            params: query ? new HttpParams({ fromObject: query }) : undefined,
+            params: command ? new HttpParams({ fromObject: command }) : undefined,
             observe: 'response',
         }).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
@@ -193,9 +209,12 @@ export abstract class BaseService {
         );
     }
 
-    protected patch<T>(action: string, query: any): Observable<ServiceReturnValue<T>> {
+    protected patch<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(hasFile)
+            command = this.formDataService.toFormData(command);
+
         const url = this.getUrl(action);
-        return this.httpClient.patch<T>(url, query, { observe: 'response' }).pipe(
+        return this.httpClient.patch<T>(url, command, { observe: 'response' }).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);

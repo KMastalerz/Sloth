@@ -2,8 +2,9 @@
 public class Team
 {
     public Guid TeamID { get; set; }
-    public string TeamName { get; set; } = default!;
-    public string TeamDescription { get; set; } = default!;
+    public string Alias { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string Description { get; set; } = default!;
 
     /// <summary>
     /// External property

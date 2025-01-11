@@ -1,3 +1,9 @@
 p {
     margin-bottom: 0.4rem;
 }
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}

@@ -5,6 +5,8 @@ using sloth.API.Constants;
 using sloth.API.Middleware;
 using sloth.Application.Models.Configuration;
 using sloth.Utilities.Constants;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace sloth.API.Extensions;
 
@@ -13,6 +15,18 @@ public static class WebApplicationBuilderExtensions
     public static void AddPresentation(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
+
+        // Increase max request body size
+        builder.Services.Configure<KestrelServerOptions>(options =>
+        {
+            options.Limits.MaxRequestBodySize = 110_100_000; // ~105 MB
+        });
+
+        // Configure FormOptions to handle large file uploads
+        builder.Services.Configure<FormOptions>(options =>
+        {
+            options.MultipartBodyLengthLimit = 104_857_600; // 100 MB
+        });
 
         /* REGISTER MIDDLEWARE HERE */
         builder.Services.AddScoped<ErrorHandlingMiddleware>();

@@ -8,8 +8,8 @@ public class JobPriorityProfile : Profile
     public JobPriorityProfile()
     {
         CreateMap<JobPriority, ToggleItem>()
-           .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Priority))
+           .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.PriorityLevel))
            .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Priority))
-           .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.PriorityClass)); ;
+           .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class)); ;
     }
 }
