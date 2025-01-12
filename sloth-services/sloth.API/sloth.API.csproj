@@ -36,10 +36,10 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="DataSeed\JobPriority.json">
+    <Content Update="DataSeed\Priority.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="DataSeed\JobStatus.json">
+    <Content Update="DataSeed\Status.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="DataSeed\Products.json">

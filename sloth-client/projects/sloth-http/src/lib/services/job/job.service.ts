@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../../base/base-service.class';
 import { ServiceReturnValue } from '../../dto/base/service-return-value.model';
-import { ListJobDataCacheItem } from '../../dto/job/list-job-data-cache.item';
+import { ListJobDataCacheItem } from '../../dto/job/items/list-job-data-cache.item';
 import { CreateQuickJobParam } from '../../dto/job/params/create-quick-job.param';
 import { HttpResponse } from '@angular/common/http';
 

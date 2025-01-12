@@ -13,7 +13,7 @@
                             formControlName="description"/>
             <sl-toggle-list [items]="priotities()" 
                             label="Bug priority"
-                            formControlName="priority"/>
+                            formControlName="priorityID"/>
             <sl-list-select [items]="products()" 
                             [multiple]="true" 
                             label="Product"
@@ -22,6 +22,8 @@
                             formControlName="isClient"/>
             <sl-file-input  label="File"
                             formControlName="file" />
+            <sl-date-picker label="Raised date"
+                            formControlName="raisedDate"/>
         </sl-section> 
     </form>
   </mat-dialog-content>

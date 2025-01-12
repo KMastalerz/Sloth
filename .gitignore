@@ -31,3 +31,4 @@ yarn.lock
 # Backup
 *.bkp
 /sloth-client/dist
+/sloth-services/sloth.API/Jobs

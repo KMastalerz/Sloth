@@ -95,21 +95,20 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid?>("ClientID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CloseDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatedBy")
+                    b.Property<Guid?>("ClosedByID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("ClosedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CurrentOwnerID")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CurrentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CurrentTeamID")
                         .HasColumnType("uniqueidentifier");
@@ -125,12 +124,20 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<bool>("IsClient")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LastModifiedByID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PriorityID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StatusID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -140,11 +147,23 @@ namespace sloth.Infrastructure.Migrations
 
                     b.HasIndex("ClientID");
 
+                    b.HasIndex("ClosedByID");
+
+                    b.HasIndex("CreatedByID");
+
                     b.HasIndex("CurrentOwnerID");
 
                     b.HasIndex("CurrentTeamID");
 
-                    b.ToTable("Job");
+                    b.HasIndex("LastModifiedByID");
+
+                    b.HasIndex("PriorityID");
+
+                    b.HasIndex("StatusID");
+
+                    b.ToTable("Job", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobAssignment", b =>
@@ -281,26 +300,6 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobFile");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobPriority", b =>
-                {
-                    b.Property<int>("PriorityLevel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PriorityLevel");
-
-                    b.ToTable("JobPriority");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
                 {
                     b.Property<int>("JobID")
@@ -312,17 +311,19 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("ChangedByID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NewPriority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NewPriorityID")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PreviousPriority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PreviousPriorityID")
+                        .HasColumnType("int");
 
                     b.HasKey("JobID", "ChangeDate");
 
                     b.HasIndex("ChangedByID");
+
+                    b.HasIndex("NewPriorityID");
+
+                    b.HasIndex("PreviousPriorityID");
 
                     b.ToTable("JobPriorityHistory");
                 });
@@ -342,32 +343,6 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobProductLink");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobStatus", b =>
-                {
-                    b.Property<int>("JobStatusID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobStatusID"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EndState")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("OwnerChange")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobStatusID");
-
-                    b.ToTable("JobStatus");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobStatusHistory", b =>
                 {
                     b.Property<int>("JobID")
@@ -379,17 +354,19 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("ChangedByID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NewStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NewStatusID")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PreviousStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PreviousStatusID")
+                        .HasColumnType("int");
 
                     b.HasKey("JobID", "ChangeDate");
 
                     b.HasIndex("ChangedByID");
+
+                    b.HasIndex("NewStatusID");
+
+                    b.HasIndex("PreviousStatusID");
 
                     b.ToTable("JobStatusHistory");
                 });
@@ -429,14 +406,43 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("TeamID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("JobStatusID")
+                    b.Property<int>("StatusID")
                         .HasColumnType("int");
 
-                    b.HasKey("TeamID", "JobStatusID");
+                    b.HasKey("TeamID", "StatusID");
 
-                    b.HasIndex("JobStatusID");
+                    b.HasIndex("StatusID");
 
                     b.ToTable("OwnerStatusMap");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Priority", b =>
+                {
+                    b.Property<int>("PriorityID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriorityID"));
+
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PriorityLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PriorityValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriorityID");
+
+                    b.HasIndex("PriorityLevel")
+                        .IsUnique();
+
+                    b.ToTable("Priority");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.Product", b =>
@@ -497,6 +503,39 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("ResetSecurityCode");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.Status", b =>
+                {
+                    b.Property<int>("StatusID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusID"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EndState")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("OwnerChange")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StatusValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StatusID");
+
+                    b.HasIndex("StatusID", "Type")
+                        .IsUnique();
+
+                    b.ToTable("Status");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.Team", b =>
                 {
                     b.Property<Guid>("TeamID")
@@ -540,12 +579,12 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("TeamID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("JobStatusID")
+                    b.Property<int>("StatusID")
                         .HasColumnType("int");
 
-                    b.HasKey("TeamID", "JobStatusID");
+                    b.HasKey("TeamID", "StatusID");
 
-                    b.HasIndex("JobStatusID");
+                    b.HasIndex("StatusID");
 
                     b.ToTable("TeamStatusMap");
                 });
@@ -664,6 +703,26 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("UserTeamLink");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.Bug", b =>
+                {
+                    b.HasBaseType("sloth.Domain.Entities.Job");
+
+                    b.Property<int>("BugID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BugID"));
+
+                    b.Property<DateTime>("RaisedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasIndex("BugID")
+                        .IsUnique()
+                        .HasFilter("[BugID] IS NOT NULL");
+
+                    b.ToTable("Bug", (string)null);
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.ClientProductLink", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.Client", null)
@@ -685,21 +744,55 @@ namespace sloth.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ClientID");
 
+                    b.HasOne("sloth.Domain.Entities.User", "ClosedBy")
+                        .WithMany()
+                        .HasForeignKey("ClosedByID");
+
+                    b.HasOne("sloth.Domain.Entities.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
                         .WithMany()
                         .HasForeignKey("CurrentOwnerID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("sloth.Domain.Entities.Team", "CurrentTeam")
                         .WithMany()
                         .HasForeignKey("CurrentTeamID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("sloth.Domain.Entities.User", "LastModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("LastModifiedByID");
+
+                    b.HasOne("sloth.Domain.Entities.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusID");
 
                     b.Navigation("Client");
+
+                    b.Navigation("ClosedBy");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("CurrentOwner");
 
                     b.Navigation("CurrentTeam");
+
+                    b.Navigation("LastModifiedBy");
+
+                    b.Navigation("Priority");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobAssignment", b =>
@@ -781,7 +874,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "CommentedBy")
                         .WithMany()
                         .HasForeignKey("CommentedByID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -793,7 +886,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.JobComment", null)
                         .WithMany("PreviousEdits")
                         .HasForeignKey("OriginalCommentID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("CommentedBy");
                 });
@@ -816,7 +909,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
                         .WithMany()
                         .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -825,7 +918,23 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("sloth.Domain.Entities.Priority", "NewPriority")
+                        .WithMany()
+                        .HasForeignKey("NewPriorityID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Priority", "PreviousPriority")
+                        .WithMany()
+                        .HasForeignKey("PreviousPriorityID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("ChangedBy");
+
+                    b.Navigation("NewPriority");
+
+                    b.Navigation("PreviousPriority");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobProductLink", b =>
@@ -848,7 +957,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
                         .WithMany()
                         .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -857,7 +966,23 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("sloth.Domain.Entities.Status", "NewStatus")
+                        .WithMany()
+                        .HasForeignKey("NewStatusID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Status", "PreviousStatus")
+                        .WithMany()
+                        .HasForeignKey("PreviousStatusID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("ChangedBy");
+
+                    b.Navigation("NewStatus");
+
+                    b.Navigation("PreviousStatus");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.LockedPassword", b =>
@@ -880,9 +1005,9 @@ namespace sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("sloth.Domain.Entities.OwnerStatusMap", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.JobStatus", null)
+                    b.HasOne("sloth.Domain.Entities.Status", null)
                         .WithMany()
-                        .HasForeignKey("JobStatusID")
+                        .HasForeignKey("StatusID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -928,9 +1053,9 @@ namespace sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("sloth.Domain.Entities.TeamStatusMap", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.JobStatus", null)
+                    b.HasOne("sloth.Domain.Entities.Status", null)
                         .WithMany()
-                        .HasForeignKey("JobStatusID")
+                        .HasForeignKey("StatusID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -967,6 +1092,15 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Bug", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithOne()
+                        .HasForeignKey("sloth.Domain.Entities.Bug", "JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

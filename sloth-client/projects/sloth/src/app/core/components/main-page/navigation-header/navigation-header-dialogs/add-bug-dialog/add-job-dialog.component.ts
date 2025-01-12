@@ -3,18 +3,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FileInputComponent, ListSelectComponent, MarkupInputComponent, SectionComponent, TextInputComponent, ToggleListComponent } from 'sloth-ui';
+import { FileInputComponent, ListSelectComponent, MarkupInputComponent, SectionComponent, 
+  TextInputComponent, ToggleListComponent, CheckboxComponent, DatePickerComponent } from 'sloth-ui';
 import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
-import { CheckboxComponent } from "../../../../../../../../../sloth-ui/src/lib/controls/select/checkbox/checkbox.component";
 import { CreateQuickJobParam } from 'sloth-http';
+
 
 @Component({
   selector: 'app-add-bug-dialog',
   imports: [MatDialogContent, SectionComponent, MatDialogActions,
     MatButtonModule, ReactiveFormsModule, MatDialogTitle,
     ListSelectComponent, MarkupInputComponent, ToggleListComponent,
-    TextInputComponent, FileInputComponent, CheckboxComponent],
+    TextInputComponent, FileInputComponent, CheckboxComponent, DatePickerComponent],
   templateUrl: './add-job-dialog.component.html',
   styleUrl: './add-job-dialog.component.scss'
 })
@@ -57,14 +58,17 @@ export class AddJobDialogComponent   {
     description: new FormControl('', {
       validators: [Validators.required]
     }),
-    priority: new FormControl('', {
+    priorityID: new FormControl(1, {
       validators: [Validators.required]
     }),
     products: new FormControl([] as number[], {
       validators: [Validators.required]
     }),
     isClient: new FormControl(false),
-    file: new FormControl<File | null>(null), // Allow File objects
+    file: new FormControl<File | null>(null),
+    raisedDate: new FormControl(new Date(), {
+      validators: [Validators.required]
+    }),
   })
 
 

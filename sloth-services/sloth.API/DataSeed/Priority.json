@@ -1,27 +1,27 @@
 [
   {
     "PriorityLevel": 1,
-    "Priority": "Lowest",
+    "PriorityValue": "Lowest",
     "Class": "lowest"
   },
   {
     "PriorityLevel": 2,
-    "Priority": "Low",
+    "PriorityValue": "Low",
     "Class": "low"
   },
   {
     "PriorityLevel": 3,
-    "Priority": "Medium",
+    "PriorityValue": "Medium",
     "Class": "medium"
   },
   {
     "PriorityLevel": 4,
-    "Priority": "High",
+    "PriorityValue": "High",
     "Class": "high"
   },
   {
     "PriorityLevel": 5,
-    "Priority": "Critical",
+    "PriorityValue": "Critical",
     "Class": "critical"
   }
 ]

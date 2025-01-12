@@ -8,6 +8,7 @@ using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
 using sloth.Utilities.Constants;
+using System.Diagnostics;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
@@ -30,37 +31,49 @@ public class CreateQuickJobCommandHandler(
         // get initial project status from IConfiguration
         var appConfig = configuration.GetSection(ConfigurationKeys.Configuration).Get<Configuration>()!;
 
-        // get initial status from repository
-        var initialJobStatus = await jobRepository.GetStatus(appConfig.InitialJobStatus);
-
         // generate creation time
         var newJobDate = DateTime.UtcNow;
-        
-        // create new Job
-        var newJob = new Job()
-        {
-            Header = request.Header,
-            Description = request.Description,
-            CurrentStatus = initialJobStatus?.Status ?? string.Empty,
-            Type = request.Type,
-            Priority = request.Priority,
-            CreatedBy = currentUser.UserGuid,
-            CreationDate = newJobDate,
-            IsClient = request.IsClient,
-            ClientID = request.ClientID,
-        };
-
+        var jobID = 0;
+        var id = 0;
         using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             try
             {
-                // add new job
-                var job = await jobRepository.CreateJob(newJob);
+                switch (request.Type)
+                {
+                    case "Bug":
+                    // create new Bug
+                    var newBug = new Bug()
+                    {
+                        Header = request.Header,
+                        Description = request.Description,
+                        StatusID = request.StatusID,
+                        Type = request.Type,
+                        PriorityID = request.PriorityID,
+                        CreatedByID = currentUser.UserGuid,
+                        CreatedDate = newJobDate,
+                        IsClient = request.IsClient,
+                        ClientID = request.ClientID,
+                    };
+
+                    // add new bug
+                    var job = await jobRepository.CreateBug(newBug);
+                    jobID = job.JobID;
+                    id = job.BugID;
+                    break;
+                    case "Query":
+                        throw new InvalidJobTypeException();
+                    default:
+                        throw new InvalidJobTypeException();
+
+                }
+
+
 
                 // link products to this job
                 var jobProductLinks = request.Products.Select(item => new JobProductLink
                 {
-                    JobID = job.JobID,
+                    JobID = jobID,
                     ProductID = item
                 });
 
@@ -72,7 +85,7 @@ public class CreateQuickJobCommandHandler(
                 {
                     var jobFile = new JobFile()
                     {
-                        JobID = job.JobID,
+                        JobID = jobID,
                         Name = request.File.FileName,
                         Size = request.File.Length,
                         Extension = Path.GetExtension(request.File.FileName),
@@ -100,10 +113,11 @@ public class CreateQuickJobCommandHandler(
                     logger.LogInformation("New file {FileName} was added by: {UserName}", request.File.FileName, currentUser.UserName);
                 }
 
-                logger.LogInformation("New job {JobID} was created by: {UserName}", newJob.JobID, currentUser.UserName);
+                logger.LogInformation("New {Type}: {id} was created by: {UserName}", request.Type.ToLower(), id, currentUser.UserName);
+
                 transactionScope.Complete();
             }
-            catch
+            catch(Exception ex)
             {
                 throw new JobCreationException();
             }

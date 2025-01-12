@@ -10,29 +10,32 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     {
         return await dbContext.Product.ToListAsync();
     }
-    public async Task<IEnumerable<JobPriority>> ListJobPriorities()
+    public async Task<IEnumerable<Priority>> ListPriorities()
     {
-        return await dbContext.JobPriority.ToListAsync();
+        return await dbContext.Priority.ToListAsync();
     }
 
-    public async Task<JobStatus?> GetStatus(int statusID)
+    public async Task<Status?> GetStatus(int statusID)
     {
-        return await dbContext.JobStatus.SingleOrDefaultAsync(js => js.JobStatusID == statusID);
+        return await dbContext.Status.SingleOrDefaultAsync(js => js.StatusID == statusID);
     }
 
-    public async Task<Job> CreateJob(Job job)
+    public async Task<Bug> CreateBug(Bug bug)
     {
-        await dbContext.Job.AddAsync(job);
-        return job;
+        await dbContext.Bug.AddAsync(bug);
+        await dbContext.SaveChangesAsync();
+        return bug;
     }
 
     public async Task AddJobProductLinks(IEnumerable<JobProductLink> productLinks)
     {
         await dbContext.JobProductLink.AddRangeAsync(productLinks);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task AddJobFile(JobFile jobFile)
     {
         await dbContext.JobFile.AddAsync(jobFile);
+        await dbContext.SaveChangesAsync();
     }
 }

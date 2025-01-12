@@ -6,7 +6,7 @@
 export * from './lib/controls/button/button/button.component';
 // export * from './lib/controls/button/icon-button/icon-button.component';
 // export * from './lib/controls/button/text-icon-button/text-icon-button.component';
-// export * from './lib/controls/input/date-picker/date-picker.component';
+export * from './lib/controls/input/date-picker/date-picker.component';
 // export * from './lib/controls/input/date-time-picker/date-time-picker.component';
 // export * from './lib/controls/input/email-input/email-input.component';
 export * from './lib/controls/input/file-input/file-input.component';
@@ -20,7 +20,7 @@ export * from './lib/controls/navigation/button-link/button-link.component';
 export * from './lib/controls/navigation/header-link/header-link.component';
 export * from './lib/controls/navigation/navigation-link/navigation-link.component';
 // export * from './lib/controls/navigation/regular-link/regular-link.component';
-// export * from './lib/controls/other/checkbox/checkbox.component';
+export * from './lib/controls/select/checkbox/checkbox.component';
 // export * from './lib/controls/other/chip/chip.component';   
 export * from './lib/controls/select/list-select/list-select.component';
 // export * from './lib/controls/other/radio-select/radio-select.component';

@@ -13,8 +13,8 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         string seedDataDirectory = Path.Combine(appDirectory, "DataSeed");
 
         await SeedUserRoles(seedDataDirectory);
-        await SeedJobPriorities(seedDataDirectory);
-        await SeedJobStatuses(seedDataDirectory);
+        await SeedPriorities(seedDataDirectory);
+        await SeedStatuses(seedDataDirectory);
         await SeedProducts(seedDataDirectory);
     }
 
@@ -46,61 +46,61 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await dbContext.SaveChangesAsync();
         logger.LogInformation("Added: {Count} user roles", userRoles!.Count);
     }
-    private async Task SeedJobPriorities(string seedDataDirectory)
+    private async Task SeedPriorities(string seedDataDirectory)
     {
-        string prioritesDirectory = Path.Combine(seedDataDirectory, "JobPriority.json");
+        string prioritesDirectory = Path.Combine(seedDataDirectory, "Priority.json");
 
         if (!File.Exists(prioritesDirectory))
         {
-            logger.LogInformation("There are no job priorities to seed");
+            logger.LogInformation("There are no priorities to seed");
             return;
         };
 
         string prioritesJson = await File.ReadAllTextAsync(prioritesDirectory);
-        var priorites = JsonSerializer.Deserialize<List<JobPriority>>(prioritesJson);
+        var priorites = JsonSerializer.Deserialize<List<Priority>>(prioritesJson);
 
         // remove priorites that already exist in the database
-        var existingPriorites = await dbContext.JobPriority.ToListAsync();
+        var existingPriorites = await dbContext.Priority.ToListAsync();
         priorites = priorites?.Where(
             ur => !existingPriorites.Any(eur => eur.PriorityLevel == ur.PriorityLevel)).ToList();
 
         if (!priorites?.Any() ?? true)
         {
-            logger.LogInformation("There are no job priorities to seed");
+            logger.LogInformation("There are no priorities to seed");
             return;
         }
 
-        await dbContext.JobPriority.AddRangeAsync(priorites!);
+        await dbContext.Priority.AddRangeAsync(priorites!);
         await dbContext.SaveChangesAsync();
-        logger.LogInformation("Added: {Count} job priorites", priorites!.Count);
+        logger.LogInformation("Added: {Count} priorites", priorites!.Count);
     }
-    private async Task SeedJobStatuses(string seedDataDirectory)
+    private async Task SeedStatuses(string seedDataDirectory)
     {
-        string statusesDirectory = Path.Combine(seedDataDirectory, "JobStatus.json");
+        string statusesDirectory = Path.Combine(seedDataDirectory, "Status.json");
 
         if (!File.Exists(statusesDirectory))
         {
-            logger.LogInformation("There are no job statuses to seed");
+            logger.LogInformation("There are no statuses to seed");
             return;
         };
 
         string statusesJson = await File.ReadAllTextAsync(statusesDirectory);
-        var statuses = JsonSerializer.Deserialize<List<JobStatus>>(statusesJson);
+        var statuses = JsonSerializer.Deserialize<List<Status>>(statusesJson);
 
         // remove statuses that already exist in the database
-        var existingStatuses = await dbContext.JobStatus.ToListAsync();
+        var existingStatuses = await dbContext.Status.ToListAsync();
         statuses = statuses?.Where(
-            ur => !existingStatuses.Any(eur => eur.Status == ur.Status)).ToList();
+            s => !existingStatuses.Any(es => es.StatusValue == s.StatusValue && es.Type == s.Type)).ToList();
 
         if (!statuses?.Any() ?? true)
         {
-            logger.LogInformation("There are no job statuses to seed");
+            logger.LogInformation("There are no statuses to seed");
             return;
         }
 
-        await dbContext.JobStatus.AddRangeAsync(statuses!);
+        await dbContext.Status.AddRangeAsync(statuses!);
         await dbContext.SaveChangesAsync();
-        logger.LogInformation("Added: {Count} job statuses", statuses!.Count);
+        logger.LogInformation("Added: {Count} statuses", statuses!.Count);
     }
     private async Task SeedProducts(string seedDataDirectory)
     {

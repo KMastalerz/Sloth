@@ -1,0 +1,23 @@
+<sl-control [tooltip]="tooltip()"
+            [tooltipPosition]="tooltipPosition()"
+            [badge]="badge()">
+    <mat-form-field appearance="outline">
+        @if( label() ) {
+            <mat-label>{{ label() }}</mat-label>
+        }
+        <input  matInput 
+                [matDatepicker]="picker"
+                [(ngModel)]="value"
+                [name]="name()"
+                [placeholder]="placeholder()"/>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if(isError()) {
+            <mat-error></mat-error>
+        } 
+        @else {
+            <mat-hint>{{ hint() }}</mat-hint>
+        }
+    </mat-form-field>
+</sl-control>
+

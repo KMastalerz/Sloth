@@ -44,6 +44,10 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         {
             await HandleExceptionAsync(context, ex, 500, "Error on creating new job request");
         }
+        catch (InvalidJobTypeException ex)
+        {
+            await HandleExceptionAsync(context, ex, 400, "Invalid job type.");
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex, 500, "An unexpected error occurred.");

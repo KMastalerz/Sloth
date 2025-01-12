@@ -2,5 +2,5 @@
 public class TeamStatusMap
 {
     public Guid TeamID { get; set; } 
-    public int JobStatusID { get; set; } 
+    public int StatusID { get; set; } 
 }

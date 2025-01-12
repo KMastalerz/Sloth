@@ -1,0 +1,177 @@
+[
+  {
+    "StatusValue": "New",
+    "Type": "All",
+    "Description": "Initial state of job"
+  },
+  {
+    "StatusValue": "In review",
+    "Type": "All",
+    "Description": "Further job is reviewed",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In planning",
+    "Type": "All",
+    "Description": "Further job is planned",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In development",
+    "Type": "Bug",
+    "Description": "Job is in development",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In development",
+    "Type": "Project",
+    "Description": "Job is in development",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In testing",
+    "Type": "Bug",
+    "Description": "Job is in testing",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In testing",
+    "Type": "Project",
+    "Description": "Job is in testing",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In testing",
+    "Type": "Test",
+    "Description": "Job is in testing",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In testing",
+    "Type": "Bug",
+    "Description": "Job is in testing",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "In testing",
+    "Type": "Project",
+    "Description": "Job is in testing",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "Checked-in",
+    "Type": "Bug",
+    "Description": "Job is staged for testing"
+  },
+  {
+    "StatusValue": "Checked-in",
+    "Type": "Project",
+    "Description": "Job is staged for testing"
+  },
+  {
+    "StatusValue": "Re-opened",
+    "Type": "Bug",
+    "Description": "Job is returned to development"
+  },
+  {
+    "StatusValue": "Re-opened",
+    "Type": "Project",
+    "Description": "Job is returned to development"
+  },
+  {
+    "StatusValue": "Re-opened",
+    "Type": "Query",
+    "Description": "Job is returned to development"
+  },
+  {
+    "StatusValue": "Queried with client",
+    "Type": "Query",
+    "Description": "Query is sent to client",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "Queried with client",
+    "Type": "Bug",
+    "Description": "Query is sent to client",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "Queried with client",
+    "Type": "Project",
+    "Description": "Query is sent to client",
+    "OwnerChange": false
+  },
+  {
+    "StatusValue": "Queried with support",
+    "Type": "Query",
+    "Description": "Query sent to support"
+  },
+  {
+    "StatusValue": "Queried with support",
+    "Type": "Bug",
+    "Description": "Query sent to support"
+  },
+  {
+    "StatusValue": "Queried with support",
+    "Type": "Project",
+    "Description": "Query sent to support"
+  },
+  {
+    "StatusValue": "Queried with development",
+    "Type": "Query",
+    "Description": "Query sent to Engineers"
+  },
+  {
+    "StatusValue": "Queried with development",
+    "Type": "Bug",
+    "Description": "Query sent to Engineers"
+  },
+  {
+    "StatusValue": "Queried with development",
+    "Type": "Project",
+    "Description": "Query sent to Engineers"
+  },
+  {
+    "StatusValue": "Queried with QA",
+    "Type": "Query",
+    "Description": "Query sent to QA"
+  },
+  {
+    "StatusValue": "Queried with QA",
+    "Type": "Bug",
+    "Description": "Query sent to QA"
+  },
+  {
+    "StatusValue": "Queried with QA",
+    "Type": "Project",
+    "Description": "Query sent to QA"
+  },
+  {
+    "StatusValue": "Completed",
+    "Type": "All",
+    "Description": "Job is marked as completed"
+  },
+  {
+    "StatusValue": "Responded",
+    "Type": "All",
+    "Description": "Response provided to another stream"
+  },
+  {
+    "StatusValue": "Answered",
+    "Type": "Query",
+    "Description": "Response to query job type",
+    "EndState": true
+  },
+  {
+    "StatusValue": "Cancelled",
+    "Type": "All",
+    "Description": "Job is cancelled",
+    "EndState": true
+  },
+  {
+    "StatusValue": "Closed",
+    "Type": "All",
+    "Description": "Job is closed",
+    "EndState": true
+  }
+]
