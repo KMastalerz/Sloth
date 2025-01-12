@@ -9,4 +9,5 @@ public interface IJobRepository
     Task<Bug> CreateBug (Bug bug);
     Task AddJobProductLinks(IEnumerable<JobProductLink> productLinks);
     Task AddJobFile (JobFile jobFile);
+    Task<Query> CreateQuery (Query query);
 }

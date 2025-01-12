@@ -675,6 +675,26 @@ namespace sloth.Infrastructure.Migrations
                         principalColumn: "UserID");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Query",
+                columns: table => new
+                {
+                    JobID = table.Column<int>(type: "int", nullable: false),
+                    QueryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RaisedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Query", x => x.JobID);
+                    table.ForeignKey(
+                        name: "FK_Query_Job_JobID",
+                        column: x => x.JobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Bug_BugID",
                 table: "Bug",
@@ -840,6 +860,13 @@ namespace sloth.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Query_QueryID",
+                table: "Query",
+                column: "QueryID",
+                unique: true,
+                filter: "[QueryID] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Status_StatusID_Type",
                 table: "Status",
                 columns: new[] { "StatusID", "Type" },
@@ -922,6 +949,9 @@ namespace sloth.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OwnerStatusMap");
+
+            migrationBuilder.DropTable(
+                name: "Query");
 
             migrationBuilder.DropTable(
                 name: "RefreshToken");

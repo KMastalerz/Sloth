@@ -723,6 +723,26 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("Bug", (string)null);
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.Query", b =>
+                {
+                    b.HasBaseType("sloth.Domain.Entities.Job");
+
+                    b.Property<int>("QueryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QueryID"));
+
+                    b.Property<DateTime>("RaisedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasIndex("QueryID")
+                        .IsUnique()
+                        .HasFilter("[QueryID] IS NOT NULL");
+
+                    b.ToTable("Query", (string)null);
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.ClientProductLink", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.Client", null)
@@ -1101,6 +1121,15 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.Job", null)
                         .WithOne()
                         .HasForeignKey("sloth.Domain.Entities.Bug", "JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Query", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithOne()
+                        .HasForeignKey("sloth.Domain.Entities.Query", "JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

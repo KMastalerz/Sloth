@@ -38,4 +38,11 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         await dbContext.JobFile.AddAsync(jobFile);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task<Query> CreateQuery(Query query)
+    {
+        await dbContext.Query.AddAsync(query);
+        await dbContext.SaveChangesAsync();
+        return query;
+    }
 }

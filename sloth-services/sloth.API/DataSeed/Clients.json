@@ -1,0 +1,222 @@
+[
+  {
+    "Name": "Tech Solutions Inc.",
+    "Alias": "TechSol",
+    "Country": "United States",
+    "City": "San Francisco",
+    "PostalCode": "94103",
+    "Street": "Market Street",
+    "BuildingNumber": "123",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Green Energy Ltd.",
+    "Alias": "GreenEng",
+    "Country": "United Kingdom",
+    "City": "Manchester",
+    "PostalCode": "M1 2WD",
+    "Street": "Oxford Road",
+    "BuildingNumber": "45",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Global Finance Group",
+    "Alias": "GFG",
+    "Country": "Germany",
+    "City": "Frankfurt",
+    "PostalCode": "60313",
+    "Street": "Zeil",
+    "BuildingNumber": "78",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Innovative Robotics Corp.",
+    "Alias": "InnoRobo",
+    "Country": "Japan",
+    "City": "Tokyo",
+    "PostalCode": "100-0001",
+    "Street": "Akihabara",
+    "BuildingNumber": "21A",
+    "ApartmentNumber": null,
+    "IsActive": false
+  },
+  {
+    "Name": "Skyline Architecture",
+    "Alias": "SkyArch",
+    "Country": "Canada",
+    "City": "Vancouver",
+    "PostalCode": "V5K 0A1",
+    "Street": "Granville Street",
+    "BuildingNumber": "200",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Oceanic Freight Services",
+    "Alias": "OFS",
+    "Country": "Australia",
+    "City": "Sydney",
+    "PostalCode": "2000",
+    "Street": "Circular Quay",
+    "BuildingNumber": "500",
+    "ApartmentNumber": "Suite 10",
+    "IsActive": true
+  },
+  {
+    "Name": "NextGen Pharmaceuticals",
+    "Alias": "NextGenPharma",
+    "Country": "India",
+    "City": "Hyderabad",
+    "PostalCode": "500081",
+    "Street": "HiTech City",
+    "BuildingNumber": "7C",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "EcoFarm Supplies",
+    "Alias": "EcoFarm",
+    "Country": "Brazil",
+    "City": "Sao Paulo",
+    "PostalCode": "01000-000",
+    "Street": "Paulista Avenue",
+    "BuildingNumber": "234",
+    "ApartmentNumber": "15A",
+    "IsActive": false
+  },
+  {
+    "Name": "CyberNet Security Ltd.",
+    "Alias": "CyberNet",
+    "Country": "Singapore",
+    "City": "Singapore",
+    "PostalCode": "048622",
+    "Street": "Raffles Place",
+    "BuildingNumber": "77B",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Aurora Mining Co.",
+    "Alias": "AuroraMine",
+    "Country": "South Africa",
+    "City": "Johannesburg",
+    "PostalCode": "2001",
+    "Street": "Main Street",
+    "BuildingNumber": "19",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Vanguard Media Group",
+    "Alias": "VMG",
+    "Country": "France",
+    "City": "Paris",
+    "PostalCode": "75008",
+    "Street": "Champs-�lys�es",
+    "BuildingNumber": "88",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Northern Oil & Gas Ltd.",
+    "Alias": "NOG",
+    "Country": "Norway",
+    "City": "Oslo",
+    "PostalCode": "0161",
+    "Street": "Karl Johans gate",
+    "BuildingNumber": "22",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Digital Innovations Corp.",
+    "Alias": "DigInno",
+    "Country": "South Korea",
+    "City": "Seoul",
+    "PostalCode": "04523",
+    "Street": "Gangnam-daero",
+    "BuildingNumber": "305",
+    "ApartmentNumber": null,
+    "IsActive": false
+  },
+  {
+    "Name": "Prime Auto Manufacturers",
+    "Alias": "PrimeAuto",
+    "Country": "Italy",
+    "City": "Turin",
+    "PostalCode": "10121",
+    "Street": "Corso Vittorio Emanuele",
+    "BuildingNumber": "54",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Global Telecom Networks",
+    "Alias": "GTNetworks",
+    "Country": "United Arab Emirates",
+    "City": "Dubai",
+    "PostalCode": "00000",
+    "Street": "Dubai Silicon Oasis",
+    "BuildingNumber": "1001",
+    "ApartmentNumber": "Suite 501",
+    "IsActive": true
+  },
+  {
+    "Name": "Horizon Aerospace",
+    "Alias": "HorizonAero",
+    "Country": "United States",
+    "City": "Seattle",
+    "PostalCode": "98101",
+    "Street": "Pike Street",
+    "BuildingNumber": "700",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Quantum Computing Labs",
+    "Alias": "QCLabs",
+    "Country": "China",
+    "City": "Beijing",
+    "PostalCode": "100000",
+    "Street": "Zhongguancun",
+    "BuildingNumber": "60",
+    "ApartmentNumber": "B203",
+    "IsActive": true
+  },
+  {
+    "Name": "Continental Shipping",
+    "Alias": "ContShip",
+    "Country": "Netherlands",
+    "City": "Rotterdam",
+    "PostalCode": "3011",
+    "Street": "Maasvlakte",
+    "BuildingNumber": "12",
+    "ApartmentNumber": null,
+    "IsActive": false
+  },
+  {
+    "Name": "Pinnacle Construction",
+    "Alias": "PinConstruct",
+    "Country": "Canada",
+    "City": "Calgary",
+    "PostalCode": "T2P 1J9",
+    "Street": "Stephen Avenue",
+    "BuildingNumber": "5",
+    "ApartmentNumber": null,
+    "IsActive": true
+  },
+  {
+    "Name": "Solar Innovations Ltd.",
+    "Alias": "SolarInno",
+    "Country": "Mexico",
+    "City": "Mexico City",
+    "PostalCode": "01000",
+    "Street": "Paseo de la Reforma",
+    "BuildingNumber": "120",
+    "ApartmentNumber": "Suite 8",
+    "IsActive": true
+  }
+]

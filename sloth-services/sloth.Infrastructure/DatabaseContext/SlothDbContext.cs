@@ -29,6 +29,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<OwnerStatusMap> OwnerStatusMap { get; set; }
     internal DbSet<Priority> Priority { get; set; }
     internal DbSet<Product> Product { get; set; }
+    internal DbSet<Query> Query { get; set; }
     internal DbSet<Status> Status { get; set; }
     internal DbSet<Team> Team { get; set; }
     internal DbSet<TeamProductLink> TeamProductLink { get; set; }
@@ -248,97 +249,23 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                     });
         });
 
-        builder.Entity<JobFile>(file =>
+        builder.Entity<JobAssignment>(assignment =>
         {
-            file.HasKey(f => f.FileID);
+            assignment.HasKey(a => new { a.JobID, a.TeamID });
 
-            file.HasOne<Job>()
+            assignment.HasOne(a => a.User)
                 .WithMany()
-                .HasForeignKey(f => f.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        builder.Entity<Team>(team =>
-        {
-            team.HasKey(t => t.TeamID);
-
-            team.HasMany(t => t.Products)
-                .WithMany()
-                .UsingEntity<TeamProductLink>(
-                    link => link.HasOne<Product>().WithMany().HasForeignKey(l => l.ProductID),
-                    link => link.HasOne<Team>().WithMany().HasForeignKey(l => l.TeamID),
-                    link =>
-                    {
-                        link.HasKey(l => new { l.TeamID, l.ProductID }); // Composite Key
-                    });
-        });
-
-        builder.Entity<UserTeamLink>(link =>
-        {
-            // Composite Key
-            link.HasKey(l => new { l.TeamID, l.UserID });
-
-            // Configuring relationships
-            link.HasOne<Team>()
-                .WithMany()
-                .HasForeignKey(l => l.TeamID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            link.HasOne<User>()
-                .WithMany()
-                .HasForeignKey(l => l.UserID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        builder.Entity<Status>(status =>
-        {
-            status.HasKey(s => s.StatusID);
-            status.HasIndex(s => new { s.StatusID, s.Type })
-                .IsUnique();
-        });
-
-        builder.Entity<Priority>(priority =>
-        {
-            priority.HasKey(p => p.PriorityID);
-
-            priority.HasIndex(p => p.PriorityLevel)
-                .IsUnique();
-        });
-
-        builder.Entity<JobComment>(comment =>
-        {
-            comment.HasKey(c => c.CommentID);
-
-            comment.HasOne(c => c.CommentedBy)
-                .WithMany()
-                .HasForeignKey(c => c.CommentedByID)
+                .HasForeignKey(a => a.UserID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            comment.HasMany(c => c.PreviousEdits)
-                .WithOne()
-                .HasForeignKey(c => c.OriginalCommentID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
-        builder.Entity<JobStatusHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangeDate });
-
-            history.HasOne(h => h.PreviousStatus)
+            assignment.HasOne(a => a.Team)
                 .WithMany()
-                .HasForeignKey(h => h.PreviousStatusID)
+                .HasForeignKey(a => a.TeamID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            history.HasOne(h => h.NewStatus)
+            assignment.HasOne(a => a.AssignedBy)
                 .WithMany()
-                .HasForeignKey(h => h.NewStatusID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
+                .HasForeignKey(a => a.AssignedByID)
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
@@ -367,6 +294,31 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
+        builder.Entity<JobComment>(comment =>
+        {
+            comment.HasKey(c => c.CommentID);
+
+            comment.HasOne(c => c.CommentedBy)
+                .WithMany()
+                .HasForeignKey(c => c.CommentedByID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            comment.HasMany(c => c.PreviousEdits)
+                .WithOne()
+                .HasForeignKey(c => c.OriginalCommentID)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        builder.Entity<JobFile>(file =>
+        {
+            file.HasKey(f => f.FileID);
+
+            file.HasOne<Job>()
+                .WithMany()
+                .HasForeignKey(f => f.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         builder.Entity<JobPriorityHistory>(history =>
         {
             history.HasKey(h => new { h.JobID, h.ChangeDate });
@@ -387,11 +339,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
-        builder.Entity<Product>(product =>
-        {
-            product.HasKey(p => p.ProductID);
-        });
-
         builder.Entity<JobProductLink>(link => {
             // Composite Key
             link.HasKey(l => new { l.JobID, l.ProductID });
@@ -410,41 +357,23 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<TeamProductLink>(link => {
-            // Composite Key
-            link.HasKey(l => new { l.TeamID, l.ProductID });
-
-            // Configuring relationships
-            link.HasOne<Team>()
-                .WithMany()
-                .HasForeignKey(l => l.TeamID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            link.HasOne<Product>()
-                .WithMany()
-                .HasForeignKey(l => l.ProductID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        builder.Entity<JobAssignment>(assignment =>
+        builder.Entity<JobStatusHistory>(history =>
         {
-            assignment.HasKey(a => new { a.JobID, a.TeamID });
+            history.HasKey(h => new { h.JobID, h.ChangeDate });
 
-            assignment.HasOne(a => a.User)
+            history.HasOne(h => h.PreviousStatus)
                 .WithMany()
-                .HasForeignKey(a => a.UserID)
+                .HasForeignKey(h => h.PreviousStatusID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            assignment.HasOne(a => a.Team)
+            history.HasOne(h => h.NewStatus)
                 .WithMany()
-                .HasForeignKey(a => a.TeamID)
+                .HasForeignKey(h => h.NewStatusID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            assignment.HasOne(a => a.AssignedBy)
+            history.HasOne(h => h.ChangedBy)
                 .WithMany()
-                .HasForeignKey(a => a.AssignedByID)
+                .HasForeignKey(h => h.ChangedByID)
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
@@ -467,6 +396,75 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        builder.Entity<Priority>(priority =>
+        {
+            priority.HasKey(p => p.PriorityID);
+
+            priority.HasIndex(p => p.PriorityLevel)
+                .IsUnique();
+        });
+
+        builder.Entity<Product>(product =>
+        {
+            product.HasKey(p => p.ProductID);
+        });
+
+        builder.Entity<Query>(query => 
+        {
+            query.ToTable("Query");
+
+            query.Property(b => b.QueryID)
+                .ValueGeneratedOnAdd();
+
+            query.HasIndex(b => b.QueryID)
+                .IsUnique();
+
+            query.HasOne<Job>()
+               .WithOne()
+               .HasForeignKey<Query>(b => b.JobID)
+               .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<Status>(status =>
+        {
+            status.HasKey(s => s.StatusID);
+            status.HasIndex(s => new { s.StatusID, s.Type })
+                .IsUnique();
+        });
+
+        builder.Entity<Team>(team =>
+        {
+            team.HasKey(t => t.TeamID);
+
+            team.HasMany(t => t.Products)
+                .WithMany()
+                .UsingEntity<TeamProductLink>(
+                    link => link.HasOne<Product>().WithMany().HasForeignKey(l => l.ProductID),
+                    link => link.HasOne<Team>().WithMany().HasForeignKey(l => l.TeamID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.TeamID, l.ProductID }); // Composite Key
+                    });
+        });
+
+        builder.Entity<TeamProductLink>(link => {
+            // Composite Key
+            link.HasKey(l => new { l.TeamID, l.ProductID });
+
+            // Configuring relationships
+            link.HasOne<Team>()
+                .WithMany()
+                .HasForeignKey(l => l.TeamID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne<Product>()
+                .WithMany()
+                .HasForeignKey(l => l.ProductID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         builder.Entity<TeamStatusMap>(statusMap =>
         {
             // Composite Key
@@ -482,6 +480,25 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
             statusMap.HasOne<Status>()
                 .WithMany()
                 .HasForeignKey(m => m.StatusID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<UserTeamLink>(link =>
+        {
+            // Composite Key
+            link.HasKey(l => new { l.TeamID, l.UserID });
+
+            // Configuring relationships
+            link.HasOne<Team>()
+                .WithMany()
+                .HasForeignKey(l => l.TeamID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(l => l.UserID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });

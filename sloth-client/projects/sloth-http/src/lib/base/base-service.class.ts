@@ -41,10 +41,10 @@ export abstract class BaseService {
         }
     }
 
-    protected async postAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected async postAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
-        
+
         var url = this.getUrl(action);
         try {
             const result = await lastValueFrom(
@@ -69,8 +69,8 @@ export abstract class BaseService {
         }
     }
 
-    protected async putAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected async putAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
 
         var url = this.getUrl(action);
@@ -123,8 +123,8 @@ export abstract class BaseService {
         }
     }
 
-    protected async patchAsync<T>(action: string, command: any, hasFile: boolean = false): Promise<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected async patchAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
 
         var url = this.getUrl(action);
@@ -167,8 +167,8 @@ export abstract class BaseService {
         );
     }
 
-    protected post<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected post<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);
@@ -181,8 +181,8 @@ export abstract class BaseService {
         );
     }
 
-    protected put<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected put<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);
@@ -209,8 +209,8 @@ export abstract class BaseService {
         );
     }
 
-    protected patch<T>(action: string, command: any, hasFile: boolean = false): Observable<ServiceReturnValue<T>> {
-        if(hasFile)
+    protected patch<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+        if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);

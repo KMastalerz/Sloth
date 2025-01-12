@@ -15,7 +15,7 @@ export * from './lib/controls/input/markup-input/markup-input.component';
 export * from './lib/controls/input/password-input/password-input.component';
 // export * from './lib/controls/input/phone-input/phone-input.component';
 export * from './lib/controls/input/text-input/text-input.component';
-// export * from './lib/controls/input/time-picker/time-picker.component';
+export * from './lib/controls/input/time-picker/time-picker.component';
 export * from './lib/controls/navigation/button-link/button-link.component';
 export * from './lib/controls/navigation/header-link/header-link.component';
 export * from './lib/controls/navigation/navigation-link/navigation-link.component';
@@ -34,3 +34,7 @@ export * from './lib/icons/sun.icon';
 
 /* Wrappers */
 export * from  './lib/wrappers/section/section.component';
+
+/* Snackbar */
+export * from './lib/snackbar/snackbar.model';
+export * from './lib/snackbar/snackbar-service/snackbar.service';

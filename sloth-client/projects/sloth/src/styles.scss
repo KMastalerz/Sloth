@@ -1,1 +1,25 @@
 @use "sloth-ui/styles/sloth-styles";
+
+.error {
+    .mat-mdc-snack-bar-action {
+        color: light-dark(var(--mat-sys-inverse-on-surface), #b41c2b) !important;
+    }
+}
+
+.warning {
+    .mat-mdc-snack-bar-action {
+        color: light-dark(var(--mat-sys-inverse-on-surface), #f0ad4e) !important;
+    }
+}
+
+.success {
+    .mat-mdc-snack-bar-action {
+        color: light-dark(var(--mat-sys-inverse-on-surface), #009f42) !important;
+    }
+}
+
+.information {
+    .mat-mdc-snack-bar-action {
+        color: light-dark(var(--mat-sys-inverse-on-surface), #388cfa) !important; 
+    }
+}

@@ -12,6 +12,11 @@ export class FormDataService {
       return formData;
     }
   
+    if (data instanceof Date) {
+      // Convert Date to ISO-8601 string
+      formData.append(parentKey ?? 'unknown', data.toISOString());
+    }
+
     // If data is a File or Blob, append directly
     if (data instanceof File || data instanceof Blob) {
       formData.append(parentKey ?? 'file', data);

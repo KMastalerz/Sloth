@@ -1,29 +1,47 @@
 <h2 mat-dialog-title class="center">Create new job</h2>
+
 <mat-dialog-content>
     <p>Provide job description</p>
     <form [formGroup]="jobForm">
-
+        <mat-stepper [linear]="false" #stepper>
+            <mat-step [stepControl]="jobForm">
+                <ng-template class="step" matStepLabel>Basic information</ng-template>
+                <sl-list-select [items]="quickJobTypes()" 
+                                label="Job type" 
+                                formControlName="type"/>
+                <sl-text-input  label="Header" 
+                                formControlName="header"/> 
+                <sl-markup-input label="Description" 
+                                formControlName="description"/>
+                <sl-list-select [items]="products()" 
+                                [multiple]="true" 
+                                label="Product"
+                                formControlName="products"/>
+            </mat-step>
+            <mat-step [stepControl]="jobForm">
+                <ng-template matStepLabel>Details</ng-template>
+                <sl-toggle-list [items]="priotities()" 
+                                label="Bug priority"
+                                formControlName="priorityID"/>
+                <sl-checkbox    label="Raised by client?"
+                                formControlName="isClient"/>
+                <sl-date-picker label="Raised date"
+                                formControlName="raisedDate"/>
+                <sl-time-picker label="Raised time"
+                                formControlName="raisedDate"/>
+            </mat-step>
+            <mat-step [stepControl]="jobForm">
+                <ng-template matStepLabel>Attach file</ng-template>
+                <sl-file-input  label="File"
+                                formControlName="file" />
+            </mat-step>
+        </mat-stepper>
         <sl-section>
-            <sl-list-select [items]="quickJobTypes()" 
-                            label="Job type" 
-                            formControlName="type"/>
-            <sl-text-input  label="Header" 
-                            formControlName="header"/> 
-            <sl-markup-input label="Description" 
-                            formControlName="description"/>
-            <sl-toggle-list [items]="priotities()" 
-                            label="Bug priority"
-                            formControlName="priorityID"/>
-            <sl-list-select [items]="products()" 
-                            [multiple]="true" 
-                            label="Product"
-                            formControlName="products"/>
-            <sl-checkbox    label="Raised by client?"
-                            formControlName="isClient"/>
-            <sl-file-input  label="File"
-                            formControlName="file" />
-            <sl-date-picker label="Raised date"
-                            formControlName="raisedDate"/>
+
+
+
+
+
         </sl-section> 
     </form>
   </mat-dialog-content>

@@ -16,6 +16,8 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await SeedPriorities(seedDataDirectory);
         await SeedStatuses(seedDataDirectory);
         await SeedProducts(seedDataDirectory);
+        await SeedClients(seedDataDirectory);
+        await SeedClientProducts(seedDataDirectory);
     }
 
     private async Task SeedUserRoles(string seedDataDirectory)
@@ -129,5 +131,77 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await dbContext.Product.AddRangeAsync(products!);
         await dbContext.SaveChangesAsync();
         logger.LogInformation("Added: {Count} products", products!.Count);
+    }
+    private async Task SeedClients(string seedDataDirectory)
+    {
+        string clientsDirectory = Path.Combine(seedDataDirectory, "Clients.json");
+
+        if (!File.Exists(clientsDirectory))
+        {
+            logger.LogInformation("There are no clients to seed");
+            return;
+        };
+
+        string clientsJson = await File.ReadAllTextAsync(clientsDirectory);
+        var clients = JsonSerializer.Deserialize<List<Client>>(clientsJson);
+
+        // remove clients that already exist in the database
+        var existingclients = await dbContext.Client.ToListAsync();
+        clients = clients?.Where(
+            ur => !existingclients.Any(eur => eur.Alias == ur.Alias)).ToList();
+
+        if (!clients?.Any() ?? true)
+        {
+            logger.LogInformation("There are no clients to seed");
+            return;
+        }
+
+        await dbContext.Client.AddRangeAsync(clients!);
+        await dbContext.SaveChangesAsync();
+        logger.LogInformation("Added: {Count} clients", clients!.Count);
+    }
+    private async Task SeedClientProducts(string seedDataDirectory)
+    {
+        string clientProduckLinksDirectory = Path.Combine(seedDataDirectory, "ClientProducts.json");
+
+        if (!File.Exists(clientProduckLinksDirectory))
+        {
+            logger.LogInformation("There are no client product links to seed");
+            return;
+        };
+
+        string clientProduckLinksJson = await File.ReadAllTextAsync(clientProduckLinksDirectory);
+        var clientProduckLinks = JsonSerializer.Deserialize<List<SeedKeyValueModel>>(clientProduckLinksJson);
+
+        // remove clientProduckLinks that already exist in the database, that clients do not exists, or products that do not exist
+        var existingclientProduckLinks = await dbContext.ClientProductLink.ToListAsync();
+        var existingProducts = await dbContext.Product.ToListAsync();
+        var existingClients = await dbContext.Client.ToListAsync();
+
+
+        var newList = (
+            from kv in clientProduckLinks
+            join c in existingClients on kv.Key equals c.Alias
+            join p in existingProducts on kv.Value equals p.Alias
+            join l in existingclientProduckLinks
+                on new { c.ClientID, p.ProductID } equals new { l.ClientID, l.ProductID } into linksGroup
+            from existingLink in linksGroup.DefaultIfEmpty()
+            where existingLink is null
+            select new ClientProductLink
+            {
+                ClientID = c.ClientID,
+                ProductID = p.ProductID
+            }
+        ).ToList();
+
+        if (!newList?.Any() ?? true)
+        {
+            logger.LogInformation("There are no clientProduckLinks to seed");
+            return;
+        }
+
+        await dbContext.ClientProductLink.AddRangeAsync(newList!);
+        await dbContext.SaveChangesAsync();
+        logger.LogInformation("Added: {Count} clientProduckLinks", clientProduckLinks!.Count);
     }
 }

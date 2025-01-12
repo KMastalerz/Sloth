@@ -8,7 +8,6 @@ using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
 using sloth.Utilities.Constants;
-using System.Diagnostics;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
@@ -42,27 +41,49 @@ public class CreateQuickJobCommandHandler(
                 switch (request.Type)
                 {
                     case "Bug":
-                    // create new Bug
-                    var newBug = new Bug()
-                    {
-                        Header = request.Header,
-                        Description = request.Description,
-                        StatusID = request.StatusID,
-                        Type = request.Type,
-                        PriorityID = request.PriorityID,
-                        CreatedByID = currentUser.UserGuid,
-                        CreatedDate = newJobDate,
-                        IsClient = request.IsClient,
-                        ClientID = request.ClientID,
-                    };
+                        // create new Bug
+                        var newBug = new Bug()
+                        {
+                            Header = request.Header,
+                            Description = request.Description,
+                            StatusID = request.StatusID,
+                            Type = request.Type,
+                            PriorityID = request.PriorityID,
+                            CreatedByID = currentUser.UserGuid,
+                            CreatedDate = newJobDate,
+                            IsClient = request.IsClient,
+                            ClientID = request.ClientID,
+                            RaisedDate = request.RaisedDate ?? newJobDate
+                        };
 
-                    // add new bug
-                    var job = await jobRepository.CreateBug(newBug);
-                    jobID = job.JobID;
-                    id = job.BugID;
-                    break;
+                        // add new bug
+                        var bug = await jobRepository.CreateBug(newBug);
+                        jobID = bug.JobID;
+                        id = bug.BugID;
+
+                        break;
                     case "Query":
-                        throw new InvalidJobTypeException();
+                        // creaate new Query
+                        var newQuery = new Query()
+                        {
+                            Header = request.Header,
+                            Description = request.Description,
+                            StatusID = request.StatusID,
+                            Type = request.Type,
+                            PriorityID = request.PriorityID,
+                            CreatedByID = currentUser.UserGuid,
+                            CreatedDate = newJobDate,
+                            IsClient = request.IsClient,
+                            ClientID = request.ClientID,
+                            RaisedDate = request.RaisedDate ?? newJobDate
+                        };
+
+                        // add new query
+                        var query = await jobRepository.CreateQuery(newQuery);
+                        jobID = query.JobID;
+                        id = query.QueryID;
+
+                        break;
                     default:
                         throw new InvalidJobTypeException();
 
@@ -117,7 +138,7 @@ public class CreateQuickJobCommandHandler(
 
                 transactionScope.Complete();
             }
-            catch(Exception ex)
+            catch
             {
                 throw new JobCreationException();
             }
