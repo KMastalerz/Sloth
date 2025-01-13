@@ -32,8 +32,9 @@
             </mat-step>
             <mat-step [stepControl]="jobForm">
                 <ng-template matStepLabel>Attach file</ng-template>
-                <sl-file-input  label="File"
-                                formControlName="file" />
+                <sl-upload-input    label="File"
+                                    placeholder="Upload files"
+                                    formControlName="file"/>
             </mat-step>
         </mat-stepper>
         <sl-section>

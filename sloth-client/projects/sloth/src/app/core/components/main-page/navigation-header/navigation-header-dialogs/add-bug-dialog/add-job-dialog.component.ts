@@ -4,9 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FileInputComponent, ListSelectComponent, MarkupInputComponent, SectionComponent, 
+import { ListSelectComponent, MarkupInputComponent, SectionComponent, 
   TextInputComponent, ToggleListComponent, CheckboxComponent, DatePickerComponent, 
-  TimePickerComponent} from 'sloth-ui';
+  TimePickerComponent,  UploadInputComponent} from 'sloth-ui';
 import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
 import { CreateQuickJobParam } from 'sloth-http';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
@@ -17,7 +17,7 @@ import { JobDataCacheService } from '../../../../../../services/job-data-cache/j
   imports: [MatDialogContent, SectionComponent, MatDialogActions,
     MatButtonModule, ReactiveFormsModule, MatDialogTitle,
     ListSelectComponent, MarkupInputComponent, ToggleListComponent,
-    TextInputComponent, FileInputComponent, CheckboxComponent, 
+    TextInputComponent, UploadInputComponent, CheckboxComponent, 
     DatePickerComponent, TimePickerComponent, MatStepperModule],
   templateUrl: './add-job-dialog.component.html',
   styleUrl: './add-job-dialog.component.scss'
@@ -68,7 +68,7 @@ export class AddJobDialogComponent   {
       validators: [Validators.required]
     }),
     isClient: new FormControl(false),
-    file: new FormControl<File | null>(null),
+    file: new FormControl<FileList | null>(null),
     raisedDate: new FormControl(new Date(), {
       validators: [Validators.required]
     })
@@ -86,6 +86,8 @@ export class AddJobDialogComponent   {
   }
 
   onSaveBug(): void {
+    console.log('this.jobForm', this.jobForm);
+    
     if(this.jobForm.valid)       
       this.dialogRef.close(
         this.jobForm.value as CreateQuickJobParam

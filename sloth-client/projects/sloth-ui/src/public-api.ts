@@ -16,6 +16,7 @@ export * from './lib/controls/input/password-input/password-input.component';
 // export * from './lib/controls/input/phone-input/phone-input.component';
 export * from './lib/controls/input/text-input/text-input.component';
 export * from './lib/controls/input/time-picker/time-picker.component';
+export * from './lib/controls/input/upload-input/upload-input.component';
 export * from './lib/controls/navigation/button-link/button-link.component';
 export * from './lib/controls/navigation/header-link/header-link.component';
 export * from './lib/controls/navigation/navigation-link/navigation-link.component';

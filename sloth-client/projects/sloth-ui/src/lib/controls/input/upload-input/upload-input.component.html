@@ -1,0 +1,30 @@
+<ng-container>
+      <div 
+        sl-event-blocker
+        (dragend)="isDragover.set(false)"
+        (dragover)="isDragover.set(true)"
+        (dragenter)="isDragover.set(true)"
+        (dragleave)="isDragover.set(false)"
+        (mouseleave)="isDragover.set(false)"
+        (drop)="storeFile($event)"
+        [ngClass]="{ 
+          'upload-container-hover': isDragover(),
+          'upload-container-files': hasFiles()
+        }"
+        class="upload-container">
+        @if(!hasFiles()) {
+          <h5>{{ placeholder() }}</h5>
+        }
+        @else {
+          <div class="file-container">
+          @for(file of fileArray; track file) {
+            <div class="file-item">
+              <mat-icon>upload_file</mat-icon>
+              <p>{{file.name}}</p>
+              <button mat-button (click)="removeFile(file)">Remove</button>
+            </div>
+          }
+          </div>
+        }
+      </div>
+</ng-container>

@@ -4,10 +4,12 @@ import { Directive, HostListener } from '@angular/core';
   selector: '[sl-event-blocker]'
 })
 export class EventBlockerDirective {
-
-  @HostListener('drop', ['$event']) 
+  constructor() {
+    console.log('EventBlockerDirective constructor!');
+  }
+  @HostListener('drop', ['$event'])
   @HostListener('dragover', ['$event']) 
-  public handleEvent(event: Event) {
-    event.preventDefault();
+  public handleEvent($event: Event) {
+    $event.preventDefault();
   }
 }
