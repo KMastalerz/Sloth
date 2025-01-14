@@ -5,7 +5,7 @@ This application is build to manage projects and tasks of various teams.
 ### Development Start
 
 ## Sloth - Client
-prerequisites: 
+#prerequisites: 
 - Installed Visual Studio Code.
 
 1. Intstall `Node.js`, which can be found at: [Node.js](https://nodejs.org/en/download)
@@ -33,7 +33,7 @@ For best experience you can also create json file `launch.json` with body (setup
 ```
 
 ## Sloth - Services
-prerequisites: 
+#prerequisites: 
 - Installed Visual Studio.
 - Installed and running MS SQL Server
 
