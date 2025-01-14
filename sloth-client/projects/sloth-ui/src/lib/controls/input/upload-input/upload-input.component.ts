@@ -1,10 +1,10 @@
-import { Component, computed, forwardRef, input, signal } from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { BaseInputComponent } from '../base-input.component';
 import { EventBlockerDirective } from 'sloth-utilities'; 
+import { BaseInputComponent } from '../base-input.component';
 @Component({
   selector: 'sl-upload-input',
   imports: [EventBlockerDirective, NgClass, MatIcon, MatButtonModule],
@@ -19,9 +19,9 @@ import { EventBlockerDirective } from 'sloth-utilities';
   ]
 })
 export class UploadInputComponent extends BaseInputComponent implements ControlValueAccessor {
+  fileInput = viewChild('fileInput', { read: ElementRef });
   isDragover = signal<boolean>(false);
   multiple = input<boolean>(true);
-  errorMessage = signal<string | null>(null);
   hasFiles = computed(()=> {
     console.log('this.value()', this.value());
     
@@ -30,14 +30,11 @@ export class UploadInputComponent extends BaseInputComponent implements ControlV
 
   storeFile($event: Event) {
     this.isDragover.set(false);
-    this.errorMessage.set(null);
 
     const files = ($event as DragEvent).dataTransfer?.files;
     if (!files) return;
 
     if (!this.multiple() && files.length > 1) {
-      // Show error when multiple files are dragged but `multiple` is `false`
-      this.errorMessage.set('Only one file can be uploaded.');
       return;
     }
 
@@ -83,6 +80,28 @@ export class UploadInputComponent extends BaseInputComponent implements ControlV
       this.value.set(updatedFiles ? this.createFileList(updatedFiles) : null);
     } else {
       this.value.set(null);
+    }
+  }
+
+  openFile() {
+    this.fileInput()!.nativeElement.click();
+  }
+
+  innerOpenFile(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if(this.multiple()) {
+      if(input.files) {
+        const existingFiles = this.value() ? Array.from(this.value() as FileList) : [];
+        const newFiles = Array.from(input.files).filter(
+          (file) => !existingFiles.some((existingFile) => existingFile.name === file.name)
+        );
+  
+        this.value.set(this.createFileList([...existingFiles, ...newFiles]));
+      }
+    }
+    else {
+      this.value.set(input.files?.item(0));
     }
   }
 }

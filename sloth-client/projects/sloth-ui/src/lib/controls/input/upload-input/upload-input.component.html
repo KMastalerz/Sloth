@@ -13,7 +13,7 @@
         }"
         class="upload-container">
         @if(!hasFiles()) {
-          <h5>{{ placeholder() }}</h5>
+          <h5> Drop files here </h5>
         }
         @else {
           <div class="file-container">
@@ -27,4 +27,16 @@
           </div>
         }
       </div>
+      <input type="file" 
+            [name]="name()"
+            [multiple]="multiple()"
+            #fileInput 
+            hidden 
+            (change)="innerOpenFile($event)"/>
+
+      <button class="upload-button" 
+              mat-flat-button
+              (click)="openFile()">
+              @if(multiple()) {Add files} @else {Add file}
+      </button>
 </ng-container>

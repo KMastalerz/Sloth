@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { UploadInputComponent } from 'sloth-ui';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [],
+    imports: [UploadInputComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
