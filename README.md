@@ -1,4 +1,4 @@
-### Sloth
+# Sloth
 
 This application is build to manage projects and tasks of various teams. 
 
