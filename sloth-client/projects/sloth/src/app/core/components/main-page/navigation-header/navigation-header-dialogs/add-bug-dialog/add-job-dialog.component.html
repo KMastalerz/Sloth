@@ -13,18 +13,20 @@
                                 formControlName="header"/> 
                 <sl-markup-input label="Description" 
                                 formControlName="description"/>
-                <sl-list-select [items]="products()" 
-                                [multiple]="true" 
-                                label="Product"
-                                formControlName="products"/>
+                <sl-list-select [items]="clients()" 
+                                [multiple]="false" 
+                                label="Client"
+                                formControlName="clientID"/>
             </mat-step>
             <mat-step [stepControl]="jobForm">
                 <ng-template matStepLabel>Details</ng-template>
                 <sl-toggle-list [items]="priotities()" 
                                 label="Bug priority"
                                 formControlName="priorityID"/>
-                <sl-checkbox    label="Raised by client?"
-                                formControlName="isClient"/>
+                <sl-list-select [items]="products()" 
+                                [multiple]="true" 
+                                label="Product"
+                                formControlName="products"/>
                 <sl-date-picker label="Raised date"
                                 formControlName="raisedDate"/>
                 <sl-time-picker label="Raised time"
@@ -32,18 +34,11 @@
             </mat-step>
             <mat-step [stepControl]="jobForm">
                 <ng-template matStepLabel>Attach file</ng-template>
-                <sl-upload-input    label="File"
+                <sl-upload-input    label="Files"
                                     placeholder="Upload files"
-                                    formControlName="file"/>
+                                    formControlName="files"/>
             </mat-step>
         </mat-stepper>
-        <sl-section>
-
-
-
-
-
-        </sl-section> 
     </form>
   </mat-dialog-content>
   <mat-dialog-actions>

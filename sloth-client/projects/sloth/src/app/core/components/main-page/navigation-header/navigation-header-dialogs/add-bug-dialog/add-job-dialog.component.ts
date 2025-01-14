@@ -1,12 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ListSelectComponent, MarkupInputComponent, SectionComponent, 
-  TextInputComponent, ToggleListComponent, CheckboxComponent, DatePickerComponent, 
-  TimePickerComponent,  UploadInputComponent} from 'sloth-ui';
+import { ListSelectComponent, MarkupInputComponent, TextInputComponent, 
+  ToggleListComponent, DatePickerComponent, TimePickerComponent,  
+  UploadInputComponent} from 'sloth-ui';
 import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
 import { CreateQuickJobParam } from 'sloth-http';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
@@ -14,15 +14,15 @@ import { JobDataCacheService } from '../../../../../../services/job-data-cache/j
 
 @Component({
   selector: 'app-add-bug-dialog',
-  imports: [MatDialogContent, SectionComponent, MatDialogActions,
-    MatButtonModule, ReactiveFormsModule, MatDialogTitle,
-    ListSelectComponent, MarkupInputComponent, ToggleListComponent,
-    TextInputComponent, UploadInputComponent, CheckboxComponent, 
-    DatePickerComponent, TimePickerComponent, MatStepperModule],
+  imports: [MatDialogContent, MatDialogActions, MatButtonModule, 
+    ReactiveFormsModule, MatDialogTitle, ListSelectComponent, 
+    MarkupInputComponent, ToggleListComponent, TextInputComponent, 
+    UploadInputComponent, DatePickerComponent, TimePickerComponent, 
+    MatStepperModule],
   templateUrl: './add-job-dialog.component.html',
   styleUrl: './add-job-dialog.component.scss'
 })
-export class AddJobDialogComponent   {
+export class AddJobDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddJobDialogComponent>);
   readonly jobDataCacheService = inject(JobDataCacheService)
 
@@ -44,11 +44,18 @@ export class AddJobDialogComponent   {
       .subscribe((data) => 
         this.quickJobTypes.set(data)
     );
-  }
 
-  onStatusChange(status: any) {
-    console.log('status', status);
-    
+    this.jobDataCacheService.clients
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => 
+        this.clients.set(data)
+    );
+
+    this.jobForm.controls.clientID.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => 
+        this.jobDataCacheService.listProductsWithClientIDAsync(value)
+    );
   }
 
   protected jobForm = new FormGroup({
@@ -58,6 +65,7 @@ export class AddJobDialogComponent   {
     header: new FormControl('', {
       validators: [Validators.required]
     }),
+    clientID: new FormControl(null as string | null),
     description: new FormControl('', {
       validators: [Validators.required]
     }),
@@ -67,14 +75,13 @@ export class AddJobDialogComponent   {
     products: new FormControl([] as number[], {
       validators: [Validators.required]
     }),
-    isClient: new FormControl(false),
-    file: new FormControl<FileList | null>(null),
+    files: new FormControl<FileList | null>(null),
     raisedDate: new FormControl(new Date(), {
       validators: [Validators.required]
     })
   })
 
-
+  clients = signal<ListSelectItem[]>([]);
   priotities = signal<ToggleListItem[]>([]);
   products = signal<ListSelectItem[]>([]);
   quickJobTypes = signal<ListSelectItem[]>([]);

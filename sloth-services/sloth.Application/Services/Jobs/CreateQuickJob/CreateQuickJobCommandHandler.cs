@@ -34,6 +34,8 @@ public class CreateQuickJobCommandHandler(
         var newJobDate = DateTime.UtcNow;
         var jobID = 0;
         var id = 0;
+        List<string> addedFiles = [];
+
         using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             try
@@ -51,13 +53,12 @@ public class CreateQuickJobCommandHandler(
                             PriorityID = request.PriorityID,
                             CreatedByID = currentUser.UserGuid,
                             CreatedDate = newJobDate,
-                            IsClient = request.IsClient,
                             ClientID = request.ClientID,
                             RaisedDate = request.RaisedDate ?? newJobDate
                         };
 
                         // add new bug
-                        var bug = await jobRepository.CreateBug(newBug);
+                        var bug = await jobRepository.CreateBugAsync(newBug);
                         jobID = bug.JobID;
                         id = bug.BugID;
 
@@ -73,13 +74,12 @@ public class CreateQuickJobCommandHandler(
                             PriorityID = request.PriorityID,
                             CreatedByID = currentUser.UserGuid,
                             CreatedDate = newJobDate,
-                            IsClient = request.IsClient,
                             ClientID = request.ClientID,
                             RaisedDate = request.RaisedDate ?? newJobDate
                         };
 
                         // add new query
-                        var query = await jobRepository.CreateQuery(newQuery);
+                        var query = await jobRepository.CreateQueryAsync(newQuery);
                         jobID = query.JobID;
                         id = query.QueryID;
 
@@ -89,8 +89,6 @@ public class CreateQuickJobCommandHandler(
 
                 }
 
-
-
                 // link products to this job
                 var jobProductLinks = request.Products.Select(item => new JobProductLink
                 {
@@ -99,47 +97,58 @@ public class CreateQuickJobCommandHandler(
                 });
 
                 // link products to job
-                await jobRepository.AddJobProductLinks(jobProductLinks);
+                await jobRepository.AddJobProductLinksAsync(jobProductLinks);
 
-                // add file if such was requested for add
-                if (request.File is not null)
+                // add files if such was requested for add
+                if (request.Files is not null && request.Files.Any())
                 {
-                    var jobFile = new JobFile()
+
+                    var jobFiles = request.Files.Select(file => new JobFile()
                     {
                         JobID = jobID,
-                        Name = request.File.FileName,
-                        Size = request.File.Length,
-                        Extension = Path.GetExtension(request.File.FileName),
+                        Name = file.FileName,
+                        Size = file.Length,
+                        Extension = Path.GetExtension(file.FileName),
                         AddedByID = currentUser.UserGuid,
                         AddedDate = newJobDate
-                    };
+                    });
 
-                    await jobRepository.AddJobFile(jobFile);
+                    await jobRepository.AddJobFilesAsync(jobFiles);
 
                     var typePath = Path.Combine(jobsPath, request.Type);
-                    var filePath = Path.Combine(typePath, request.File.FileName);
+                    var jobPath = Path.Combine(jobsPath, jobID.ToString());
 
-                    // check if directory exists
-                    if (!Directory.Exists(filePath))
+                    foreach (var item in request.Files)
                     {
-                        Directory.CreateDirectory(typePath);
-                    }
+                        var filePath = Path.Combine(jobPath, item.FileName);
 
-                    // save file on server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await request.File.CopyToAsync(stream, cancellationToken);
+                        // check if directory exists
+                        if (!Directory.Exists(jobPath))
+                            Directory.CreateDirectory(jobPath);
+                        
+                        // save file on server
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream, cancellationToken);
+                        }
+                        addedFiles.Add(filePath);
+                        logger.LogInformation("New file {FileName} was added by: {UserName}", item.FileName, currentUser.UserName);
                     }
-
-                    logger.LogInformation("New file {FileName} was added by: {UserName}", request.File.FileName, currentUser.UserName);
                 }
-
                 logger.LogInformation("New {Type}: {id} was created by: {UserName}", request.Type.ToLower(), id, currentUser.UserName);
-
                 transactionScope.Complete();
             }
             catch
             {
+                foreach (var item in addedFiles)
+                {
+                    if (File.Exists(item))
+                    {
+                        File.Delete(item);
+                        logger.LogInformation("Deleted file {FileName} as part of rollback due to an exception.", Path.GetFileName(item));
+                    }
+                }
+
                 throw new JobCreationException();
             }
         }

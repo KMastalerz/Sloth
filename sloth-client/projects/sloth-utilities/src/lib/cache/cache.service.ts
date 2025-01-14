@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({
@@ -6,95 +7,95 @@ import * as CryptoJS from 'crypto-js';
 })
 export class CacheService {
 
-  private encryptionKey: string = 'MySecretKey'; // Change this to a secure key
+  readonly cookieService = inject(CookieService);
+  private readonly masterKey: string = 'SuperSecureMasterKey'; // A static, secure master key
 
-  constructor() { }
+  constructor() {}
 
-  // Encrypt and serialize data before saving it
+  // Helper to create a consistent key hash
+  private hashKey(key: string): string {
+    return CryptoJS.SHA256(key).toString(CryptoJS.enc.Hex); // Create a deterministic hash for keys
+  }
+
+  // Encrypt and serialize data with a random IV
   private encryptData<T>(data: T): string {
     const jsonData = JSON.stringify(data);
-    const encrypted = CryptoJS.AES.encrypt(jsonData, this.encryptionKey).toString();
+    const base64Encoded = btoa(jsonData);
+    const encrypted = CryptoJS.AES.encrypt(base64Encoded, this.masterKey).toString(); // Random IV for strong security
     return encrypted;
   }
 
-  // Decrypt and parse data when reading it
+  // Decrypt and deserialize data
   private decryptData<T>(encryptedData: string): T | null {
     try {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, this.encryptionKey);
-      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-      return decryptedData ? JSON.parse(decryptedData) as T : null;
+      const bytes = CryptoJS.AES.decrypt(encryptedData, this.masterKey);
+      const base64Decoded = bytes.toString(CryptoJS.enc.Utf8);
+      const jsonData = atob(base64Decoded);
+      return JSON.parse(jsonData) as T;
     } catch (e) {
-      console.error('Decryption failed', e);
       return null;
     }
   }
 
-  // Save to LocalStorage
-  saveToLocalStorage<T>(key: string, value: T): void {
-    this.removeFromLocalStorage(key);
-    const encryptedValue = this.encryptData(value);
-    localStorage.setItem(key, encryptedValue);
-  }
-
-  // Read from LocalStorage
-  readFromLocalStorage<T>(key: string): T | null {
-    const encryptedValue = localStorage.getItem(key);
-    return encryptedValue ? this.decryptData<T>(encryptedValue) : null;
-  }
-
-  // Save to SessionStorage
-  saveToSessionStorage<T>(key: string, value: T): void {
-    this.removeFromSessionStorage(key);  
-    const encryptedValue = this.encryptData(value);
-    sessionStorage.setItem(key, encryptedValue);
-  }
-
-  // Read from SessionStorage
-  readFromSessionStorage<T>(key: string): T | null {
-    const encryptedValue = sessionStorage.getItem(key);
-    return encryptedValue ? this.decryptData<T>(encryptedValue) : null;
-  }
-
-  // Save to Cookies
+  // Save to Cookies with deterministic key hash
   saveToCookies<T>(key: string, value: T, expiresDays: number = 7): void {
-    this.removeFromCookies(key);
+    const hashedKey = this.hashKey(key); // Consistent hashed key
     const encryptedValue = this.encryptData(value);
     const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + (expiresDays * 24 * 60 * 60 * 1000)); // set expiration date
-    const cookieValue = `${key}=${encryptedValue};expires=${expirationDate.toUTCString()};path=/`;
-    document.cookie = cookieValue;
+    expirationDate.setTime(expirationDate.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+    this.cookieService.set(hashedKey, encryptedValue, expirationDate, '/');
   }
 
-  // Read from Cookies
+  // Read from Cookies with deterministic key hash
   readFromCookies<T>(key: string): T | null {
-    const name = `${key}=`;
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        const encryptedValue = c.substring(name.length, c.length);
-        return this.decryptData<T>(encryptedValue);
-      }
-    }
-    return null;
+    const hashedKey = this.hashKey(key);
+    const encryptedValue = this.cookieService.get(hashedKey);
+    return encryptedValue ? this.decryptData<T>(encryptedValue) : null;
   }
 
-    // Remove from LocalStorage
-    removeFromLocalStorage(key: string): void {
-      localStorage.removeItem(key);
-    }
-  
-    // Remove from SessionStorage
-    removeFromSessionStorage(key: string): void {
-      sessionStorage.removeItem(key);
-    }
-  
-    // Remove from Cookies
-    removeFromCookies(key: string): void {
-      document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-    }
+  // Remove from Cookies with deterministic key hash
+  removeFromCookies(key: string): void {
+    const hashedKey = this.hashKey(key);
+    this.cookieService.delete(hashedKey, '/');
+  }
+
+  // Save to LocalStorage with deterministic key hash
+  saveToLocalStorage<T>(key: string, value: T): void {
+    const hashedKey = this.hashKey(key);
+    const encryptedValue = this.encryptData(value);
+    localStorage.setItem(hashedKey, encryptedValue);
+  }
+
+  // Read from LocalStorage with deterministic key hash
+  readFromLocalStorage<T>(key: string): T | null {
+    const hashedKey = this.hashKey(key);
+    const encryptedValue = localStorage.getItem(hashedKey);
+    return encryptedValue ? this.decryptData<T>(encryptedValue) : null;
+  }
+
+  // Remove from LocalStorage with deterministic key hash
+  removeFromLocalStorage(key: string): void {
+    const hashedKey = this.hashKey(key);
+    localStorage.removeItem(hashedKey);
+  }
+
+  // Save to SessionStorage with deterministic key hash
+  saveToSessionStorage<T>(key: string, value: T): void {
+    const hashedKey = this.hashKey(key);
+    const encryptedValue = this.encryptData(value);
+    sessionStorage.setItem(hashedKey, encryptedValue);
+  }
+
+  // Read from SessionStorage with deterministic key hash
+  readFromSessionStorage<T>(key: string): T | null {
+    const hashedKey = this.hashKey(key);
+    const encryptedValue = sessionStorage.getItem(hashedKey);
+    return encryptedValue ? this.decryptData<T>(encryptedValue) : null;
+  }
+
+  // Remove from SessionStorage with deterministic key hash
+  removeFromSessionStorage(key: string): void {
+    const hashedKey = this.hashKey(key);
+    sessionStorage.removeItem(hashedKey);
+  }
 }

@@ -4,8 +4,7 @@ export interface CreateQuickJobParam {
     description: string,
     priorityID: number,
     products: number[],
-    file: File,
-    isClient: boolean,
+    files: FileList,
     clientID?: string,
     reportedDate: Date
 }

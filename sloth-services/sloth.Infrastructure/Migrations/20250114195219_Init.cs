@@ -560,8 +560,7 @@ namespace sloth.Infrastructure.Migrations
                     Size = table.Column<long>(type: "bigint", nullable: false),
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AddedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    JobID1 = table.Column<int>(type: "int", nullable: true)
+                    AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -572,11 +571,6 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "Job",
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobFile_Job_JobID1",
-                        column: x => x.JobID1,
-                        principalTable: "Job",
-                        principalColumn: "JobID");
                 });
 
             migrationBuilder.CreateTable(
@@ -807,11 +801,6 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_JobFile_JobID",
                 table: "JobFile",
                 column: "JobID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobFile_JobID1",
-                table: "JobFile",
-                column: "JobID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPriorityHistory_ChangedByID",

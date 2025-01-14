@@ -314,8 +314,9 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
             file.HasKey(f => f.FileID);
 
             file.HasOne<Job>()
-                .WithMany()
+                .WithMany(j => j.Files)
                 .HasForeignKey(f => f.JobID)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });
 

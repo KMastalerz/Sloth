@@ -2,6 +2,7 @@ import { ListSelectItem, ToggleListItem } from "sloth-utilities";
 
 
 export interface ListJobDataCacheItem {
-    products: ListSelectItem[];
+    clients: ListSelectItem[];
     jobPriorities: ToggleListItem[];
+    products: ListSelectItem[];
 }

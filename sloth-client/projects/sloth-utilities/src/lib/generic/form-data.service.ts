@@ -23,6 +23,14 @@ export class FormDataService {
       return formData;
     }
   
+    if (data instanceof FileList) {
+      // Append the entire FileList under the same key (e.g., 'Files')
+      Array.from(data).forEach((file) => {
+        formData.append(parentKey ?? 'Files', file); // Single key for all files
+      });
+      return formData;
+    }
+    
     // If data is an array, iterate and append each item
     if (Array.isArray(data)) {
       data.forEach((element, index) => {

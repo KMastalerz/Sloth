@@ -20,4 +20,8 @@ export class JobService extends BaseService {
   async createQuickJob(command: CreateQuickJobParam): Promise<ServiceReturnValue<any>> {    
     return await this.postAsync("CreateQuickJob", command, true);
   }
+
+  async listProductsWithClientIDAsync(command: {clientID: string | null}): Promise<ServiceReturnValue<any>> {
+    return await this.getAsync("ListProductsWithClientID", command) ?? [];
+  } 
 }

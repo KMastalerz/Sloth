@@ -12,7 +12,7 @@ using sloth.Infrastructure.DatabaseContext;
 namespace sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20250112160534_Init")]
+    [Migration("20250114195219_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -284,9 +284,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("JobID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("JobID1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -297,8 +294,6 @@ namespace sloth.Infrastructure.Migrations
                     b.HasKey("FileID");
 
                     b.HasIndex("JobID");
-
-                    b.HasIndex("JobID1");
 
                     b.ToTable("JobFile");
                 });
@@ -917,14 +912,10 @@ namespace sloth.Infrastructure.Migrations
             modelBuilder.Entity("sloth.Domain.Entities.JobFile", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany()
+                        .WithMany("Files")
                         .HasForeignKey("JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("Files")
-                        .HasForeignKey("JobID1");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>

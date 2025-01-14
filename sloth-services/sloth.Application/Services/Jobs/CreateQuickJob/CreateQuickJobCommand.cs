@@ -10,8 +10,7 @@ public class CreateQuickJobCommand: IRequest
     public int? StatusID { get; set; } = null;
     public int PriorityID { get; set; }
     public int[] Products { get; set; } = [];
-    public IFormFile? File { get; set; } = null;
-    public bool IsClient { get; set; } = false;
+    public IFormFile[]? Files { get; set; } = null;
     public Guid? ClientID { get; set; } = null;
     public DateTime? RaisedDate { get; set; } = null;
 }
