@@ -32,3 +32,4 @@ yarn.lock
 *.bkp
 /sloth-client/dist
 /sloth-services/sloth.API/Jobs
+/sloth-services/sloth.API/appsettings.Development.json
