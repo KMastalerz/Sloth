@@ -1,27 +1,49 @@
-# Sloth
+### Sloth
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+This application is build to manage projects and tasks of various teams. 
 
-## Development server
+### Development Start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Sloth - Client
+prerequisites: 
+- Installed Visual Studio Code.
 
-## Code scaffolding
+1. Intstall `Node.js`, which can be found at: [Node.js](https://nodejs.org/en/download)
+2. Install yarn with `npm install --global yarn`
+3. Install angular CLI `npm install -g @angular/cli`
+4. Open folder with Visual Studio Code.
+5. Run command `yarn` it will install all necessary packages. 
+6. Run command `yarn build-all` this is pre-defined script in project, that will build all libraries. 
+7. Run command `yarn start` it will compile and run new project. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+For best experience you can also create json file `launch.json` with body (setup for Edge browser): 
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ng serve msedge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:4200/",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
+```
 
-## Build
+## Sloth - Services
+prerequisites: 
+- Installed Visual Studio.
+- Installed and running MS SQL Server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. Open solution by clicking `sloth.sln` or select it from IDE.
+2. In solution explorer right click on solution and select "Restore NuGet Packages".
+3. In solution explorer right click on solution and select "Build" 
+4. Modify file: `appsettings.Development.json` for development or `appsettings.json` for production.
+5. In selected `appsettings.json` paste your connection string to your database. 
+6. Open "Package Manager Console" if not seen on GUI, select Tools -> NuGet Package Manage -> Package Manager Console
+7. In "Package Manager Console" select `Sloth.Infrastructure` as deafault project. (migration is located on this layer)
+8. In "Package Manager Console" run command: `update-database`.
+9. Set `Sloth.API` as startup project. 
+10. Press `https` on top panel. 
