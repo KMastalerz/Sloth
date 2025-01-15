@@ -5,7 +5,7 @@ public class JobPriorityHistory
     public int PreviousPriorityID { get; set; } = default!;
     public int NewPriorityID { get; set; } = default!;
     public Guid ChangedByID { get; set; }
-    public DateTime ChangeDate { get; set; }
+    public DateTime ChangedDate { get; set; }
 
 
     /// <summary>

@@ -16,11 +16,17 @@ public class ListJobDataCacheQueryHandler(
         var products = await jobRepository.ListProductsAsync();
         var clients = await jobRepository.ListClientsAsync();
 
+        var priorityResults = mapper.Map<List<ToggleItem>>(priorities).OrderBy(p => p.Label).ToList();
+        var productResults = mapper.Map<List<ListItem>>(products).OrderBy(p => p.Label).ToList();
+        var clientResults = mapper.Map<List<ListItem>>(clients).OrderBy(p => p.Label).ToList();
+
+        clientResults.Insert(0, new() { Label = "None", Value = null });
+
         var returnItem = new ListJobDataCacheItem()
         {
-            Products = mapper.Map<List<ListItem>>(products),
-            JobPriorities = mapper.Map<List<ToggleItem>>(priorities),
-            Clients = mapper.Map<List<ListItem>>(clients)
+            Products = productResults,
+            Priorities = priorityResults,
+            Clients = clientResults
         };
 
         return returnItem;

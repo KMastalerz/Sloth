@@ -47,7 +47,7 @@ internal class RegisterCommandHandler(
     {
         return new()
         {
-            UserName = request.UserName.ToUpper(),
+            UserName = request.UserName.ToLower(),
             Email = request.Email.ToLower(),
             Password = request.Password,
             ConfirmPassword = request.ConfirmPassword,

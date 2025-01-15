@@ -5,7 +5,7 @@ public class JobStatusHistory
     public Guid ChangedByID { get; set; }
     public int PreviousStatusID { get; set; } = default!;
     public int NewStatusID { get; set; } = default!;
-    public DateTime ChangeDate { get; set; }
+    public DateTime ChangedDate { get; set; }
 
 
     /// <summary>

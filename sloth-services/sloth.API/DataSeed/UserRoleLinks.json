@@ -1,0 +1,110 @@
+[
+  {
+    "UserName": "jdoe",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "asmith",
+    "RoleCode": "SOFTWARE_ENG"
+  },
+  {
+    "UserName": "bthomas",
+    "RoleCode": "QA_ENG"
+  },
+  {
+    "UserName": "cjones",
+    "RoleCode": "SUPPORT"
+  },
+  {
+    "UserName": "dlee",
+    "RoleCode": "PROJECT_MGR"
+  },
+  {
+    "UserName": "ewilson",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "fclark",
+    "RoleCode": "SOFTWARE_ENG"
+  },
+  {
+    "UserName": "gmartin",
+    "RoleCode": "QA_ENG"
+  },
+  {
+    "UserName": "hroberts",
+    "RoleCode": "SUPPORT"
+  },
+  {
+    "UserName": "ijackson",
+    "RoleCode": "PROJECT_MGR"
+  },
+  {
+    "UserName": "jhill",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "kgreen",
+    "RoleCode": "SOFTWARE_ENG"
+  },
+  {
+    "UserName": "lmiller",
+    "RoleCode": "QA_ENG"
+  },
+  {
+    "UserName": "mmartinez",
+    "RoleCode": "SUPPORT"
+  },
+  {
+    "UserName": "ndavis",
+    "RoleCode": "PROJECT_MGR"
+  },
+  {
+    "UserName": "oanderson",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "pparker",
+    "RoleCode": "SOFTWARE_ENG"
+  },
+  {
+    "UserName": "qwhite",
+    "RoleCode": "QA_ENG"
+  },
+  {
+    "UserName": "rking",
+    "RoleCode": "SUPPORT"
+  },
+  {
+    "UserName": "sscott",
+    "RoleCode": "PROJECT_MGR"
+  },
+  {
+    "UserName": "tbrown",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "uadams",
+    "RoleCode": "SOFTWARE_ENG"
+  },
+  {
+    "UserName": "vturner",
+    "RoleCode": "QA_ENG"
+  },
+  {
+    "UserName": "wcollins",
+    "RoleCode": "SUPPORT"
+  },
+  {
+    "UserName": "xharris",
+    "RoleCode": "PROJECT_MGR"
+  },
+  {
+    "UserName": "yyoung",
+    "RoleCode": "ADMIN"
+  },
+  {
+    "UserName": "zgreen",
+    "RoleCode": "SOFTWARE_ENG"
+  }
+]

@@ -1,10 +1,15 @@
 ﻿namespace sloth.Domain.Entities;
 public class User
 {
+    public User()
+    {
+        FullName = $"{FirstName} {LastName}";
+    }
     public Guid UserID { get; set; } = new Guid();
     public string UserName { get; set; } = default!;
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
+    public string FullName { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string PasswordHash { get; set; } = default!;
     public string LanguageCode { get; set; } = "en"; //ISO 639-1

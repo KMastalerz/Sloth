@@ -26,9 +26,7 @@ internal class AuthRepository(SlothDbContext dbContext) : IAuthRepository
         await dbContext.UserRoleLink.AddAsync(new()
         {
             UserID = user.UserID,
-            RoleID = userRole.RoleID,
-            FromDate = DateTime.UtcNow,
-            ToDate = null
+            RoleID = userRole.RoleID
         });
         await dbContext.SaveChangesAsync();
         return user;

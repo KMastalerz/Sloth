@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sloth.Application.Services.Auth;
 
@@ -24,6 +25,13 @@ public class AuthController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> RefreshToken(RefreshTokenCommand command)
     {
         var result = await mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> HealthCheck(string login)
+    {
+        var result = await mediator.Send(new HealthCheckCommand(login));
         return Ok(result);
     }
 }

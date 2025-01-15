@@ -14,7 +14,7 @@ internal class ListProductsWithClientIDCommandHandler(
     public async Task<ListProductsWithClientIDItem> Handle(ListProductsWithClientIDCommand request, CancellationToken cancellationToken)
     {
         var products = await jobRepository.ListProductsWithClientIDAsync(request.ClientID);
-        var results = mapper.Map<IEnumerable<ListItem>>(products);
+        var results = mapper.Map<IEnumerable<ListItem>>(products).OrderBy(p => p.Label).ToList();
         return new(results);
     }
 }

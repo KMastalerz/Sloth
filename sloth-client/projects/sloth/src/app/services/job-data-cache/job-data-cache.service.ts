@@ -12,7 +12,7 @@ export class JobDataCacheService {
   quickJobTypes = new BehaviorSubject<ListSelectItem[]>([]);
   clients = new BehaviorSubject<ListSelectItem[]>([]);
   products = new BehaviorSubject<ListSelectItem[]>([]);
-  jobPriorities = new BehaviorSubject<ListSelectItem[]>([]);
+  priorities = new BehaviorSubject<ListSelectItem[]>([]);
 
   
   constructor() { 
@@ -24,7 +24,7 @@ export class JobDataCacheService {
     if(response.success) {
       this.clients.next(response.data.clients);
       this.products.next(response.data.products);
-      this.jobPriorities.next(response.data.jobPriorities);
+      this.priorities.next(response.data.priorities);
     }
     this.quickJobTypes.next([
       {

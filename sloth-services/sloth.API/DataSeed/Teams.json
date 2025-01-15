@@ -1,0 +1,32 @@
+[
+  {
+    "Alias": "dev_team_1",
+    "Speciality": "Development",
+    "Name": "Alpha Developers",
+    "Description": "Focused on Mastermind Monitoring and Mastermind Business enhancements."
+  },
+  {
+    "Alias": "dev_team_2",
+    "Speciality": "Development",
+    "Name": "Beta Builders",
+    "Description": "Handles new features for Mastermind Monitoring and Mastermind Business."
+  },
+  {
+    "Alias": "qa_team",
+    "Speciality": "Quality Assurance",
+    "Name": "QA Guardians",
+    "Description": "Ensures quality across all products with rigorous testing."
+  },
+  {
+    "Alias": "support_team_1",
+    "Speciality": "Support - Initial Contact",
+    "Name": "Frontline Support",
+    "Description": "Handles initial customer inquiries and directs to appropriate resources."
+  },
+  {
+    "Alias": "support_team_2",
+    "Speciality": "Support - Configuration Assistance",
+    "Name": "Config Wizards",
+    "Description": "Assists with configuration and setup-related issues across all products."
+  }
+]

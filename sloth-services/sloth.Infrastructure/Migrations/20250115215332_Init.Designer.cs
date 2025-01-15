@@ -12,7 +12,7 @@ using sloth.Infrastructure.DatabaseContext;
 namespace sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20250114195219_Init")]
+    [Migration("20250115215332_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -124,17 +124,8 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsClient")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("LastModifiedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("PriorityID")
                         .HasColumnType("int");
@@ -145,6 +136,12 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("JobID");
 
@@ -158,11 +155,11 @@ namespace sloth.Infrastructure.Migrations
 
                     b.HasIndex("CurrentTeamID");
 
-                    b.HasIndex("LastModifiedByID");
-
                     b.HasIndex("PriorityID");
 
                     b.HasIndex("StatusID");
+
+                    b.HasIndex("UpdatedByID");
 
                     b.ToTable("Job", (string)null);
 
@@ -202,7 +199,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("JobID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ChangeDate")
+                    b.Property<DateTime>("ChangedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ChangedByID")
@@ -217,7 +214,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("TeamID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("JobID", "ChangeDate");
+                    b.HasKey("JobID", "ChangedDate");
 
                     b.HasIndex("ChangedByID");
 
@@ -298,12 +295,27 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobFile");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityLink", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FunctionalityID")
+                        .HasColumnType("int");
+
+                    b.HasKey("JobID", "FunctionalityID");
+
+                    b.HasIndex("FunctionalityID");
+
+                    b.ToTable("JobFunctionalityLink");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
                 {
                     b.Property<int>("JobID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ChangeDate")
+                    b.Property<DateTime>("ChangedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ChangedByID")
@@ -315,7 +327,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("PreviousPriorityID")
                         .HasColumnType("int");
 
-                    b.HasKey("JobID", "ChangeDate");
+                    b.HasKey("JobID", "ChangedDate");
 
                     b.HasIndex("ChangedByID");
 
@@ -346,7 +358,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("JobID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ChangeDate")
+                    b.Property<DateTime>("ChangedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ChangedByID")
@@ -358,7 +370,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("PreviousStatusID")
                         .HasColumnType("int");
 
-                    b.HasKey("JobID", "ChangeDate");
+                    b.HasKey("JobID", "ChangedDate");
 
                     b.HasIndex("ChangedByID");
 
@@ -456,15 +468,48 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductID");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.ProductFunctionality", b =>
+                {
+                    b.Property<int>("FunctionalityID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FunctionalityID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FunctionalityID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ProductFunctionality");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.RefreshToken", b =>
@@ -552,6 +597,10 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Speciality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("TeamID");
 
                     b.ToTable("Team");
@@ -587,6 +636,21 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("TeamStatusMap");
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.TeamUserLink", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TeamID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("TeamUserLink");
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -601,6 +665,10 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -667,38 +735,11 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("RoleID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ToDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("UserID", "RoleID");
 
                     b.HasIndex("RoleID");
 
                     b.ToTable("UserRoleLink");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.UserTeamLink", b =>
-                {
-                    b.Property<Guid>("TeamID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("TeamID", "UserID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UserTeamLink");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.Bug", b =>
@@ -710,6 +751,10 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BugID"));
+
+                    b.Property<string>("InquiryNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RaisedDate")
                         .HasColumnType("datetime2");
@@ -782,10 +827,6 @@ namespace sloth.Infrastructure.Migrations
                         .HasForeignKey("CurrentTeamID")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("sloth.Domain.Entities.User", "LastModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("LastModifiedByID");
-
                     b.HasOne("sloth.Domain.Entities.Priority", "Priority")
                         .WithMany()
                         .HasForeignKey("PriorityID")
@@ -795,6 +836,10 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusID");
+
+                    b.HasOne("sloth.Domain.Entities.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedByID");
 
                     b.Navigation("Client");
 
@@ -806,11 +851,11 @@ namespace sloth.Infrastructure.Migrations
 
                     b.Navigation("CurrentTeam");
 
-                    b.Navigation("LastModifiedBy");
-
                     b.Navigation("Priority");
 
                     b.Navigation("Status");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobAssignment", b =>
@@ -913,6 +958,21 @@ namespace sloth.Infrastructure.Migrations
                 {
                     b.HasOne("sloth.Domain.Entities.Job", null)
                         .WithMany("Files")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityLink", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.ProductFunctionality", null)
+                        .WithMany()
+                        .HasForeignKey("FunctionalityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany()
                         .HasForeignKey("JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1032,6 +1092,15 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("sloth.Domain.Entities.ProductFunctionality", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.Product", null)
+                        .WithMany("Functionalities")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("sloth.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.User", null)
@@ -1080,11 +1149,11 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.UserRoleLink", b =>
+            modelBuilder.Entity("sloth.Domain.Entities.TeamUserLink", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.UserRole", null)
+                    b.HasOne("sloth.Domain.Entities.Team", null)
                         .WithMany()
-                        .HasForeignKey("RoleID")
+                        .HasForeignKey("TeamID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1095,11 +1164,11 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.UserTeamLink", b =>
+            modelBuilder.Entity("sloth.Domain.Entities.UserRoleLink", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.Team", null)
+                    b.HasOne("sloth.Domain.Entities.UserRole", null)
                         .WithMany()
-                        .HasForeignKey("TeamID")
+                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1146,6 +1215,11 @@ namespace sloth.Infrastructure.Migrations
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
                 {
                     b.Navigation("PreviousEdits");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("Functionalities");
                 });
 #pragma warning restore 612, 618
         }

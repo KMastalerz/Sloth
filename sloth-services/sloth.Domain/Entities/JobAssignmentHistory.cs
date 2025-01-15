@@ -6,7 +6,7 @@ public class JobAssignmentHistory
     public Guid CurrentOwnerID { get; set; }
     public Guid TeamID { get; set; } 
     public Guid ChangedByID { get; set; }
-    public DateTime ChangeDate { get; set; }
+    public DateTime ChangedDate { get; set; }
 
     /// <summary>
     /// External properties

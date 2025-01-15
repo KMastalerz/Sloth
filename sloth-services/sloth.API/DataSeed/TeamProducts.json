@@ -1,0 +1,82 @@
+[
+  {
+    "TeamAlias": "dev_team_1",
+    "ProductAlias": "mw+"
+  },
+  {
+    "TeamAlias": "dev_team_2",
+    "ProductAlias": "mw"
+  },
+  {
+    "TeamAlias": "dev_team_3",
+    "ProductAlias": "mmm"
+  },
+  {
+    "TeamAlias": "dev_team_3",
+    "ProductAlias": "mmb"
+  },
+  {
+    "TeamAlias": "dev_team_4",
+    "ProductAlias": "ex"
+  },
+  {
+    "TeamAlias": "qa_team",
+    "ProductAlias": "mmm"
+  },
+  {
+    "TeamAlias": "qa_team",
+    "ProductAlias": "mmb"
+  },
+  {
+    "TeamAlias": "qa_team",
+    "ProductAlias": "ex"
+  },
+  {
+    "TeamAlias": "qa_team",
+    "ProductAlias": "mw"
+  },
+  {
+    "TeamAlias": "qa_team",
+    "ProductAlias": "mw+"
+  },
+  {
+    "TeamAlias": "support_team_1",
+    "ProductAlias": "mmm"
+  },
+  {
+    "TeamAlias": "support_team_1",
+    "ProductAlias": "mmb"
+  },
+  {
+    "TeamAlias": "support_team_1",
+    "ProductAlias": "ex"
+  },
+  {
+    "TeamAlias": "support_team_1",
+    "ProductAlias": "mw"
+  },
+  {
+    "TeamAlias": "support_team_1",
+    "ProductAlias": "mw+"
+  },
+  {
+    "TeamAlias": "support_team_2",
+    "ProductAlias": "mmm"
+  },
+  {
+    "TeamAlias": "support_team_2",
+    "ProductAlias": "mmb"
+  },
+  {
+    "TeamAlias": "support_team_2",
+    "ProductAlias": "ex"
+  },
+  {
+    "TeamAlias": "support_team_2",
+    "ProductAlias": "mw"
+  },
+  {
+    "TeamAlias": "support_team_2",
+    "ProductAlias": "mw+"
+  }
+]

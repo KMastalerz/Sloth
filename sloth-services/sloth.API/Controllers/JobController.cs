@@ -29,4 +29,10 @@ public class JobController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new ListProductsWithClientIDCommand(clientID));
         return Ok(result);
     }
+    [HttpGet]
+    public async Task<IActionResult> ListBugs(ListBugsCommand command)
+    {
+        var result = await mediator.Send(command);
+        return Ok(result);
+    }
 }

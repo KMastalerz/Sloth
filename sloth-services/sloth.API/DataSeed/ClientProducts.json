@@ -1,154 +1,154 @@
 [
   {
-    "Key": "TechSol",
-    "Value": "mmm"
+    "ClientAlias": "TechSol",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "TechSol",
-    "Value": "mmb"
+    "ClientAlias": "TechSol",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "TechSol",
-    "Value": "mw+"
+    "ClientAlias": "TechSol",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "GreenEng",
-    "Value": "mw"
+    "ClientAlias": "GreenEng",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "GFG",
-    "Value": "ex"
+    "ClientAlias": "GFG",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "GFG",
-    "Value": "mmm"
+    "ClientAlias": "GFG",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "InnoRobo",
-    "Value": "mmm"
+    "ClientAlias": "InnoRobo",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "SkyArch",
-    "Value": "mmb"
+    "ClientAlias": "SkyArch",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "OFS",
-    "Value": "mmb"
+    "ClientAlias": "OFS",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "OFS",
-    "Value": "mw"
+    "ClientAlias": "OFS",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "OFS",
-    "Value": "mmm"
+    "ClientAlias": "OFS",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "NextGenPharma",
-    "Value": "mmm"
+    "ClientAlias": "NextGenPharma",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "NextGenPharma",
-    "Value": "mw+"
+    "ClientAlias": "NextGenPharma",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "EcoFarm",
-    "Value": "mmm"
+    "ClientAlias": "EcoFarm",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "EcoFarm",
-    "Value": "ex"
+    "ClientAlias": "EcoFarm",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "EcoFarm",
-    "Value": "mw"
+    "ClientAlias": "EcoFarm",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "CyberNet",
-    "Value": "mmm"
+    "ClientAlias": "CyberNet",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "CyberNet",
-    "Value": "mw+"
+    "ClientAlias": "CyberNet",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "CyberNet",
-    "Value": "mw"
+    "ClientAlias": "CyberNet",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "AuroraMine",
-    "Value": "mw+"
+    "ClientAlias": "AuroraMine",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "AuroraMine",
-    "Value": "ex"
+    "ClientAlias": "AuroraMine",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "VMG",
-    "Value": "mw"
+    "ClientAlias": "VMG",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "VMG",
-    "Value": "mmm"
+    "ClientAlias": "VMG",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "NOG",
-    "Value": "mw"
+    "ClientAlias": "NOG",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "DigInno",
-    "Value": "ex"
+    "ClientAlias": "DigInno",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "PrimeAuto",
-    "Value": "mmb"
+    "ClientAlias": "PrimeAuto",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "GTNetworks",
-    "Value": "mmb"
+    "ClientAlias": "GTNetworks",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "HorizonAero",
-    "Value": "mw"
+    "ClientAlias": "HorizonAero",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "HorizonAero",
-    "Value": "ex"
+    "ClientAlias": "HorizonAero",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "HorizonAero",
-    "Value": "mw+"
+    "ClientAlias": "HorizonAero",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "QCLabs",
-    "Value": "mmm"
+    "ClientAlias": "QCLabs",
+    "ProductAlias": "mmm"
   },
   {
-    "Key": "QCLabs",
-    "Value": "ex"
+    "ClientAlias": "QCLabs",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "QCLabs",
-    "Value": "mw+"
+    "ClientAlias": "QCLabs",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "ContShip",
-    "Value": "mw"
+    "ClientAlias": "ContShip",
+    "ProductAlias": "mw"
   },
   {
-    "Key": "ContShip",
-    "Value": "ex"
+    "ClientAlias": "ContShip",
+    "ProductAlias": "ex"
   },
   {
-    "Key": "PinConstruct",
-    "Value": "mmb"
+    "ClientAlias": "PinConstruct",
+    "ProductAlias": "mmb"
   },
   {
-    "Key": "SolarInno",
-    "Value": "mw+"
+    "ClientAlias": "SolarInno",
+    "ProductAlias": "mw+"
   },
   {
-    "Key": "SolarInno",
-    "Value": "mmm"
+    "ClientAlias": "SolarInno",
+    "ProductAlias": "mmm"
   }
 ]

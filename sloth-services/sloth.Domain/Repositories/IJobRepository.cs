@@ -1,4 +1,5 @@
 ﻿using sloth.Domain.Entities;
+using sloth.Domain.Models.Jobs;
 
 namespace sloth.Domain.Repositories;
 public interface IJobRepository
@@ -12,4 +13,5 @@ public interface IJobRepository
     Task AddJobFilesAsync(IEnumerable<JobFile> jobFiles);
     Task<Query> CreateQueryAsync(Query query);
     Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID);
+    Task<IEnumerable<Bug>?> ListBugsAsync(ListBugFilters filters);
 }

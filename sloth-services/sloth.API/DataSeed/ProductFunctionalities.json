@@ -1,0 +1,212 @@
+[
+  {
+    "ProductAlias": "mmm",
+    "Name": "Dispatcher Login",
+    "Tag": "Login",
+    "Description": "Provides secure login for dispatchers using the Mastermind Monitoring system.",
+    "TagColor": "#4285F4"
+  },
+  {
+    "ProductAlias": "mmm",
+    "Name": "Incident Tracking",
+    "Tag": "Tracking",
+    "Description": "Enables dispatchers to track incidents and their statuses in real-time.",
+    "TagColor": "#34A853"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Dealer Account Management",
+    "Tag": "Accounts",
+    "Description": "Allows dealers to manage their account details and preferences.",
+    "TagColor": "#FF6F61"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Inventory Control",
+    "Tag": "Inventory",
+    "Description": "Manages dealer inventory including stock levels and restocking alerts.",
+    "TagColor": "#8E44AD"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "Cross-System Reporting",
+    "Tag": "Reporting",
+    "Description": "Generates reports integrating data from business and monitoring systems.",
+    "TagColor": "#34495E"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "Real-Time Notifications",
+    "Tag": "Notifications",
+    "Description": "Sends real-time updates and alerts to users.",
+    "TagColor": "#E74C3C"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "Dealer Dashboard",
+    "Tag": "Dashboard",
+    "Description": "Provides a comprehensive dashboard for dealers to monitor activities.",
+    "TagColor": "#2ECC71"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "Sales Tracking",
+    "Tag": "Sales",
+    "Description": "Tracks and reports sales made by dealers.",
+    "TagColor": "#95A5A6"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Dealer Notifications",
+    "Tag": "Notifications",
+    "Description": "Sends tailored notifications to dealers about their activities.",
+    "TagColor": "#E74C3C"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Custom Reporting",
+    "Tag": "Reporting",
+    "Description": "Allows users to generate custom reports tailored to their needs.",
+    "TagColor": "#34495E"
+  },
+  {
+    "ProductAlias": "mmm",
+    "Name": "Alarm Prioritization",
+    "Tag": "Alarms",
+    "Description": "Ranks alarms by priority for faster dispatcher response.",
+    "TagColor": "#FF5733"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Billing and Invoicing",
+    "Tag": "Billing",
+    "Description": "Generates bills and invoices for dealer transactions.",
+    "TagColor": "#1ABC9C"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "Data Synchronization",
+    "Tag": "Sync",
+    "Description": "Ensures real-time data synchronization across systems.",
+    "TagColor": "#F7DC6F"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "Multi-Tenant Support",
+    "Tag": "MultiTenant",
+    "Description": "Enables the application to support multiple dealer environments.",
+    "TagColor": "#F1948A"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Theme Customization",
+    "Tag": "Themes",
+    "Description": "Allows users to customize the application theme.",
+    "TagColor": "#FF5733"
+  },
+  {
+    "ProductAlias": "mmm",
+    "Name": "Incident Archiving",
+    "Tag": "Archiving",
+    "Description": "Archives resolved incidents for historical reference.",
+    "TagColor": "#AF7AC5"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Supplier Coordination",
+    "Tag": "Suppliers",
+    "Description": "Facilitates coordination between dealers and suppliers.",
+    "TagColor": "#52BE80"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "Service Layer Integration",
+    "Tag": "Integration",
+    "Description": "Facilitates communication between WPF application and the WCF service layer.",
+    "TagColor": "#F39C12"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "User Feedback Module",
+    "Tag": "Feedback",
+    "Description": "Collects and analyzes feedback from users to improve services.",
+    "TagColor": "#D5DBDB"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Audit Logs",
+    "Tag": "Audits",
+    "Description": "Tracks and logs all user activities for security and auditing purposes.",
+    "TagColor": "#7F8C8D"
+  },
+  {
+    "ProductAlias": "mmm",
+    "Name": "Dispatcher Notifications",
+    "Tag": "Notifications",
+    "Description": "Sends updates to dispatchers about incidents and system statuses.",
+    "TagColor": "#E74C3C"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Advanced Filtering",
+    "Tag": "Filtering",
+    "Description": "Offers advanced filtering options for data views and reports.",
+    "TagColor": "#16A085"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "Cross-System User Management",
+    "Tag": "Users",
+    "Description": "Allows management of users across business and monitoring systems.",
+    "TagColor": "#7DCEA0"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "Ad Campaign Analytics",
+    "Tag": "Ads",
+    "Description": "Tracks the performance of ad campaigns run by dealers.",
+    "TagColor": "#1D8348"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Two-Factor Authentication",
+    "Tag": "2FA",
+    "Description": "Enhances login security with two-factor authentication.",
+    "TagColor": "#E74C3C"
+  },
+  {
+    "ProductAlias": "mmm",
+    "Name": "Alarm History",
+    "Tag": "History",
+    "Description": "Provides a detailed history of all alarms generated in the system.",
+    "TagColor": "#FF5733"
+  },
+  {
+    "ProductAlias": "mmb",
+    "Name": "Product Catalog",
+    "Tag": "Catalog",
+    "Description": "Provides a detailed product catalog for dealers to manage their offerings.",
+    "TagColor": "#3498DB"
+  },
+  {
+    "ProductAlias": "ex",
+    "Name": "API Management",
+    "Tag": "API",
+    "Description": "Manages API calls for seamless integration with other applications.",
+    "TagColor": "#1F618D"
+  },
+  {
+    "ProductAlias": "mw",
+    "Name": "Customer Query Management",
+    "Tag": "Queries",
+    "Description": "Manages and resolves customer queries efficiently.",
+    "TagColor": "#BDC3C7"
+  },
+  {
+    "ProductAlias": "mw+",
+    "Name": "Web-Based Analytics",
+    "Tag": "Analytics",
+    "Description": "Offers analytics tools to understand trends and performance metrics.",
+    "TagColor": "#E67E22"
+  }
+]

@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
     selector: 'app-bugs',
-    imports: [],
+    imports: [MatTableModule],
     templateUrl: './bugs.component.html',
     styleUrl: './bugs.component.scss'
 })
-export class BugsComponent {
+export class BugsComponent implements OnInit {
+    // protected data: = [];
+
+    ngOnInit(): void {
+
+    }
+
 
 }

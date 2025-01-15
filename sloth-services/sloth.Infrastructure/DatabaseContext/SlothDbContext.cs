@@ -23,18 +23,20 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<JobAssignmentHistory> JobAssignmentHistory { get; set; }
     internal DbSet<JobComment> JobComment { get; set; }
     internal DbSet<JobFile> JobFile { get; set; }
+    internal DbSet<JobFunctionalityLink> JobFunctionalityLink { get; set; }
     internal DbSet<JobPriorityHistory> JobPriorityHistory { get; set; }
     internal DbSet<JobProductLink> JobProductLink { get; set; }
     internal DbSet<JobStatusHistory> JobStatusHistory { get; set; }
     internal DbSet<OwnerStatusMap> OwnerStatusMap { get; set; }
     internal DbSet<Priority> Priority { get; set; }
     internal DbSet<Product> Product { get; set; }
+    internal DbSet<ProductFunctionality> ProductFunctionality { get; set; }
     internal DbSet<Query> Query { get; set; }
     internal DbSet<Status> Status { get; set; }
     internal DbSet<Team> Team { get; set; }
     internal DbSet<TeamProductLink> TeamProductLink { get; set; }
     internal DbSet<TeamStatusMap> TeamStatusMap { get; set; }
-    internal DbSet<UserTeamLink> UserTeamLink { get; set; }
+    internal DbSet<TeamUserLink> TeamUserLink { get; set; }
 
     #endregion
     protected override void OnModelCreating(ModelBuilder builder)
@@ -247,6 +249,16 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                     {
                         link.HasKey(l => new { l.JobID, l.ProductID }); // Composite Key
                     });
+
+            job.HasMany(b => b.Functionalities)
+                .WithMany()
+                .UsingEntity<JobFunctionalityLink>(
+                    link => link.HasOne<ProductFunctionality>().WithMany().HasForeignKey(l => l.FunctionalityID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.JobID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.JobID, l.FunctionalityID }); // Composite Key
+                    });
         });
 
         builder.Entity<JobAssignment>(assignment =>
@@ -271,7 +283,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
 
         builder.Entity<JobAssignmentHistory>(history =>
         {
-            history.HasKey(h => new { h.JobID, h.ChangeDate });
+            history.HasKey(h => new { h.JobID, h.ChangedDate });
 
             history.HasOne(h => h.PreviousOwner)
                 .WithMany()
@@ -320,9 +332,28 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        builder.Entity<JobFunctionalityLink>(link =>
+        {
+            // Composite Key
+            link.HasKey(l => new { l.JobID, l.FunctionalityID });
+
+            // Configuring relationships
+            link.HasOne<Job>()
+                .WithMany()
+                .HasForeignKey(l => l.JobID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne<ProductFunctionality>()
+                .WithMany()
+                .HasForeignKey(l => l.FunctionalityID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
         builder.Entity<JobPriorityHistory>(history =>
         {
-            history.HasKey(h => new { h.JobID, h.ChangeDate });
+            history.HasKey(h => new { h.JobID, h.ChangedDate });
 
             history.HasOne(h => h.NewPriority)
                 .WithMany()
@@ -360,7 +391,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
 
         builder.Entity<JobStatusHistory>(history =>
         {
-            history.HasKey(h => new { h.JobID, h.ChangeDate });
+            history.HasKey(h => new { h.JobID, h.ChangedDate });
 
             history.HasOne(h => h.PreviousStatus)
                 .WithMany()
@@ -408,6 +439,15 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
         builder.Entity<Product>(product =>
         {
             product.HasKey(p => p.ProductID);
+
+            product.HasMany(p=> p.Functionalities)
+                    .WithOne()
+                    .HasForeignKey(h => h.ProductID)
+                    .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<ProductFunctionality>(functionality => {
+            functionality.HasKey(p => p.FunctionalityID);
         });
 
         builder.Entity<Query>(query => 
@@ -485,7 +525,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<UserTeamLink>(link =>
+        builder.Entity<TeamUserLink>(link =>
         {
             // Composite Key
             link.HasKey(l => new { l.TeamID, l.UserID });

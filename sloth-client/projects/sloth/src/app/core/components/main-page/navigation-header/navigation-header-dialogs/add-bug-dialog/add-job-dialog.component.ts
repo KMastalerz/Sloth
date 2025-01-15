@@ -27,7 +27,7 @@ export class AddJobDialogComponent {
   readonly jobDataCacheService = inject(JobDataCacheService)
 
   constructor(){
-    this.jobDataCacheService.jobPriorities
+    this.jobDataCacheService.priorities
     .pipe(takeUntilDestroyed())
     .subscribe((data) => 
       this.priotities.set(data)
