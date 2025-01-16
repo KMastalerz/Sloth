@@ -67,6 +67,9 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .Include(b => b.CurrentOwner)
             .Include(b => b.CreatedBy)
             .Include(b => b.UpdatedBy)
+            .Include(b => b.Products)
+            .Include(b => b.Functionalities)
+            .Include(b => b.Client)
             .AsQueryable();
 
         if (filters.BugID is not null)
@@ -168,24 +171,18 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
 
         if (filters.Products != null && filters.Products.Any())
         {
-            filteredQuery = filteredQuery.Include(b => b.Products);
-
             filteredQuery = filteredQuery.Where(b =>
             b.Products.Any(p => filters.Products.Contains(p.ProductID)));
         }
 
         if (filters.Functionalities != null && filters.Functionalities.Any())
         {
-            filteredQuery = filteredQuery.Include(b => b.Functionalities);
-
             filteredQuery = filteredQuery.Where(b =>
             b.Functionalities.Any(p => filters.Functionalities.Contains(p.FunctionalityID)));
         }
 
         if (filters.Clients != null && filters.Clients.Any())
         {
-            filteredQuery = filteredQuery.Include(b => b.Client);
-
             filteredQuery = filteredQuery.Where(b =>
             b.Client != null &&
             filters.Clients.Contains(b.Client.ClientID));

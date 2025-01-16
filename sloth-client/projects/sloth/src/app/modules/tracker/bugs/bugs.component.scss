@@ -1,0 +1,33 @@
+.auto-fit-column {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.bugs-container {
+    padding: 1.4rem;
+}
+
+.bug-table {
+    border: solid 0.02rem white;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.tag-list {
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.product-tag {
+    padding: 0.1rem 0.4rem;
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    width: fit-content;
+    font-size: smaller;
+    border-radius: 0.4rem;
+    display: flex;
+    white-space: nowrap;
+}
+

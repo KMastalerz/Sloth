@@ -8,7 +8,7 @@ public class ListBugFilters
     public string? Description { get; set; } = null;
     public bool? IsClosed { get; set; } = null;
     public int? BugID { get; set; } = null;
-    public string InquiryNumber { get; set; } = default!;
+    public string? InquiryNumber { get; set; } = null;
     public DateTime? CreatedDateStart { get; set; } = null;
     public DateTime? CreatedDateEnd { get; set; } = null;
     public DateTime? UpdatedDateStart { get; set; } = null;

@@ -1,5 +1,119 @@
-<!-- <table mat-table [dataSource]>
-    <ng-container>
-
+<div class="bugs-container">
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="bug-table">  
+    <!-- BugID Column with filter button in header -->
+    <ng-container matColumnDef="BugID">
+      <th mat-header-cell *matHeaderCellDef>Bug ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.bugID }}</td>
     </ng-container>
-</table> -->
+  
+    <!-- ClientInquiryNumber Column -->
+    <ng-container matColumnDef="InquiryNumber">
+      <th mat-header-cell *matHeaderCellDef>Client Inquiry</th>
+      <td mat-cell *matCellDef="let element">{{ element.inquiryNumber }}</td>
+    </ng-container>
+  
+    <!-- Header Column -->
+    <ng-container matColumnDef="Header">
+      <th mat-header-cell *matHeaderCellDef>Header</th>
+      <td mat-cell *matCellDef="let element" class="auto-fit-column">{{ element.header }}</td>
+    </ng-container>
+  
+    <!-- Priority Column -->
+    <ng-container matColumnDef="Priority">
+      <th mat-header-cell *matHeaderCellDef>Priority</th>
+      <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+    </ng-container>
+  
+    <!-- Status Column -->
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+    </ng-container>
+  
+    <!-- CreatedDate Column -->
+    <ng-container matColumnDef="CreatedDate">
+      <th mat-header-cell *matHeaderCellDef>Created Date</th>
+      <td mat-cell *matCellDef="let element" class="auto-fit-column">{{ element.createdDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+    </ng-container>
+  
+    <!-- Products Column -->
+    <ng-container matColumnDef="Products">
+      <th mat-header-cell *matHeaderCellDef>Products</th>
+      <td mat-cell *matCellDef="let element">
+        @if(element.products) {
+          <div class="tag-list">
+            @for(product of element.products; track $index) {
+              <span class="product-tag">{{ product }}</span>
+            }
+          </div>
+        }
+      </td>
+    </ng-container>
+  
+    <!-- Functionalities Column -->
+    <ng-container matColumnDef="Functionalities">
+      <th mat-header-cell *matHeaderCellDef>Functionalities</th>
+      <td mat-cell *matCellDef="let element">
+        @if(element.functionalities) {
+          <div class="tag-list"> 
+            @for(func of element.functionalities; track $index) {
+              <span class="functionality-tag">{{ func }}</span>
+            }
+          </div>
+        }
+      </td>
+    </ng-container>
+  
+    <!-- Expander Column -->
+    <ng-container matColumnDef="expander">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="expandedElement = expandedElement === element ? null : element">
+          <mat-icon>
+            {{ expandedElement === element ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Claim Column -->
+    <ng-container matColumnDef="Claim">
+      <th mat-header-cell *matHeaderCellDef>Claim</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="primary" (click)="claimBug(element)">Claim</button>
+      </td>
+    </ng-container>
+  
+    <!-- Expanded Detail Row Definition -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        @if(expandedElement === element){
+          <div class="element-description">
+            {{ element.description }}
+          </div>
+        }
+      </td>
+    </ng-container>
+  
+    <!-- Header and Row Declarations -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row 
+        *matRowDef="let row; columns: displayedColumns;" 
+        class="element-row">
+    </tr>
+    <tr mat-row 
+        *matRowDef="let row; columns: ['expandedDetail']" 
+        [@detailExpand]="row === expandedElement ? 'expanded' : 'collapsed'" 
+        style="overflow: hidden">
+    </tr>
+  </table>
+  
+  <!-- Paginator -->
+  <mat-paginator #paginator 
+    [pageSizeOptions]="[10, 20, 50, 100]" 
+    [pageSize]="50" 
+    [length]="100" 
+    (page)="onPaginateChange($event)"
+    showFirstLastButtons></mat-paginator>
+  
+</div>

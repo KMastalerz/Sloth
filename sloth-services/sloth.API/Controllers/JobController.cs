@@ -30,7 +30,7 @@ public class JobController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
     [HttpGet]
-    public async Task<IActionResult> ListBugs(ListBugsCommand command)
+    public async Task<IActionResult> ListBugs([FromQuery] ListBugsCommand command)
     {
         var result = await mediator.Send(command);
         return Ok(result);
