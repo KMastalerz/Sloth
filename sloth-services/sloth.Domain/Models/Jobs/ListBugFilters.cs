@@ -7,6 +7,8 @@ public class ListBugFilters
     public string? Header { get; set; } = null;
     public string? Description { get; set; } = null;
     public bool? IsClosed { get; set; } = null;
+    public bool? IsRTS { get; set; } = null;
+    public bool? IsBlocker { get; set; } = null;
     public int? BugID { get; set; } = null;
     public string? InquiryNumber { get; set; } = null;
     public DateTime? CreatedDateStart { get; set; } = null;

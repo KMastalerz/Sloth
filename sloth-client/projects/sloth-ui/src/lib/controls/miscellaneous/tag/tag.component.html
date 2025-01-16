@@ -1,0 +1,8 @@
+<span class="tag" 
+    [ngStyle]="{
+        backgroundColor: backgroundColor(),
+        color: color()
+    }"
+    [matTooltipDisabled]="hideTooltip()"
+    [matTooltip]="tooltip()"
+    [matTooltipPosition]="tooltipPosition()">{{ tag() }}</span>

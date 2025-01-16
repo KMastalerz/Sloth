@@ -7,7 +7,11 @@
                             [hideMultipleSelectionIndicator]="hideIndicator()">
         @for(item of items(); track item) {
             <mat-button-toggle [value]="item.value" 
-                [class]="item.class">{{ item.label ?? item.value }}</mat-button-toggle>
+                [ngStyle]="{
+                    backgroundColor: isChecked(item.value) ? item.color : null,
+                    color: isChecked(item.value) ? getColor(item?.color ?? null) : null
+                }"
+                >{{ item.label ?? item.value }}</mat-button-toggle>
         }
     </mat-button-toggle-group>
     @if (isError()) {

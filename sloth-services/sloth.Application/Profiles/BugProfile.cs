@@ -17,13 +17,12 @@ public class BugProfile : Profile
             .ForMember(dest => dest.Header, opt => opt.MapFrom(src => src.Header))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.PriorityID, opt => opt.MapFrom(src => src.PriorityID))
-            .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => src.Priority != null ? src.Priority.PriorityValue : null))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status != null ? src.Status.StatusValue : null))
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
             .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => src.UpdatedDate))
             .ForMember(dest => dest.ClosedDate, opt => opt.MapFrom(src => src.ClosedDate))
             .ForMember(dest => dest.IsClosed, opt => opt.MapFrom(src => src.IsClosed))
+            .ForMember(dest => dest.IsBlocker, opt => opt.MapFrom(src => src.IsBlocker))
 
             // Map IDs
             .ForMember(dest => dest.CurrentOwnerID, opt => opt.MapFrom(src => src.CurrentOwnerID))
@@ -37,12 +36,6 @@ public class BugProfile : Profile
             .ForMember(dest => dest.CurrentTeam, opt => opt.MapFrom(src => src.CurrentTeam != null ? src.CurrentTeam.Name : null))
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.FullName : null))
             .ForMember(dest => dest.ClosedBy, opt => opt.MapFrom(src => src.ClosedBy != null ? src.ClosedBy.FullName : null))
-            .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : null))
-
-            // Map collections to lists of strings using Name property
-            .ForMember(dest => dest.Products,
-                       opt => opt.MapFrom(src => src.Products.Select(p => p.Name).ToList()))
-            .ForMember(dest => dest.Functionalities,
-                       opt => opt.MapFrom(src => src.Functionalities.Select(f => f.Name).ToList()));
-            }
+            .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : null));
+    }
 }

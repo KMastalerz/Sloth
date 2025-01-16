@@ -13,5 +13,6 @@ public interface IJobRepository
     Task AddJobFilesAsync(IEnumerable<JobFile> jobFiles);
     Task<Query> CreateQueryAsync(Query query);
     Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID);
-    Task<IEnumerable<Bug>?> ListBugsAsync(ListBugFilters filters);
+    Task<ListBugItemRepositoryResponse> ListBugsAsync(ListBugFilters filters);
+    Task<int> GetInitialStatusAsync(string type);
 }

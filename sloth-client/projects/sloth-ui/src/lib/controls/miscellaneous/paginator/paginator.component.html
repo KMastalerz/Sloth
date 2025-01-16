@@ -1,0 +1,33 @@
+<div class="paginator-container">
+    <mat-form-field class="page-size" appearance="outline">
+        <mat-label>Page size</mat-label>
+        <mat-select [(value)]="pageSize" (valueChange)="emitChange()">
+            @for(size of pageSizes(); track size) {
+                <mat-option [value]="size">{{size}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <span class="paginator-info"> {{displayedRecords()}}</span>
+    <div class="paginator-options">
+        <button mat-icon-button 
+            (click)="goToFirstPage()"
+            [disabled]="firstPageDisabled()">
+            <mat-icon>first_page</mat-icon>
+          </button>
+        <button mat-icon-button 
+            (click)="goToPreviousPage()"
+            [disabled]="previousPageDisabled()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button 
+            (click)="goToNextPage()"
+            [disabled]="nextPageDisabled()">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button mat-icon-button 
+            (click)="goToLastPage()"
+            [disabled]="lastPageDisabled()">
+            <mat-icon>last_page</mat-icon>
+        </button>
+    </div>
+</div>

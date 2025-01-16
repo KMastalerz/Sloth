@@ -5,6 +5,8 @@ export interface ListBugParam {
     header?: string | null;
     description?: string | null;
     isClosed?: boolean | null;
+    isRTS?: boolean | null;
+    isBlocker?: boolean | null;
     bugID?: number | null;
     inquiryNumber?: string | null;
     createdDateStart?: Date | null;

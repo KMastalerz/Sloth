@@ -27,7 +27,7 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await SeedTeamUsers();
         await SeedClients();
         await SeedClientProducts();
-        await SeedBugs();
+        await SeedJobs();
         await SeedJobProjectLinks();
         await SeedJobFunctionalitiesLinks();
     }
@@ -182,7 +182,7 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         // remove statuses that already exist in the database
         var existingStatuses = await dbContext.Status.ToListAsync();
         statuses = statuses?.Where(
-            s => !existingStatuses.Any(es => es.StatusValue == s.StatusValue && es.Type == s.Type)).ToList();
+            s => !existingStatuses.Any(es => es.Tag == s.Tag && es.Type == s.Type)).ToList();
 
         if (!statuses?.Any() ?? true)
         {
@@ -448,32 +448,34 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
         await dbContext.SaveChangesAsync();
         logger.LogInformation("Added: {Count} client product links", newList!.Count);
     }
-    private async Task SeedBugs()
+    private async Task SeedJobs()
     {
-        string bugsDirectory = Path.Combine(seedDataDirectory, "Bugs.json");
+        string jobsDirectory = Path.Combine(seedDataDirectory, "Jobs.json");
 
-        if (!File.Exists(bugsDirectory))
+        if (!File.Exists(jobsDirectory))
         {
-            logger.LogInformation("There are no bugs to seed");
+            logger.LogInformation("There are no jobs to seed");
             return;
-        };
+        }
 
-        string bugsJson = await File.ReadAllTextAsync(bugsDirectory);
-        var bugs = JsonSerializer.Deserialize<List<BugSeed>>(bugsJson);
+        string jobsJson = await File.ReadAllTextAsync(jobsDirectory);
+        var jobs = JsonSerializer.Deserialize<List<JobSeed>>(jobsJson);
 
-        // remove bugs that already exist in the database
-        var existingBugs = await dbContext.Bug.ToListAsync();
+        // Load existing data from the database
+        var existingJobs = await dbContext.Job.ToListAsync();
         var clients = await dbContext.Client.ToListAsync();
         var users = await dbContext.User.ToListAsync();
 
-        var newList = (
-            from s in bugs
-            join c in clients on s.ClientAlias equals c.Alias
+        // Separate Bugs and Queries while validating against existing jobs
+        var newBugs = (
+            from s in jobs
+            where s.Type.Equals("Bug", StringComparison.OrdinalIgnoreCase)
+            join c in clients on s.ClientAlias equals c.Alias into clientGroup
+            from c in clientGroup.DefaultIfEmpty() // Allow for no client
             join u in users on s.CreatedByAlias equals u.UserName
-            join b in existingBugs 
-                on s.Header equals b.Header into linksGroup
+            join b in existingJobs on s.Header equals b.Header into linksGroup
             from existingLink in linksGroup.DefaultIfEmpty()
-            where existingLink is null
+            where existingLink == null
             select new Bug
             {
                 InquiryNumber = s.InquiryNumber,
@@ -485,19 +487,59 @@ internal class Seeder(ILogger<Seeder> logger, SlothDbContext dbContext) : ISeede
                 StatusID = s.StatusID,
                 Type = s.Type,
                 CreatedByID = u.UserID,
-                ClientID = c.ClientID,
+                ClientID = c?.ClientID, // Handle no client
+                IsBlocker = s.IsBlocker
             }
         ).ToList();
 
-        if (!newList?.Any() ?? true)
+        var newQueries = (
+            from s in jobs
+            where s.Type.Equals("Query", StringComparison.OrdinalIgnoreCase)
+            join c in clients on s.ClientAlias equals c.Alias into clientGroup
+            from c in clientGroup.DefaultIfEmpty() // Allow for no client
+            join u in users on s.CreatedByAlias equals u.UserName
+            join b in existingJobs on s.Header equals b.Header into linksGroup
+            from existingLink in linksGroup.DefaultIfEmpty()
+            where existingLink == null
+            select new Query
+            {
+                RaisedDate = s.RaisedDate,
+                Header = s.Header,
+                Description = s.Description,
+                PriorityID = s.PriorityID,
+                CreatedDate = s.CreatedDate,
+                StatusID = s.StatusID,
+                Type = s.Type,
+                CreatedByID = u.UserID,
+                ClientID = c?.ClientID // Handle no client
+            }
+        ).ToList();
+
+        // Check if there are any new records to insert
+        bool hasNewBugs = newBugs.Any();
+        bool hasNewQueries = newQueries.Any();
+
+        if (!hasNewBugs && !hasNewQueries)
         {
-            logger.LogInformation("There are no bugs to seed");
+            logger.LogInformation("There are no new jobs to seed");
             return;
         }
 
-        await dbContext.Bug.AddRangeAsync(newList!);
+        // Insert new records into the respective tables
+        if (hasNewBugs)
+        {
+            await dbContext.Bug.AddRangeAsync(newBugs!);
+            logger.LogInformation("Added: {Count} bugs", newBugs.Count);
+        }
+
+        if (hasNewQueries)
+        {
+            await dbContext.Query.AddRangeAsync(newQueries!);
+            logger.LogInformation("Added: {Count} queries", newQueries.Count);
+        }
+
+        // Save changes to the database
         await dbContext.SaveChangesAsync();
-        logger.LogInformation("Added: {Count} bugs", newList!.Count);
     }
     private async Task SeedJobProjectLinks()
     {

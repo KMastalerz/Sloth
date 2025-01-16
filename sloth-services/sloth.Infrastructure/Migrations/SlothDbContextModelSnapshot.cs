@@ -431,17 +431,17 @@ namespace sloth.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriorityID"));
 
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PriorityLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("PriorityValue")
+                    b.Property<string>("Tag")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagColor")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PriorityID");
@@ -557,11 +557,17 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<bool>("EndState")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsInitial")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("OwnerChange")
                         .HasColumnType("bit");
 
-                    b.Property<string>("StatusValue")
+                    b.Property<string>("Tag")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagColor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
@@ -750,8 +756,10 @@ namespace sloth.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BugID"));
 
                     b.Property<string>("InquiryNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBlocker")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("RaisedDate")
                         .HasColumnType("datetime2");
@@ -766,6 +774,9 @@ namespace sloth.Infrastructure.Migrations
             modelBuilder.Entity("sloth.Domain.Entities.Query", b =>
                 {
                     b.HasBaseType("sloth.Domain.Entities.Job");
+
+                    b.Property<string>("InquiryNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QueryID")
                         .ValueGeneratedOnAdd()

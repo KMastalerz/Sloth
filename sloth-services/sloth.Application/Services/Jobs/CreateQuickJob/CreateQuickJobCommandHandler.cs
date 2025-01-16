@@ -13,7 +13,6 @@ using System.Transactions;
 namespace sloth.Application.Services.Jobs;
 public class CreateQuickJobCommandHandler(
     ILogger<CreateQuickJobCommandHandler> logger,
-    IMapper mapper,
     IJobRepository jobRepository,
     IUserContext userContext,
     IConfiguration configuration) 
@@ -29,6 +28,12 @@ public class CreateQuickJobCommandHandler(
 
         // get initial project status from IConfiguration
         var appConfig = configuration.GetSection(ConfigurationKeys.Configuration).Get<Configuration>()!;
+
+        // if job status is not set get initial status for its type, or from all. 
+        if (request.StatusID is null)
+        {
+            request.StatusID = await jobRepository.GetInitialStatusAsync(request.Type);
+        }
 
         // generate creation time
         var newJobDate = DateTime.UtcNow;
@@ -54,7 +59,7 @@ public class CreateQuickJobCommandHandler(
                             CreatedByID = currentUser.UserGuid,
                             CreatedDate = newJobDate,
                             ClientID = request.ClientID,
-                            RaisedDate = request.RaisedDate ?? newJobDate
+                            RaisedDate = request.RaisedDate?.ToUniversalTime() ?? newJobDate
                         };
 
                         // add new bug
@@ -75,7 +80,7 @@ public class CreateQuickJobCommandHandler(
                             CreatedByID = currentUser.UserGuid,
                             CreatedDate = newJobDate,
                             ClientID = request.ClientID,
-                            RaisedDate = request.RaisedDate ?? newJobDate
+                            RaisedDate = request.RaisedDate?.ToUniversalTime() ?? newJobDate
                         };
 
                         // add new query

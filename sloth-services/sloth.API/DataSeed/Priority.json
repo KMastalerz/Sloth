@@ -1,27 +1,27 @@
 [
   {
     "PriorityLevel": 1,
-    "PriorityValue": "Lowest",
-    "Class": "lowest"
+    "Tag": "Lowest",
+    "TagColor": "#167533"
   },
   {
     "PriorityLevel": 2,
-    "PriorityValue": "Low",
-    "Class": "low"
+    "Tag": "Low",
+    "TagColor": "#284475"
   },
   {
     "PriorityLevel": 3,
-    "PriorityValue": "Medium",
-    "Class": "medium"
+    "Tag": "Medium",
+    "TagColor": "#af7f3c"
   },
   {
     "PriorityLevel": 4,
-    "PriorityValue": "High",
-    "Class": "high"
+    "Tag": "High",
+    "TagColor": "#851d22"
   },
   {
     "PriorityLevel": 5,
-    "PriorityValue": "Critical",
-    "Class": "critical"
+    "Tag": "Critical",
+    "TagColor": "#2f1310"
   }
 ]

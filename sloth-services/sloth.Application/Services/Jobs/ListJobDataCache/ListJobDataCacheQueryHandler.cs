@@ -16,7 +16,7 @@ public class ListJobDataCacheQueryHandler(
         var products = await jobRepository.ListProductsAsync();
         var clients = await jobRepository.ListClientsAsync();
 
-        var priorityResults = mapper.Map<List<ToggleItem>>(priorities).OrderBy(p => p.Label).ToList();
+        var priorityResults = mapper.Map<List<ToggleItem>>(priorities).OrderBy(p => p.Value).ToList();
         var productResults = mapper.Map<List<ListItem>>(products).OrderBy(p => p.Label).ToList();
         var clientResults = mapper.Map<List<ListItem>>(clients).OrderBy(p => p.Label).ToList();
 

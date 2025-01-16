@@ -61,12 +61,14 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             return await dbContext.Product.ToListAsync();
     }
 
-    public async Task<IEnumerable<Bug>?> ListBugsAsync(ListBugFilters filters)
+    public async Task<ListBugItemRepositoryResponse> ListBugsAsync(ListBugFilters filters)
     {
         var filteredQuery = dbContext.Bug
             .Include(b => b.CurrentOwner)
             .Include(b => b.CreatedBy)
             .Include(b => b.UpdatedBy)
+            .Include(b => b.Priority)
+            .Include(b => b.Status)
             .Include(b => b.Products)
             .Include(b => b.Functionalities)
             .Include(b => b.Client)
@@ -76,6 +78,24 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         {
             filteredQuery = filteredQuery.Where(b =>
                 b.BugID == filters.BugID);
+        }
+
+        if (filters.IsRTS is not null)
+        {
+            if((bool)filters.IsRTS)
+            {
+                filteredQuery = filteredQuery.Where(b => b.ClientID != null);
+            }
+            else
+            {
+                filteredQuery = filteredQuery.Where(b => b.ClientID == null);
+            }
+        }
+
+        if (filters.IsBlocker is not null)
+        {
+            filteredQuery = filteredQuery.Where(b =>
+            b.IsBlocker == filters.IsBlocker);
         }
 
         if (filters.IsClosed is not null)
@@ -188,11 +208,27 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             filters.Clients.Contains(b.Client.ClientID));
         }
 
+        var totalCount = await filteredQuery.CountAsync();
         var results = await filteredQuery
             .Skip((filters.PageID - 1) * filters.TakeCount)
             .Take(filters.TakeCount)
             .ToListAsync();
 
-        return results;
+        return new(){
+            TotalCount = totalCount,
+            Bugs = results
+        };
+    }
+
+    public async Task<int> GetInitialStatusAsync(string type)
+    {
+        var result = await dbContext.Status
+            .Where(s => s.IsInitial &&
+                       (s.Type.ToLower() == type.ToLower() || s.Type.ToLower() == "all"))
+            .OrderByDescending(s => s.Type.ToLower() == type.ToLower()) // True values sort first
+            .Select(s => s.StatusID)
+            .FirstAsync();
+
+        return result; 
     }
 }

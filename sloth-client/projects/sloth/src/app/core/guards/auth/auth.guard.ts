@@ -25,6 +25,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       next: (result) => {
         if(result.success) {
           authStateService.casheAccessTokenResponse(result.data);
+          console.log('[authGuard]: token refreshed');
           return true;
         }
         else {

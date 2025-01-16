@@ -2,6 +2,7 @@
 public class Bug: Job
 {
     public int BugID { get; set; }
-    public string InquiryNumber { get; set; } = default!;
+    public bool IsBlocker { get; set; } = false;
+    public string? InquiryNumber { get; set; } = null;
     public DateTime RaisedDate { get; set; }
 }

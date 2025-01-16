@@ -1,177 +1,160 @@
 [
   {
-    "StatusValue": "New",
+    "Tag": "New",
     "Type": "All",
-    "Description": "Initial state of job"
+    "Description": "Initial state of job",
+    "IsInitial": true,
+    "TagColor": "#3267b5" 
   },
   {
-    "StatusValue": "In review",
+    "Tag": "In review",
     "Type": "All",
     "Description": "Further job is reviewed",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#3267b5"
   },
   {
-    "StatusValue": "In planning",
+    "Tag": "In planning",
     "Type": "All",
     "Description": "Further job is planned",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#3267b5" 
   },
   {
-    "StatusValue": "In development",
+    "Tag": "In development",
     "Type": "Bug",
     "Description": "Job is in development",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#af7f3c" 
   },
   {
-    "StatusValue": "In development",
+    "Tag": "In development",
     "Type": "Project",
     "Description": "Job is in development",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#af7f3c"
   },
   {
-    "StatusValue": "In testing",
+    "Tag": "In testing",
     "Type": "Bug",
     "Description": "Job is in testing",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#3267b5" 
   },
   {
-    "StatusValue": "In testing",
+    "Tag": "In testing",
     "Type": "Project",
     "Description": "Job is in testing",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#3267b5" 
   },
   {
-    "StatusValue": "In testing",
+    "Tag": "In testing",
     "Type": "Test",
     "Description": "Job is in testing",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#3267b5" 
   },
   {
-    "StatusValue": "In testing",
+    "Tag": "Checked-in",
     "Type": "Bug",
-    "Description": "Job is in testing",
-    "OwnerChange": false
+    "Description": "Job is staged for testing",
+    "TagColor": "#167533" 
   },
   {
-    "StatusValue": "In testing",
+    "Tag": "Checked-in",
     "Type": "Project",
-    "Description": "Job is in testing",
-    "OwnerChange": false
+    "Description": "Job is staged for testing",
+    "TagColor": "#167533"
   },
   {
-    "StatusValue": "Checked-in",
+    "Tag": "Re-opened",
     "Type": "Bug",
-    "Description": "Job is staged for testing"
+    "Description": "Job is returned to development",
+    "TagColor": "#851d22"
   },
   {
-    "StatusValue": "Checked-in",
+    "Tag": "Re-opened",
     "Type": "Project",
-    "Description": "Job is staged for testing"
+    "Description": "Job is returned to development",
+    "TagColor": "#851d22"
   },
   {
-    "StatusValue": "Re-opened",
-    "Type": "Bug",
-    "Description": "Job is returned to development"
-  },
-  {
-    "StatusValue": "Re-opened",
-    "Type": "Project",
-    "Description": "Job is returned to development"
-  },
-  {
-    "StatusValue": "Re-opened",
+    "Tag": "Re-opened",
     "Type": "Query",
-    "Description": "Job is returned to development"
+    "Description": "Job is returned to development",
+    "TagColor": "#851d22" 
   },
   {
-    "StatusValue": "Queried with client",
+    "Tag": "Queried with client",
     "Type": "Query",
     "Description": "Query is sent to client",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#c6c6c6" 
   },
   {
-    "StatusValue": "Queried with client",
+    "Tag": "Queried with client",
     "Type": "Bug",
     "Description": "Query is sent to client",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#c6c6c6"
   },
   {
-    "StatusValue": "Queried with client",
+    "Tag": "Queried with client",
     "Type": "Project",
     "Description": "Query is sent to client",
-    "OwnerChange": false
+    "OwnerChange": false,
+    "TagColor": "#c6c6c6" 
   },
   {
-    "StatusValue": "Queried with support",
+    "Tag": "Queried with support",
     "Type": "Query",
-    "Description": "Query sent to support"
+    "Description": "Query sent to support",
+    "TagColor": "#c6c6c6"
   },
   {
-    "StatusValue": "Queried with support",
-    "Type": "Bug",
-    "Description": "Query sent to support"
-  },
-  {
-    "StatusValue": "Queried with support",
-    "Type": "Project",
-    "Description": "Query sent to support"
-  },
-  {
-    "StatusValue": "Queried with development",
+    "Tag": "Queried with development",
     "Type": "Query",
-    "Description": "Query sent to Engineers"
+    "Description": "Query sent to Engineers",
+    "TagColor": "#c6c6c6" 
   },
   {
-    "StatusValue": "Queried with development",
-    "Type": "Bug",
-    "Description": "Query sent to Engineers"
-  },
-  {
-    "StatusValue": "Queried with development",
-    "Type": "Project",
-    "Description": "Query sent to Engineers"
-  },
-  {
-    "StatusValue": "Queried with QA",
+    "Tag": "Queried with QA",
     "Type": "Query",
-    "Description": "Query sent to QA"
+    "Description": "Query sent to QA",
+    "TagColor": "#c6c6c6" 
   },
   {
-    "StatusValue": "Queried with QA",
-    "Type": "Bug",
-    "Description": "Query sent to QA"
-  },
-  {
-    "StatusValue": "Queried with QA",
-    "Type": "Project",
-    "Description": "Query sent to QA"
-  },
-  {
-    "StatusValue": "Completed",
+    "Tag": "Completed",
     "Type": "All",
-    "Description": "Job is marked as completed"
+    "Description": "Job is marked as completed",
+    "TagColor": "#167533" 
   },
   {
-    "StatusValue": "Responded",
+    "Tag": "Responded",
     "Type": "All",
-    "Description": "Response provided to another stream"
+    "Description": "Response provided to another stream",
+    "TagColor": "#3267b5"
   },
   {
-    "StatusValue": "Answered",
+    "Tag": "Answered",
     "Type": "Query",
     "Description": "Response to query job type",
-    "EndState": true
+    "EndState": true,
+    "TagColor": "#167533"
   },
   {
-    "StatusValue": "Cancelled",
+    "Tag": "Cancelled",
     "Type": "All",
     "Description": "Job is cancelled",
-    "EndState": true
+    "EndState": true,
+    "TagColor": "#851d22"
   },
   {
-    "StatusValue": "Closed",
+    "Tag": "Closed",
     "Type": "All",
     "Description": "Job is closed",
-    "EndState": true
+    "EndState": true,
+    "TagColor": "#167533" 
   }
 ]

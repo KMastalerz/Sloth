@@ -20,61 +20,51 @@ export const trackerRoutes: Routes = [
     {
       path: 'bugs',
       component: BugsComponent,
-      canActivate: [accessGuard],
-      children: [
-        {
-            path: 'bugs/:id',
-            component: BugComponent,
-            canActivate: [accessGuard]  
-        }
-      ]
+      canActivate: [accessGuard]
+    },
+    {
+      path: 'bugs/:bugID',
+      component: BugComponent,
+      canActivate: [accessGuard]  
     },
     {
       path: 'projects',
       component: ProjectsComponent,
-      canActivate: [accessGuard],
-      children: [
-        {
-            path: 'projects/:id',
-            component: ProjectComponent,
-            canActivate: [accessGuard]
-        }
-      ]
+      canActivate: [accessGuard]
+    },
+    {
+      path: 'projects/:projectID',
+      component: ProjectComponent,
+      canActivate: [accessGuard]
     },
     {
       path: 'queries',
       component: QueriesComponent,
-      canActivate: [accessGuard],
-      children: [
-        {
-          path: 'queries/:id',
-          component: QueryComponent,
-          canActivate: [accessGuard]
-        }
-      ]
+      canActivate: [accessGuard]
+    },
+    {
+      path: 'queries/:queryID',
+      component: QueryComponent,
+      canActivate: [accessGuard]
     },
     {
       path: 'tasks',
       component: TasksComponent,
-      canActivate: [accessGuard],
-      children: [
-        {
-          path: 'tasks/:id',
-          component: TaskComponent,
-          canActivate: [accessGuard]
-        }
-      ]
+      canActivate: [accessGuard]
+    },
+    {
+      path: 'task/:taskID',
+      component: TaskComponent,
+      canActivate: [accessGuard]
     },
     {
       path: 'tests',
       component: TestsComponent,
-      canActivate: [accessGuard],
-      children: [
-        {
-          path: 'tests/:id',
-          component: TestComponent,
-          canActivate: [accessGuard]
-        }
-      ]
+      canActivate: [accessGuard]
+    },
+    {
+      path: 'test/:testID',
+      component: TestComponent,
+      canActivate: [accessGuard]
     }
   ];

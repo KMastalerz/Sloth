@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using sloth.Application.Models.Jobs;
 using sloth.Application.Models.Miscellaneous;
 using sloth.Domain.Entities;
 
@@ -9,7 +10,11 @@ public class PriorityProfile : Profile
     {
         CreateMap<Priority, ToggleItem>()
            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.PriorityID))
-           .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.PriorityValue))
-           .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class)); ;
+           .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Tag))
+           .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.TagColor));
+
+        CreateMap<Priority, ListBugPriorityItem>()
+           .ForMember(dest => dest.Tag, opt => opt.MapFrom(src => src.Tag))
+           .ForMember(dest => dest.TagColor, opt => opt.MapFrom(src => src.TagColor));
     }
 }

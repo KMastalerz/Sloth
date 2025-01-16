@@ -4,7 +4,7 @@ import { ServiceReturnValue } from '../../dto/base/service-return-value.model';
 import { ListJobDataCacheItem } from '../../dto/job/items/list-job-data-cache.item';
 import { CreateQuickJobParam } from '../../dto/job/params/create-quick-job.param';
 import { ListBugParam } from '../../dto/job/params/list-bug.param';
-import { ListBugItem } from '../../dto/job/items/list-bug.item';
+import { ListBugResponse } from '../../dto/job/items/list-bug.item';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class JobService extends BaseService {
     return await this.getAsync("ListProductsWithClientID", command) ?? [];
   } 
 
-  async listBugsAsync(command: ListBugParam): Promise<ServiceReturnValue<ListBugItem[]>> {
+  async listBugsAsync(command: ListBugParam): Promise<ServiceReturnValue<ListBugResponse>> {
     return await this.getAsync("ListBugs", command) ?? [];
   }
 }

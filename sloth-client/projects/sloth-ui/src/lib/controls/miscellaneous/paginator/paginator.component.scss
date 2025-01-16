@@ -1,0 +1,22 @@
+.paginator-container {
+    margin: 1.2rem;
+    margin-left: auto;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.page-size {
+    width: fit-content;
+    max-width: 8.8rem;
+}
+
+.paginator-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.paginator-info ,
+.paginator-options {
+    margin-bottom: 1.2rem;
+}

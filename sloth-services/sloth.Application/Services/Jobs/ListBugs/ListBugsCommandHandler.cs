@@ -7,11 +7,16 @@ namespace sloth.Application.Services.Jobs;
 public class ListBugsCommandHandler(
     IMapper mapper,
     IJobRepository jobRepository
-    ) : IRequestHandler<ListBugsCommand, IEnumerable<ListBugItem>>
+    ) : IRequestHandler<ListBugsCommand, ListBugItemResponse>
 {
-    public async Task<IEnumerable<ListBugItem>> Handle(ListBugsCommand request, CancellationToken cancellationToken)
+    public async Task<ListBugItemResponse> Handle(ListBugsCommand request, CancellationToken cancellationToken)
     {
         var results = await jobRepository.ListBugsAsync(request);
-        return mapper.Map<IEnumerable<ListBugItem>>(results);
+        var bugs = mapper.Map<IEnumerable<ListBugItem>>(results.Bugs);
+        return new()
+        {
+            TotalCount = results.TotalCount,
+            Bugs = bugs
+        };
     }
 }
