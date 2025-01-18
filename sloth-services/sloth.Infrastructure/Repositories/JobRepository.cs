@@ -19,38 +19,42 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     {
         return await dbContext.Client.ToListAsync();
     }
-
+    public async Task<IEnumerable<ProductFunctionality>> ListFunctionalitiesAsync()
+    {
+        return await dbContext.ProductFunctionality
+            .Include(f=>f.Product).ToListAsync();
+    }
     public async Task<Status?> GetStatusAsync(int statusID)
     {
         return await dbContext.Status.SingleOrDefaultAsync(js => js.StatusID == statusID);
     }
-
     public async Task<Bug> CreateBugAsync(Bug bug)
     {
         await dbContext.Bug.AddAsync(bug);
         await dbContext.SaveChangesAsync();
         return bug;
     }
-
     public async Task AddJobProductLinksAsync(IEnumerable<JobProductLink> productLinks)
     {
         await dbContext.JobProductLink.AddRangeAsync(productLinks);
         await dbContext.SaveChangesAsync();
     }
-
+    public async Task AddJobFunctionalityLinksAsync(IEnumerable<JobFunctionalityLink> functionalityLinks)
+    {
+        await dbContext.JobFunctionalityLink.AddRangeAsync(functionalityLinks);
+        await dbContext.SaveChangesAsync();
+    }
     public async Task AddJobFilesAsync(IEnumerable<JobFile> jobFiles)
     {
         await dbContext.JobFile.AddRangeAsync(jobFiles);
         await dbContext.SaveChangesAsync();
     }
-
     public async Task<Query> CreateQueryAsync(Query query)
     {
         await dbContext.Query.AddAsync(query);
         await dbContext.SaveChangesAsync();
         return query;
     }
-
     public async Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID)
     {
         if (clientID is not null)
@@ -60,7 +64,15 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         else
             return await dbContext.Product.ToListAsync();
     }
-
+    public async Task<IEnumerable<ProductFunctionality>?> ListFunctionalitiesWithProductIDAsync(IEnumerable<int>? productIDs)
+    {
+        if (productIDs is not null)
+        {
+            return await dbContext.ProductFunctionality.Include(f => f.Product).Where(f => productIDs.Any(p=> p == f.ProductID)).ToListAsync();
+        }
+        else
+            return await dbContext.ProductFunctionality.Include(f => f.Product).ToListAsync();
+    }
     public async Task<ListBugItemRepositoryResponse> ListBugsAsync(ListBugFilters filters)
     {
         var filteredQuery = dbContext.Bug
@@ -209,6 +221,9 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         }
 
         var totalCount = await filteredQuery.CountAsync();
+
+        if (filters.PageID < 1) filters.PageID = 1;
+
         var results = await filteredQuery
             .Skip((filters.PageID - 1) * filters.TakeCount)
             .Take(filters.TakeCount)
@@ -219,7 +234,6 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             Bugs = results
         };
     }
-
     public async Task<int> GetInitialStatusAsync(string type)
     {
         var result = await dbContext.Status
@@ -230,5 +244,63 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .FirstAsync();
 
         return result; 
+    }
+    public async Task<Bug?> GetBugAsync(int bugID)
+    {
+        var result = await dbContext.Bug
+            .Include(b => b.CurrentOwner)
+            .Include(b => b.CurrentTeam)
+            .Include(b => b.CreatedBy)
+            .Include(b => b.ClosedBy)
+            .Include(b => b.Client)
+            .Include(b => b.UpdatedBy)
+            .Include(b => b.Priority)
+            .Include(b => b.Status)
+            .Include(b => b.Comments)
+                .ThenInclude(c => c.CommentedBy)
+            .Include(b => b.Comments)
+                .ThenInclude(c => c.PreviousEdits)
+            .Include(b => b.AssignmentHistory)
+                .ThenInclude(ah => ah.PreviousOwner)
+            .Include(b => b.AssignmentHistory)
+                .ThenInclude(ah => ah.CurrentOwner)
+            .Include(b => b.AssignmentHistory)
+                .ThenInclude(ah => ah.ChangedBy)
+            .Include(b => b.AssignmentHistory)
+                .ThenInclude(ah => ah.Team)
+            .Include(b => b.Assignments)
+                .ThenInclude(ah => ah.User)
+            .Include(b => b.Assignments)
+                .ThenInclude(ah => ah.Team)
+            .Include(b => b.Assignments)
+                .ThenInclude(ah => ah.AssignedBy)
+            .Include(b => b.Files)
+                .ThenInclude(f => f.AddedBy)
+            .Include(b => b.PriorityHistory)
+                .ThenInclude(ph => ph.ChangedBy)
+            .Include(b => b.PriorityHistory)
+                .ThenInclude(ph => ph.NewPriority)
+            .Include(b => b.StatusHistory)
+                .ThenInclude(sh => sh.ChangedBy)
+            .Include(b => b.StatusHistory)
+                .ThenInclude(sh => sh.NewStatus)
+            .Include(b => b.Products)
+            .Include(b => b.Functionalities)
+            .FirstOrDefaultAsync(b=> b.BugID == bugID);
+
+        return result;
+    }
+    public async Task AddJobCommentAsync(JobComment jobComment)
+    {
+        await dbContext.JobComment.AddAsync(jobComment);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task<IEnumerable<JobComment>> ListJobCommentsAsync(int jobID)
+    {
+        var results = await dbContext.JobComment
+            .Include(c=>c.CommentedBy)
+            .Where(c => c.JobID == jobID)
+            .ToListAsync();
+        return results;
     }
 }

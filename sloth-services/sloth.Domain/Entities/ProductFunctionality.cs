@@ -7,4 +7,6 @@ public class ProductFunctionality
     public string Tag { get; set; } = default!;
     public string? TagColor { get; set; } = default;
     public string Description { get; set; } = default!;
+
+    public Product? Product { get; set; } = null;
 }

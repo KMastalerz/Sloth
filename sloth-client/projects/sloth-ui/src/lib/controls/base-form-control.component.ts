@@ -1,6 +1,7 @@
-import { Component, input, model, OnDestroy, OnInit, Optional, signal } from '@angular/core';
+import { Component, computed, input, model, OnDestroy, OnInit, Optional, signal } from '@angular/core';
 import { ControlContainer, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { FormMode } from '../models/form-mode.model';
 
 @Component({
   selector: 'sl-base-form-control',
@@ -9,11 +10,20 @@ import { Subscription } from 'rxjs';
 })
 export class BaseFormControlComponent implements ControlValueAccessor, OnInit, OnDestroy {
   isFormControl = false;
+  formMode = input<FormMode>(FormMode.Add)
+  formControlName = input<string | undefined>(undefined);
+  value = model<any | any[]>();
+
   parentForm = signal<FormGroup | undefined>(undefined);
   formControl = signal<FormControl | undefined>(undefined);
   isError = signal<boolean>(false);
-  formControlName = input<string | undefined>(undefined);
-  value = model<any | any[]>();
+
+  canEdit = computed<Boolean>(() => {
+    switch(this.formMode()){
+      case FormMode.Add: return true;
+      default: return false;
+    }
+  });
 
   constructor(@Optional() private controlContainer: ControlContainer) {}
 
@@ -49,12 +59,17 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
   registerOnChange(fn: any): void { 
     this.value.subscribe((value) => fn(value));
   }
+
+  // onValueChange(newValue: any): void {
+  //   this.value = newValue;
+  //   this.onChange(newValue);
+  // }
   
   registerOnTouched(fn: any): void {}
 
   setDisabledState?(isDisabled: boolean): void {}
 
-  private onChange = (value: any) => {};
+  onChange = (value: any) => {};
 
-  private onTouched = () => {};
+  onTouched = () => {};
 }

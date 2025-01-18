@@ -23,8 +23,6 @@ export class UploadInputComponent extends BaseInputComponent implements ControlV
   isDragover = signal<boolean>(false);
   multiple = input<boolean>(true);
   hasFiles = computed(()=> {
-    console.log('this.value()', this.value());
-    
     return this.value() ? true : false
   });
 

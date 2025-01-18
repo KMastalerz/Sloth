@@ -51,11 +51,22 @@ export class AddJobDialogComponent {
         this.clients.set(data)
     );
 
+    this.jobDataCacheService.functionalities
+    .pipe(takeUntilDestroyed())
+    .subscribe((data) => 
+      this.functionalities.set(data)
+  );
+
     this.jobForm.controls.clientID.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => 
         this.jobDataCacheService.listProductsWithClientIDAsync(value)
     );
+
+    this.jobForm.controls.products.valueChanges
+    .pipe(takeUntilDestroyed())
+    .subscribe((value) => 
+      this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(value))
   }
 
   protected jobForm = new FormGroup({
@@ -75,6 +86,7 @@ export class AddJobDialogComponent {
     products: new FormControl([] as number[], {
       validators: [Validators.required]
     }),
+    functionalities: new FormControl([] as number[] | null),
     files: new FormControl<FileList | null>(null),
     raisedDate: new FormControl(new Date(), {
       validators: [Validators.required]
@@ -85,6 +97,7 @@ export class AddJobDialogComponent {
   priotities = signal<ToggleListItem[]>([]);
   products = signal<ListSelectItem[]>([]);
   quickJobTypes = signal<ListSelectItem[]>([]);
+  functionalities= signal<ListSelectItem[]>([]);
   
   onCloseDialog(): void {
     this.dialogRef.close(
@@ -93,8 +106,6 @@ export class AddJobDialogComponent {
   }
 
   onSaveBug(): void {
-    console.log('this.jobForm', this.jobForm);
-    
     if(this.jobForm.valid)       
       this.dialogRef.close(
         this.jobForm.value as CreateQuickJobParam

@@ -1,5 +1,5 @@
-import { Component, forwardRef } from '@angular/core';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef, input } from '@angular/core';
+import { FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ControlComponent } from '../../control.component';
 import { BaseInputComponent } from '../base-input.component';

@@ -11,10 +11,10 @@ import { HexService } from 'sloth-utilities';
 })
 export class TagComponent {
   private readonly herService = inject(HexService);
-  tag = input<string>('');
-  tooltip = input<string>('');
+  tag = input<string | null | undefined>(undefined);
+  tooltip = input<string | null | undefined>(undefined);
   hideTooltip = computed<boolean>(()=> this.tooltip() === '');
   tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
-  backgroundColor = input<string | null>(null);
+  backgroundColor = input<string | null | undefined>(null);
   color = computed(()=> this.herService.getAccessibleFontColor(this.backgroundColor()) ?? null);
 }

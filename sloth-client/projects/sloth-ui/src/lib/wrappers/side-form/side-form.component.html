@@ -1,0 +1,10 @@
+<div class="side-form-container">
+    @if(formGroup()) {
+        <form [formGroup]="formGroup()!">
+            <ng-content></ng-content>
+        </form>
+    }
+    @else {
+        <ng-content></ng-content>
+    }
+</div>

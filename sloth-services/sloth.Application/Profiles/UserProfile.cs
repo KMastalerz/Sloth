@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using sloth.Application.Models.Auth;
+using sloth.Application.Models.Jobs;
 using sloth.Application.Services.Auth;
 using sloth.Domain.Entities;
 
@@ -11,5 +12,8 @@ public class UserProfile : Profile
         CreateMap<User, RegisterCommand>().ReverseMap();
 
         CreateMap<User, AccessUser>();
+
+        CreateMap<User, GetUserBugItem>()
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
     }
 }

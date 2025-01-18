@@ -164,7 +164,8 @@ namespace sloth.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TagColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductID1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,6 +176,11 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "Product",
                         principalColumn: "ProductID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductFunctionality_Product_ProductID1",
+                        column: x => x.ProductID1,
+                        principalTable: "Product",
+                        principalColumn: "ProductID");
                 });
 
             migrationBuilder.CreateTable(
@@ -294,7 +300,8 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_Job_Team_CurrentTeamID",
                         column: x => x.CurrentTeamID,
                         principalTable: "Team",
-                        principalColumn: "TeamID");
+                        principalColumn: "TeamID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Job_User_ClosedByID",
                         column: x => x.ClosedByID,
@@ -310,7 +317,8 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_Job_User_CurrentOwnerID",
                         column: x => x.CurrentOwnerID,
                         principalTable: "User",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Job_User_UpdatedByID",
                         column: x => x.UpdatedByID,
@@ -486,17 +494,20 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_JobAssignment_Team_TeamID",
                         column: x => x.TeamID,
                         principalTable: "Team",
-                        principalColumn: "TeamID");
+                        principalColumn: "TeamID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_JobAssignment_User_AssignedByID",
                         column: x => x.AssignedByID,
                         principalTable: "User",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_JobAssignment_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -550,6 +561,7 @@ namespace sloth.Infrastructure.Migrations
                     JobID = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CommendDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsEdited = table.Column<bool>(type: "bit", nullable: false),
                     OriginalCommentID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -560,7 +572,8 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_JobComment_JobComment_OriginalCommentID",
                         column: x => x.OriginalCommentID,
                         principalTable: "JobComment",
-                        principalColumn: "CommentID");
+                        principalColumn: "CommentID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_JobComment_Job_JobID",
                         column: x => x.JobID,
@@ -571,7 +584,8 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_JobComment_User_CommentedByID",
                         column: x => x.CommentedByID,
                         principalTable: "User",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -595,6 +609,12 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "Job",
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobFile_User_AddedByID",
+                        column: x => x.AddedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -847,6 +867,11 @@ namespace sloth.Infrastructure.Migrations
                 column: "OriginalCommentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobFile_AddedByID",
+                table: "JobFile",
+                column: "AddedByID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobFile_JobID",
                 table: "JobFile",
                 column: "JobID");
@@ -906,6 +931,11 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_ProductFunctionality_ProductID",
                 table: "ProductFunctionality",
                 column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductFunctionality_ProductID1",
+                table: "ProductFunctionality",
+                column: "ProductID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Query_QueryID",

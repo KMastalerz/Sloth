@@ -5,11 +5,26 @@
         @if( label() ) {
             <mat-label>{{ label() }}</mat-label>
         }
-        <mat-select [multiple]="multiple()" 
-                    [(ngModel)]="value">
-            @for (item of items(); track $index) {
-                <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
-            }
-        </mat-select>
+        @if(hasGroups()) {
+            <mat-select [multiple]="multiple()" 
+                        [(ngModel)]="value">
+                @for(group of groupedItems(); track group) {
+                    <mat-optgroup [label]="group.name">
+                        @for (item of group.items; track $index) {
+                            <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
+                        }
+                    </mat-optgroup>
+                }
+            </mat-select>
+        }
+        @else {
+            <mat-select [multiple]="multiple()" 
+                        [(ngModel)]="value">
+                @for (item of items(); track $index) {
+                    <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
+                }
+            </mat-select>
+        }
+
     </mat-form-field>
 </sl-control>

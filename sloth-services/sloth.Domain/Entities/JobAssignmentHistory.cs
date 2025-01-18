@@ -14,6 +14,6 @@ public class JobAssignmentHistory
     
     public User PreviousOwner { get; set; } = default!;
     public User CurrentOwner { get; set; } = default!;
-    public User ChengedBy { get; set; } = default!;
+    public User ChangedBy { get; set; } = default!;
     public Team Team { get; set; } = default!;
 }

@@ -232,6 +232,9 @@ namespace sloth.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
 
+                    b.Property<DateTime>("CommendDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -286,6 +289,8 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("FileID");
+
+                    b.HasIndex("AddedByID");
 
                     b.HasIndex("JobID");
 
@@ -495,6 +500,9 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductID1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tag")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -505,6 +513,8 @@ namespace sloth.Infrastructure.Migrations
                     b.HasKey("FunctionalityID");
 
                     b.HasIndex("ProductID");
+
+                    b.HasIndex("ProductID1");
 
                     b.ToTable("ProductFunctionality");
                 });
@@ -828,12 +838,12 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
                         .WithMany()
                         .HasForeignKey("CurrentOwnerID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("sloth.Domain.Entities.Team", "CurrentTeam")
                         .WithMany()
                         .HasForeignKey("CurrentTeamID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("sloth.Domain.Entities.Priority", "Priority")
                         .WithMany()
@@ -871,7 +881,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "AssignedBy")
                         .WithMany()
                         .HasForeignKey("AssignedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -883,13 +893,13 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AssignedBy");
@@ -901,7 +911,7 @@ namespace sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("sloth.Domain.Entities.JobAssignmentHistory", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.User", "ChengedBy")
+                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
                         .WithMany()
                         .HasForeignKey("ChangedByID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -931,7 +941,7 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ChengedBy");
+                    b.Navigation("ChangedBy");
 
                     b.Navigation("CurrentOwner");
 
@@ -945,7 +955,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.User", "CommentedBy")
                         .WithMany()
                         .HasForeignKey("CommentedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -957,18 +967,26 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.JobComment", null)
                         .WithMany("PreviousEdits")
                         .HasForeignKey("OriginalCommentID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CommentedBy");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobFile", b =>
                 {
+                    b.HasOne("sloth.Domain.Entities.User", "AddedBy")
+                        .WithMany()
+                        .HasForeignKey("AddedByID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("sloth.Domain.Entities.Job", null)
                         .WithMany("Files")
                         .HasForeignKey("JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AddedBy");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityLink", b =>
@@ -1102,11 +1120,17 @@ namespace sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("sloth.Domain.Entities.ProductFunctionality", b =>
                 {
-                    b.HasOne("sloth.Domain.Entities.Product", null)
-                        .WithMany("Functionalities")
+                    b.HasOne("sloth.Domain.Entities.Product", "Product")
+                        .WithMany()
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Product", null)
+                        .WithMany("Functionalities")
+                        .HasForeignKey("ProductID1");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.RefreshToken", b =>

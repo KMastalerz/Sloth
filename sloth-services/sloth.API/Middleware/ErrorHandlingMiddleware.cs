@@ -14,49 +14,53 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         }
         catch (InvalidLoginException ex)
         {
-            await HandleExceptionAsync(context, ex, 401, "Invalid login attempt.");
+            await HandleExceptionAsync(context, ex, 401);
         }
         catch (InvalidUserRoleException ex)
         {
-            await HandleExceptionAsync(context, ex, 403, "User does not have the required role.");
+            await HandleExceptionAsync(context, ex, 403);
         }
         catch (LockedPasswordException ex)
         {
-            await HandleExceptionAsync(context, ex, 423, "Password is locked.");
+            await HandleExceptionAsync(context, ex, 423);
         }
         catch (LockedUserException ex)
         {
-            await HandleExceptionAsync(context, ex, 423, "User account is locked.");
+            await HandleExceptionAsync(context, ex, 423);
         }
         catch (UserAlreadyExistsException ex)
         {
-            await HandleExceptionAsync(context, ex, 409, "User already exists.");
+            await HandleExceptionAsync(context, ex, 409);
         }
         catch (InvalidUserException ex)
         {
-            await HandleExceptionAsync(context, ex, 400, "Invalid user.");
+            await HandleExceptionAsync(context, ex, 400);
         }
         catch (InvalidTokenException ex)
         {
-            await HandleExceptionAsync(context, ex, 400, "Invalid token.");
+            await HandleExceptionAsync(context, ex, 400);
         }
         catch (JobCreationException ex)
         {
-            await HandleExceptionAsync(context, ex, 500, "Error on creating new job request");
+            await HandleExceptionAsync(context, ex, 500);
         }
         catch (InvalidJobTypeException ex)
         {
-            await HandleExceptionAsync(context, ex, 400, "Invalid job type.");
+            await HandleExceptionAsync(context, ex, 400);
+        }
+        catch (MissingUserContextException ex)
+        {
+            await HandleExceptionAsync(context, ex, 401);
         }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, ex, 500, "An unexpected error occurred.");
+            await HandleExceptionAsync(context, ex, 500);
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception ex, int statusCode, string message)
+    private async Task HandleExceptionAsync(HttpContext context, Exception ex, int statusCode)
     {
-        logger.LogError(message);
+        logger.LogError(ex.Message);
 
         var errorResponse = new
         {

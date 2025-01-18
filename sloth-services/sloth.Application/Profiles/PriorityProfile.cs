@@ -13,8 +13,8 @@ public class PriorityProfile : Profile
            .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Tag))
            .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.TagColor));
 
-        CreateMap<Priority, ListBugPriorityItem>()
-           .ForMember(dest => dest.Tag, opt => opt.MapFrom(src => src.Tag))
-           .ForMember(dest => dest.TagColor, opt => opt.MapFrom(src => src.TagColor));
+        CreateMap<Priority, ListBugPriorityItem>().ReverseMap();
+
+        CreateMap<Priority, GetPriorityBugItem>().ReverseMap();
     }
 }

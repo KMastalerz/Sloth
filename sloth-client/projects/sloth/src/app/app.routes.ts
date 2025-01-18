@@ -20,7 +20,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'dashboard',
+            redirectTo: 'tracker/bugs',
             pathMatch: 'full'
           },      
           {

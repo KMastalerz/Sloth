@@ -10,5 +10,7 @@ public class StatusProfile : Profile
         CreateMap<Status, ListBugStatusItem>()
            .ForMember(dest => dest.Tag, opt => opt.MapFrom(src => src.Tag))
            .ForMember(dest => dest.TagColor, opt => opt.MapFrom(src => src.TagColor));
+
+        CreateMap<Status, GetStatusBugItem>().ReverseMap();
     }
 }

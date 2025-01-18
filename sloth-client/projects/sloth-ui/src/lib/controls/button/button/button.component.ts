@@ -12,6 +12,5 @@ import { BaseButtonComponent } from '../base-button.component';
 export class ButtonComponent extends BaseButtonComponent {
   isHeader = input<boolean>(false);
   displayType = input<'add' | 'delete' | 'flat' | 'basic'>('basic');
-
   isFlatButton = computed(()=> this.displayType() !== 'basic');
 }

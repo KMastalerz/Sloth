@@ -1,0 +1,13 @@
+<div class="form-container">
+    @if(header()) {
+        <h2 class="form-header">{{this.header()}}</h2>
+    }
+    @if(formGroup()) {
+        <form [formGroup]="formGroup()!">
+            <ng-content></ng-content>
+        </form>
+    }
+    @else {
+        <ng-content></ng-content>
+    }
+</div>

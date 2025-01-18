@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using sloth.Application.Models.Configuration;
@@ -101,8 +100,18 @@ public class CreateQuickJobCommandHandler(
                     ProductID = item
                 });
 
+                // link functionalities to this job
+                var jobFunctionalityLinks = request.Functionalities?.Select(item => new JobFunctionalityLink
+                {
+                    JobID = jobID,
+                    FunctionalityID = item
+                });
+
                 // link products to job
                 await jobRepository.AddJobProductLinksAsync(jobProductLinks);
+
+                if(jobFunctionalityLinks is not null)
+                    await jobRepository.AddJobFunctionalityLinksAsync(jobFunctionalityLinks);
 
                 // add files if such was requested for add
                 if (request.Files is not null && request.Files.Any())

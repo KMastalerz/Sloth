@@ -19,6 +19,7 @@ export * from './lib/controls/select/checkbox/checkbox.component';
 export * from './lib/controls/select/list-select/list-select.component';
 export * from './lib/controls/select/toggle/toggle.component';
 export * from './lib/controls/select/toggle-list/toggle-list.component';
+export * from './lib/controls/miscellaneous/comment/comment.component';
 export * from './lib/controls/miscellaneous/tag/tag.component';
 export * from './lib/controls/miscellaneous/paginator/paginator.component';
 
@@ -27,9 +28,13 @@ export * from './lib/icons/moon.icon';
 export * from './lib/icons/sun.icon';
 
 /* Wrappers */
+export * from  './lib/wrappers/form/form.component';
 export * from  './lib/wrappers/section/section.component';
+export * from  './lib/wrappers/side-form//side-form.component';
+export * from  './lib/wrappers/side-section//side-section.component';
 
 /* Models */ 
+export * from  './lib/models/form-mode.model';
 export * from  './lib/models/paginator-event.model';
 
 /* Snackbar */

@@ -1,0 +1,16 @@
+.form-container {
+    grid-area: form-panel;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    padding-right: 3.6rem;
+    padding-left: 2rem;
+}
+
+
+.form-header {
+    white-space: pre;
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0.7;
+}

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HexService {
-  getAccessibleFontColor(hexColor: string | null): 'white' | 'black' | null{
+  getAccessibleFontColor(hexColor: string | null | undefined): 'white' | 'black' | null{
     if(!hexColor) return null;
 
     // Remove the '#' if present

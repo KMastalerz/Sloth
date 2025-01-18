@@ -15,5 +15,7 @@ public class ProductProfile : Profile
         CreateMap<Product, ListBugProductItem>()
            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+        CreateMap<Product, GetProductBugItem>().ReverseMap();
     }
 }

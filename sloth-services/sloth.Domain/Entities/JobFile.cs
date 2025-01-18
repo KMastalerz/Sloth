@@ -8,4 +8,6 @@ public class JobFile
     public string Extension { get; set; } = default!;
     public Guid AddedByID {  get; set; } 
     public DateTime AddedDate { get; set; }
+
+    public User? AddedBy { get; set; } = null;
 }

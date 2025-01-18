@@ -1,0 +1,35 @@
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    height: fit-content;
+}
+
+.comment-details {
+    display: flex;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.comment-text {
+    background-color: var(--mat-sys-inverse-surface);
+    color: var(--mat-sys-inverse-on-surface);
+    padding: 0.6rem;
+    width: fit-content;
+    border-radius: 1.6rem;
+    font-size: small;
+    font-weight: 500;
+    max-width: 70%;
+}
+
+.comment-author {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    align-self: flex-end;
+}
+
+
+.details-author {
+    align-self: flex-end;
+}

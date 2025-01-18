@@ -44,15 +44,15 @@ export abstract class BaseService {
     protected async postAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
         if(useFormData) {
             command = this.formDataService.toFormData(command);
-            // Check if files were added to FormData
-            for (const [key, value] of command.entries()) {
-                console.log(`Key: ${key}`);
-                if (value instanceof File) {
-                console.log(`File: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
-                } else {
-                console.log(`Value: ${value}`);
-                }
-            }
+            // // Check if files were added to FormData
+            // for (const [key, value] of command.entries()) {
+            //     console.log(`Key: ${key}`);
+            //     if (value instanceof File) {
+            //     console.log(`File: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
+            //     } else {
+            //     console.log(`Value: ${value}`);
+            //     }
+            // }
         }
 
         var url = this.getUrl(action);

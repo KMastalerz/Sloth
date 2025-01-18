@@ -1,6 +1,14 @@
-<section>
-    @if(header()) {
-        <p>{{header()}}</p>
-    }
+<section class="section-container">
+    <div class="section-header">
+        @if(header()) {
+            <h3>{{header()}}</h3>
+        }
+        @if(hasActionButton()) {
+            <button 
+                (click)="onAction()">
+                <mat-icon>{{actionButtonIcon()}}</mat-icon>
+            </button>
+        }
+    </div>
     <ng-content></ng-content>
 </section>
