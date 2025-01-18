@@ -1,63 +1,72 @@
 <div class="bug-container">
-    <sl-form 
-        [header]="mainHeader()">
-        <div class="action-list">
-            <sl-button label="Claim"  displayType="flat"/>
-            <sl-button label="Save form"/>
-        </div>
-        <sl-section 
-            header="Description"
-            (action)="editDescriptionChange()"
-            [hasActionButton]="true"
-            actionButtonIcon="edit">
-            <sl-markup-input 
-                [value]="this.bug()?.description" 
-                [formMode]="descriptionMode()"/>
-            <section>
+    @if(formGroup) {
+        <sl-form 
+            [formGroup]="formGroup"
+            [header]="mainHeader()">
+            <div class="action-list">
+                <sl-button label="Claim"  displayType="flat"/>
+                <sl-button label="Save form"/>
+            </div>
+            <sl-section
+                header="Description"
+                (action)="editDescriptionChange()"
+                [hasActionButton]="true"
+                actionButtonIcon="edit">
                 <sl-markup-input 
-                    label="Comment"
-                    [(value)]="comment"/>
-                <sl-button  
-                    label="Add comment"
-                    (onClick)="onAddComment()"/>
-            </section>
-        </sl-section>
-        <mat-divider></mat-divider>
-        <sl-section header="Comments">
-            @for(comment of this.bug()?.comments; track comment) {
-                <sl-comment 
-                    [comment]="comment"/>
-            }
-        </sl-section>
-    </sl-form>
-    <sl-side-form>
-        <sl-side-section header="Current owner:">
-            <sl-tag [tag]="this.bug()?.currentOwner?.fullName ?? 'Unassigned'"/>
-        </sl-side-section>
-        <sl-side-section header="Created by:">
-            <sl-tag [tag]="this.bug()?.createdBy?.fullName ?? 'Missing'"/>
-        </sl-side-section>
-        <sl-side-section header="Priority:">
-            <sl-tag 
-                [tag]="this.bug()?.priority?.tag ?? 'None'" 
-                [backgroundColor]="this.bug()?.priority?.tagColor"/>
-        </sl-side-section>
-        <sl-side-section header="Products:">
-            <div class="tag-list">
-                @for(product of this.bug()?.products; track product) {
-                    <sl-tag [tag]="product.name" [tooltip]="product.description"/>
+                    formControlName="description" 
+                    [formMode]="descriptionMode()"/>
+                <!-- <sl-markup-input 
+                    [value]="this.bug()?.description" 
+                    [formMode]="descriptionMode()"/> -->
+                <section>
+                    <sl-markup-input 
+                        label="Comment"
+                        [(value)]="comment"/>
+                    <sl-button  
+                        label="Add comment"
+                        (onClick)="onAddComment()"/>
+                </section>
+            </sl-section>
+            <mat-divider></mat-divider>
+            <sl-section header="Comments">
+                @for(comment of this.bug()?.comments; track comment) {
+                    <sl-comment 
+                        [comment]="comment"/>
                 }
-            </div>
-        </sl-side-section>
-        <sl-side-section header="Functionalities:">
-            <div class="tag-list">
-                @for(function of this.bug()?.functionalities; track function) {
-                    <sl-tag 
-                        [tag]="function.tag" 
-                        [backgroundColor]="function.tagColor"
-                        [tooltip]="function.description"/>
-                }
-            </div>
-        </sl-side-section>
-    </sl-side-form>
+            </sl-section>
+        </sl-form>
+        <sl-side-form>
+            <sl-side-section header="Current owner:">
+                <sl-tag [tag]="this.bug()?.currentOwner?.fullName ?? 'Unassigned'"/>
+            </sl-side-section>
+            <sl-side-section header="Created by:">
+                <sl-tag [tag]="this.bug()?.createdBy?.fullName ?? 'Missing'"/>
+            </sl-side-section>
+            <sl-side-section header="Priority:">
+                <sl-tag 
+                    [tag]="this.bug()?.priority?.tag ?? 'None'" 
+                    [backgroundColor]="this.bug()?.priority?.tagColor"/>
+            </sl-side-section>
+            <sl-side-section header="Products:">
+                <div class="tag-list">
+                    @for(product of this.bug()?.products; track product) {
+                        <sl-tag [tag]="product.name" [tooltip]="product.description"/>
+                    }
+                </div>
+            </sl-side-section>
+            <sl-side-section header="Functionalities:">
+                <div class="tag-list">
+                    @for(function of this.bug()?.functionalities; track function) {
+                        <sl-tag 
+                            [tag]="function.tag" 
+                            [backgroundColor]="function.tagColor"
+                            [tooltip]="function.description"/>
+                    }
+                </div>
+            </sl-side-section>
+        </sl-side-form>
+    }
+    @else {
+        <p>loading</p>
+    }
 </div>

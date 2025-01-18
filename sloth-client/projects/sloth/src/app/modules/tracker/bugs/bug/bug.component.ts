@@ -1,4 +1,5 @@
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { GetBugItem, JobService } from 'sloth-http';
 import { ButtonComponent, CommentComponent, FormComponent, FormMode, 
     MarkupInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, 
     SnackbarService, SnackbarType, TagComponent } from 'sloth-ui';
+import { FormGroupService } from 'sloth-utilities';
 @Component({
     selector: 'app-bug',
     imports: [FormComponent, SideFormComponent, SectionComponent, 
@@ -20,11 +22,13 @@ export class BugComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);
     private readonly titleService = inject(Title)
     private readonly snackbarService = inject(SnackbarService);
+    private readonly formGroupService = inject(FormGroupService);
 
     descriptionMode = signal(FormMode.Read);
     bugID = input.required<number>();
     bug = model<GetBugItem | undefined>(undefined);
-    
+    // formGroup = signal<FormGroup | undefined>(undefined);
+    formGroup: FormGroup | undefined = undefined;
     mainHeader = computed<string>(()=>  {
         const mainHead = `${this.bugID()}#\t  ${this.bug()?.header}`;
         this.titleService.setTitle(mainHead);
@@ -33,10 +37,12 @@ export class BugComponent implements OnInit {
     comment = model<string>();
 
     async ngOnInit(): Promise<void> {
-        var response = await this.jobServices.getBugAsync(this.bugID());
-
+        const response = await this.jobServices.getBugAsync(this.bugID());
         if(response.success) {
             this.bug.set(response.data ?? undefined);
+            // this.formGroup.set(this.formGroupService.createFormGroup(this.bug()));
+            this.formGroup = this.formGroupService.createFormGroup(this.bug());
+            console.log('[BugComponent] ngOnInit:', this.formGroup);
             if(!this.bug())
                 this.router.navigate(['../'], { relativeTo: this.route });
         }
