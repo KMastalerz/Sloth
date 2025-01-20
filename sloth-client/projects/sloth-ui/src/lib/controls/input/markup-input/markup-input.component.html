@@ -1,7 +1,7 @@
 <sl-control [tooltip]="tooltip()"
             [tooltipPosition]="tooltipPosition()"
             [badge]="badge()">
-    @if(canEdit()) {
+    @if(isEditMode()) {
         <mat-form-field appearance="outline">
             @if( label() ) {
                 <mat-label>{{ label() }}</mat-label>

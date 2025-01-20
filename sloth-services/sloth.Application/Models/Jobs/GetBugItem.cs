@@ -29,17 +29,27 @@ public class GetBugItem
 public class GetAssignmentBugItem
 {
     public DateTime AssignedDate { get; set; }
-    public GetUserBugItem User { get; set; } = default!;
-    public GetTeamBugItem Team { get; set; } = default!;
-    public GetUserBugItem AssignedBy { get; set; } = default!;
+    public string AssignedTo { get; set; } = default!;
+    public string AssignedToFullName { get; set; } = default!;
+    public string AssignedToEmail { get; set; } = default!;
+    public string Team { get; set; } = default!;
+    public string AssignedBy { get; set; } = default!;
+    public string AssignedByFullName { get; set; } = default!;
+    public string AssignedByEmail { get; set; } = default!;
 }
 public class GetAssignmentHistoryBugItem
 {
     public DateTime ChangedDate { get; set; }
-    public GetUserBugItem PreviousOwner { get; set; } = default!;
-    public GetUserBugItem CurrentOwner { get; set; } = default!;
-    public GetUserBugItem ChangedBy { get; set; } = default!;
-    public GetTeamBugItem Team { get; set; } = default!;
+    public string PreviousOwner { get; set; } = default!;
+    public string PreviousOwnerFullName { get; set; } = default!;
+    public string PreviousOwnerEmail { get; set; } = default!;
+    public string CurrentOwner { get; set; } = default!;
+    public string CurrentOwnerFullName { get; set; } = default!;
+    public string CurrentOwnerEmail { get; set; } = default!;
+    public string ChangedBy { get; set; } = default!;
+    public string ChangedByFullName { get; set; } = default!;
+    public string ChangedByEmail { get; set; } = default!;
+    public string Team { get; set; } = default!;
 }
 public class GetClientBugItem
 {
@@ -50,10 +60,11 @@ public class GetCommentBugItem
 {
     public int CommentID { get; set; }
     public string Comment { get; set; } = default!;
-    public DateTime CommendDate { get; set; } = default!;
+    public DateTime CommentDate { get; set; } = default!;
     public bool IsEdited { get; set; } = false;
-    public GetUserBugItem CommentedBy { get; set; } = default!;
-    public List<GetCommentBugItem>? PreviousEdits { get; set; } = null;
+    public string CommentedBy { get; set; } = default!;
+    public string CommentedByEmail { get; set; } = default!;
+    public string CommentedByFullName { get; set; } = default!;
 }
 public class GetFileBugItem
 {
@@ -62,7 +73,9 @@ public class GetFileBugItem
     public long Size { get; set; }
     public string Extension { get; set; } = default!;
     public DateTime AddedDate { get; set; }
-    public GetUserBugItem AddedBy { get; set; } = default!;
+    public string AddedBy { get; set; } = default!;
+    public string AddedByEmail { get; set; } = default!;
+    public string AddedByFullName { get; set; } = default!;
 }
 public class GetFunctionalityBugItem
 {
@@ -81,8 +94,12 @@ public class GetPriorityBugItem
 public class GetPriorityHistoryBugItem
 {
     public DateTime ChangedDate { get; set; }
-    public GetUserBugItem ChangedBy { get; set; } = default!;
-    public GetPriorityBugItem NewPriority { get; set; } = default!;
+    public string ChangedBy { get; set; } = default!;
+    public string ChangedByEmail { get; set; } = default!;
+    public string ChangedByFullName { get; set; } = default!;
+    public string NewPriorityTag { get; set; } = default!;
+    public string? NewPriorityTagColor { get; set; } = default!;
+    public string? NewPriorityDescription { get; set; } = default!;
 }
 public class GetProductBugItem
 {
@@ -100,8 +117,12 @@ public class GetStatusBugItem
 public class GetStatusHistoryBugItem
 {
     public DateTime ChangedDate { get; set; }
-    public GetUserBugItem ChangedBy { get; set; } = default!;
-    public GetStatusBugItem NewStatus { get; set; } = default!;
+    public string ChangedBy { get; set; } = default!;
+    public string ChangedByEmail { get; set; } = default!;
+    public string ChangedByFullName { get; set; } = default!;
+    public string NewStatusTag { get; set; } = default!;
+    public string? NewStatusTagColor { get; set; } = default!;
+    public string? NewStatusDescription { get; set; } = default!;
 }
 public class GetTeamBugItem
 {

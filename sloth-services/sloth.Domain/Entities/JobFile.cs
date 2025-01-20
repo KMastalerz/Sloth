@@ -9,5 +9,5 @@ public class JobFile
     public Guid AddedByID {  get; set; } 
     public DateTime AddedDate { get; set; }
 
-    public User? AddedBy { get; set; } = null;
+    public User AddedBy { get; set; } = default!;
 }

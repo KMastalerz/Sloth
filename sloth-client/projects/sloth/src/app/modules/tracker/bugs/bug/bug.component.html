@@ -1,21 +1,27 @@
 <div class="bug-container">
     @if(formGroup()) {
-        <sl-form 
-            [formGroup]="formGroup()!"
-            [header]="mainHeader()">
+        <sl-form [formGroup]="formGroup()!">
+            <section class="bug-header">
+                <p>{{headerID()}}</p>
+                <p>{{ this.formGroup().value.header }}</p>
+            </section>
+
             <div class="action-list">
-                <sl-button label="Claim"  displayType="flat"/>
-                <sl-button label="Save form" (onClick)="onSaveForm()"/>
+                <sl-button label="Save" displayType="flat" (onClick)="onSaveForm()"/>
+                <sl-button [label]="editMode()" (onClick)="onToggleEditMode()"/>
+                <sl-button label="Claim"/>
             </div>
-            <sl-section
-                header="Description"
-                (action)="editDescriptionChange()"
-                [hasActionButton]="true"
-                actionButtonIcon="edit">
+            <sl-section header="Description:">
+                @if(isEditMode()) {
+                    <sl-text-input formControlName="header"
+                                    label="Header"
+                                    [formMode]="formMode()"/>
+                }
                 <sl-markup-input 
                     name="description"
-                    formControlName="description" 
-                    [formMode]="descriptionMode()"/>
+                    label="Description"
+                    formControlName="description"
+                    [formMode]="formMode()"/>
                 <section>
                     <sl-markup-input 
                         label="Comment"
@@ -25,9 +31,14 @@
                         (onClick)="onAddComment()"/>
                 </section>
             </sl-section>
-            <mat-divider></mat-divider>
-            <sl-section>
-                <sl-comment-list formArrayName="comments"/>
+            <mat-divider class="comment-divider"></mat-divider>
+            <sl-section header="Comments:">
+                <sl-comment-list formArrayName="comments"
+                                 commentIDKey="commentID"
+                                 commentKey="comment"
+                                 commentedByKey="commentedByFullName"
+                                 commentedByUserNameKey="commentedBy"
+                                 commentDateKey="commentDate"/>
             </sl-section>
         </sl-form>
         <sl-side-form [formGroup]="formGroup()!">

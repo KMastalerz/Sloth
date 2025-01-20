@@ -11,7 +11,7 @@ public class JobPriorityHistory
     /// <summary>
     /// External properties
     /// </summary>
-    public User? ChangedBy { get; set; } = null;
-    public Priority? PreviousPriority { get; set; } = null;
-    public Priority? NewPriority { get; set; } = null;
+    public User ChangedBy { get; set; } = default!;
+    public Priority PreviousPriority { get; set; } = default!;
+    public Priority NewPriority { get; set; } = default!;
 }

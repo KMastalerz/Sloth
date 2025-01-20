@@ -27,10 +27,10 @@
         <div class="content-list">
           <sl-regular-link [label]="element.header" [link]="element.bugID"/>
           @if(element.client !== null) {
-            <sl-tag tag="RTS" backgroundColor="#851d22"/>
+            <sl-tag value="RTS" backgroundColor="#851d22"/>
           }
           @if(element.isBlocker) {
-            <sl-tag tag="Blocker" backgroundColor="#851d22"/>
+            <sl-tag value="Blocker" backgroundColor="#851d22"/>
           }
         </div>
       </td>

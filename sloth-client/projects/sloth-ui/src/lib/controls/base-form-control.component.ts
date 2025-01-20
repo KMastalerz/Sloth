@@ -16,7 +16,7 @@ enum FormType {
 })
 export class BaseFormControlComponent implements ControlValueAccessor, OnInit, OnDestroy {
   // Basic form mode
-  formMode = input<FormMode>(FormMode.Add);
+  formMode = input<FormMode>(FormMode.Edit);
 
   // Names used to look up from *parent* form
   formControlName = input<string | null | undefined>(undefined);
@@ -47,14 +47,7 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
   });
 
   // Basic sample logic for canEdit
-  canEdit = computed<Boolean>(() => {
-    switch (this.formMode()) {
-      case FormMode.Add: 
-        return true;
-      default: 
-        return false;
-    }
-  });
+  isEditMode = computed<Boolean>(() => this.formMode() === FormMode.Edit);
 
   private valueChangeSub: Subscription | undefined = undefined;
   private onChangeFn: (value: any) => void = () => {};

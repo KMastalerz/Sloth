@@ -34,10 +34,10 @@ public class BugProfile : Profile
             .ForMember(dest => dest.ClientID, opt => opt.MapFrom(src => src.ClientID))
 
             // Map string representations of related entities
-            .ForMember(dest => dest.CurrentOwner, opt => opt.MapFrom(src => src.CurrentOwner != null ? src.CurrentOwner.FullName : null))
+            .ForMember(dest => dest.CurrentOwner, opt => opt.MapFrom(src => src.CurrentOwner != null ? $"{src.CurrentOwner.FirstName} {src.CurrentOwner.LastName}" : null))
             .ForMember(dest => dest.CurrentTeam, opt => opt.MapFrom(src => src.CurrentTeam != null ? src.CurrentTeam.Name : null))
-            .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.FullName : null))
-            .ForMember(dest => dest.ClosedBy, opt => opt.MapFrom(src => src.ClosedBy != null ? src.ClosedBy.FullName : null))
+            .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy != null ? $"{src.UpdatedBy.FirstName} {src.UpdatedBy.LastName}" : null))
+            .ForMember(dest => dest.ClosedBy, opt => opt.MapFrom(src => src.ClosedBy != null ? $"{src.ClosedBy.FirstName} {src.ClosedBy.LastName}" : null))
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : null));
     }
 }

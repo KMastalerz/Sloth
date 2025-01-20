@@ -12,7 +12,7 @@ using sloth.Infrastructure.DatabaseContext;
 namespace sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20250117164816_Init")]
+    [Migration("20250120122025_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -235,12 +235,12 @@ namespace sloth.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
 
-                    b.Property<DateTime>("CommendDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CommentedByID")
                         .HasColumnType("uniqueidentifier");
@@ -681,10 +681,6 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

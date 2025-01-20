@@ -232,12 +232,12 @@ namespace sloth.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
 
-                    b.Property<DateTime>("CommendDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CommentedByID")
                         .HasColumnType("uniqueidentifier");
@@ -678,10 +678,6 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

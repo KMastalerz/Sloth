@@ -179,8 +179,8 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
 
             filteredQuery = filteredQuery.Where(b =>
                 b.CurrentOwner != null &&
-                b.CurrentOwner.FullName != null &&
-                b.CurrentOwner.FullName.ToLower().Contains(currentOwner));
+                $"{b.CurrentOwner.FirstName} {b.CurrentOwner.LastName}" != null &&
+                $"{b.CurrentOwner.FirstName} {b.CurrentOwner.LastName}".ToLower().Contains(currentOwner));
         }
 
         if (!string.IsNullOrEmpty(filters.Header))
@@ -256,7 +256,7 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .Include(b => b.UpdatedBy)
             .Include(b => b.Priority)
             .Include(b => b.Status)
-            .Include(b => b.Comments)
+            .Include(b => b.Comments.OrderByDescending(c=>c.CommentDate))
                 .ThenInclude(c => c.CommentedBy)
             .Include(b => b.Comments)
                 .ThenInclude(c => c.PreviousEdits)
@@ -300,6 +300,7 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         var results = await dbContext.JobComment
             .Include(c=>c.CommentedBy)
             .Where(c => c.JobID == jobID)
+            .OrderByDescending(c => c.CommentDate)
             .ToListAsync();
         return results;
     }

@@ -5,7 +5,7 @@ public class JobComment
     public int JobID { get; set; }
     public string Comment { get; set; } = default!;
     public Guid CommentedByID { get; set; }
-    public DateTime CommendDate { get; set; } = DateTime.UtcNow;
+    public DateTime CommentDate { get; set; } = DateTime.UtcNow;
     public bool IsEdited { get; set; } = false;
     public int? OriginalCommentID { get; set; } = null; 
 

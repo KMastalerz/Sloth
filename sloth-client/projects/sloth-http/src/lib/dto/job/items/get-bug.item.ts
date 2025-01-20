@@ -4,17 +4,17 @@ export interface GetBugItem {
     description: string;
     type: string;
     createdDate: Date;
-    updatedDate?: Date | null;
-    closedDate?: Date | null;
+    updatedDate: Date | null;
+    closedDate: Date | null;
     isClosed: boolean;
-    currentOwner?: GetUserBugItem | null;
-    currentTeam?: GetTeamBugItem | null;
-    createdBy?: GetUserBugItem | null;
-    closedBy?: GetUserBugItem | null;
-    client?: GetClientBugItem | null;
-    updatedBy?: GetUserBugItem | null;
-    priority?: GetPriorityBugItem | null;
-    status?: GetStatusBugItem | null;
+    currentOwner: GetUserBugItem | null;
+    currentTeam: GetTeamBugItem | null;
+    createdBy: GetUserBugItem | null;
+    closedBy: GetUserBugItem | null;
+    client: GetClientBugItem | null;
+    updatedBy: GetUserBugItem | null;
+    priority: GetPriorityBugItem | null;
+    status: GetStatusBugItem | null;
     comments: GetCommentBugItem[];
     assignmentHistory: GetAssignmentHistoryBugItem[];
     assignments: GetAssignmentBugItem[];
@@ -23,96 +23,118 @@ export interface GetBugItem {
     statusHistory: GetStatusHistoryBugItem[];
     products: GetProductBugItem[];
     functionalities: GetFunctionalityBugItem[];
-}
-
-export interface GetAssignmentBugItem {
+  }
+  
+  export interface GetAssignmentBugItem {
     assignedDate: Date;
-    user: GetUserBugItem;
-    team: GetTeamBugItem;
-    assignedBy: GetUserBugItem;
-}
-
-export interface GetAssignmentHistoryBugItem {
+    assignedTo: string;
+    assignedToFullName: string;
+    assignedToEmail: string;
+    team: string;
+    assignedBy: string;
+    assignedByFullName: string;
+    assignedByEmail: string;
+  }
+  
+  export interface GetAssignmentHistoryBugItem {
     changedDate: Date;
-    previousOwner: GetUserBugItem;
-    currentOwner: GetUserBugItem;
-    changedBy: GetUserBugItem;
-    team: GetTeamBugItem;
-}
-
-export interface GetClientBugItem {
+    previousOwner: string;
+    previousOwnerFullName: string;
+    previousOwnerEmail: string;
+    currentOwner: string;
+    currentOwnerFullName: string;
+    currentOwnerEmail: string;
+    changedBy: string;
+    changedByFullName: string;
+    changedByEmail: string;
+    team: string;
+  }
+  
+  export interface GetClientBugItem {
     name: string;
     alias: string;
-}
-
-export interface GetCommentBugItem {
-    commentID: number;
+  }
+  
+  export interface GetCommentBugItem {
+    commentId: number;
     comment: string;
-    commendDate: Date;
+    commentDate: Date;
     isEdited: boolean;
-    commentedBy: GetUserBugItem;
-    previousEdits?: GetCommentBugItem[] | null;
-}
-
-export interface GetFileBugItem {
-    fileID: string;
+    commentedBy: string;
+    commentedByEmail: string;
+    commentedByFullName: string;
+  }
+  
+  export interface GetFileBugItem {
+    fileId: string; // Guid as string
     name: string;
     size: number;
     extension: string;
     addedDate: Date;
-    addedBy: GetUserBugItem;
-}
-
-export interface GetFunctionalityBugItem {
-    functionalityID: number;
+    addedBy: string;
+    addedByEmail: string;
+    addedByFullName: string;
+  }
+  
+  export interface GetFunctionalityBugItem {
+    functionalityId: number;
     name: string;
     tag: string;
-    tagColor?: string | null;
+    tagColor: string | null;
     description: string;
-}
-
-export interface GetPriorityBugItem {
+  }
+  
+  export interface GetPriorityBugItem {
     tag: string;
-    tagColor?: string | null;
-    description?: string | null;
-}
-
-export interface GetPriorityHistoryBugItem {
+    tagColor: string | null;
+    description: string | null;
+  }
+  
+  export interface GetPriorityHistoryBugItem {
     changedDate: Date;
-    changedBy: GetUserBugItem;
-    newPriority: GetPriorityBugItem;
-}
-
-export interface GetProductBugItem {
-    productID: number;
+    changedBy: string;
+    changedByEmail: string;
+    changedByFullName: string;
+    newPriorityTag: string;
+    newPriorityTagColor: string | null;
+    newPriorityDescription: string | null;
+  }
+  
+  export interface GetProductBugItem {
+    productId: number;
     alias: string;
     name: string;
-    description?: string | null;
-}
-
-export interface GetStatusBugItem {
+    description: string | null;
+  }
+  
+  export interface GetStatusBugItem {
     tag: string;
-    tagColor?: string | null;
-    description?: string | null;
-}
-
-export interface GetStatusHistoryBugItem {
+    tagColor: string | null;
+    description: string | null;
+  }
+  
+  export interface GetStatusHistoryBugItem {
     changedDate: Date;
-    changedBy: GetUserBugItem;
-    newStatus: GetStatusBugItem;
-}
-
-export interface GetTeamBugItem {
+    changedBy: string;
+    changedByEmail: string;
+    changedByFullName: string;
+    newStatusTag: string;
+    newStatusTagColor: string | null;
+    newStatusDescription: string | null;
+  }
+  
+  export interface GetTeamBugItem {
     alias: string;
     speciality: string;
     name: string;
     description: string;
-}
-
-export interface GetUserBugItem {
+  }
+  
+  export interface GetUserBugItem {
     userName: string;
     firstName: string;
     lastName: string;
     fullName: string;
     email: string;
-}
+  }
+  

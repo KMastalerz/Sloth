@@ -17,5 +17,4 @@ import { BaseInputComponent } from '../base-input.component';
     }
   ],
 })
-export class TextInputComponent extends BaseInputComponent implements ControlValueAccessor {
-}
+export class TextInputComponent extends BaseInputComponent implements ControlValueAccessor {}

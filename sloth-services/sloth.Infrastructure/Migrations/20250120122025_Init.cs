@@ -104,7 +104,6 @@ namespace sloth.Infrastructure.Migrations
                     UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LanguageCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -561,7 +560,7 @@ namespace sloth.Infrastructure.Migrations
                     JobID = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CommendDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsEdited = table.Column<bool>(type: "bit", nullable: false),
                     OriginalCommentID = table.Column<int>(type: "int", nullable: true)
                 },

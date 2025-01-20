@@ -13,6 +13,6 @@ public class JobStatusHistory
     /// </summary>
 
     public User ChangedBy { get; set; } = default!;
-    public Status? PreviousStatus { get; set; } = null;
-    public Status? NewStatus { get; set; } = null;
+    public Status PreviousStatus { get; set; } = default!;
+    public Status NewStatus { get; set; } = default!;
 }

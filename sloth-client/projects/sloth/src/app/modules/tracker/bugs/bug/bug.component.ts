@@ -1,4 +1,3 @@
-import { P } from '@angular/cdk/keycodes';
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
@@ -7,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GetBugItem, JobService } from 'sloth-http';
 import { ButtonComponent, CommentListComponent, FormComponent, FormMode, 
     MarkupInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, 
-    SnackbarService, SnackbarType, TagComponent, TagListComponent} from 'sloth-ui';
+    SnackbarService, SnackbarType, TagComponent, TagListComponent,
+    TextInputComponent} from 'sloth-ui';
 import { FormGroupService } from 'sloth-utilities';
 
 @Component({
@@ -15,7 +15,7 @@ import { FormGroupService } from 'sloth-utilities';
     imports: [FormComponent, SideFormComponent, SectionComponent,
     MarkupInputComponent, SideSectionComponent, TagComponent,
     ButtonComponent, MatDivider, ReactiveFormsModule, 
-    TagListComponent, CommentListComponent],
+    TagListComponent, CommentListComponent, TextInputComponent],
     templateUrl: './bug.component.html',
     styleUrl: './bug.component.scss'
 })
@@ -28,10 +28,9 @@ export class BugComponent implements OnInit {
     private readonly formGroupService = inject(FormGroupService);
 
 
-    descriptionMode = signal(FormMode.Read);
+    formMode = signal<FormMode>(FormMode.Read);
     bugID = input.required<number>();
-    // TODO: remove, try to use form only.
-    bug = model<GetBugItem | undefined>(undefined);
+    jobID = signal<number>(0);
     formGroup = signal<FormGroup>(new FormGroup({
         jobID: new FormControl(0),
         header: new FormControl(''),
@@ -99,21 +98,19 @@ export class BugComponent implements OnInit {
         functionalities: new FormArray([])
     }));
 
-    mainHeader = computed<string>(()=>  {
-        const mainHead = `${this.bugID()}#\t  ${this.bug()?.header}`;
-        this.titleService.setTitle(mainHead);
-        return mainHead;
-    });
+    headerID = computed<string>(() => `${this.bugID()}#`)
+    isEditMode = computed<boolean>(() => this.formMode() === FormMode.Edit);
+    editMode = computed<string>(()=> this.isEditMode() ? 'End edit' : 'Edit');
     comment = model<string>();
 
     async ngOnInit(): Promise<void> {
         const response = await this.jobServices.getBugAsync(this.bugID());
         if(response.success) {
-            this.bug.set(response.data ?? undefined); // TODO: remove, try to use form only.    
-            console.log('Bug', this.bug());
-                    
-            if(response.data)
+            if(response.data) {
+                this.jobID.set(response.data.jobID);
                 this.patchBug(response.data);
+            }
+
             if(!response.data)
                 this.router.navigate(['../'], { relativeTo: this.route });
         }
@@ -122,21 +119,14 @@ export class BugComponent implements OnInit {
         }
     }
 
-    editDescriptionChange(): void {
-        this.descriptionMode() === FormMode.Add ? this.descriptionMode.set(FormMode.Read) : this.descriptionMode.set(FormMode.Add);
-    }
-
     async onAddComment(): Promise<void> {
         var results = await this.jobServices.addJobCommentAsync({
-            jobID: this.bug()?.jobID!,
+            jobID: this.jobID(),
             comment: this.comment()!
         })
 
-        const bug = this.bug();
-        if(results.success && bug) {
-            bug.comments = results.data
-            this.bug.set(bug);
-            this.comment.set('');
+        if(results.success) {
+            this.patchArray('comments', results.data ?? [], true);            
             this.snackbarService.openSnackbar('Comment added','Close',5000, SnackbarType.SUCCESS);
         }
         else {
@@ -149,15 +139,25 @@ export class BugComponent implements OnInit {
         
     }
 
+    onToggleEditMode() : void {
+        this.formMode.set(this.formMode() === FormMode.Read ? FormMode.Edit : FormMode.Read)
+    }
+
     private patchBug(bug: GetBugItem): void {
         this.formGroup().patchValue(bug);       
         this.patchArray('products', bug.products ?? []);
         this.patchArray('functionalities', bug.functionalities ?? []);
         this.patchArray('comments', bug.comments ?? []);
+        this.formGroup.set(this.formGroup());
     }
 
-    private patchArray(key: string, data: unknown[]): void {
+    private patchArray(key: string, data: unknown[], clearFlag: boolean = false): void {
         const formArray = this.formGroup().get(key);
+
+        if(clearFlag) {
+            if(formArray instanceof FormArray)
+                formArray.clear();
+        }
 
         if(formArray instanceof FormArray) {
             data.forEach(item=> {

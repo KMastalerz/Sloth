@@ -3,13 +3,13 @@
     class="comment-text" 
     [ngClass]="{
         'comment-author': isAuthor()
-    }">{{comment().comment}}</p>
+    }">{{ value() }}</p>
     <div 
     class="comment-details"
     [ngClass]="{
         'details-author': isAuthor()
     }">
-        <p>{{comment().commentedBy.fullName}}</p>
-        <p>{{comment().commendDate| date:"yyyy-MM-dd HH:mm:ss"}}</p>
+        <p>{{commentedBy()}}</p>
+        <p>{{commentDate()| date:"yyyy-MM-dd HH:mm:ss"}}</p>
     </div>
 </div>
