@@ -1,0 +1,11 @@
+<div class="tag-list">
+    @for(formGroup of formArrayControls(); track $index) {
+        <div [formGroup]="formGroup">
+            @if(formControlNames()) {
+                <sl-tag [formControlName]="formControlNames()!"
+                        [tooltipControlName]="tooltipControlName()"
+                        [backgroundControlName]="backgroundControlName()"/>
+            }
+        </div>
+    }
+</div>

@@ -8,5 +8,5 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './side-form.component.scss'
 })
 export class SideFormComponent {
-  formGroup = input<FormGroup | undefined>(undefined)
+  formGroup = input<FormGroup>(new FormGroup({}));
 }

@@ -9,5 +9,5 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class FormComponent {
   header = input<string | undefined>(undefined);
-  formGroup = input<FormGroup | undefined>(undefined);
+  formGroup = input<FormGroup>(new FormGroup({}));
 }

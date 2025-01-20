@@ -1,11 +1,14 @@
 .side-form-container {
     grid-area: side-form-panel;
     padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
 
     h4 {
         font-weight: 500;
     }
+}
+
+.side-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
 }

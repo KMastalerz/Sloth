@@ -20,8 +20,10 @@ export * from './lib/controls/select/list-select/list-select.component';
 export * from './lib/controls/select/toggle/toggle.component';
 export * from './lib/controls/select/toggle-list/toggle-list.component';
 export * from './lib/controls/miscellaneous/comment/comment.component';
-export * from './lib/controls/miscellaneous/tag/tag.component';
+export * from './lib/controls/miscellaneous/comment-list/comment-list.component';
 export * from './lib/controls/miscellaneous/paginator/paginator.component';
+export * from './lib/controls/miscellaneous/tag/tag.component';
+export * from './lib/controls/miscellaneous/tag-list/tag-list.component';
 
 /* Icons */
 export * from './lib/icons/moon.icon';
@@ -36,6 +38,7 @@ export * from  './lib/wrappers/side-section//side-section.component';
 /* Models */ 
 export * from  './lib/models/form-mode.model';
 export * from  './lib/models/paginator-event.model';
+export * from  './lib/models/tag-list-item.model';
 
 /* Snackbar */
 export * from './lib/snackbar/snackbar.model';

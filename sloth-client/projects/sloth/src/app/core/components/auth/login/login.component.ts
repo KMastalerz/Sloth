@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
     }
 
     protected async onSubmit(): Promise<void> {
+        console.log('[LoginComponent]', this.loginForm);
+        
         if(this.loginForm.invalid) {
             this.displayLoginError.set(true);
             return;
