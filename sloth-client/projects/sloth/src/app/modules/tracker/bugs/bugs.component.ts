@@ -55,9 +55,7 @@ export class BugsComponent implements OnInit {
 
     async loadData(): Promise<void> {
         const result = await this.jobService.listBugsAsync({pageID: this.currentPage, takeCount: this.pageSize()});
-        if(result.success) {
-            console.log('total records:', result.data.totalCount);
-            
+        if(result.success) {            
             result.data.bugs.forEach(d=>d.functionalities?.forEach(
                     f=>f.tagColor = this.stringService.toInitialLowerCase(f.tagColor)));
             this.data.next(result.data.bugs);

@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { JobService } from 'sloth-http';
-import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
+import { CacheAssigneeItem, CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CacheStatusItem, JobService } from 'sloth-http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +8,14 @@ import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
 export class JobDataCacheService {
   private jobService = inject(JobService)
 
-  quickJobTypes = new BehaviorSubject<ListSelectItem[]>([]);
-  clients = new BehaviorSubject<ListSelectItem[]>([]);
-  products = new BehaviorSubject<ListSelectItem[]>([]);
-  priorities = new BehaviorSubject<ToggleListItem[]>([]);
-  functionalities = new BehaviorSubject<ListSelectItem[]>([]);
-  
+  jobTypes = new BehaviorSubject<string[]>([]);
+  clients = new BehaviorSubject<CacheClientItem[]>([]);
+  priorities = new BehaviorSubject<CachePriorityItem[]>([]);
+  products = new BehaviorSubject<CacheProductItem[]>([]);
+  functionalities = new BehaviorSubject<CacheFunctionalityItem[]>([]);
+  statuses = new BehaviorSubject<CacheStatusItem[]>([]);
+  assignees = new BehaviorSubject<CacheAssigneeItem[]>([]);
+
   constructor() { 
     this.initialize();
   }
@@ -26,18 +27,9 @@ export class JobDataCacheService {
       this.products.next(response.data.products);
       this.priorities.next(response.data.priorities);
       this.functionalities.next(response.data.functionalities);
+      this.statuses.next(response.data.statuses);
     }
-    this.quickJobTypes.next([
-      {
-        value: "Bug"
-      }, 
-      {
-        value: "Query"
-      }, 
-      {
-        value: "Task"
-      }
-    ])
+    this.jobTypes.next(["Bug", "Query", "Task"])
   }
 
 

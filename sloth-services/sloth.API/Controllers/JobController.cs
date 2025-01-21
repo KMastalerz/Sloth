@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using sloth.Application.Models.Jobs;
 using sloth.Application.Services.Jobs;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 namespace sloth.API.Controllers;
 
 [ApiController]
@@ -52,12 +50,6 @@ public class JobController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> AddJobComment(AddJobCommentCommand command)
     {
         var result = await mediator.Send(command);
-        return Ok(result);
-    }
-    [HttpGet]
-    public async Task<IActionResult> ListBugDataCache([FromQuery] int bugID)
-    {
-        var result = await mediator.Send(new ListBugDataCacheQuery(bugID));
         return Ok(result);
     }
 }

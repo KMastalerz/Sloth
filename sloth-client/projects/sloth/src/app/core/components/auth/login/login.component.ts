@@ -1,15 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatError } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { AuthService, LoginParam } from 'sloth-http';
-import { ButtonComponent, ButtonLinkComponent, PasswordInputComponent, SectionComponent, TextInputComponent } from 'sloth-ui';
+import { ButtonComponent, ButtonLinkComponent, PasswordInputComponent, TextInputComponent } from 'sloth-ui';
 import { AuthStateService } from 'sloth-utilities';
 
 @Component({
     selector: 'app-login',
-    imports: [SectionComponent, TextInputComponent, PasswordInputComponent, 
-        ButtonComponent, ButtonLinkComponent, ReactiveFormsModule],
+    imports: [TextInputComponent, PasswordInputComponent, ButtonComponent, 
+        ButtonLinkComponent, ReactiveFormsModule],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })

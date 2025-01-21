@@ -7,10 +7,10 @@ public class StatusProfile : Profile
 {
     public StatusProfile()
     {
-        CreateMap<Status, ListBugStatusItem>()
-           .ForMember(dest => dest.Tag, opt => opt.MapFrom(src => src.Tag))
-           .ForMember(dest => dest.TagColor, opt => opt.MapFrom(src => src.TagColor));
+        CreateMap<Status, ListBugStatusItem>();
 
-        CreateMap<Status, GetStatusBugItem>().ReverseMap();
+        CreateMap<Status, CacheStatusItem>();
+
+        CreateMap<Status, GetStatusBugItem>();
     }
 }

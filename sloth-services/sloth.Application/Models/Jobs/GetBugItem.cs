@@ -9,6 +9,7 @@ public class GetBugItem
     public DateTime? UpdatedDate { get; set; }
     public DateTime? ClosedDate { get; set; } = null;
     public bool IsClosed { get; set; } = false;
+    public bool IsBlocker { get; set; } = false;
     public GetUserBugItem? CurrentOwner { get; set; } = null;
     public GetTeamBugItem? CurrentTeam { get; set; } = null;
     public GetUserBugItem? CreatedBy { get; set; } = null;
@@ -87,6 +88,7 @@ public class GetFunctionalityBugItem
 }
 public class GetPriorityBugItem
 {
+    public int PriorityID { get; set; }
     public string Tag { get; set; } = default!;
     public string? TagColor { get; set; } = default;
     public string? Description { get; set; } = null;
@@ -97,6 +99,7 @@ public class GetPriorityHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
+    public int NewPriorityID { get; set; }
     public string NewPriorityTag { get; set; } = default!;
     public string? NewPriorityTagColor { get; set; } = default!;
     public string? NewPriorityDescription { get; set; } = default!;
@@ -110,6 +113,7 @@ public class GetProductBugItem
 }
 public class GetStatusBugItem
 {
+    public int StatusID { get; set; }
     public string Tag { get; set; } = default!;
     public string? TagColor { get; set; } = default;
     public string? Description { get; set; } = null;
@@ -120,6 +124,7 @@ public class GetStatusHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
+    public int NewStatusID { get; set; } = default!;
     public string NewStatusTag { get; set; } = default!;
     public string? NewStatusTagColor { get; set; } = default!;
     public string? NewStatusDescription { get; set; } = default!;

@@ -7,6 +7,7 @@ export interface GetBugItem {
     updatedDate: Date | null;
     closedDate: Date | null;
     isClosed: boolean;
+    isBlocker: boolean;
     currentOwner: GetUserBugItem | null;
     currentTeam: GetTeamBugItem | null;
     createdBy: GetUserBugItem | null;
@@ -56,7 +57,7 @@ export interface GetBugItem {
   }
   
   export interface GetCommentBugItem {
-    commentId: number;
+    commentID: number;
     comment: string;
     commentDate: Date;
     isEdited: boolean;
@@ -66,7 +67,7 @@ export interface GetBugItem {
   }
   
   export interface GetFileBugItem {
-    fileId: string; // Guid as string
+    fileID: string; // Guid as string
     name: string;
     size: number;
     extension: string;
@@ -77,7 +78,7 @@ export interface GetBugItem {
   }
   
   export interface GetFunctionalityBugItem {
-    functionalityId: number;
+    functionalityID: number;
     name: string;
     tag: string;
     tagColor: string | null;
@@ -85,6 +86,7 @@ export interface GetBugItem {
   }
   
   export interface GetPriorityBugItem {
+    priorityID: number,
     tag: string;
     tagColor: string | null;
     description: string | null;
@@ -101,13 +103,14 @@ export interface GetBugItem {
   }
   
   export interface GetProductBugItem {
-    productId: number;
+    productID: number;
     alias: string;
     name: string;
     description: string | null;
   }
   
   export interface GetStatusBugItem {
+    statusID: number;
     tag: string;
     tagColor: string | null;
     description: string | null;

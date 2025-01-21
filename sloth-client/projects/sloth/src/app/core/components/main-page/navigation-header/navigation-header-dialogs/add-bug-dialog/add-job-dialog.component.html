@@ -6,7 +6,7 @@
         <mat-stepper [linear]="false" #stepper>
             <mat-step [stepControl]="jobForm">
                 <ng-template class="step" matStepLabel>Basic information</ng-template>
-                <sl-list-select [items]="quickJobTypes()" 
+                <sl-list-select [items]="jobTypes()" 
                                 label="Job type" 
                                 formControlName="type"/>
                 <sl-text-input  label="Header" 
@@ -14,20 +14,30 @@
                 <sl-markup-input label="Description" 
                                 formControlName="description"/>
                 <sl-list-select [items]="clients()" 
+                                valueKey="clientID"
+                                displayKey="name"
                                 [multiple]="false" 
                                 label="Client"
                                 formControlName="clientID"/>
             </mat-step>
             <mat-step [stepControl]="jobForm">
                 <ng-template matStepLabel>Details</ng-template>
-                <sl-toggle-list [items]="priotities()" 
+                <sl-toggle-list [items]="priorities()" 
+                                valueKey="priorityID"
+                                displayKey="tag"
+                                backgroundKey="tagColor"
                                 label="Bug priority"
                                 formControlName="priorityID"/>
                 <sl-list-select [items]="products()" 
+                                valueKey="productID"
+                                displayKey="name"
                                 [multiple]="true" 
                                 label="Products"
                                 formControlName="products"/>
                 <sl-list-select [items]="functionalities()" 
+                                valueKey="functionalityID"
+                                displayKey="name"
+                                groupKey="product"
                                 [multiple]="true" 
                                 label="Functionalities"
                                 formControlName="functionalities"/>

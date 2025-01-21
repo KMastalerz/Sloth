@@ -55,7 +55,7 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         await dbContext.SaveChangesAsync();
         return query;
     }
-    public async Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID)
+    public async Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID = null)
     {
         if (clientID is not null)
         {
@@ -303,5 +303,10 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .OrderByDescending(c => c.CommentDate)
             .ToListAsync();
         return results;
+    }
+    public async Task<IEnumerable<Status>> ListStatusesAsync()
+    {
+        var result = await dbContext.Status.ToListAsync();
+        return result;
     }
 }

@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
-using sloth.Application.Models.Miscellaneous;
+using sloth.Application.Models.Jobs;
 using sloth.Domain.Repositories;
 
 namespace sloth.Application.Services.Jobs;
 public class ListFunctionalitiesWithProductIDQueryHandler(
     IMapper mapper, 
     IJobRepository jobRepository
-    ) : IRequestHandler<ListFunctionalitiesWithProductIDQuery, IEnumerable<ListItem>>
+    ) : IRequestHandler<ListFunctionalitiesWithProductIDQuery, IEnumerable<CacheFunctionalityItem>>
 {
-    public async Task<IEnumerable<ListItem>> Handle(ListFunctionalitiesWithProductIDQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CacheFunctionalityItem>> Handle(ListFunctionalitiesWithProductIDQuery request, CancellationToken cancellationToken)
     {
         var functionalities = await jobRepository.ListFunctionalitiesWithProductIDAsync(request.ProductIDs);
-        var results = mapper.Map<IEnumerable<ListItem>>(functionalities).OrderBy(p => p.Label).ToList();
+        var results = mapper.Map<IEnumerable<CacheFunctionalityItem>>(functionalities).OrderBy(p => p.Name).ToList();
         return results;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { BaseFormControlComponent } from '../../base-form-control.component';
 import { CommentComponent } from '../comment/comment.component';
 

@@ -5,7 +5,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { ListItemGroup, ListSelectItem } from 'sloth-utilities';
 import { ControlComponent } from '../../control.component';
 import { BaseSelectComponent } from '../base-select.component';
-
 @Component({
   selector: 'sl-list-select',
   imports: [MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ControlComponent, FormsModule],
@@ -21,14 +20,29 @@ import { BaseSelectComponent } from '../base-select.component';
 })
 export class ListSelectComponent extends BaseSelectComponent {
   multiple = input<boolean>(false);
-  items = input<ListSelectItem[]>([]);
-  hasGroups = computed(() => this.items().some(item=> !!item.group) ?? false)
-  groupedItems = computed<ListItemGroup[]>(() => {
+  items = input<any[]>([]);
+  valueKey = input<string | null | undefined>(undefined);
+  groupKey = input<string | null | undefined>(undefined);
+  displayKey = input<string | null | undefined>(undefined);
+  hasGroups = computed<boolean>(() => this.groupKey() ? true : false);
+
+  protected displayList = computed<ListSelectItem[]>(() => {
+    const items = this.items();
+    if (!items) return [];
+  
+    return items.map(i => ({
+      value: this.valueKey() ? i[this.valueKey()!] : i,
+      label: this.displayKey() ? i[this.displayKey()!] : undefined,
+      group: this.groupKey() ? i[this.groupKey()!] : undefined,
+    }));
+  });
+
+  protected groupedItems = computed<ListItemGroup[]>(() => {
     if(!this.hasGroups()) return [];
 
     const groupsMap = new Map<string, ListSelectItem[]>();
     
-    this.items().forEach(item => {
+    this.displayList().forEach(item => {
       const groupName = item.group || 'Ungrouped';
       if (!groupsMap.has(groupName)) {
         groupsMap.set(groupName, []);

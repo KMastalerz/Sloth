@@ -42,9 +42,21 @@ export class TagComponent extends BaseFormControlComponent implements OnInit, On
     super.ngOnInit();
 
     if(this.formGroup()) {
+      // Get the current values from the form group
+      const currentValue = this.formGroup()!.value;
+      
+      // Initialize backgroundColor and tooltip using current form values
+      if (this.backgroundControlName()) {
+        this.backgroundColor.set(currentValue[this.backgroundControlName()!]);
+      }
+      if (this.tooltipControlName()) {
+        this.tooltip.set(currentValue[this.tooltipControlName()!]);
+      }
+      
       this.formGroupSubscription = this.formGroup()?.valueChanges.subscribe(value => {        
-        if(this.backgroundControlName())
+        if(this.backgroundControlName()) {
           this.backgroundColor.set(value[this.backgroundControlName()!]);
+        }
         if(this.tooltipControlName())
           this.tooltip.set(value[this.tooltipControlName()!]);
       });

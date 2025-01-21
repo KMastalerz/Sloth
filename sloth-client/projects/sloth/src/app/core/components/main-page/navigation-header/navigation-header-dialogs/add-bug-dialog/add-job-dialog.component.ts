@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -7,8 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ListSelectComponent, MarkupInputComponent, TextInputComponent, 
   ToggleListComponent, DatePickerComponent, TimePickerComponent,  
   UploadInputComponent} from 'sloth-ui';
-import { ListSelectItem, ToggleListItem } from 'sloth-utilities';
-import { CreateQuickJobParam } from 'sloth-http';
+import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CreateQuickJobParam } from 'sloth-http';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
 
 
@@ -23,14 +22,16 @@ import { JobDataCacheService } from '../../../../../../services/job-data-cache/j
   styleUrl: './add-job-dialog.component.scss'
 })
 export class AddJobDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<AddJobDialogComponent>);
-  readonly jobDataCacheService = inject(JobDataCacheService)
+  private readonly dialogRef = inject(MatDialogRef<AddJobDialogComponent>);
+  private readonly jobDataCacheService = inject(JobDataCacheService)
 
   constructor(){
     this.jobDataCacheService.priorities
-    .pipe(takeUntilDestroyed())
-    .subscribe((data) => 
-      this.priotities.set(data)
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => {
+        this.priorities.set(data)
+      }
+      
     );
 
     this.jobDataCacheService.products
@@ -39,10 +40,10 @@ export class AddJobDialogComponent {
         this.products.set(data)
     );
 
-    this.jobDataCacheService.quickJobTypes
+    this.jobDataCacheService.jobTypes
       .pipe(takeUntilDestroyed())
       .subscribe((data) => 
-        this.quickJobTypes.set(data)
+        this.jobTypes.set(data)
     );
 
     this.jobDataCacheService.clients
@@ -52,10 +53,10 @@ export class AddJobDialogComponent {
     );
 
     this.jobDataCacheService.functionalities
-    .pipe(takeUntilDestroyed())
-    .subscribe((data) => 
-      this.functionalities.set(data)
-  );
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => 
+        this.functionalities.set(data)
+    );
 
     this.jobForm.controls.clientID.valueChanges
       .pipe(takeUntilDestroyed())
@@ -64,9 +65,10 @@ export class AddJobDialogComponent {
     );
 
     this.jobForm.controls.products.valueChanges
-    .pipe(takeUntilDestroyed())
-    .subscribe((value) => 
-      this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(value))
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => 
+        this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(value)
+    );
   }
 
   protected jobForm = new FormGroup({
@@ -93,11 +95,11 @@ export class AddJobDialogComponent {
     })
   })
 
-  clients = signal<ListSelectItem[]>([]);
-  priotities = signal<ToggleListItem[]>([]);
-  products = signal<ListSelectItem[]>([]);
-  quickJobTypes = signal<ListSelectItem[]>([]);
-  functionalities= signal<ListSelectItem[]>([]);
+  jobTypes = signal<string[]>([]);
+  clients = signal<CacheClientItem[]>([]);
+  priorities = signal<CachePriorityItem[]>([]);
+  products = signal<CacheProductItem[]>([]);
+  functionalities= signal<CacheFunctionalityItem[]>([]);
   
   onCloseDialog(): void {
     this.dialogRef.close(

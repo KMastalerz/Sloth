@@ -1,5 +1,5 @@
 <div class="comment-list-container">
-    @for(comment of value(); track $index) {
+    @for(comment of value(); track comment.commentID) {
         <sl-comment [comment]="comment"
                     [commentIDKey]="commentIDKey()"
                     [commentKey]="commentKey()"

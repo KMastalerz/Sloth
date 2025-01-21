@@ -2,7 +2,6 @@ import { Component, computed, input, model, OnDestroy, OnInit, Optional, signal 
 import { AbstractControl, ControlContainer, ControlValueAccessor, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FormMode } from '../models/form-mode.model';
-import { P } from '@angular/cdk/keycodes';
 
 enum FormType {
   Array,
@@ -57,13 +56,8 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
 
   ngOnInit() {
     const parent = this.controlContainer?.control as FormGroup | FormArray | undefined;
-
-    if(this.formControlName() === 'status' ){
-      console.log('parent for status', parent);
-    }
     let baseControl: AbstractControl | null = null;
     if(parent) {
-      // NEW START
       if(parent instanceof FormArray) {
         this.formArray.set(parent);
       }
@@ -71,11 +65,6 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
       if(parent instanceof FormGroup){
         this.formGroup.set(parent)
       }
-
-      
-
-      // NEW END
-
 
       if(this.formControlName()) {        
         const control = parent?.get(this.formControlName()!);
@@ -154,7 +143,8 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
   setDisabledState?(isDisabled: boolean): void {
     const ctrl = this.baseControl();
     if (ctrl) {
-      isDisabled ? ctrl.disable() : ctrl.enable();
+      if(isDisabled !== ctrl.disabled)
+        isDisabled ? ctrl.disable() : ctrl.enable();
     }
   }
 

@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using sloth.Application.Models.Jobs;
-using sloth.Application.Models.Miscellaneous;
+using sloth.Application.UserIdentity;
 using sloth.Domain.Repositories;
 
 namespace sloth.Application.Services.Jobs;
 public class ListJobDataCacheQueryHandler(
     IMapper mapper,
-    IJobRepository jobRepository
+    IJobRepository jobRepository,
+    IUserContext userContext 
     ) : IRequestHandler<ListJobDataCacheQuery, ListJobDataCacheItem>
 {
     public async Task<ListJobDataCacheItem> Handle(ListJobDataCacheQuery request, CancellationToken cancellationToken)
@@ -16,20 +17,23 @@ public class ListJobDataCacheQueryHandler(
         var products = await jobRepository.ListProductsAsync();
         var clients = await jobRepository.ListClientsAsync();
         var functionalities = await jobRepository.ListFunctionalitiesAsync();
+        var statuses = await jobRepository.ListStatusesAsync();
 
-        var priorityResults = mapper.Map<List<ToggleItem>>(priorities).OrderBy(p => p.Value).ToList();
-        var productResults = mapper.Map<List<ListItem>>(products).OrderBy(p => p.Label).ToList();
-        var clientResults = mapper.Map<List<ListItem>>(clients).OrderBy(p => p.Label).ToList();
-        var functionalitiesResult = mapper.Map<List<ListItem>>(functionalities).OrderBy(p => p.Label).ToList();
+        var priorityResults = mapper.Map<List<CachePriorityItem>>(priorities.OrderBy(p => p.PriorityLevel)).ToList();
+        var productResults = mapper.Map<List<CacheProductItem>>(products).OrderBy(p => p.Name).ToList();
+        var clientResults = mapper.Map<List<CacheClientItem>>(clients).OrderBy(p => p.Name).ToList();
+        var functionalitiesResult = mapper.Map<List<CacheFunctionalityItem>>(functionalities).OrderBy(p => p.Name).ToList();
+        var statusesResult = mapper.Map<List<CacheStatusItem>>(statuses).OrderBy(s => s.Tag).ToList();
 
-        clientResults.Insert(0, new() { Label = "None", Value = null });
+        clientResults.Insert(0, new() { Name = "None", ClientID = null });
 
         var returnItem = new ListJobDataCacheItem()
         {
             Products = productResults,
             Priorities = priorityResults,
             Clients = clientResults,
-            Functionalities = functionalitiesResult
+            Functionalities = functionalitiesResult,
+            Statuses = statusesResult
         };
 
         return returnItem;

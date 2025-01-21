@@ -5,7 +5,7 @@
     <mat-button-toggle-group [(ngModel)]="value"
                             [hideSingleSelectionIndicator]="hideIndicator()" 
                             [hideMultipleSelectionIndicator]="hideIndicator()">
-        @for(item of items(); track item) {
+        @for(item of displayList(); track item.value) {
             <mat-button-toggle [value]="item.value" 
                 [ngStyle]="{
                     backgroundColor: isChecked(item.value) ? item.color : null,

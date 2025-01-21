@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ListSelectItem } from 'sloth-utilities';
 import { BaseService } from '../../base/base-service.class';
 import { ServiceReturnValue } from '../../dto/base/service-return-value.model';
-import { ListJobDataCacheItem } from '../../dto/job/items/list-job-data-cache.item';
+import { CacheFunctionalityItem, CacheProductItem, ListJobDataCacheItem } from '../../dto/job/items/list-job-data-cache.item';
 import { CreateQuickJobParam } from '../../dto/job/params/create-quick-job.param';
 import { ListBugParam } from '../../dto/job/params/list-bug.param';
 import { ListBugResponse } from '../../dto/job/items/list-bug.item';
@@ -27,11 +26,14 @@ export class JobService extends BaseService {
     return await this.postAsync("CreateQuickJob", command, true);
   }
 
-  async listProductsWithClientIDAsync(clientID: string| null): Promise<ServiceReturnValue<ListSelectItem[]>> {
-    return await this.getAsync("ListProductsWithClientID", {clientID}) ?? [];
+  async listProductsWithClientIDAsync(clientID: string| null): Promise<ServiceReturnValue<CacheProductItem[]>> {
+    if(clientID) {
+      return await this.getAsync("ListProductsWithClientID", {clientID}) ?? [];
+    }
+    return await this.getAsync("ListProductsWithClientID") ?? [];
   } 
 
-  async listFunctionalitiesWithProductIDAsync(productIDs: number[] | null): Promise<ServiceReturnValue<ListSelectItem[]>> {
+  async listFunctionalitiesWithProductIDAsync(productIDs: number[] | null): Promise<ServiceReturnValue<CacheFunctionalityItem[]>> {
     return await this.getAsync("ListFunctionalitiesWithProductID", {productIDs}) ?? [];
   } 
 

@@ -8,7 +8,7 @@
         @if(hasGroups()) {
             <mat-select [multiple]="multiple()" 
                         [(ngModel)]="value">
-                @for(group of groupedItems(); track group) {
+                @for(group of groupedItems(); track group.name) {
                     <mat-optgroup [label]="group.name">
                         @for (item of group.items; track $index) {
                             <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
@@ -20,7 +20,7 @@
         @else {
             <mat-select [multiple]="multiple()" 
                         [(ngModel)]="value">
-                @for (item of items(); track $index) {
+                @for (item of displayList(); track $index) {
                     <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
                 }
             </mat-select>
