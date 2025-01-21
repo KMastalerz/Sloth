@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TagComponent } from '../tag/tag.component';
-import { BaseFormControlComponent } from '../../base-form-control.component';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-tag-list',

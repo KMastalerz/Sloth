@@ -3,7 +3,7 @@ import { Component, computed, forwardRef, inject, input, model, OnDestroy, OnIni
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HexService } from 'sloth-utilities';
-import { BaseFormControlComponent } from '../../base-form-control.component';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 import { Subscription } from 'rxjs';
 
 @Component({

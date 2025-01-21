@@ -2,7 +2,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
 import { GetCommentBugItem } from 'sloth-http';
 import { AuthStateService, User } from 'sloth-utilities';
-import { BaseFormControlComponent } from '../../base-form-control.component';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-comment',

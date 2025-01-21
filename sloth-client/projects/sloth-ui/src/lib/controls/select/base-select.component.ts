@@ -1,5 +1,5 @@
 import { Component, computed, input, Optional, Self } from '@angular/core';
-import { BaseFormControlComponent } from '../base-form-control.component';
+import { BaseFormControlComponent } from '../base-form-control/base-form-control.component';
 import { ControlContainer } from '@angular/forms';
 
 @Component({

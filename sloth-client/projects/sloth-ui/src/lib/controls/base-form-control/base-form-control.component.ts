@@ -1,7 +1,7 @@
 import { Component, computed, input, model, OnDestroy, OnInit, Optional, signal } from '@angular/core';
 import { AbstractControl, ControlContainer, ControlValueAccessor, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { FormMode } from '../models/form-mode.model';
+import { FormMode } from '../../models/form-mode.model';
 
 enum FormType {
   Array,
