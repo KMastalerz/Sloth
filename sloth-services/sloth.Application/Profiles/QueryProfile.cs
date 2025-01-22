@@ -7,6 +7,6 @@ public class QueryProfile : Profile
 {
     public QueryProfile()
     {
-        CreateMap<CreateQuickJobCommand, Query>();
+        CreateMap<CreateJobCommand, Query>();
     }
 }

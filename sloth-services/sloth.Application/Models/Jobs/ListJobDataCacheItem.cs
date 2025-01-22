@@ -13,6 +13,8 @@ public class CacheClientItem
 {
     public string Name { get; set; } = default!;
     public Guid? ClientID { get; set; } = null;
+
+    public IEnumerable<CacheProductItem> Products { get; set; } = [];
 }
 
 public class CachePriorityItem
@@ -37,6 +39,7 @@ public class CacheFunctionalityItem
     public string? TagColor { get; set; } = null;
     public string? Description { get; set; } = null;
     public string? Product { get; set; } = null;
+    public int? ProductID { get; set; } = null;
 }
 
 public class CacheStatusItem

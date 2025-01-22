@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, ElementRef, forwardRef, input, output, viewChild } from '@angular/core';
 import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlComponent } from '../../control.component';
-import { BaseSelectComponent } from '../base-select.component';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-toggle',
-  imports: [MatSlideToggle, MatSlideToggleModule, ControlComponent, FormsModule],
+  imports: [MatSlideToggle, MatSlideToggleModule, FormsModule],
   templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.scss',
   providers: [
@@ -17,7 +16,7 @@ import { BaseSelectComponent } from '../base-select.component';
     }
   ],
 })
-export class ToggleComponent extends BaseSelectComponent implements AfterViewInit {
+export class ToggleComponent extends BaseFormControlComponent implements AfterViewInit {
   themeToggle = viewChild(MatSlideToggle, { read: ElementRef });
   change = output();
   theme = input<'theme-toggle' | null>(null);  

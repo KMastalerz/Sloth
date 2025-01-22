@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using sloth.Domain.Cache;
 using sloth.Domain.Entities;
 using sloth.Domain.Repositories;
+using sloth.Infrastructure.Authorization;
 using sloth.Infrastructure.Cache;
 using sloth.Infrastructure.DatabaseContext;
 using sloth.Infrastructure.Repositories;
@@ -37,7 +39,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJobRepository, JobRepository>();
         services.AddScoped<IUserSettingsRepository, UserSettingsRepository>();
 
+        services.AddScoped<IClaimsTransformation, CustomClaimsTransformer>();
+
         // Register Caches
         services.AddScoped<IRoleCache, RoleCache>();
+
     }
 }

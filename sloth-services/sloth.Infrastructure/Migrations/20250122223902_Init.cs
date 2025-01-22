@@ -86,7 +86,7 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     TeamID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Alias = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Speciality = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -265,8 +265,6 @@ namespace sloth.Infrastructure.Migrations
                     PriorityID = table.Column<int>(type: "int", nullable: false),
                     StatusID = table.Column<int>(type: "int", nullable: true),
                     ClientID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CurrentOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CurrentTeamID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -274,7 +272,8 @@ namespace sloth.Infrastructure.Migrations
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ClosedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ClosedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsClosed = table.Column<bool>(type: "bit", nullable: false)
+                    IsClosed = table.Column<bool>(type: "bit", nullable: false),
+                    CurrentTeamTeamID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -296,11 +295,10 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "Status",
                         principalColumn: "StatusID");
                     table.ForeignKey(
-                        name: "FK_Job_Team_CurrentTeamID",
-                        column: x => x.CurrentTeamID,
+                        name: "FK_Job_Team_CurrentTeamTeamID",
+                        column: x => x.CurrentTeamTeamID,
                         principalTable: "Team",
-                        principalColumn: "TeamID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TeamID");
                     table.ForeignKey(
                         name: "FK_Job_User_ClosedByID",
                         column: x => x.ClosedByID,
@@ -312,12 +310,6 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "User",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Job_User_CurrentOwnerID",
-                        column: x => x.CurrentOwnerID,
-                        principalTable: "User",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Job_User_UpdatedByID",
                         column: x => x.UpdatedByID,
@@ -474,27 +466,20 @@ namespace sloth.Infrastructure.Migrations
                 name: "JobAssignment",
                 columns: table => new
                 {
-                    TeamID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    JobID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobID = table.Column<int>(type: "int", nullable: false),
                     AssignedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssignedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobAssignment", x => new { x.JobID, x.TeamID });
+                    table.PrimaryKey("PK_JobAssignment", x => new { x.JobID, x.UserID });
                     table.ForeignKey(
                         name: "FK_JobAssignment_Job_JobID",
                         column: x => x.JobID,
                         principalTable: "Job",
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobAssignment_Team_TeamID",
-                        column: x => x.TeamID,
-                        principalTable: "Team",
-                        principalColumn: "TeamID",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_JobAssignment_User_AssignedByID",
                         column: x => x.AssignedByID,
@@ -514,26 +499,20 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CurrentOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TeamID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PreviousOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobAssignmentHistory", x => new { x.JobID, x.ChangedDate });
+                    table.PrimaryKey("PK_JobAssignmentHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.CurrentOwnerID });
                     table.ForeignKey(
                         name: "FK_JobAssignmentHistory_Job_JobID",
                         column: x => x.JobID,
                         principalTable: "Job",
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobAssignmentHistory_Team_TeamID",
-                        column: x => x.TeamID,
-                        principalTable: "Team",
-                        principalColumn: "TeamID");
                     table.ForeignKey(
                         name: "FK_JobAssignmentHistory_User_ChangedByID",
                         column: x => x.ChangedByID,
@@ -645,14 +624,14 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousPriorityID = table.Column<int>(type: "int", nullable: false),
                     NewPriorityID = table.Column<int>(type: "int", nullable: false),
-                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PreviousPriorityID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobPriorityHistory", x => new { x.JobID, x.ChangedDate });
+                    table.PrimaryKey("PK_JobPriorityHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.NewPriorityID });
                     table.ForeignKey(
                         name: "FK_JobPriorityHistory_Job_JobID",
                         column: x => x.JobID,
@@ -705,14 +684,14 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PreviousStatusID = table.Column<int>(type: "int", nullable: false),
-                    NewStatusID = table.Column<int>(type: "int", nullable: false)
+                    NewStatusID = table.Column<int>(type: "int", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PreviousStatusID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobStatusHistory", x => new { x.JobID, x.ChangedDate });
+                    table.PrimaryKey("PK_JobStatusHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.NewStatusID });
                     table.ForeignKey(
                         name: "FK_JobStatusHistory_Job_JobID",
                         column: x => x.JobID,
@@ -791,14 +770,9 @@ namespace sloth.Infrastructure.Migrations
                 column: "CreatedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Job_CurrentOwnerID",
+                name: "IX_Job_CurrentTeamTeamID",
                 table: "Job",
-                column: "CurrentOwnerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_CurrentTeamID",
-                table: "Job",
-                column: "CurrentTeamID");
+                column: "CurrentTeamTeamID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Job_PriorityID",
@@ -821,11 +795,6 @@ namespace sloth.Infrastructure.Migrations
                 column: "AssignedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobAssignment_TeamID",
-                table: "JobAssignment",
-                column: "TeamID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_JobAssignment_UserID",
                 table: "JobAssignment",
                 column: "UserID");
@@ -844,11 +813,6 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_JobAssignmentHistory_PreviousOwnerID",
                 table: "JobAssignmentHistory",
                 column: "PreviousOwnerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobAssignmentHistory_TeamID",
-                table: "JobAssignmentHistory",
-                column: "TeamID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobComment_CommentedByID",
@@ -947,6 +911,12 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_Status_StatusID_Type",
                 table: "Status",
                 columns: new[] { "StatusID", "Type" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Team_Alias",
+                table: "Team",
+                column: "Alias",
                 unique: true);
 
             migrationBuilder.CreateIndex(

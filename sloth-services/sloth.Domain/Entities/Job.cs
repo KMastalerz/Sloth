@@ -10,8 +10,6 @@ public class Job
     public int PriorityID { get; set; }
     public int? StatusID { get; set; } = null;
     public Guid? ClientID { get; set; } = null;
-    public Guid? CurrentOwnerID { get;set; }
-    public Guid? CurrentTeamID {  get; set; } 
     public string Type { get; set; } = default!;
     public Guid CreatedByID { get; set; }
     public DateTime CreatedDate { get; set; } 
@@ -24,7 +22,6 @@ public class Job
     /// <summary>
     /// External properties
     /// </summary>
-    public User? CurrentOwner { get; set; } = null;
     public Team? CurrentTeam { get; set; } = null;
     public User? CreatedBy { get; set; } = null;
     public User? ClosedBy { get; set; } = null;

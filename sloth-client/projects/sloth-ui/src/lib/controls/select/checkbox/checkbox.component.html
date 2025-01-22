@@ -1,17 +1,8 @@
-
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    <div class="checkbox-container">
-        <mat-checkbox [(ngModel)]="value"
-                    [name]="name()"
-        >{{ label() }}</mat-checkbox>
-        @if(isError()) {
-            <mat-error></mat-error>
-        } 
-        @else {
-            <mat-hint>{{ hint() }}</mat-hint>
-        }
-    </div>
-</sl-control>
-
+<div class="checkbox-container"
+    [matTooltipDisabled]="hideTooltip()"
+    [matTooltip]="tooltip()"
+    [matTooltipPosition]="tooltipPosition()">
+    <mat-checkbox [(ngModel)]="value"
+                  [name]="name()"
+    >{{ label() }}</mat-checkbox>
+</div>

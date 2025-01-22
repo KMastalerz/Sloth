@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sloth.Application.Services.Jobs;
+using sloth.Domain.Constants;
 namespace sloth.API.Controllers;
 
 [ApiController]
@@ -17,22 +18,10 @@ public class JobController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateQuickJob(CreateQuickJobCommand command)
+    public async Task<IActionResult> CreateJob(CreateJobCommand command)
     {
         await mediator.Send(command);
         return Created();
-    }
-    [HttpGet]
-    public async Task<IActionResult> ListProductsWithClientID([FromQuery] Guid? clientID = null)
-    {
-        var result = await mediator.Send(new ListProductsWithClientIDQuery(clientID));
-        return Ok(result);
-    }
-    [HttpGet]
-    public async Task<IActionResult> ListFunctionalitiesWithProductID([FromQuery] IEnumerable<int>? productIDs = null)
-    {
-        var result = await mediator.Send(new ListFunctionalitiesWithProductIDQuery(productIDs));
-        return Ok(result);
     }
     [HttpGet]
     public async Task<IActionResult> ListBugs([FromQuery] ListBugsQuery command)
@@ -50,6 +39,25 @@ public class JobController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> AddJobComment(AddJobCommentCommand command)
     {
         var result = await mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpDelete]
+    //[Authorize(Roles = UserRoles.ADMIN)]
+    public async Task<IActionResult> DeleteBug(int bugID)
+    {
+        await mediator.Send(new DeleteBugCommand(bugID));
+        return NoContent();
+    }
+    [HttpPost]
+    public async Task<IActionResult> ClaimBug([FromQuery] int bugID)
+    {
+        var result = await mediator.Send(new ClaimBugCommand(bugID));
+        return Ok(result);
+    }
+    [HttpPost]
+    public async Task<IActionResult> AbandonBug([FromQuery] int bugID)
+    {
+        var result = await mediator.Send(new AbandonBugCommand(bugID));
         return Ok(result);
     }
 }

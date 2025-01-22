@@ -1,26 +1,37 @@
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    @if(isFlatButton()) {
-        <button mat-flat-button
-                (click)="onClickEmit()"
-                [class]="
-                {
-                    'header-button': isHeader(),
-                    'add-button': displayType() === 'add',
-                    'delete-button': displayType() === 'delete',
-                }"
-                [disabled]="isDisabled()"
-                [type]="type()"> 
-            {{ label() }}
-        </button>
-    }
-    @else {
-        <button mat-button
-                (click)="onClickEmit()"
-                [disabled]="isDisabled()"
-                [type]="type()"> 
-            {{ label() }}
-        </button>
-    }
-</sl-control>
+@if(isFlatButton()) {
+    <button mat-flat-button
+            [matTooltipDisabled]="hideTooltip()"
+            [matTooltip]="tooltip()"
+            [matTooltipPosition]="tooltipPosition()"   
+            [matBadge]="badge()" 
+            [matBadgeHidden]="hideBadge()"
+            (click)="onClickEmit()"
+            class="flat"
+            [class]="
+            {
+                'header-button': isHeader(),
+                'add-button': displayType() === 'add',
+                'delete-button': displayType() === 'delete',
+                'error-button': buttonClass() === 'error',
+                'warning-button': buttonClass() === 'warning',
+                'success-button': buttonClass() === 'success'
+            }"
+            [disabled]="isDisabled()"
+            [type]="type()"> 
+        {{ label() }}
+    </button>
+}
+@else {
+    <button mat-button
+            class="regular"
+            [class]="{
+                'error-button': buttonClass() === 'error',
+                'warning-button': buttonClass() === 'warning',
+                'success-button': buttonClass() === 'success'
+            }"
+            (click)="onClickEmit()"
+            [disabled]="isDisabled()"
+            [type]="type()"> 
+        {{ label() }}
+    </button>
+}

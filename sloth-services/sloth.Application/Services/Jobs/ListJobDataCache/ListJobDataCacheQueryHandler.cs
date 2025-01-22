@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using sloth.Application.Models.Jobs;
-using sloth.Application.UserIdentity;
 using sloth.Domain.Repositories;
 
 namespace sloth.Application.Services.Jobs;
 public class ListJobDataCacheQueryHandler(
     IMapper mapper,
-    IJobRepository jobRepository,
-    IUserContext userContext 
+    IJobRepository jobRepository
     ) : IRequestHandler<ListJobDataCacheQuery, ListJobDataCacheItem>
 {
     public async Task<ListJobDataCacheItem> Handle(ListJobDataCacheQuery request, CancellationToken cancellationToken)

@@ -1,30 +1,29 @@
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    <mat-form-field appearance="outline">
-        @if( label() ) {
-            <mat-label>{{ label() }}</mat-label>
-        }
-        @if(hasGroups()) {
-            <mat-select [multiple]="multiple()" 
-                        [(ngModel)]="value">
-                @for(group of groupedItems(); track group.name) {
-                    <mat-optgroup [label]="group.name">
-                        @for (item of group.items; track $index) {
-                            <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
-                        }
-                    </mat-optgroup>
-                }
-            </mat-select>
-        }
-        @else {
-            <mat-select [multiple]="multiple()" 
-                        [(ngModel)]="value">
-                @for (item of displayList(); track $index) {
-                    <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
-                }
-            </mat-select>
-        }
+<mat-form-field appearance="outline"
+                [matTooltipDisabled]="hideTooltip()"
+                [matTooltip]="tooltip()"
+                [matTooltipPosition]="tooltipPosition()">
+    @if( label() ) {
+        <mat-label>{{ label() }}</mat-label>
+    }
+    @if(hasGroups()) {
+        <mat-select [multiple]="multiple()" 
+                    [(ngModel)]="value">
+            @for(group of groupedItems(); track group.name) {
+                <mat-optgroup [label]="group.name">
+                    @for (item of group.items; track $index) {
+                        <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
+                    }
+                </mat-optgroup>
+            }
+        </mat-select>
+    }
+    @else {
+        <mat-select [multiple]="multiple()" 
+                    [(ngModel)]="value">
+            @for (item of displayList(); track $index) {
+                <mat-option [value]="item.value">{{item.label ?? item.value}}</mat-option>
+            }
+        </mat-select>
+    }
 
-    </mat-form-field>
-</sl-control>
+</mat-form-field>

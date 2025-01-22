@@ -1,13 +1,14 @@
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    <a mat-button [routerLink]="target()" routerLinkActive="active">
-        <mat-icon>{{icon()}}</mat-icon>
-        @if(label()) {
-            {{label()}}
-        }
-        @if(value()) {
-            <span class="tag">{{ value() }}</span>
-        }
-    </a>
-</sl-control>
+<a  mat-button 
+    [matTooltipDisabled]="hideTooltip()"
+    [matTooltip]="tooltip()"
+    [matTooltipPosition]="tooltipPosition()" 
+    [routerLink]="link()" 
+    routerLinkActive="active">
+    <mat-icon>{{icon()}}</mat-icon>
+    @if(label()) {
+        {{label()}}
+    }
+    @if(tag()) {
+        <span class="tag">{{ tag() }}</span>
+    }
+</a>

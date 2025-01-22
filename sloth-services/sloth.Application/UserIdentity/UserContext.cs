@@ -24,6 +24,7 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
         var lastName = user.FindFirst(c => c.Type == SlothClaimTypes.LastName)!.Value;
         var userName = user.FindFirst(c => c.Type == ClaimTypes.Name)!.Value;
         var userRoles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+        var userTeamsIDs = user.Claims.Where(c => c.Type == SlothClaimTypes.Teams).Select(c => c.Value);
         var userGuid = Guid.Empty;
 
         if (Guid.TryParse(userID, out Guid guid))
@@ -31,6 +32,15 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
             userGuid = guid;
         }
 
-        return new CurrentUser(userID, email, firstName, lastName, userName, userRoles, userGuid);
+        var userTeams = new List<Guid>();
+        foreach (var item in userTeamsIDs)
+        {
+            if (Guid.TryParse(item, out Guid teamGuid))
+            {
+                 userTeams.Add(teamGuid);
+            }
+        }
+
+        return new CurrentUser(userID, email, firstName, lastName, userName, userRoles, userGuid, userTeams);
     }
 }

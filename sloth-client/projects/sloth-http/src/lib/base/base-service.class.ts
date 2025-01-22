@@ -5,7 +5,10 @@ import { inject } from "@angular/core";
 import { FormDataService } from "sloth-utilities";
 import { HttpConfigService } from "../config/http-config/http-config.service";
 import { ServiceReturnValue } from "../dto/base/service-return-value.model";
-
+export interface RequestOptions {
+    useFormData?: boolean;
+    useQueryParams?: boolean;
+}
 export abstract class BaseService {
     constructor(private controller: string){}
     private formDataService = inject(FormDataService);
@@ -41,26 +44,26 @@ export abstract class BaseService {
         }
     }
 
-    protected async postAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+    protected async postAsync<T>(action: string, command: any, options: RequestOptions = {}): Promise<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData) {
             command = this.formDataService.toFormData(command);
-            // // Check if files were added to FormData
-            // for (const [key, value] of command.entries()) {
-            //     console.log(`Key: ${key}`);
-            //     if (value instanceof File) {
-            //     console.log(`File: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
-            //     } else {
-            //     console.log(`Value: ${value}`);
-            //     }
-            // }
         }
 
-        var url = this.getUrl(action);
+        const url = this.getUrl(action);
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
         try {
             const result = await lastValueFrom(
-                this.httpClient.post<T>(url, command, {
-                    observe: 'response' // Get full HttpResponse
-                }).pipe(
+                this.httpClient.post<T>(url, command, httpOptions).pipe(
                     // Map the response in case of success
                     map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
     
@@ -79,16 +82,25 @@ export abstract class BaseService {
         }
     }
 
-    protected async putAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+    protected async putAsync<T>(action: string, command: any, options: RequestOptions = {}): Promise<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData)
             command = this.formDataService.toFormData(command);
 
-        var url = this.getUrl(action);
+        const url = this.getUrl(action);
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
         try {
             const result = await lastValueFrom(
-                this.httpClient.put<T>(url, command, {
-                    observe: 'response' // Get full HttpResponse
-                }).pipe(
+                this.httpClient.put<T>(url, command, httpOptions).pipe(
                     // Map the response in case of success
                     map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
     
@@ -133,16 +145,25 @@ export abstract class BaseService {
         }
     }
 
-    protected async patchAsync<T>(action: string, command: any, useFormData: boolean = false): Promise<ServiceReturnValue<T>> {
+    protected async patchAsync<T>(action: string, command: any, options: RequestOptions = {}): Promise<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData)
             command = this.formDataService.toFormData(command);
 
-        var url = this.getUrl(action);
+        const url = this.getUrl(action);
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
         try {
             const result = await lastValueFrom(
-                this.httpClient.patch<T>(url, command, {
-                    observe: 'response' // Get full HttpResponse
-                }).pipe(
+                this.httpClient.patch<T>(url, command, httpOptions).pipe(
                     // Map the response in case of success
                     map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
     
@@ -177,12 +198,23 @@ export abstract class BaseService {
         );
     }
 
-    protected post<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+    protected post<T>(action: string, command: any, options: RequestOptions = {}): Observable<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);
-        return this.httpClient.post<T>(url, command, { observe: 'response' }).pipe(
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
+        return this.httpClient.post<T>(url, command, httpOptions).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);
@@ -191,12 +223,23 @@ export abstract class BaseService {
         );
     }
 
-    protected put<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+    protected put<T>(action: string, command: any, options: RequestOptions = {}): Observable<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);
-        return this.httpClient.put<T>(url, command, { observe: 'response' }).pipe(
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
+        return this.httpClient.put<T>(url, command, httpOptions).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);
@@ -219,12 +262,23 @@ export abstract class BaseService {
         );
     }
 
-    protected patch<T>(action: string, command: any, useFormData: boolean = false): Observable<ServiceReturnValue<T>> {
+    protected patch<T>(action: string, command: any, options: RequestOptions = {}): Observable<ServiceReturnValue<T>> {
+        const { useFormData, useQueryParams } = options;
         if(useFormData)
             command = this.formDataService.toFormData(command);
 
         const url = this.getUrl(action);
-        return this.httpClient.patch<T>(url, command, { observe: 'response' }).pipe(
+        let httpOptions: {
+            observe: 'response';
+            params?: HttpParams;
+        } = { observe: 'response' };
+
+        if (useQueryParams) {
+            httpOptions.params = new HttpParams({ fromObject: command });
+            command = null; // No body is sent
+        }
+
+        return this.httpClient.patch<T>(url, command, httpOptions).pipe(
             map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
             catchError((error: HttpErrorResponse) => {
                 const mappedError = this.mapError<T>(error);

@@ -1,4 +1,4 @@
-export interface CreateQuickJobParam {
+export interface CreateJobParam {
     type: string,
     header: string,
     description: string,

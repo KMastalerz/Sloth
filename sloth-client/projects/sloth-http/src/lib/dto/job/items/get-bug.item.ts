@@ -8,8 +8,6 @@ export interface GetBugItem {
     closedDate: Date | null;
     isClosed: boolean;
     isBlocker: boolean;
-    currentOwner: GetUserBugItem | null;
-    currentTeam: GetTeamBugItem | null;
     createdBy: GetUserBugItem | null;
     closedBy: GetUserBugItem | null;
     client: GetClientBugItem | null;
@@ -31,7 +29,6 @@ export interface GetBugItem {
     assignedTo: string;
     assignedToFullName: string;
     assignedToEmail: string;
-    team: string;
     assignedBy: string;
     assignedByFullName: string;
     assignedByEmail: string;
@@ -48,10 +45,10 @@ export interface GetBugItem {
     changedBy: string;
     changedByFullName: string;
     changedByEmail: string;
-    team: string;
   }
   
   export interface GetClientBugItem {
+    clientID: string;
     name: string;
     alias: string;
   }
@@ -67,7 +64,7 @@ export interface GetBugItem {
   }
   
   export interface GetFileBugItem {
-    fileID: string; // Guid as string
+    fileID: string; 
     name: string;
     size: number;
     extension: string;

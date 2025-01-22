@@ -13,7 +13,6 @@ public class JobAssignmentProfile: Profile
            .ForMember(dest => dest.AssignedToFullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
            .ForMember(dest => dest.AssignedBy, opt => opt.MapFrom(src => src.AssignedBy.UserName))
            .ForMember(dest => dest.AssignedByEmail, opt => opt.MapFrom(src => src.AssignedBy.Email))
-           .ForMember(dest => dest.AssignedByFullName, opt => opt.MapFrom(src => $"{src.AssignedBy.FirstName} {src.AssignedBy.LastName}"))
-           .ForMember(dest => dest.Team, opt => opt.MapFrom(src => src.Team.Name));
+           .ForMember(dest => dest.AssignedByFullName, opt => opt.MapFrom(src => $"{src.AssignedBy.FirstName} {src.AssignedBy.LastName}"));
     }
 }

@@ -107,10 +107,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CurrentOwnerID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CurrentTeamID")
+                    b.Property<Guid?>("CurrentTeamTeamID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -148,9 +145,7 @@ namespace sloth.Infrastructure.Migrations
 
                     b.HasIndex("CreatedByID");
 
-                    b.HasIndex("CurrentOwnerID");
-
-                    b.HasIndex("CurrentTeamID");
+                    b.HasIndex("CurrentTeamTeamID");
 
                     b.HasIndex("PriorityID");
 
@@ -168,7 +163,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("JobID")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TeamID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AssignedByID")
@@ -177,14 +172,9 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<DateTime>("AssignedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("JobID", "TeamID");
+                    b.HasKey("JobID", "UserID");
 
                     b.HasIndex("AssignedByID");
-
-                    b.HasIndex("TeamID");
 
                     b.HasIndex("UserID");
 
@@ -208,18 +198,13 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("PreviousOwnerID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TeamID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("JobID", "ChangedDate");
+                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "CurrentOwnerID");
 
                     b.HasIndex("ChangedByID");
 
                     b.HasIndex("CurrentOwnerID");
 
                     b.HasIndex("PreviousOwnerID");
-
-                    b.HasIndex("TeamID");
 
                     b.ToTable("JobAssignmentHistory");
                 });
@@ -329,7 +314,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("PreviousPriorityID")
                         .HasColumnType("int");
 
-                    b.HasKey("JobID", "ChangedDate");
+                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "NewPriorityID");
 
                     b.HasIndex("ChangedByID");
 
@@ -372,7 +357,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("PreviousStatusID")
                         .HasColumnType("int");
 
-                    b.HasKey("JobID", "ChangedDate");
+                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "NewStatusID");
 
                     b.HasIndex("ChangedByID");
 
@@ -600,7 +585,7 @@ namespace sloth.Infrastructure.Migrations
 
                     b.Property<string>("Alias")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -615,6 +600,9 @@ namespace sloth.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamID");
+
+                    b.HasIndex("Alias")
+                        .IsUnique();
 
                     b.ToTable("Team");
                 });
@@ -831,15 +819,9 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
-                        .WithMany()
-                        .HasForeignKey("CurrentOwnerID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("sloth.Domain.Entities.Team", "CurrentTeam")
                         .WithMany()
-                        .HasForeignKey("CurrentTeamID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrentTeamTeamID");
 
                     b.HasOne("sloth.Domain.Entities.Priority", "Priority")
                         .WithMany()
@@ -860,8 +842,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Navigation("ClosedBy");
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("CurrentOwner");
 
                     b.Navigation("CurrentTeam");
 
@@ -886,12 +866,6 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sloth.Domain.Entities.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("sloth.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
@@ -899,8 +873,6 @@ namespace sloth.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("AssignedBy");
-
-                    b.Navigation("Team");
 
                     b.Navigation("User");
                 });
@@ -931,19 +903,11 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("sloth.Domain.Entities.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("ChangedBy");
 
                     b.Navigation("CurrentOwner");
 
                     b.Navigation("PreviousOwner");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>

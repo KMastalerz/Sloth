@@ -4,7 +4,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatError, MatHint } from '@angular/material/form-field';
 import { NgStyle } from '@angular/common';
 import { HexService, ToggleListItem } from 'sloth-utilities';
-import { BaseSelectComponent } from '../base-select.component';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-toggle-list',
@@ -19,8 +19,9 @@ import { BaseSelectComponent } from '../base-select.component';
     }
   ],
 })
-export class ToggleListComponent extends BaseSelectComponent {
+export class ToggleListComponent extends BaseFormControlComponent {
   private readonly hexServices = inject(HexService);
+  label = input<string | null>(null);
   items = input<any[]>([]);
   hideIndicator = input<boolean>(true);
   valueKey = input<string | null | undefined>(undefined);

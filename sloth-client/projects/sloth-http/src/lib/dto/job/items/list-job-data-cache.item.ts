@@ -10,6 +10,8 @@ export interface ListJobDataCacheItem {
 export interface CacheClientItem {
     name: string;
     clientID: string;
+
+    products: CacheProductItem[];
 }
 
 export interface CachePriorityItem {
@@ -30,7 +32,8 @@ export interface CacheFunctionalityItem {
     tag: string;
     description: string | null;
     tagColor?: string | null;
-    product?: string | null;
+    product: string | null;
+    productID: number | null;
 }
 
 export interface CacheStatusItem {

@@ -14,10 +14,4 @@
                 >{{ item.label ?? item.value }}</mat-button-toggle>
         }
     </mat-button-toggle-group>
-    @if (isError()) {
-        <mat-error></mat-error>
-    }
-    @else {
-        <mat-hint>{{hint()}}</mat-hint>
-    }
 </div>

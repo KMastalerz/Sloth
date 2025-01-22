@@ -17,7 +17,7 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     }
     public async Task<IEnumerable<Client>> ListClientsAsync()
     {
-        return await dbContext.Client.ToListAsync();
+        return await dbContext.Client.Include(c => c.Products).ToListAsync();
     }
     public async Task<IEnumerable<ProductFunctionality>> ListFunctionalitiesAsync()
     {
@@ -55,28 +55,9 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         await dbContext.SaveChangesAsync();
         return query;
     }
-    public async Task<IEnumerable<Product>?> ListProductsWithClientIDAsync(Guid? clientID = null)
-    {
-        if (clientID is not null)
-        {
-            return await dbContext.Client.Include(c => c.Products).Where(c => c.ClientID == clientID).Select(c => c.Products.AsEnumerable()).FirstOrDefaultAsync();
-        }
-        else
-            return await dbContext.Product.ToListAsync();
-    }
-    public async Task<IEnumerable<ProductFunctionality>?> ListFunctionalitiesWithProductIDAsync(IEnumerable<int>? productIDs)
-    {
-        if (productIDs is not null)
-        {
-            return await dbContext.ProductFunctionality.Include(f => f.Product).Where(f => productIDs.Any(p=> p == f.ProductID)).ToListAsync();
-        }
-        else
-            return await dbContext.ProductFunctionality.Include(f => f.Product).ToListAsync();
-    }
     public async Task<ListBugItemRepositoryResponse> ListBugsAsync(ListBugFilters filters)
     {
         var filteredQuery = dbContext.Bug
-            .Include(b => b.CurrentOwner)
             .Include(b => b.CreatedBy)
             .Include(b => b.UpdatedBy)
             .Include(b => b.Priority)
@@ -173,16 +154,6 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
                 b.InquiryNumber.ToLower().Contains(inquiryNumber));
         }
 
-        if (!string.IsNullOrEmpty(filters.CurrentOwner))
-        {
-            string currentOwner = filters.CurrentOwner.ToLower();
-
-            filteredQuery = filteredQuery.Where(b =>
-                b.CurrentOwner != null &&
-                $"{b.CurrentOwner.FirstName} {b.CurrentOwner.LastName}" != null &&
-                $"{b.CurrentOwner.FirstName} {b.CurrentOwner.LastName}".ToLower().Contains(currentOwner));
-        }
-
         if (!string.IsNullOrEmpty(filters.Header))
         {
             string header = filters.Header.ToLower();
@@ -248,7 +219,6 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     public async Task<Bug?> GetBugAsync(int bugID)
     {
         var result = await dbContext.Bug
-            .Include(b => b.CurrentOwner)
             .Include(b => b.CurrentTeam)
             .Include(b => b.CreatedBy)
             .Include(b => b.ClosedBy)
@@ -266,12 +236,8 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
                 .ThenInclude(ah => ah.CurrentOwner)
             .Include(b => b.AssignmentHistory)
                 .ThenInclude(ah => ah.ChangedBy)
-            .Include(b => b.AssignmentHistory)
-                .ThenInclude(ah => ah.Team)
             .Include(b => b.Assignments)
                 .ThenInclude(ah => ah.User)
-            .Include(b => b.Assignments)
-                .ThenInclude(ah => ah.Team)
             .Include(b => b.Assignments)
                 .ThenInclude(ah => ah.AssignedBy)
             .Include(b => b.Files)
@@ -308,5 +274,36 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     {
         var result = await dbContext.Status.ToListAsync();
         return result;
+    }
+    public async Task DeleteBugAsync(Bug bug)
+    {
+        dbContext.Bug.Remove(bug);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobAssignmentAsync(JobAssignment assignment)
+    {
+        await dbContext.JobAssignment.AddAsync(assignment);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task<IEnumerable<JobAssignment>> ListAssignmentsAsync(int jobID)
+    {
+        return await dbContext.JobAssignment
+            .Include(a => a.AssignedBy)
+            .Include(a => a.User)
+            .Where(a => a.JobID == jobID)
+            .ToListAsync();
+    }
+    public async Task<JobAssignment> GetJobAssignment(int jobID, Guid userID)
+    {
+        return await dbContext.JobAssignment
+            .Include(a => a.AssignedBy)
+            .Include(a => a.User)
+            .Where(a => a.JobID == jobID && a.UserID == userID)
+            .FirstAsync();
+    }
+    public async Task RemoveJobAssignmentAsync(JobAssignment assignment)
+    {
+        dbContext.JobAssignment.Remove(assignment);
+        await dbContext.SaveChangesAsync();
     }
 }

@@ -3,7 +3,6 @@ public class ListBugFilters
 {
     public int PageID { get; set; } = 0;
     public int TakeCount { get; set; } = 50;
-    public string? CurrentOwner { get; set; } = null;
     public string? Header { get; set; } = null;
     public string? Description { get; set; } = null;
     public bool? IsClosed { get; set; } = null;

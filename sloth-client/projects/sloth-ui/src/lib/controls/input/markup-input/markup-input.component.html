@@ -1,26 +1,18 @@
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    @if(isEditMode()) {
-        <mat-form-field appearance="outline">
-            @if( label() ) {
-                <mat-label>{{ label() }}</mat-label>
-            }
-            <textarea matInput 
-                    [(ngModel)]="value"
-                    [name]="name()"
-                    [placeholder]="placeholder()">
-            </textarea>
-            @if(isError()) {
-                <mat-error></mat-error>
-            } 
-            @else {
-                <mat-hint>{{ hint() }}</mat-hint>
-            }
-        </mat-form-field>
-    }
-    @else {
-        <p>{{ value() }}</p>
-    }
-</sl-control>
-
+@if(isEditMode()) {
+    <mat-form-field appearance="outline"
+                    [matTooltipDisabled]="hideTooltip()"
+                    [matTooltip]="tooltip()"
+                    [matTooltipPosition]="tooltipPosition()">
+        @if( label() ) {
+            <mat-label>{{ label() }}</mat-label>
+        }
+        <textarea matInput 
+                [(ngModel)]="value"
+                [name]="name()"
+                [placeholder]="placeholder()">
+        </textarea>
+    </mat-form-field>
+}
+@else {
+    <p>{{ value() }}</p>
+}

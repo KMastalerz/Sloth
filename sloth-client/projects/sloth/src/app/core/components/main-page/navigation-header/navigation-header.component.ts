@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { AddJobDialogComponent } from './navigation-header-dialogs/add-bug-dialog/add-job-dialog.component';
-import { ButtonComponent, HeaderLinkComponent, SnackbarService, SnackbarType} from 'sloth-ui';
-import { CreateQuickJobParam, JobService } from 'sloth-http';
+import { ButtonComponent, HeaderLinkComponent} from 'sloth-ui';
+import { CreateJobParam, JobService } from 'sloth-http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -13,31 +14,31 @@ import { CreateQuickJobParam, JobService } from 'sloth-http';
   styleUrl: './navigation-header.component.scss'
 })
 export class NavigationHeaderComponent {
-  readonly dialog = inject(MatDialog);
-  readonly jobService = inject(JobService);
-  readonly snackbarService = inject(SnackbarService);
+  private readonly dialog = inject(MatDialog);
+  private readonly jobService = inject(JobService);
+  private readonly snackBar = inject(MatSnackBar);
 
   
   addBug(): void {
     const dialogRef = this.dialog.open(AddJobDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result: CreateQuickJobParam) => {
+    dialogRef.afterClosed().subscribe((result: CreateJobParam) => {
       if(result)
         this.createQuickJob(result);
       else if(result === null)
-        this.snackbarService.openSnackbar('Not enough data!','Close',5000, SnackbarType.ERROR);
+        this.snackBar.open('Not enough data!','Close',{duration: 5000});
 
     });
   }
 
-  async createQuickJob(job: CreateQuickJobParam): Promise<void> {
-    const result = await this.jobService.createQuickJob(job);
+  async createQuickJob(job: CreateJobParam): Promise<void> {
+    const result = await this.jobService.createJob(job);
 
     if(result.success) {
-      this.snackbarService.openSnackbar('Job created successfully','Close',5000, SnackbarType.SUCCESS);
+      this.snackBar.open('Job created successfully','Close',{duration: 5000});
     }
     else {
-      this.snackbarService.openSnackbar('Error: new job not inserted','Close',5000, SnackbarType.ERROR);
+      this.snackBar.open('Error: new job not inserted','Close',{duration: 5000});
     }
   }
 }

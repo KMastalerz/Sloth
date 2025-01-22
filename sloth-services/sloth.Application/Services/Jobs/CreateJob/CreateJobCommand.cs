@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 
 namespace sloth.Application.Services.Jobs;
-public class CreateQuickJobCommand: IRequest
+public class CreateJobCommand: IRequest
 {
     public string Type { get; set; } = default!;
     public string Header { get; set; } = default!;

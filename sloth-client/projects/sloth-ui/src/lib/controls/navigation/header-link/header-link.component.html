@@ -1,10 +1,11 @@
-<sl-control [tooltip]="tooltip()"
-            [tooltipPosition]="tooltipPosition()"
-            [badge]="badge()">
-    <a mat-button
-       [disabled]="isDisabled()">
+<a  mat-button
+    [matTooltipDisabled]="hideTooltip()"
+    [matTooltip]="tooltip()"
+    [matTooltipPosition]="tooltipPosition()"   
+    [matBadge]="badge()" 
+    [matBadgeHidden]="hideBadge()"
+    [disabled]="isDisabled()">
     @if(label()) {
-        {{ label() }}
+    {{ label() }}
     }
-    </a>
-</sl-control>
+</a>

@@ -7,9 +7,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ListSelectComponent, MarkupInputComponent, TextInputComponent, 
   ToggleListComponent, DatePickerComponent, TimePickerComponent,  
   UploadInputComponent} from 'sloth-ui';
-import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CreateQuickJobParam } from 'sloth-http';
+import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CreateJobParam } from 'sloth-http';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
-
 
 @Component({
   selector: 'app-add-bug-dialog',
@@ -19,7 +18,8 @@ import { JobDataCacheService } from '../../../../../../services/job-data-cache/j
     UploadInputComponent, DatePickerComponent, TimePickerComponent, 
     MatStepperModule],
   templateUrl: './add-job-dialog.component.html',
-  styleUrl: './add-job-dialog.component.scss'
+  styleUrl: './add-job-dialog.component.scss',
+  providers: [JobDataCacheService]
 })
 export class AddJobDialogComponent {
   private readonly dialogRef = inject(MatDialogRef<AddJobDialogComponent>);
@@ -31,7 +31,6 @@ export class AddJobDialogComponent {
       .subscribe((data) => {
         this.priorities.set(data)
       }
-      
     );
 
     this.jobDataCacheService.products
@@ -48,8 +47,9 @@ export class AddJobDialogComponent {
 
     this.jobDataCacheService.clients
       .pipe(takeUntilDestroyed())
-      .subscribe((data) => 
-        this.clients.set(data)
+      .subscribe((data) => {
+        this.clients.set(data);
+      }
     );
 
     this.jobDataCacheService.functionalities
@@ -60,8 +60,11 @@ export class AddJobDialogComponent {
 
     this.jobForm.controls.clientID.valueChanges
       .pipe(takeUntilDestroyed())
-      .subscribe((value) => 
-        this.jobDataCacheService.listProductsWithClientIDAsync(value)
+      .subscribe((value) => {
+        this.jobDataCacheService.listProductsWithClientIDAsync(value);
+        this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(this.products().map(p=>p.productID))
+      }
+       
     );
 
     this.jobForm.controls.products.valueChanges
@@ -110,7 +113,7 @@ export class AddJobDialogComponent {
   onSaveBug(): void {
     if(this.jobForm.valid)       
       this.dialogRef.close(
-        this.jobForm.value as CreateQuickJobParam
+        this.jobForm.value as CreateJobParam
       );
     else 
       this.dialogRef.close(

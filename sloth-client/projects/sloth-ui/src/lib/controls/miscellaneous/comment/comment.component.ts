@@ -1,8 +1,6 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
-import { GetCommentBugItem } from 'sloth-http';
 import { AuthStateService, User } from 'sloth-utilities';
-import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-comment',
@@ -10,7 +8,7 @@ import { BaseFormControlComponent } from '../../base-form-control/base-form-cont
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
-export class CommentComponent extends BaseFormControlComponent implements OnInit {
+export class CommentComponent implements OnInit {
   private readonly authStateService = inject(AuthStateService);
   private user = signal<User | undefined | null>(undefined)
   protected isAuthor = computed<boolean>(() => {
@@ -19,24 +17,24 @@ export class CommentComponent extends BaseFormControlComponent implements OnInit
   })
 
   comment = model<any | null | undefined>(undefined);
+  commentText = model<any | null | undefined>(undefined);
   commentID = model<number | null | undefined>(undefined)
   commentDate = model<Date | null | undefined>(undefined);
   commentedBy = model<string | null | undefined>(undefined);
   commentedByUserName = model<string | null | undefined>(undefined);
 
-  commentKey = input<string | null | undefined>(undefined);
+  commentTextKey = input<string | null | undefined>(undefined);
   commentIDKey = model<string | null | undefined>(undefined)
   commentDateKey = input<string | null | undefined>(undefined);
   commentedByKey = input<string | null | undefined>(undefined);
   commentedByUserNameKey = input<string | null | undefined>(undefined);
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
     this.user.set(this.authStateService.user);
-
+    
     if(this.comment()) {
-      if(this.commentKey()) {
-        this.value.set(this.comment()[this.commentKey()!])
+      if(this.commentTextKey()) {
+        this.commentText.set(this.comment()[this.commentTextKey()!])
       }
       if(this.commentDateKey()) {
         this.commentDate.set(this.comment()[this.commentDateKey()!])

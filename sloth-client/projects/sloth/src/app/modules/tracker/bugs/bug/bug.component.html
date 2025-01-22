@@ -1,9 +1,9 @@
 <div class="bug-container">
-    @if(formGroup()) {
-        <sl-form [formGroup]="formGroup()!">
+    @if(formGroup) {
+        <sl-form [formGroup]="formGroup">
             <section class="bug-header">
                 <p>{{headerID()}}</p>
-                <p>{{ this.formGroup().value.header }}</p>
+                <p>{{ this.formGroup.value.header }}</p>
                 @if(isRTS()) {
                     <sl-tag value="RTS" backgroundColor="#851d22"/>
                 }
@@ -13,13 +13,28 @@
             </section>
 
             <div class="action-list">
-                <sl-button label="Save" displayType="flat" (onClick)="onSaveForm()"/>
+                <sl-button label="Save" 
+                            displayType="flat" 
+                            buttonClass="success"
+                            (onClick)="onSaveForm()"/>
                 <sl-button [label]="editMode()" (onClick)="onToggleEditMode()"/>
-                <sl-button label="Claim"/>
+                @if(isClaimed()) {
+                    <sl-button label="Abandon"
+                                (onClick)="onAbandonBug()"/>
+                }
+                @else {
+                    <sl-button label="Claim"
+                                (onClick)="onClaimBug()"/>
+                }
+                @if(canDelete()) {
+                    <sl-button label="Delete" 
+                                buttonClass="error" 
+                                (onClick)="onDeleteBug()"/>
+                }
             </div>
             <sl-section header="Description:">
                 @if(isEditMode()) {
-                    <sl-text-input formControlName="header"
+                    <sl-text-input formControlName="header"s
                                     label="Header"
                                     [formMode]="formMode()"/>
                 }
@@ -40,15 +55,15 @@
             </sl-section>
             <mat-divider class="comment-divider"></mat-divider>
             <sl-section header="Comments:">
-                <sl-comment-list formArrayName="comments"
+                <sl-comment-list [comments]="comments()"
                                  commentIDKey="commentID"
-                                 commentKey="comment"
+                                 commentTextKey="comment"
                                  commentedByKey="commentedByFullName"
                                  commentedByUserNameKey="commentedBy"
                                  commentDateKey="commentDate"/>
             </sl-section>
         </sl-form>
-        <sl-side-form [formGroup]="formGroup()!">
+        <sl-side-form [formGroup]="formGroup">
             <sl-side-section header="Status:"  
                              formGroupName="status">         
                 @if(isEditMode()) {
@@ -59,19 +74,35 @@
                                     (valueChange)="onStatusChange($event)"/>
                 } 
                 @else {
-                    <sl-tag formControlName="tag"
-                            backgroundControlName="tagColor" 
+                    <sl-tag tagKey="tag"
+                            backgroundKey="tagColor" 
                             fallbackValue="Unassigned"/>
                 }
             </sl-side-section>
-            <sl-side-section header="Current owner:" 
-                            formGroupName="currentOwner">
-                <sl-tag formControlName="fullName" 
-                        fallbackValue="Unassigned"/>
+
+            @if(isRTS()) {
+                <sl-side-section header="Client:" 
+                                formGroupName="client" >
+                @if(isEditMode()) {
+                    <sl-list-select [items]="clients()"
+                                    displayKey="name"
+                                    valueKey="clientID"
+                                    [value]="currentClientID()"
+                                    (valueChange)="onClientChange($event)"/>
+                }
+                @else {
+                    <sl-tag tagKey="name" 
+                            fallbackValue="None"/>
+                }
+                </sl-side-section>
+            }
+            <sl-side-section header="Assignees:">
+                <sl-tag-list [tags]="assignees()"
+                             tagKey="assignedToFullName"/>
             </sl-side-section>
             <sl-side-section header="Created by:" 
-                            formGroupName="createdBy">
-                <sl-tag  formControlName="fullName" 
+                             formGroupName="createdBy">
+                <sl-tag  tagKey="fullName" 
                         fallbackValue="Missing"/>
             </sl-side-section>
             <sl-side-section header="Priority:" 
@@ -85,8 +116,8 @@
                                     (valueChange)="onPriorityChange($event)"/>
                 }
                 @else {
-                    <sl-tag formControlName="tag" 
-                            backgroundControlName="tagColor" 
+                    <sl-tag tagKey="tag" 
+                            backgroundKey="tagColor" 
                             fallbackValue="None"/>
                 }
             </sl-side-section>
@@ -100,9 +131,9 @@
                                     (valueChange)="onProductsChange($event)"/>
                 }
                 @else {
-                    <sl-tag-list tooltipControlName="description"
-                                 formArrayName="products"
-                                 formControlNames="name"/>
+                    <sl-tag-list formArrayName="products"
+                                 tooltipKey="description"
+                                 tagKey="name"/>
                 }
             </sl-side-section>
             <sl-side-section header="Functionalities:">
@@ -110,15 +141,16 @@
                     <sl-list-select [items]="functionalities()"
                                     [multiple]="true"
                                     displayKey="tag"
+                                    groupKey="product"
                                     valueKey="functionalityID"
                                     [value]="currentFunctionalityIDs()"
                                     (valueChange)="onFunctionalityChange($event)"/>
                 }
                 @else {
-                    <sl-tag-list  tooltipControlName="description"
-                                formArrayName="functionalities"
-                                backgroundControlName="tagColor"
-                                formControlNames="tag"/>
+                    <sl-tag-list    formArrayName="functionalities"
+                                    tooltipKey="description"
+                                    backgroundKey="tagColor"
+                                    tagKey="tag"/>
                 }
             </sl-side-section>
         </sl-side-form>

@@ -10,8 +10,6 @@ public class GetBugItem
     public DateTime? ClosedDate { get; set; } = null;
     public bool IsClosed { get; set; } = false;
     public bool IsBlocker { get; set; } = false;
-    public GetUserBugItem? CurrentOwner { get; set; } = null;
-    public GetTeamBugItem? CurrentTeam { get; set; } = null;
     public GetUserBugItem? CreatedBy { get; set; } = null;
     public GetUserBugItem? ClosedBy { get; set; } = null;
     public GetClientBugItem? Client { get; set; } = null;
@@ -33,7 +31,6 @@ public class GetAssignmentBugItem
     public string AssignedTo { get; set; } = default!;
     public string AssignedToFullName { get; set; } = default!;
     public string AssignedToEmail { get; set; } = default!;
-    public string Team { get; set; } = default!;
     public string AssignedBy { get; set; } = default!;
     public string AssignedByFullName { get; set; } = default!;
     public string AssignedByEmail { get; set; } = default!;
@@ -50,10 +47,10 @@ public class GetAssignmentHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
-    public string Team { get; set; } = default!;
 }
 public class GetClientBugItem
 {
+    public Guid ClientID { get; set; } = default!;
     public string Name { get; set; } = default!;
     public string Alias { get; set; } = default!;
 }

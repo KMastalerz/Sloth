@@ -10,7 +10,7 @@ public class BugProfile : Profile
     {
         CreateMap<Bug, GetBugItem>().ReverseMap();
 
-        CreateMap<CreateQuickJobCommand, Bug>();
+        CreateMap<CreateJobCommand, Bug>();
 
         CreateMap<Bug, ListBugItem>()
             // Map properties from Bug
@@ -27,15 +27,11 @@ public class BugProfile : Profile
             .ForMember(dest => dest.IsBlocker, opt => opt.MapFrom(src => src.IsBlocker))
 
             // Map IDs
-            .ForMember(dest => dest.CurrentOwnerID, opt => opt.MapFrom(src => src.CurrentOwnerID))
-            .ForMember(dest => dest.CurrentTeamID, opt => opt.MapFrom(src => src.CurrentTeamID))
             .ForMember(dest => dest.UpdatedByID, opt => opt.MapFrom(src => src.UpdatedByID))
             .ForMember(dest => dest.ClosedByID, opt => opt.MapFrom(src => src.ClosedByID))
             .ForMember(dest => dest.ClientID, opt => opt.MapFrom(src => src.ClientID))
 
             // Map string representations of related entities
-            .ForMember(dest => dest.CurrentOwner, opt => opt.MapFrom(src => src.CurrentOwner != null ? $"{src.CurrentOwner.FirstName} {src.CurrentOwner.LastName}" : null))
-            .ForMember(dest => dest.CurrentTeam, opt => opt.MapFrom(src => src.CurrentTeam != null ? src.CurrentTeam.Name : null))
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy != null ? $"{src.UpdatedBy.FirstName} {src.UpdatedBy.LastName}" : null))
             .ForMember(dest => dest.ClosedBy, opt => opt.MapFrom(src => src.ClosedBy != null ? $"{src.ClosedBy.FirstName} {src.ClosedBy.LastName}" : null))
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : null));

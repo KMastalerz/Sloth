@@ -1,16 +1,16 @@
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
 import { Title } from '@angular/platform-browser';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CacheStatusItem, GetBugItem, JobService } from 'sloth-http';
+import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CacheStatusItem, GetAssignmentBugItem, GetCommentBugItem, JobService } from 'sloth-http';
 import { ButtonComponent, CommentListComponent, FormComponent, FormMode, ListSelectComponent, 
-    MarkupInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, 
-    SnackbarService, SnackbarType, TagComponent, TagListComponent, ToggleListComponent,
+    MarkupInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, TagComponent, TagListComponent, ToggleListComponent,
     TextInputComponent} from 'sloth-ui';
-import { FormGroupService } from 'sloth-utilities';
+import { AuthStateService, FormGroupService } from 'sloth-utilities';
 import { JobDataCacheService } from '../../../../services/job-data-cache/job-data-cache.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
     selector: 'app-bug',
     imports: [FormComponent, SideFormComponent, SectionComponent,
@@ -18,15 +18,17 @@ import { JobDataCacheService } from '../../../../services/job-data-cache/job-dat
     ButtonComponent, MatDivider, ReactiveFormsModule,
     TagListComponent, CommentListComponent, TextInputComponent, ListSelectComponent, ToggleListComponent],
     templateUrl: './bug.component.html',
-    styleUrl: './bug.component.scss'
+    styleUrl: './bug.component.scss',
+    providers: [JobDataCacheService]
 })
 export class BugComponent implements OnInit {
+    private readonly authStateService = inject(AuthStateService);
     private readonly jobDataCacheService = inject(JobDataCacheService)
     private readonly jobServices = inject(JobService);
     private readonly router = inject(Router);
     private readonly route = inject(ActivatedRoute);
     private readonly titleService = inject(Title)
-    private readonly snackbarService = inject(SnackbarService);
+    private readonly snackBar = inject(MatSnackBar);
     private readonly formGroupService = inject(FormGroupService);
 
     constructor(){
@@ -45,7 +47,10 @@ export class BugComponent implements OnInit {
         this.jobDataCacheService.products
             .pipe(takeUntilDestroyed())
             .subscribe((data) => 
-            this.products.set(data)
+            {
+                this.products.set(data);
+                this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(data.map(p=>p.productID));
+            }
         );
 
         this.jobDataCacheService.functionalities
@@ -60,6 +65,7 @@ export class BugComponent implements OnInit {
             this.statuses.set(data.filter(d=> d.type === "Bug" || d.type === "All"))
         );
     }
+    bugID = input.required<number>();
 
     clients = signal<CacheClientItem[]>([]);
     priorities = signal<CachePriorityItem[]>([]);
@@ -68,106 +74,49 @@ export class BugComponent implements OnInit {
     statuses = signal<CacheStatusItem[]>([]);
 
     formMode = signal<FormMode>(FormMode.Read);
-    bugID = input.required<number>();
+
+    canDelete = signal<boolean>(false);
+    assignees = signal<GetAssignmentBugItem[]>([]);
     jobID = signal<number>(0);
     isRTS = signal<boolean>(false);
     isBlocker = signal<boolean>(false);
-    formGroup = signal<FormGroup>(new FormGroup({
-        jobID: new FormControl(0),
-        header: new FormControl(''),
-        description: new FormControl(''),
-        type: new FormControl(''),
-        createdDate: new FormControl(new Date()),
-        updatedDate: new FormControl(null),
-        closedDate: new FormControl(null),
-        isClosed: new FormControl(false),
-        currentOwner: new FormGroup({
-            userName: new FormControl(''),
-            firstName: new FormControl(''),
-            lastName: new FormControl(''),
-            fullName: new FormControl(''),
-            email: new FormControl('')
-        }),
-        currentTeam: new FormControl({
-            alias: new FormControl(''),
-            speciality: new FormControl(''),
-            name: new FormControl(''),
-            description: new FormControl('')
-        }),
-        createdBy: new FormGroup({
-            userName: new FormControl(''),
-            firstName: new FormControl(''),
-            lastName: new FormControl(''),
-            fullName: new FormControl(''),
-            email: new FormControl('')
-        }),
-        closedBy: new FormGroup({
-            userName: new FormControl(''),
-            firstName: new FormControl(''),
-            lastName: new FormControl(''),
-            fullName: new FormControl(''),
-            email: new FormControl('')
-        }),
-        client: new FormGroup({
-            name: new FormControl(''),
-            alias: new FormControl('')
-        }),
-        updatedBy: new FormGroup({
-            userName: new FormControl(''),
-            firstName: new FormControl(''),
-            lastName: new FormControl(''),
-            fullName: new FormControl(''),
-            email: new FormControl('')
-        }),
-        priority: new FormGroup({
-            priorityID: new FormControl(''),
-            tag: new FormControl(''),
-            tagColor: new FormControl(null),
-            description: new FormControl(null)
-        }),
-        status: new FormGroup({
-            statusID: new FormControl(null),
-            tag: new FormControl(''),
-            tagColor: new FormControl(null),
-            description: new FormControl(null)
-        }),
-        comments: new FormArray([]),
-        assignmentHistory: new FormArray([]),
-        assignments: new FormArray([]),
-        files: new FormArray([]),
-        priorityHistory: new FormArray([]),
-        statusHistory: new FormArray([]),
-        products: new FormArray([]),
-        functionalities: new FormArray([])
-    }));
-
-    headerID = computed<string>(() => `${this.bugID()}#`)
-    isEditMode = computed<boolean>(() => this.formMode() === FormMode.Edit);
-    editMode = computed<string>(()=> this.isEditMode() ? 'End edit' : 'Edit');
+    comments = signal<GetCommentBugItem[]>([]);
+    currentClientID = signal<string | null>(null);
     currentStatusID = signal<number | null>(null);
     currentProductIDs = signal<number[]>([]);
     currentFunctionalityIDs = signal<number[]>([]);
     currentPriorityID = signal<number | null>(null);
+    formGroup: FormGroup | null = null;
+
+    headerID = computed<string>(() => `${this.bugID()}#`)
+    isEditMode = computed<boolean>(() => this.formMode() === FormMode.Edit);
+    editMode = computed<string>(()=> this.isEditMode() ? 'End edit' : 'Edit');
+    isClaimed = computed<boolean>(()=> this.assignees().some(a=>a.assignedTo === this.authStateService.user?.userName));
 
     comment = model<string>();
-
+    
     async ngOnInit(): Promise<void> {
+        this.canDelete.set(this.authStateService.user?.userRoles.some(r=>r.roleCode === "ADMIN") ?? false);        
         const response = await this.jobServices.getBugAsync(this.bugID());
         if(response.success) {
+            if(!response.data)
+                this.router.navigate(['../'], { relativeTo: this.route });
+
+            this.jobID.set(response.data!.jobID);
             this.isRTS.set(!!response.data?.client);
             this.isBlocker.set(response.data?.isBlocker ?? false);
+            this.currentClientID.set(response.data?.client?.clientID ?? null);
             this.currentStatusID.set(response.data?.status?.statusID ?? null);
             this.currentProductIDs.set(response.data?.products.map(p=>p.productID) ?? []);
             this.currentFunctionalityIDs.set(response.data?.functionalities.map(p=>p.functionalityID) ?? []);
             this.currentPriorityID.set(response.data?.priority?.priorityID ?? null)
+            this.comments.set(response.data?.comments ?? []);
+            this.assignees.set(response.data?.assignments ?? []);
             this.titleService.setTitle(`${this.bugID()}# ${response.data?.header}`)
-            if(response.data) {
-                this.jobID.set(response.data.jobID);
-                this.patchBug(response.data);
-            }
+            this.formGroup = this.formGroupService.createFormFromObject(response.data) as FormGroup;
 
-            if(!response.data)
-                this.router.navigate(['../'], { relativeTo: this.route });
+            if(this.currentClientID())
+                this.jobDataCacheService.listProductsWithClientIDAsync(this.currentClientID());
         }
         else {
             this.router.navigate(['../'], { relativeTo: this.route });
@@ -182,25 +131,69 @@ export class BugComponent implements OnInit {
 
         if(response.success) {
             this.comment.set(undefined);
-            this.patchArray('comments', response.data ?? [], true);   
-            this.snackbarService.openSnackbar('Comment added','Close',5000, SnackbarType.SUCCESS);
+            this.comments.set(response.data);
+            this.snackBar.open('Comment added','Close', {duration: 5000});
         }
         else {
-            this.snackbarService.openSnackbar(`Error: ${response.error}`,'Close',5000, SnackbarType.ERROR);
+            this.snackBar.open(`Error: ${response.error}`,'Close', {duration: 5000});
         }
     }
 
     async onSaveForm(): Promise<void> {
-        console.log('[BugComponent] onSaveForm:', this.formGroup());
+        console.log('[BugComponent] onSaveForm:', this.formGroup);
         
+    }
+
+    async onClaimBug(): Promise<void> {
+        const response = await this.jobServices.claimBugAsync(this.bugID());
+        if(response.success) {
+            this.snackBar.open('Bug claimed!','Close', {duration: 5000});
+            this.assignees.set(response.data);
+        }
+        else {
+            this.snackBar.open(`Error: ${response.error}`,'Close', {duration: 5000});
+        }
+    }
+
+    async onAbandonBug(): Promise<void> {
+        const response = await this.jobServices.abdandonBugAsync(this.bugID());
+        if(response.success) {
+            this.snackBar.open('Bug abandoned!','Close', {duration: 5000});
+            this.assignees.set(response.data);
+        }
+        else {
+            this.snackBar.open(`Error: ${response.error}`,'Close', {duration: 5000});
+        }
+    }
+
+    async onDeleteBug(): Promise<void> {
+        const response = await this.jobServices.deleteBugAsync(this.bugID());
+        if(response.success) {
+            this.snackBar.open('Bug removed!','Close', {duration: 5000});
+            this.router.navigate(['../'], { relativeTo: this.route });
+        }
+        else {
+            this.snackBar.open(`Error: ${response.error}`,'Close', {duration: 5000});
+        }
     }
 
     onToggleEditMode() : void {
         this.formMode.set(this.formMode() === FormMode.Read ? FormMode.Edit : FormMode.Read)
     }
 
+    onClientChange(value: string | null): void {
+        const clientGroup = this.formGroup?.get('client');
+        const client = this.clients().find(s=> s.clientID === value);
+
+        if(clientGroup) {
+            clientGroup.patchValue(client);
+            this.currentClientID.set(value);
+            this.jobDataCacheService.listProductsWithClientIDAsync(value);
+        }
+    }
+
     onStatusChange(value: number): void {
-        const statusGroup = this.formGroup().get('status');
+        const statusGroup = this.formGroup?.get('status');
         const status = this.statuses().find(s=> s.statusID === value);
 
         if(statusGroup) {
@@ -210,17 +203,18 @@ export class BugComponent implements OnInit {
     }
 
     onProductsChange(value: number[]) {
-        const productsArray = this.formGroup().get('products') as FormArray;
+        const productsArray = this.formGroup?.get('products') as FormArray;
         const products = this.products().filter(p => value.some(v => v === p.productID)) ?? [];
 
         if(productsArray) {
             this.patchArray('products', products, true);
             this.currentProductIDs.set(value);
+            this.jobDataCacheService.listFunctionalitiesWithProductIDAsync(value);
         }
     }
 
     onFunctionalityChange(value: number[]) {
-        const functionalitiesArray = this.formGroup().get('functionalities') as FormArray;
+        const functionalitiesArray = this.formGroup?.get('functionalities') as FormArray;
         const functionalities = this.functionalities().filter(f => value.some(v => v === f.functionalityID)) ?? [];
 
         if(functionalitiesArray) {
@@ -230,7 +224,7 @@ export class BugComponent implements OnInit {
     }
 
     onPriorityChange(value: number) {
-        const priorityGroup = this.formGroup().get('priority') 
+        const priorityGroup = this.formGroup?.get('priority') 
         const priority = this.priorities().find(p=> p.priorityID === value);
 
         if(priorityGroup) {
@@ -239,16 +233,8 @@ export class BugComponent implements OnInit {
         }
     }
 
-    private patchBug(bug: GetBugItem): void {
-        this.formGroup().patchValue(bug);       
-        this.patchArray('products', bug.products ?? []);
-        this.patchArray('functionalities', bug.functionalities ?? []);
-        this.patchArray('comments', bug.comments ?? []);
-        this.formGroup.set(this.formGroup());
-    }
-
-    private patchArray(key: string, data: unknown[], clearFlag: boolean = false): void {
-        const formArray = this.formGroup().get(key);
+    private patchArray(key: string, data: unknown[], clearFlag: boolean = false, markAsDirty: boolean = true): void {
+        const formArray = this.formGroup?.get(key);
 
         if(clearFlag) {
             if(formArray instanceof FormArray)
@@ -260,7 +246,9 @@ export class BugComponent implements OnInit {
                 const newFormGroup = this.formGroupService.createFormFromObject(item);
                 formArray.push(newFormGroup);
             })
-            formArray.markAsDirty();
+
+            if(markAsDirty)
+                formArray.markAsDirty();
         }
     }
 }

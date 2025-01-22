@@ -17,7 +17,7 @@ export * from './lib/dto/job/items/get-bug.item';
 export * from './lib/dto/job/items/list-bug.item';
 export * from './lib/dto/job/items/list-job-data-cache.item';
 export * from './lib/dto/job/params/add-job-comment.param';
-export * from './lib/dto/job/params/create-quick-job.param';
+export * from './lib/dto/job/params/create-job.param';
 export * from './lib/dto/job/params/list-bug.param';
 
 // services 

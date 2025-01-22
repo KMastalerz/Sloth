@@ -1,14 +1,15 @@
-import { Component, ElementRef, forwardRef, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { ControlComponent } from '../../control.component';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { BaseInputComponent } from '../base-input.component';
+import { v4 as uuidv4 } from 'uuid';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-file-input',
-  imports: [MatInputModule, ControlComponent, ReactiveFormsModule, FormsModule, MatButtonModule, MatIconModule],
+  imports: [MatInputModule, ReactiveFormsModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './file-input.component.html',
   styleUrl: './file-input.component.scss',
   providers: [
@@ -19,7 +20,15 @@ import { BaseInputComponent } from '../base-input.component';
     }
   ]
 })
-export class FileInputComponent extends BaseInputComponent {
+export class FileInputComponent extends BaseFormControlComponent {
+  name = input<string>(this.formControlName() ?? uuidv4());
+  placeholder = input<string>('');
+  label = input<string | null>(null);
+  tooltip = input<string | null>(null);
+  tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
+
+  hideTooltip = computed(() => !this.tooltip());
+
   fileInput = viewChild('fileInput', { read: ElementRef });
   fileName = signal<string>('')
 

@@ -10,15 +10,15 @@ using sloth.Utilities.Constants;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
-public class CreateQuickJobCommandHandler(
-    ILogger<CreateQuickJobCommandHandler> logger,
+public class CreateJobCommandHandler(
+    ILogger<CreateJobCommandHandler> logger,
     IJobRepository jobRepository,
     IUserContext userContext,
     IConfiguration configuration) 
-    : IRequestHandler<CreateQuickJobCommand>
+    : IRequestHandler<CreateJobCommand>
 {
     private readonly string jobsPath = Path.Combine(Directory.GetCurrentDirectory(), "Jobs");
-    public async Task Handle(CreateQuickJobCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateJobCommand request, CancellationToken cancellationToken)
     {
         var currentUser = userContext.GetCurrentUser();
 

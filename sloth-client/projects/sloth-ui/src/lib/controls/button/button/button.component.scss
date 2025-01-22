@@ -15,3 +15,31 @@
     font-size: small;
     height: auto;
 }
+
+.regular.error-button {
+    color: #851d22 !important;
+}
+
+.regular.warning-button {
+    color: #af7f3c !important;
+}
+
+.regular.success-button {
+    color: #167533 !important;
+}
+
+.flat.error-button {
+    background-color: #851d22 !important;
+    color: #ffffff !important;
+}
+
+.flat.warning-button {
+    background-color: #af7f3c !important;
+    color: #000 !important;
+}
+
+.flat.success-button {
+    background-color: #167533 !important;
+    color: #ffffff !important;
+}
+

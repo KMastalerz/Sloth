@@ -1,13 +1,13 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, computed, forwardRef, input } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatError, MatHint } from '@angular/material/form-field';
-import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlComponent } from '../../control.component';
-import { BaseSelectComponent } from '../base-select.component';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';;
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 
 @Component({
   selector: 'sl-checkbox',
-  imports: [ControlComponent, MatCheckboxModule, FormsModule, MatHint, MatError],
+  imports: [MatCheckboxModule, FormsModule, MatTooltipModule],
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss',
   providers: [
@@ -18,4 +18,10 @@ import { BaseSelectComponent } from '../base-select.component';
     }
   ],
 })
-export class CheckboxComponent extends BaseSelectComponent {}
+export class CheckboxComponent extends BaseFormControlComponent {
+  name = input<string>(this.formControlName() ?? uuidv4());
+  label = input<string | null>(null);
+  tooltip = input<string | null>(null);
+  tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
+  hideTooltip = computed(() => !this.tooltip());
+}

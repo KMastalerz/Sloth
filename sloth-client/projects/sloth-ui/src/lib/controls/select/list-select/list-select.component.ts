@@ -3,11 +3,11 @@ import { Component, computed, forwardRef, input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ListItemGroup, ListSelectItem } from 'sloth-utilities';
-import { ControlComponent } from '../../control.component';
-import { BaseSelectComponent } from '../base-select.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 @Component({
   selector: 'sl-list-select',
-  imports: [MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ControlComponent, FormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatTooltipModule, FormsModule],
   templateUrl: './list-select.component.html',
   styleUrl: './list-select.component.scss',
   providers: [
@@ -18,9 +18,14 @@ import { BaseSelectComponent } from '../base-select.component';
     }
   ],
 })
-export class ListSelectComponent extends BaseSelectComponent {
+export class ListSelectComponent extends BaseFormControlComponent {
   multiple = input<boolean>(false);
-  items = input<any[]>([]);
+  items = input.required<any[]>();
+  label = input<string | null>(null);
+  tooltip = input<string | null>(null);
+  tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
+  hideTooltip = computed(() => !this.tooltip());
+
   valueKey = input<string | null | undefined>(undefined);
   groupKey = input<string | null | undefined>(undefined);
   displayKey = input<string | null | undefined>(undefined);

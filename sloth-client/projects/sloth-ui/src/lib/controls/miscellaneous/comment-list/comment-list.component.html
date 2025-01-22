@@ -1,8 +1,8 @@
 <div class="comment-list-container">
-    @for(comment of value(); track comment.commentID) {
+    @for(comment of comments(); track comment[commentIDKey()]) {
         <sl-comment [comment]="comment"
                     [commentIDKey]="commentIDKey()"
-                    [commentKey]="commentKey()"
+                    [commentTextKey]="commentTextKey()"
                     [commentDateKey]="commentDateKey()"
                     [commentedByUserNameKey]="commentedByUserNameKey()"
                     [commentedByKey]="commentedByKey()"/>

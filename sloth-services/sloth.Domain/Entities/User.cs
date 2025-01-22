@@ -11,4 +11,5 @@ public class User
     public int FailedLoginAttempts { get; set; }
     public bool IsActive { get; set; }
     public List<UserRole> UserRoles { get; set; } = [];
+    public List<Team> Teams { get; set; } = [];
 }

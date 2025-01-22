@@ -1,5 +1,5 @@
 import { Component, computed, input, model, OnDestroy, OnInit, Optional, signal } from '@angular/core';
-import { AbstractControl, ControlContainer, ControlValueAccessor, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { ControlContainer, ControlValueAccessor, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FormMode } from '../../models/form-mode.model';
 
@@ -19,19 +19,11 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
 
   // Names used to look up from *parent* form
   formControlName = input<string | null | undefined>(undefined);
-  formGroupName = input<string | null | undefined>(undefined);
-  formArrayName = input<string | null | undefined>(undefined);
 
   // Bounded values
   formControl = model<FormControl | null | undefined>(undefined);
-  formGroup = model<FormGroup | null | undefined>(undefined);
-  formArray = model<FormArray | null | undefined>(undefined);
-
-  formArrayControls = computed(()=> this.formArray()?.controls as FormGroup[] ?? []);
-  formGroupControls = computed(()=> this.formGroup()?.controls);
-
-  // Base control of any type => FormGroup | FormArray | FormControl 
-  baseControl = model<AbstractControl | null | undefined>(undefined);
+  formGroup = signal<FormGroup | null | undefined>(undefined);
+  formArray = signal<FormArray | null | undefined>(undefined);
 
   // Our local "value" model, only used if we have a FormControl
   value = model<any | any[]>();
@@ -41,7 +33,7 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
 
   // For error display if we are a FormControl
   isError = computed<boolean>(() => {
-    const c = this.baseControl();
+    const c = this.formControl();
     return !!(c && c.invalid && (c.touched || c.dirty));
   });
 
@@ -56,60 +48,25 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
 
   ngOnInit() {
     const parent = this.controlContainer?.control as FormGroup | FormArray | undefined;
-    let baseControl: AbstractControl | null = null;
-    if(parent) {
-      if(parent instanceof FormArray) {
-        this.formArray.set(parent);
-      }
 
-      if(parent instanceof FormGroup){
-        this.formGroup.set(parent)
-      }
 
-      if(this.formControlName()) {        
-        const control = parent?.get(this.formControlName()!);
-        if(control instanceof FormControl) {
-          this.formControl.set(control as FormControl);
-          baseControl = control;
-        }
-        else  {
-          this.formControl.set(null);
-          baseControl = null;
-        }
-      }
-      else if(this.formGroupName()) {
-        const group = parent;
-
-        if(group instanceof FormGroup) {
-          this.formGroup.set(group as FormGroup);
-          baseControl = group;
-        }
-        else  {
-          this.formControl.set(null);
-          baseControl = null;
-        }
-      }
-      else if(this.formArrayName()) {
-        const array = parent;
-
-        if(array instanceof FormArray) {
-          this.formArray.set(array as FormArray);
-          baseControl = array;
-        }
-        else  {
-          this.formControl.set(null);
-          baseControl = null;
-        }
-      }
-      else {
-        this.formControl.set(null);
-      }
+    if(parent instanceof FormGroup) {
+      this.formGroup.set(parent)
+    }
+    if(parent instanceof FormArray) {
+      this.formArray.set(parent)
     }
 
-    this.baseControl.set(baseControl);
+    if(parent && this.formControlName()) {
+      const control = parent.get(this.formControlName()!) as FormControl;
+      this.formControl.set(control);
+    }
+    
 
-    if(this.baseControl()) {
-      this.valueChangeSub = this.baseControl()!.valueChanges.subscribe(val => {
+
+    if(this.formControl()) {
+      this.value.set(this.formControl()?.value)
+      this.valueChangeSub = this.formControl()!.valueChanges.subscribe(val => {
         this.value.set(val);
         this.onChangeFn(val);
       });
@@ -141,7 +98,7 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    const ctrl = this.baseControl();
+    const ctrl = this.formControl();
     if (ctrl) {
       if(isDisabled !== ctrl.disabled)
         isDisabled ? ctrl.disable() : ctrl.enable();

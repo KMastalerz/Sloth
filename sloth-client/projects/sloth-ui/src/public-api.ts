@@ -39,7 +39,3 @@ export * from  './lib/wrappers/side-section//side-section.component';
 export * from  './lib/models/form-mode.model';
 export * from  './lib/models/paginator-event.model';
 export * from  './lib/models/tag-list-item.model';
-
-/* Snackbar */
-export * from './lib/snackbar/snackbar.model';
-export * from './lib/snackbar/snackbar-service/snackbar.service';

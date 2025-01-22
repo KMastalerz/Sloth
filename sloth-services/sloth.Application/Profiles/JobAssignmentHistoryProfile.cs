@@ -16,7 +16,6 @@ public class JobAssignmentHistoryProfile : Profile
             .ForMember(dest => dest.PreviousOwnerEmail, opt => opt.MapFrom(src => src.PreviousOwner.Email))
             .ForMember(dest => dest.ChangedBy, opt => opt.MapFrom(src => src.ChangedBy.UserName))
             .ForMember(dest => dest.ChangedByFullName, opt => opt.MapFrom(src => $"{src.ChangedBy.FirstName} {src.ChangedBy.LastName}"))
-            .ForMember(dest => dest.ChangedByEmail, opt => opt.MapFrom(src => src.ChangedBy.Email))
-            .ForMember(dest => dest.Team, opt => opt.MapFrom(src => src.Team.Name));
+            .ForMember(dest => dest.ChangedByEmail, opt => opt.MapFrom(src => src.ChangedBy.Email));
     }
 }

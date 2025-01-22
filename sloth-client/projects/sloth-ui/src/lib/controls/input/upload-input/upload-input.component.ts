@@ -1,10 +1,11 @@
 import { Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { EventBlockerDirective } from 'sloth-utilities'; 
-import { BaseInputComponent } from '../base-input.component';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
 @Component({
   selector: 'sl-upload-input',
   imports: [EventBlockerDirective, NgClass, MatIcon, MatButtonModule],
@@ -18,10 +19,12 @@ import { BaseInputComponent } from '../base-input.component';
     }
   ]
 })
-export class UploadInputComponent extends BaseInputComponent implements ControlValueAccessor {
+export class UploadInputComponent extends BaseFormControlComponent   {
+  multiple = input<boolean>(true);
+  name = input<string>(this.formControlName() ?? uuidv4());
+
   fileInput = viewChild('fileInput', { read: ElementRef });
   isDragover = signal<boolean>(false);
-  multiple = input<boolean>(true);
   hasFiles = computed(()=> {
     return this.value() ? true : false
   });
@@ -37,7 +40,6 @@ export class UploadInputComponent extends BaseInputComponent implements ControlV
     }
 
     if (this.multiple()) {
-      // Merge new files with the existing FileList
       const existingFiles = this.value() ? Array.from(this.value() as FileList) : [];
       const newFiles = Array.from(files).filter(
         (file) => !existingFiles.some((existingFile) => existingFile.name === file.name)
@@ -45,7 +47,6 @@ export class UploadInputComponent extends BaseInputComponent implements ControlV
 
       this.value.set(this.createFileList([...existingFiles, ...newFiles]));
     } else {
-      // Replace the file when `multiple` is `false`
       this.value.set(files.item(0));
     }
   }

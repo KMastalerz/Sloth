@@ -1,20 +1,20 @@
 <div class="side-navigation">
     <span class="application-name center"> Sloth </span>
-    <sl-navigation-link icon="space_dashboard" label="Dashboard" target="dashboard"/>
-    <sl-navigation-link icon="view_kanban" label="Kanban" target="kanban"/>
+    <sl-navigation-link icon="space_dashboard" label="Dashboard" link="dashboard"/>
+    <sl-navigation-link icon="view_kanban" label="Kanban" link="kanban"/>
     <mat-divider></mat-divider>
-    <sl-navigation-link icon="bug_report" label="Bugs" target="tracker/bugs"/>
-    <sl-navigation-link icon="help" label="Queries" target="tracker/queries"/>
-    <sl-navigation-link icon="emoji_objects" label="Projects" target="tracker/projects"/>
-    <sl-navigation-link icon="hardware" label="Tests" target="tracker/tests"/>
+    <sl-navigation-link icon="bug_report" label="Bugs" link="tracker/bugs"/>
+    <sl-navigation-link icon="help" label="Queries" link="tracker/queries"/>
+    <sl-navigation-link icon="emoji_objects" label="Projects" link="tracker/projects"/>
+    <sl-navigation-link icon="hardware" label="Tests" link="tracker/tests"/>
     <mat-divider></mat-divider>
-    <sl-navigation-link icon="category" label="Products" target="admin/products"/>
-    <sl-navigation-link icon="handshake" label="SLAs" target="admin/slas"/>
-    <sl-navigation-link icon="manage_accounts" label="Users" target="admin/users"/>
+    <sl-navigation-link icon="category" label="Products" link="admin/products"/>
+    <sl-navigation-link icon="handshake" label="SLAs" link="admin/slas"/>
+    <sl-navigation-link icon="manage_accounts" label="Users" link="admin/users"/>
     <mat-divider></mat-divider>
-    <sl-navigation-link icon="calendar_month" label="Timesheet" target="calendar"/>
-    <sl-navigation-link icon="rocket_launch" label="Releases" target="calendar/releases"/>
-    <sl-navigation-link icon="book_ribbon" label="Documentation" target="documentation"/>
+    <sl-navigation-link icon="calendar_month" label="Timesheet" link="calendar"/>
+    <sl-navigation-link icon="rocket_launch" label="Releases" link="calendar/releases"/>
+    <sl-navigation-link icon="book_ribbon" label="Documentation" link="documentation"/>
     
     <sl-toggle  [(value)]="isLight" 
                 (change)="onThemeToggle()" 
