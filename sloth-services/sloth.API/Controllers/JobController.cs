@@ -42,7 +42,7 @@ public class JobController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
     [HttpDelete]
-    //[Authorize(Roles = UserRoles.ADMIN)]
+    [Authorize(Roles = UserRoles.ADMIN)]
     public async Task<IActionResult> DeleteBug(int bugID)
     {
         await mediator.Send(new DeleteBugCommand(bugID));
