@@ -36,12 +36,10 @@ export interface GetBugItem {
   
   export interface GetAssignmentHistoryBugItem {
     changedDate: Date;
-    previousOwner: string;
-    previousOwnerFullName: string;
-    previousOwnerEmail: string;
-    currentOwner: string;
-    currentOwnerFullName: string;
-    currentOwnerEmail: string;
+    userName: string;
+    userFullName: string;
+    userEmail: string;
+    action: string;
     changedBy: string;
     changedByFullName: string;
     changedByEmail: string;
@@ -94,7 +92,7 @@ export interface GetBugItem {
     changedBy: string;
     changedByEmail: string;
     changedByFullName: string;
-    newPriorityTag: string;
+    newPriorityTag: string | null;
     newPriorityTagColor: string | null;
     newPriorityDescription: string | null;
   }
@@ -118,7 +116,7 @@ export interface GetBugItem {
     changedBy: string;
     changedByEmail: string;
     changedByFullName: string;
-    newStatusTag: string;
+    newStatusTag: string | null;
     newStatusTagColor: string | null;
     newStatusDescription: string | null;
   }

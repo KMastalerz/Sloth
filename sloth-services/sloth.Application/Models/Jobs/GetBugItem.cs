@@ -38,12 +38,10 @@ public class GetAssignmentBugItem
 public class GetAssignmentHistoryBugItem
 {
     public DateTime ChangedDate { get; set; }
-    public string PreviousOwner { get; set; } = default!;
-    public string PreviousOwnerFullName { get; set; } = default!;
-    public string PreviousOwnerEmail { get; set; } = default!;
-    public string CurrentOwner { get; set; } = default!;
-    public string CurrentOwnerFullName { get; set; } = default!;
-    public string CurrentOwnerEmail { get; set; } = default!;
+    public string UserName { get; set; } = default!;
+    public string UserFullName { get; set; } = default!;
+    public string UserEmail { get; set; } = default!;
+    public string Action { get; set; } = default!;
     public string ChangedBy { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
@@ -96,10 +94,10 @@ public class GetPriorityHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
-    public int NewPriorityID { get; set; }
-    public string NewPriorityTag { get; set; } = default!;
-    public string? NewPriorityTagColor { get; set; } = default!;
-    public string? NewPriorityDescription { get; set; } = default!;
+    public int? NewPriorityID { get; set; } = null;
+    public string? NewPriorityTag { get; set; } = null;
+    public string? NewPriorityTagColor { get; set; } = null;
+    public string? NewPriorityDescription { get; set; } = null;
 }
 public class GetProductBugItem
 {
@@ -121,10 +119,10 @@ public class GetStatusHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
-    public int NewStatusID { get; set; } = default!;
-    public string NewStatusTag { get; set; } = default!;
-    public string? NewStatusTagColor { get; set; } = default!;
-    public string? NewStatusDescription { get; set; } = default!;
+    public int? NewStatusID { get; set; } = null;
+    public string? NewStatusTag { get; set; } = null;
+    public string? NewStatusTagColor { get; set; } = null;
+    public string? NewStatusDescription { get; set; } = null;
 }
 public class GetTeamBugItem
 {

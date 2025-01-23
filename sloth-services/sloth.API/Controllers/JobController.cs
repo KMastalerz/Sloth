@@ -60,4 +60,16 @@ public class JobController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new AbandonBugCommand(bugID));
         return Ok(result);
     }
+    [HttpPost]
+    public async Task<IActionResult> SaveBug(SaveBugCommand comment)
+    {
+        var result = await mediator.Send(comment);
+        return Ok(result);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetUserCounters()
+    {
+        var result = await mediator.Send(new GetUserCountersQuery());
+        return Ok(result);
+    }
 }

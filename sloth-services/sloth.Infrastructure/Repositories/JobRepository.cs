@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using sloth.Domain.Entities;
 using sloth.Domain.Models.Jobs;
 using sloth.Domain.Repositories;
@@ -231,9 +232,7 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .Include(b => b.Comments)
                 .ThenInclude(c => c.PreviousEdits)
             .Include(b => b.AssignmentHistory)
-                .ThenInclude(ah => ah.PreviousOwner)
-            .Include(b => b.AssignmentHistory)
-                .ThenInclude(ah => ah.CurrentOwner)
+                .ThenInclude(ah => ah.User)
             .Include(b => b.AssignmentHistory)
                 .ThenInclude(ah => ah.ChangedBy)
             .Include(b => b.Assignments)
@@ -305,5 +304,38 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     {
         dbContext.JobAssignment.Remove(assignment);
         await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobAssignmentHistoryAsync(JobAssignmentHistory assignmentHistory)
+    {
+        await dbContext.JobAssignmentHistory.AddAsync(assignmentHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task<Priority?> GetPriorityAsync(int priorityID)
+    {
+        var result = await dbContext.Priority.FirstOrDefaultAsync(p => p.PriorityID == priorityID);
+        return result;
+    }
+    public async Task AddJobStatusHistoryAsync(JobStatusHistory statusHistory)
+    {
+        await dbContext.JobStatusHistory.AddAsync(statusHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobPriorityHistoryAsync(JobPriorityHistory priorityHistory)
+    {
+        await dbContext.JobPriorityHistory.AddAsync(priorityHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task UpdateBugAsync(Bug bug)
+    {
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task<int> GetBugCountByUserAsync(Guid userID)
+    {
+        var result = await dbContext.Bug
+            .Include(b => b.Assignments)
+            .Where(b => b.Assignments.Any(a => a.UserID == userID))
+            .CountAsync();
+
+        return result;
     }
 }

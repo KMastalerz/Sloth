@@ -5,6 +5,7 @@ using sloth.Application.UserIdentity;
 using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
+using System.Transactions;
 
 namespace sloth.Application.Services.Jobs.ClaimBug;
 public class ClaimBugCommandHandler(
@@ -29,7 +30,23 @@ public class ClaimBugCommandHandler(
             AssignedDate = DateTime.UtcNow
         };
 
-        await jobRepository.AddJobAssignmentAsync(newJobAssignment);
+        var transactionOptions = new TransactionOptions
+        {
+            IsolationLevel = IsolationLevel.ReadCommitted,
+            Timeout = TransactionManager.DefaultTimeout
+        };
+
+        using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions, TransactionScopeAsyncFlowOption.Enabled))
+        {
+            await jobRepository.AddJobAssignmentAsync(newJobAssignment);
+
+            var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(newJobAssignment);
+            jobAssignmentHistory.Action = "Added";
+
+            await jobRepository.AddJobAssignmentHistoryAsync(jobAssignmentHistory);
+
+            scope.Complete();
+        }
 
         var assignments = await jobRepository.ListAssignmentsAsync(bug.JobID);
 

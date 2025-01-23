@@ -1,6 +1,6 @@
 <mat-drawer-container hasBackdrop="true">
     <mat-drawer #drawer mode="over">
-        <side-navigation/>
+        <side-navigation [userCounters]="userCounters()"/>
     </mat-drawer>
     <mat-drawer-content>
         <main-header (onToggle)="drawer.toggle()"/>

@@ -5,6 +5,7 @@ using sloth.Application.UserIdentity;
 using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
+using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
 public class AbandonBugCommandHandler(
@@ -24,7 +25,23 @@ public class AbandonBugCommandHandler(
         var jobAssignment = await jobRepository.GetJobAssignment(bug.JobID, user.UserGuid)
             ?? throw new MissingEntryException(nameof(JobAssignment));
 
-        await jobRepository.RemoveJobAssignmentAsync(jobAssignment);
+        var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(jobAssignment);
+        jobAssignmentHistory.Action = "Removed";
+        jobAssignmentHistory.ChangedDate = DateTime.UtcNow;
+
+        var transactionOptions = new TransactionOptions
+        {
+            IsolationLevel = IsolationLevel.ReadCommitted,
+            Timeout = TransactionManager.DefaultTimeout
+        };
+
+        using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions, TransactionScopeAsyncFlowOption.Enabled))
+        {
+            await jobRepository.AddJobAssignmentHistoryAsync(jobAssignmentHistory);
+
+            await jobRepository.RemoveJobAssignmentAsync(jobAssignment);
+            scope.Complete();
+        }
 
         var assignments = await jobRepository.ListAssignmentsAsync(bug.JobID);
 

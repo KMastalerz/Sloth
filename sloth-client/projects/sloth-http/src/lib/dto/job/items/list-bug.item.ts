@@ -16,10 +16,6 @@ export interface ListBugItem {
     closedDate?: Date;
     isClosed: boolean;
     isBlocker: boolean;
-    currentOwnerID?: string;
-    currentOwner?: string;
-    currentTeamID?: string;
-    currentTeam?: string;
     updatedByID?: string;
     updatedBy?: string;
     closedByID?: string;

@@ -1,5 +1,6 @@
-import { Component, inject, model, Renderer2, signal } from '@angular/core';
+import { Component, inject, input, model, Renderer2, signal } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
+import { GetUserCountersItem } from 'sloth-http';
 import { moon, sun, NavigationLinkComponent, ToggleComponent } from 'sloth-ui';
 
 @Component({
@@ -9,6 +10,7 @@ import { moon, sun, NavigationLinkComponent, ToggleComponent } from 'sloth-ui';
   styleUrl: './side-navigation.component.scss'
 })
 export class SideNavigationComponent {
+  userCounters = input<GetUserCountersItem | undefined>(undefined);
   private renderer = inject(Renderer2);
   isLight = model<boolean>(false);
 

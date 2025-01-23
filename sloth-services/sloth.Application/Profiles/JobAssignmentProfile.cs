@@ -14,5 +14,9 @@ public class JobAssignmentProfile: Profile
            .ForMember(dest => dest.AssignedBy, opt => opt.MapFrom(src => src.AssignedBy.UserName))
            .ForMember(dest => dest.AssignedByEmail, opt => opt.MapFrom(src => src.AssignedBy.Email))
            .ForMember(dest => dest.AssignedByFullName, opt => opt.MapFrom(src => $"{src.AssignedBy.FirstName} {src.AssignedBy.LastName}"));
+
+        CreateMap<JobAssignment, JobAssignmentHistory>()
+            .ForMember(dest => dest.ChangedByID, opt => opt.MapFrom(src => src.AssignedByID))
+            .ForMember(dest => dest.ChangedDate, opt => opt.MapFrom(src => src.AssignedDate));
     }
 }

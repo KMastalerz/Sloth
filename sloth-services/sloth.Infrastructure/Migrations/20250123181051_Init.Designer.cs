@@ -12,7 +12,7 @@ using sloth.Infrastructure.DatabaseContext;
 namespace sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20250122223902_Init")]
+    [Migration("20250123181051_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -195,19 +195,18 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<Guid>("ChangedByID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CurrentOwnerID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PreviousOwnerID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "CurrentOwnerID");
+                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "UserID");
 
                     b.HasIndex("ChangedByID");
 
-                    b.HasIndex("CurrentOwnerID");
-
-                    b.HasIndex("PreviousOwnerID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("JobAssignmentHistory");
                 });
@@ -314,7 +313,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("NewPriorityID")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreviousPriorityID")
+                    b.Property<int?>("PreviousPriorityID")
                         .HasColumnType("int");
 
                     b.HasKey("JobID", "ChangedDate", "ChangedByID", "NewPriorityID");
@@ -357,7 +356,7 @@ namespace sloth.Infrastructure.Migrations
                     b.Property<int>("NewStatusID")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreviousStatusID")
+                    b.Property<int?>("PreviousStatusID")
                         .HasColumnType("int");
 
                     b.HasKey("JobID", "ChangedDate", "ChangedByID", "NewStatusID");
@@ -888,29 +887,21 @@ namespace sloth.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("sloth.Domain.Entities.User", "CurrentOwner")
-                        .WithMany()
-                        .HasForeignKey("CurrentOwnerID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("sloth.Domain.Entities.Job", null)
                         .WithMany("AssignmentHistory")
                         .HasForeignKey("JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("sloth.Domain.Entities.User", "PreviousOwner")
+                    b.HasOne("sloth.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("PreviousOwnerID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ChangedBy");
 
-                    b.Navigation("CurrentOwner");
-
-                    b.Navigation("PreviousOwner");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
@@ -990,8 +981,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.Priority", "PreviousPriority")
                         .WithMany()
                         .HasForeignKey("PreviousPriorityID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("ChangedBy");
 
@@ -1038,8 +1028,7 @@ namespace sloth.Infrastructure.Migrations
                     b.HasOne("sloth.Domain.Entities.Status", "PreviousStatus")
                         .WithMany()
                         .HasForeignKey("PreviousStatusID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("ChangedBy");
 

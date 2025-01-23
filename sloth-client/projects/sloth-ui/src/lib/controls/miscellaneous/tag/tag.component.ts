@@ -38,7 +38,7 @@ export class TagComponent extends BaseFormControlComponent implements OnInit{
 
   override ngOnInit(): void {
     super.ngOnInit();
-
+    
     if(this.formGroup() && !this.tag()) {
       const value = this.formGroup()?.value;
       

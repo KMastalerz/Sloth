@@ -25,4 +25,10 @@ public interface IJobRepository
     Task<IEnumerable<JobAssignment>> ListAssignmentsAsync(int jobID);
     Task<JobAssignment> GetJobAssignment(int jobID, Guid userID);
     Task RemoveJobAssignmentAsync(JobAssignment assignment);
+    Task AddJobAssignmentHistoryAsync(JobAssignmentHistory assignmentHistory);
+    Task<Priority?> GetPriorityAsync(int priorityID);
+    Task AddJobStatusHistoryAsync(JobStatusHistory statusHistory);
+    Task AddJobPriorityHistoryAsync(JobPriorityHistory priorityHistory);
+    Task UpdateBugAsync(Bug bug);
+    Task<int> GetBugCountByUserAsync(Guid userID);
 }

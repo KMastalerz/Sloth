@@ -283,16 +283,11 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
 
         builder.Entity<JobAssignmentHistory>(history =>
         {
-            history.HasKey(h=> new { h.JobID, h.ChangedDate, h.ChangedByID, h.CurrentOwnerID});
+            history.HasKey(h=> new { h.JobID, h.ChangedDate, h.ChangedByID, h.UserID});
 
-            history.HasOne(h => h.PreviousOwner)
+            history.HasOne(h => h.User)
                 .WithMany()
-                .HasForeignKey(h => h.PreviousOwnerID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.CurrentOwner)
-                .WithMany()
-                .HasForeignKey(h => h.CurrentOwnerID)
+                .HasForeignKey(h => h.UserID)
                 .OnDelete(DeleteBehavior.NoAction);
 
             history.HasOne(h => h.ChangedBy)

@@ -163,7 +163,7 @@ export abstract class BaseService {
 
         try {
             const result = await lastValueFrom(
-                this.httpClient.patch<T>(url, command, httpOptions).pipe(
+                this.httpClient.patch<T>(url, command ?? null, httpOptions).pipe(
                     // Map the response in case of success
                     map((response: HttpResponse<T>) => this.mapResponse<T>(response)),
     

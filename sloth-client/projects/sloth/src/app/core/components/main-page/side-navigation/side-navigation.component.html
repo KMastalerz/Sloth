@@ -3,7 +3,7 @@
     <sl-navigation-link icon="space_dashboard" label="Dashboard" link="dashboard"/>
     <sl-navigation-link icon="view_kanban" label="Kanban" link="kanban"/>
     <mat-divider></mat-divider>
-    <sl-navigation-link icon="bug_report" label="Bugs" link="tracker/bugs"/>
+    <sl-navigation-link icon="bug_report" label="Bugs" link="tracker/bugs" [tag]="userCounters()?.bugCount ?? undefined"/>
     <sl-navigation-link icon="help" label="Queries" link="tracker/queries"/>
     <sl-navigation-link icon="emoji_objects" label="Projects" link="tracker/projects"/>
     <sl-navigation-link icon="hardware" label="Tests" link="tracker/tests"/>

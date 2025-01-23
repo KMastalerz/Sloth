@@ -52,6 +52,14 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         {
             await HandleExceptionAsync(context, ex, 401);
         }
+        catch (MissingEntryException ex)
+        {
+            await HandleExceptionAsync(context, ex, 404);
+        }
+        catch (NoChangesException ex)
+        {
+            await HandleExceptionAsync(context, ex, 409);
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex, 500);
@@ -60,7 +68,8 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
 
     private async Task HandleExceptionAsync(HttpContext context, Exception ex, int statusCode)
     {
-        logger.LogError(ex.Message);
+        if(statusCode >= 500)
+            logger.LogError(ex.Message);
 
         var errorResponse = new
         {

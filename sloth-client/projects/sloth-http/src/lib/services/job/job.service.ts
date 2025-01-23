@@ -7,6 +7,8 @@ import { ListBugParam } from '../../dto/job/params/list-bug.param';
 import { ListBugResponse } from '../../dto/job/items/list-bug.item';
 import { GetAssignmentBugItem, GetBugItem, GetCommentBugItem } from '../../dto/job/items/get-bug.item';
 import { AddJobCommentParam } from '../../dto/job/params/add-job-comment.param';
+import { SaveBugParam } from '../../dto/job/params/save-bug.param';
+import { GetUserCountersItem } from '../../dto/job/items/get-user-counters.item';
 
 
 @Injectable({
@@ -48,5 +50,13 @@ export class JobService extends BaseService {
 
   async abdandonBugAsync(bugID: number): Promise<ServiceReturnValue<GetAssignmentBugItem[]>> {
     return await this.postAsync("AbandonBug", {bugID}, {useQueryParams: true});
+  }
+
+  async SaveBugAsync(command: SaveBugParam): Promise<ServiceReturnValue<GetBugItem>> {
+    return await this.postAsync("SaveBug", command);
+  }
+
+  async GetUserCountersAsync(): Promise<ServiceReturnValue<GetUserCountersItem>> {
+    return await this.getAsync("GetUserCounters");
   }
 }

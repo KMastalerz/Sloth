@@ -466,8 +466,8 @@ namespace sloth.Infrastructure.Migrations
                 name: "JobAssignment",
                 columns: table => new
                 {
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JobID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssignedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssignedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -499,14 +499,14 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    CurrentOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousOwnerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobAssignmentHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.CurrentOwnerID });
+                    table.PrimaryKey("PK_JobAssignmentHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.UserID });
                     table.ForeignKey(
                         name: "FK_JobAssignmentHistory_Job_JobID",
                         column: x => x.JobID,
@@ -519,13 +519,8 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "User",
                         principalColumn: "UserID");
                     table.ForeignKey(
-                        name: "FK_JobAssignmentHistory_User_CurrentOwnerID",
-                        column: x => x.CurrentOwnerID,
-                        principalTable: "User",
-                        principalColumn: "UserID");
-                    table.ForeignKey(
-                        name: "FK_JobAssignmentHistory_User_PreviousOwnerID",
-                        column: x => x.PreviousOwnerID,
+                        name: "FK_JobAssignmentHistory_User_UserID",
+                        column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID");
                 });
@@ -627,7 +622,7 @@ namespace sloth.Infrastructure.Migrations
                     NewPriorityID = table.Column<int>(type: "int", nullable: false),
                     ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousPriorityID = table.Column<int>(type: "int", nullable: false)
+                    PreviousPriorityID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -687,7 +682,7 @@ namespace sloth.Infrastructure.Migrations
                     ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NewStatusID = table.Column<int>(type: "int", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousStatusID = table.Column<int>(type: "int", nullable: false)
+                    PreviousStatusID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -805,14 +800,9 @@ namespace sloth.Infrastructure.Migrations
                 column: "ChangedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobAssignmentHistory_CurrentOwnerID",
+                name: "IX_JobAssignmentHistory_UserID",
                 table: "JobAssignmentHistory",
-                column: "CurrentOwnerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobAssignmentHistory_PreviousOwnerID",
-                table: "JobAssignmentHistory",
-                column: "PreviousOwnerID");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobComment_CommentedByID",

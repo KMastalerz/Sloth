@@ -2,8 +2,8 @@
 public class JobAssignmentHistory
 {
     public int JobID { get; set; }
-    public Guid PreviousOwnerID { get; set; }
-    public Guid CurrentOwnerID { get; set; }
+    public Guid UserID { get; set; }
+    public string Action { get; set; } = default!;
     public Guid ChangedByID { get; set; }
     public DateTime ChangedDate { get; set; }
 
@@ -11,7 +11,6 @@ public class JobAssignmentHistory
     /// External properties
     /// </summary>
     
-    public User PreviousOwner { get; set; } = default!;
-    public User CurrentOwner { get; set; } = default!;
+    public User User { get; set; } = default!;
     public User ChangedBy { get; set; } = default!;
 }

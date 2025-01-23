@@ -16,6 +16,7 @@
                 <sl-button label="Save" 
                             displayType="flat" 
                             buttonClass="success"
+                            [isDisabled]="this.formGroup.pristine"
                             (onClick)="onSaveForm()"/>
                 <sl-button [label]="editMode()" (onClick)="onToggleEditMode()"/>
                 @if(isClaimed()) {
@@ -156,6 +157,6 @@
         </sl-side-form>
     }
     @else {
-        <p>Loading...</p>
+        <p>Please wait...</p>
     }
 </div>

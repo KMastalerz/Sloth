@@ -18,10 +18,6 @@ public class ListBugItem
     public DateTime? UpdatedDate { get; set; }
     public DateTime? ClosedDate { get; set; } = null;
     public bool IsClosed { get; set; } = false;
-    public Guid? CurrentOwnerID { get; set; } = null;
-    public string? CurrentOwner { get; set; } = null;
-    public Guid? CurrentTeamID { get; set; } = null;
-    public string? CurrentTeam { get; set; } = null;
     public Guid? UpdatedByID { get; set; } = null;
     public string? UpdatedBy { get; set; } = null;
     public Guid? ClosedByID { get; set; } = null;

@@ -14,11 +14,13 @@ export * from './lib/dto/auth/params/refresh-token.param';
 export * from './lib/dto/base/error.model';
 export * from './lib/dto/base/service-return-value.model';
 export * from './lib/dto/job/items/get-bug.item';
+export * from './lib/dto/job/items/get-user-counters.item';
 export * from './lib/dto/job/items/list-bug.item';
 export * from './lib/dto/job/items/list-job-data-cache.item';
 export * from './lib/dto/job/params/add-job-comment.param';
 export * from './lib/dto/job/params/create-job.param';
 export * from './lib/dto/job/params/list-bug.param';
+export * from './lib/dto/job/params/save-bug.param';
 
 // services 
 export * from './lib/services/auth/auth.service';
