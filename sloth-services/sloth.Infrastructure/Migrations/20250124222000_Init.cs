@@ -463,6 +463,71 @@ namespace sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobAncestryLink",
+                columns: table => new
+                {
+                    ParentJobID = table.Column<int>(type: "int", nullable: false),
+                    ChildJobID = table.Column<int>(type: "int", nullable: false),
+                    LinkDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LinkedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobAncestryLink", x => new { x.ParentJobID, x.ChildJobID });
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLink_Job_ChildJobID",
+                        column: x => x.ChildJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLink_Job_ParentJobID",
+                        column: x => x.ParentJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLink_User_LinkedByID",
+                        column: x => x.LinkedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobAncestryLinkHistory",
+                columns: table => new
+                {
+                    ParentJobID = table.Column<int>(type: "int", nullable: false),
+                    ChildJobID = table.Column<int>(type: "int", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobAncestryLinkHistory", x => new { x.ParentJobID, x.ChildJobID, x.ChangeDate, x.ChangedByID });
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLinkHistory_Job_ChildJobID",
+                        column: x => x.ChildJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLinkHistory_Job_ParentJobID",
+                        column: x => x.ParentJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobAncestryLinkHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobAssignment",
                 columns: table => new
                 {
@@ -500,8 +565,8 @@ namespace sloth.Infrastructure.Migrations
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -675,6 +740,71 @@ namespace sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobSiblingLink",
+                columns: table => new
+                {
+                    PrimaryJobID = table.Column<int>(type: "int", nullable: false),
+                    SecondaryJobID = table.Column<int>(type: "int", nullable: false),
+                    LinkDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LinkedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobSiblingLink", x => new { x.PrimaryJobID, x.SecondaryJobID });
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLink_Job_PrimaryJobID",
+                        column: x => x.PrimaryJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLink_Job_SecondaryJobID",
+                        column: x => x.SecondaryJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLink_User_LinkedByID",
+                        column: x => x.LinkedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobSiblingLinkHistory",
+                columns: table => new
+                {
+                    PrimaryJobID = table.Column<int>(type: "int", nullable: false),
+                    SecondaryJobID = table.Column<int>(type: "int", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobSiblingLinkHistory", x => new { x.PrimaryJobID, x.SecondaryJobID, x.ChangeDate, x.ChangedByID });
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLinkHistory_Job_PrimaryJobID",
+                        column: x => x.PrimaryJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLinkHistory_Job_SecondaryJobID",
+                        column: x => x.SecondaryJobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobSiblingLinkHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobStatusHistory",
                 columns: table => new
                 {
@@ -785,6 +915,26 @@ namespace sloth.Infrastructure.Migrations
                 column: "UpdatedByID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobAncestryLink_ChildJobID",
+                table: "JobAncestryLink",
+                column: "ChildJobID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobAncestryLink_LinkedByID",
+                table: "JobAncestryLink",
+                column: "LinkedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobAncestryLinkHistory_ChangedByID",
+                table: "JobAncestryLinkHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobAncestryLinkHistory_ChildJobID",
+                table: "JobAncestryLinkHistory",
+                column: "ChildJobID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobAssignment_AssignedByID",
                 table: "JobAssignment",
                 column: "AssignedByID");
@@ -853,6 +1003,26 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_JobProductLink_ProductID",
                 table: "JobProductLink",
                 column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSiblingLink_LinkedByID",
+                table: "JobSiblingLink",
+                column: "LinkedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSiblingLink_SecondaryJobID",
+                table: "JobSiblingLink",
+                column: "SecondaryJobID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSiblingLinkHistory_ChangedByID",
+                table: "JobSiblingLinkHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobSiblingLinkHistory_SecondaryJobID",
+                table: "JobSiblingLinkHistory",
+                column: "SecondaryJobID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobStatusHistory_ChangedByID",
@@ -958,6 +1128,12 @@ namespace sloth.Infrastructure.Migrations
                 name: "ClientProductLink");
 
             migrationBuilder.DropTable(
+                name: "JobAncestryLink");
+
+            migrationBuilder.DropTable(
+                name: "JobAncestryLinkHistory");
+
+            migrationBuilder.DropTable(
                 name: "JobAssignment");
 
             migrationBuilder.DropTable(
@@ -977,6 +1153,12 @@ namespace sloth.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "JobProductLink");
+
+            migrationBuilder.DropTable(
+                name: "JobSiblingLink");
+
+            migrationBuilder.DropTable(
+                name: "JobSiblingLinkHistory");
 
             migrationBuilder.DropTable(
                 name: "JobStatusHistory");

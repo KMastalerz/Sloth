@@ -22,6 +22,8 @@ public class DeleteBugCommandHandler(
         var bug = await jobRepository.GetBugAsync(request.BugID) ??
             throw new MissingEntryException(nameof(Bug));
 
+        // TODO: Add check on linked child and secondary places, befor bug removal those need to be removed before bug is deleted.
+
         await jobRepository.DeleteBugAsync(bug);
     }
 }

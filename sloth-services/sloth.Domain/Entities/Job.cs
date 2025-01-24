@@ -30,12 +30,20 @@ public class Job
     public Priority? Priority { get; set; } = null;
 
     public Status? Status { get; set; } = null;
-    public List<JobComment> Comments { get; set; } = [];
-    public List<JobAssignmentHistory> AssignmentHistory { get; set; } = [];
-    public List<JobAssignment> Assignments { get; set; } = [];
-    public List<JobFile> Files { get; set; } = [];
-    public List<JobPriorityHistory> PriorityHistory { get; set; } = [];
-    public List<JobStatusHistory> StatusHistory { get; set; } = [];
-    public List<Product> Products { get; set; } = [];
-    public List<ProductFunctionality> Functionalities { get; set; } = [];
+    public ICollection<JobComment> Comments { get; set; } = [];
+    public ICollection<JobAssignmentHistory> AssignmentHistory { get; set; } = [];
+    public ICollection<JobAssignment> Assignments { get; set; } = [];
+    public ICollection<JobFile> Files { get; set; } = [];
+    public ICollection<JobPriorityHistory> PriorityHistory { get; set; } = [];
+    public ICollection<JobStatusHistory> StatusHistory { get; set; } = [];
+    public ICollection<Product> Products { get; set; } = [];
+    public ICollection<ProductFunctionality> Functionalities { get; set; } = [];
+    public ICollection<Job> ParentJobs { get; set; } = [];
+    public ICollection<Job> ChildJobs { get; set; } = [];
+    public ICollection<Job> LinkedJobs { get; set; } = [];
+    public ICollection<JobAncestryLinkHistory> ParentJobHistory { get; set; } = [];
+    public ICollection<JobAncestryLinkHistory> ChildJobHistory { get; set; } = [];
+    public IEnumerable<JobSiblingLinkHistory> LinkedJobsHistory { get; set; } = [];
+
+
 }

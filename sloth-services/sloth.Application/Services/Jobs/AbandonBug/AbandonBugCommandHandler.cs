@@ -26,7 +26,7 @@ public class AbandonBugCommandHandler(
             ?? throw new MissingEntryException(nameof(JobAssignment));
 
         var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(jobAssignment);
-        jobAssignmentHistory.Action = "Removed";
+        jobAssignmentHistory.Action = "Delete";
         jobAssignmentHistory.ChangedDate = DateTime.UtcNow;
 
         var transactionOptions = new TransactionOptions

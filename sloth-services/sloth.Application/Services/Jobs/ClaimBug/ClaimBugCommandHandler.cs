@@ -41,7 +41,7 @@ public class ClaimBugCommandHandler(
             await jobRepository.AddJobAssignmentAsync(newJobAssignment);
 
             var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(newJobAssignment);
-            jobAssignmentHistory.Action = "Added";
+            jobAssignmentHistory.Action = "Add";
 
             await jobRepository.AddJobAssignmentHistoryAsync(jobAssignmentHistory);
 

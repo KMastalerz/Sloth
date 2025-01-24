@@ -19,6 +19,8 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<Client> Client { get; set; }
     internal DbSet<ClientProductLink> ClientProductLink { get; set; }
     internal DbSet<Job> Job { get; set; }
+    internal DbSet<JobAncestryLink> JobAncestryLink { get; set; }
+    internal DbSet<JobAncestryLinkHistory> JobAncestryLinkHistory { get; set; }
     internal DbSet<JobAssignment> JobAssignment { get; set; }
     internal DbSet<JobAssignmentHistory> JobAssignmentHistory { get; set; }
     internal DbSet<JobComment> JobComment { get; set; }
@@ -26,6 +28,8 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<JobFunctionalityLink> JobFunctionalityLink { get; set; }
     internal DbSet<JobPriorityHistory> JobPriorityHistory { get; set; }
     internal DbSet<JobProductLink> JobProductLink { get; set; }
+    internal DbSet<JobSiblingLink> JobSiblingLink { get; set; }
+    internal DbSet<JobSiblingLinkHistory> JobSiblingLinkHistory { get; set; }
     internal DbSet<JobStatusHistory> JobStatusHistory { get; set; }
     internal DbSet<OwnerStatusMap> OwnerStatusMap { get; set; }
     internal DbSet<Priority> Priority { get; set; }
@@ -159,6 +163,7 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                .WithOne()
                .HasForeignKey<Bug>(b => b.JobID)
                .OnDelete(DeleteBehavior.Cascade);
+
         });
 
         builder.Entity<Client>(client =>
@@ -228,42 +233,125 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            job.HasOne(b => b.Priority)
+            job.HasOne(j => j.Priority)
                 .WithMany()
-                .HasForeignKey(b => b.PriorityID);
+                .HasForeignKey(j => j.PriorityID);
 
-            job.HasOne(b => b.Status)
+            job.HasOne(j => j.Status)
                 .WithMany()
-                .HasForeignKey(b => b.StatusID);
+                .HasForeignKey(j => j.StatusID);
 
-            job.HasOne(b => b.Client)
+            job.HasOne(j => j.Client)
                 .WithMany()
-                .HasForeignKey(b => b.ClientID);
+                .HasForeignKey(j => j.ClientID);
 
-            job.HasMany(b => b.PriorityHistory)
+            job.HasMany(j => j.PriorityHistory)
                 .WithOne()
                 .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            job.HasMany(b => b.Products)
+            job.HasMany(p => p.Products)
                 .WithMany()
                 .UsingEntity<JobProductLink>(
-                    link => link.HasOne<Product>().WithMany().HasForeignKey(l => l.ProductID).OnDelete(DeleteBehavior.Cascade),
-                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.JobID).OnDelete(DeleteBehavior.Cascade),
+                    link => link.HasOne<Product>().WithMany().HasForeignKey(l => l.ProductID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.JobID),
                     link =>
                     {
                         link.HasKey(l => new { l.JobID, l.ProductID });
                     });
 
-            job.HasMany(b => b.Functionalities)
+            job.HasMany(f => f.Functionalities)
                 .WithMany()
                 .UsingEntity<JobFunctionalityLink>(
-                    link => link.HasOne<ProductFunctionality>().WithMany().HasForeignKey(l => l.FunctionalityID).OnDelete(DeleteBehavior.Cascade),
-                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.JobID).OnDelete(DeleteBehavior.Cascade),
+                    link => link.HasOne<ProductFunctionality>().WithMany().HasForeignKey(l => l.FunctionalityID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.JobID),
                     link =>
                     {
                         link.HasKey(l => new { l.JobID, l.FunctionalityID }); 
                     });
+
+            job.HasMany(j => j.ParentJobs)
+                .WithMany()
+                .UsingEntity<JobAncestryLink>(
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.ParentJobID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.ChildJobID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.ParentJobID, l.ChildJobID });
+                    });
+
+            job.HasMany(j => j.ChildJobs)
+                .WithMany()
+                .UsingEntity<JobAncestryLink>(
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.ChildJobID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.ParentJobID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.ParentJobID, l.ChildJobID });
+                    });
+
+            job.HasMany(j => j.LinkedJobs)
+                .WithMany()
+                .UsingEntity<JobSiblingLink>(
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.SecondaryJobID),
+                    link => link.HasOne<Job>().WithMany().HasForeignKey(l => l.PrimaryJobID),
+                    link =>
+                    {
+                        link.HasKey(l => new { l.PrimaryJobID, l.SecondaryJobID });
+                    });
+
+            job.HasMany(j => j.ParentJobHistory)
+                .WithOne()
+                .HasForeignKey(h => h.ChildJobID);
+
+            job.HasMany(j => j.ChildJobHistory)
+                .WithOne()
+                .HasForeignKey(h => h.ParentJobID);
+
+            job.HasMany(j => j.LinkedJobsHistory)
+                .WithOne()
+                .HasForeignKey(h => h.PrimaryJobID);
+
+        });
+
+        builder.Entity<JobAncestryLink>(link =>
+        {
+            link.HasKey(l => new { l.ParentJobID, l.ChildJobID });
+
+            link.HasOne(l => l.ParentJob)
+                .WithMany()
+                .HasForeignKey(l => l.ParentJobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne(l => l.ChildJob)
+                .WithMany()
+                .HasForeignKey(l => l.ChildJobID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            link.HasOne(l => l.LinkedBy)
+                .WithMany()
+                .HasForeignKey(l => l.LinkedByID)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<JobAncestryLinkHistory>(history =>
+        {
+            history.HasKey(h => new { h.ParentJobID, h.ChildJobID, h.ChangeDate, h.ChangedByID });
+
+            history.HasOne(h => h.ParentJob)
+                .WithMany(j => j.ParentJobHistory)
+                .HasForeignKey(h => h.ParentJobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            history.HasOne(h => h.ChildJob)
+                .WithMany(j => j.ChildJobHistory)
+                .HasForeignKey(h => h.ChildJobID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            history.HasOne(h => h.ChangedBy)
+                .WithMany()
+                .HasForeignKey(h => h.ChangedByID)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         builder.Entity<JobAssignment>(assignment =>
@@ -329,10 +417,8 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
 
         builder.Entity<JobFunctionalityLink>(link =>
         {
-            // Composite Key
             link.HasKey(l => new { l.JobID, l.FunctionalityID });
 
-            // Configuring relationships
             link.HasOne<Job>()
                 .WithMany()
                 .HasForeignKey(l => l.JobID)
@@ -380,6 +466,46 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .HasForeignKey(l => l.ProductID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<JobSiblingLink>(link =>
+        {
+            link.HasKey(l => new { l.PrimaryJobID, l.SecondaryJobID });
+
+            link.HasOne(l => l.PrimaryJob)
+                .WithMany()
+                .HasForeignKey(h => h.PrimaryJobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            link.HasOne(l => l.SecondaryJob)
+                .WithMany()
+                .HasForeignKey(l => l.SecondaryJobID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            link.HasOne(l => l.LinkedBy)
+                .WithMany()
+                .HasForeignKey(l => l.LinkedByID)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<JobSiblingLinkHistory>(history =>
+        {
+            history.HasKey(h => new { h.PrimaryJobID, h.SecondaryJobID, h.ChangeDate, h.ChangedByID });
+
+            history.HasOne(h => h.PrimaryJob)
+                .WithMany(j => j.LinkedJobsHistory)
+                .HasForeignKey(h => h.PrimaryJobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            history.HasOne(h => h.SecondaryJob)
+                .WithMany()
+                .HasForeignKey(h => h.SecondaryJobID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            history.HasOne(h => h.ChangedBy)
+                .WithMany()
+                .HasForeignKey(h => h.ChangedByID)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         builder.Entity<JobStatusHistory>(history =>
@@ -450,15 +576,15 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
         {
             query.ToTable("Query");
 
-            query.Property(b => b.QueryID)
+            query.Property(q => q.QueryID)
                 .ValueGeneratedOnAdd();
 
-            query.HasIndex(b => b.QueryID)
+            query.HasIndex(q => q.QueryID)
                 .IsUnique();
 
             query.HasOne<Job>()
                .WithOne()
-               .HasForeignKey<Query>(b => b.JobID)
+               .HasForeignKey<Query>(q => q.JobID)
                .OnDelete(DeleteBehavior.Cascade);
         });
 

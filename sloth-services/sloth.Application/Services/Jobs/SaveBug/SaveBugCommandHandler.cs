@@ -5,6 +5,7 @@ using sloth.Application.UserIdentity;
 using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
+using sloth.Utilities.Extensions;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
