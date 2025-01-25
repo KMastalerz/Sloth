@@ -8,21 +8,21 @@ using sloth.Domain.Repositories;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
-public class AbandonBugCommandHandler(
+public class AbandonJobCommandHandler(
     IMapper mapper,
     IUserContext userContext,
     IJobRepository jobRepository
-    ) : IRequestHandler<AbandonBugCommand, IEnumerable<GetAssignmentBugItem>>
+    ) : IRequestHandler<AbandonJobCommand, IEnumerable<GetAssignmentBugItem>>
 {
-    public async Task<IEnumerable<GetAssignmentBugItem>> Handle(AbandonBugCommand request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<GetAssignmentBugItem>> Handle(AbandonJobCommand request, CancellationToken cancellationToken)
     {
         var user = userContext.GetCurrentUser()
             ?? throw new InvalidUserException();
 
-        var bug = await jobRepository.GetBugAsync(request.BugID)
-            ?? throw new MissingEntryException(nameof(Bug));
+        var bug = await jobRepository.GetJobAsync(request.JobID)
+            ?? throw new MissingEntryException(nameof(Job));
 
-        var jobAssignment = await jobRepository.GetJobAssignment(bug.JobID, user.UserGuid)
+        var jobAssignment = await jobRepository.GetJobAssignment(request.JobID, user.UserGuid)
             ?? throw new MissingEntryException(nameof(JobAssignment));
 
         var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(jobAssignment);

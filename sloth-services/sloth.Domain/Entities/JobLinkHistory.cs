@@ -1,5 +1,5 @@
 ﻿namespace sloth.Domain.Entities;
-public class JobAncestryLinkHistory
+public class JobLinkHistory
 {
     public int ParentJobID { get; set; } = default;
     public int ChildJobID { get; set; } = default;

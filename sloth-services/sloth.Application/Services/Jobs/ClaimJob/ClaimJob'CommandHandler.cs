@@ -12,20 +12,20 @@ public class ClaimBugCommandHandler(
     IMapper mapper,
     IUserContext userContext,
     IJobRepository jobRepository
-    ) : IRequestHandler<ClaimBugCommand, IEnumerable<GetAssignmentBugItem>>
+    ) : IRequestHandler<ClaimJobCommand, IEnumerable<GetAssignmentBugItem>>
 {
-    public async Task<IEnumerable<GetAssignmentBugItem>> Handle(ClaimBugCommand request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<GetAssignmentBugItem>> Handle(ClaimJobCommand request, CancellationToken cancellationToken)
     {
         var user = userContext.GetCurrentUser()
             ?? throw new InvalidUserException();
 
-        var bug = await jobRepository.GetBugAsync(request.BugID)
-            ?? throw new MissingEntryException(nameof(Bug));
+        var bug = await jobRepository.GetJobAsync(request.JobID)
+            ?? throw new MissingEntryException(nameof(Job));
 
         var newJobAssignment = new JobAssignment()
         {
             UserID = user.UserGuid,
-            JobID = bug.JobID,
+            JobID = request.JobID,
             AssignedByID = user.UserGuid,
             AssignedDate = DateTime.UtcNow
         };

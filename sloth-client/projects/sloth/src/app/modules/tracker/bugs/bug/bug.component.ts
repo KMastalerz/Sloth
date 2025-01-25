@@ -232,7 +232,7 @@ export class BugComponent implements OnInit {
     }
 
     async onClaimBug(): Promise<void> {
-        const response = await this.jobServices.claimBugAsync(this.bugID());
+        const response = await this.jobServices.claimJobAsync(this.jobID());
         if(response.success) {
             this.snackBar.open('Bug claimed!','Close', {duration: 5000});
             this.assignees.set([]);
@@ -246,7 +246,7 @@ export class BugComponent implements OnInit {
     }
 
     async onAbandonBug(): Promise<void> {
-        const response = await this.jobServices.abdandonBugAsync(this.bugID());
+        const response = await this.jobServices.abdandonJobAsync(this.jobID());
         if(response.success) {
             this.snackBar.open('Bug abandoned!','Close', {duration: 5000});
             this.assignees.set([]);
@@ -260,7 +260,7 @@ export class BugComponent implements OnInit {
     }
 
     async onDeleteBug(): Promise<void> {
-        const response = await this.jobServices.deleteBugAsync(this.bugID());
+        const response = await this.jobServices.deleteJobAsync(this.jobID());
         if(response.success) {
             this.snackBar.open('Bug removed!','Close', {duration: 5000});
             this.router.navigate(['../'], { relativeTo: this.route });

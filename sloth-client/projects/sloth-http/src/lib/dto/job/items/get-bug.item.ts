@@ -14,6 +14,7 @@ export interface GetBugItem {
     updatedBy: GetUserBugItem | null;
     priority: GetPriorityBugItem | null;
     status: GetStatusBugItem | null;
+
     comments: GetCommentBugItem[];
     assignmentHistory: GetAssignmentHistoryBugItem[];
     assignments: GetAssignmentBugItem[];
@@ -22,6 +23,10 @@ export interface GetBugItem {
     statusHistory: GetStatusHistoryBugItem[];
     products: GetProductBugItem[];
     functionalities: GetFunctionalityBugItem[];
+    parentJobs: GetJobLinkBugItem [];
+    childJobs: GetJobLinkBugItem[];
+    parentJobHistory: GetJobAncestryHistoryBugItem[];
+    childJobHistory: GetJobAncestryHistoryBugItem[];
   }
   
   export interface GetAssignmentBugItem {
@@ -135,4 +140,33 @@ export interface GetBugItem {
     fullName: string;
     email: string;
   }
+
+  export interface GetJobAncestryHistoryBugItem {
+    parentJobID: number;
+    parentJobHeader: number;
+    parentJobDescription: number;
+    childJobID: number;
+    childJobHeader: number;
+    childJobDescription: number;
+    changeDate: string;
+    action: string;
+    changedBy: string;
+    changedByFullName: string;
+    changedByEmail: string;
+  }  
+  
+  export interface GetJobLinkBugItem {
+    parentJobID: number;
+    parentJobHeader: number;
+    parentJobDescription: number;
+    childJobID: number;
+    childJobHeader: number;
+    childJobDescription: number;
+    linkDate: string;
+    linkedBy: string;
+    linkedByFullName: string;
+    linkedByEmail: string;
+  }
+
+
   

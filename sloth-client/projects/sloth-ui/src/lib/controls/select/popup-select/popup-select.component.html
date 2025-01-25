@@ -1,0 +1,27 @@
+@if(isEditMode()) {
+    <mat-form-field appearance="outline"
+                    [matTooltipDisabled]="hideTooltip()"
+                    [matTooltip]="tooltip()"
+                    [matTooltipPosition]="tooltipPosition()">
+        @if( label() ) {
+            <mat-label>{{ label() }}</mat-label>
+        }
+        <!--On input value, add pipe that will show max chars-->
+        <input  matInput 
+                [value]="display()" 
+                [placeholder]="placeholder()"
+                [disabled]="!isEditMode()"/>
+        <button mat-icon-button matSuffix type="button">
+            <mat-icon>list</mat-icon>
+        </button>
+    </mat-form-field>
+}
+@else {
+    <div class="text-input">
+        @if( label() ) {
+            <label class="text-input-label">{{label()}}</label>
+        }
+        <p class="text-input-value">{{value()}}</p>
+    </div>
+
+}

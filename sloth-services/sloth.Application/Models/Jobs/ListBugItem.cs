@@ -7,7 +7,7 @@ public class ListBugItemResponse
 public class ListBugItem
 {
     public int BugID { get; set; }
-    public string ClientInquiryNumber { get; set; } = default!;
+    public string InquiryNumber { get; set; } = default!;
     public string Header { get; set; } = default!;
     public string Description { get; set; } = default!;
     public int PriorityID { get; set; }

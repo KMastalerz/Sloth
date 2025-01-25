@@ -24,6 +24,10 @@ public class GetBugItem
     public List<GetStatusHistoryBugItem> StatusHistory { get; set; } = [];
     public List<GetProductBugItem> Products { get; set; } = [];
     public List<GetFunctionalityBugItem> Functionalities { get; set; } = [];
+    public List<GetChildJobLinkBugItem> ChildJobs { get; set; } = [];
+    public List<GetParentJobLinkBugItem> ParentJobs { get; set; } = [];
+    public List<GetParentJobLinkHistoryBugItem> ParentJobHistory { get; set; } = [];
+    public List<GetChildJobLinkHistoryBugItem> ChildJobHistory { get; set; } = [];
 }
 public class GetAssignmentBugItem
 {
@@ -139,3 +143,28 @@ public class GetUserBugItem
     public string FullName { get; set; } = default!;
     public string Email { get; set; } = default!;
 }
+public class GetJobLinkBugItem
+{
+    public int JobID { get; set; } = default;
+    public string JobHeader { get; set; } = default!;
+    public string JobDescription { get; set; } = default!;
+    public DateTime LinkDate { get; set; } = default!;
+    public string LinkedBy { get; set; } = default!;
+    public string LinkedByFullName { get; set; } = default!;
+    public string LinkedByEmail { get; set; } = default!;
+}
+public class GetParentJobLinkBugItem : GetJobLinkBugItem;
+public class GetChildJobLinkBugItem : GetJobLinkBugItem;
+public class GetJobLinkHistoryBugItem
+{
+    public int JobID { get; set; } = default;
+    public string JobHeader { get; set; } = default!;
+    public string JobDescription { get; set; } = default!;
+    public DateTime ChangeDate { get; set; } = default!;
+    public string Action { get; set; } = default!;
+    public string ChangedBy { get; set; } = default!;
+    public string ChangedByFullName { get; set; } = default!;
+    public string ChangedByEmail { get; set; } = default!;
+}
+public class GetParentJobLinkHistoryBugItem : GetJobLinkHistoryBugItem;
+public class GetChildJobLinkHistoryBugItem : GetJobLinkHistoryBugItem;

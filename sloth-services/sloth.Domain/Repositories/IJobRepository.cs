@@ -31,4 +31,7 @@ public interface IJobRepository
     Task AddJobPriorityHistoryAsync(JobPriorityHistory priorityHistory);
     Task UpdateBugAsync(Bug bug);
     Task<int> GetBugCountByUserAsync(Guid userID);
+    Task<Job?> GetJobAsync (int jobID);
+    Task<Bug?> GetBugByJobIDAsync(int jobID);
+    Task DeleteLinkedJobsAsync (int jobID);
 }

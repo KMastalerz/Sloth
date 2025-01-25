@@ -40,16 +40,16 @@ export class JobService extends BaseService {
     return await this.postAsync("AddJobComment", command);
   }
 
-  async deleteBugAsync(bugID: number): Promise<ServiceReturnValue<any>> {
-    return await this.deleteAsync("DeleteBug", {bugID});
+  async deleteJobAsync(jobID: number): Promise<ServiceReturnValue<any>> {
+    return await this.deleteAsync("DeleteJob", {jobID});
   }
 
-  async claimBugAsync(bugID: number): Promise<ServiceReturnValue<GetAssignmentBugItem[]>> {
-    return await this.postAsync("ClaimBug", {bugID}, {useQueryParams: true});
+  async claimJobAsync(jobID: number): Promise<ServiceReturnValue<GetAssignmentBugItem[]>> {
+    return await this.postAsync("ClaimJob", {jobID}, {useQueryParams: true});
   }
 
-  async abdandonBugAsync(bugID: number): Promise<ServiceReturnValue<GetAssignmentBugItem[]>> {
-    return await this.postAsync("AbandonBug", {bugID}, {useQueryParams: true});
+  async abdandonJobAsync(jobID: number): Promise<ServiceReturnValue<GetAssignmentBugItem[]>> {
+    return await this.postAsync("AbandonJob", {jobID}, {useQueryParams: true});
   }
 
   async SaveBugAsync(command: SaveBugParam): Promise<ServiceReturnValue<GetBugItem>> {

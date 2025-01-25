@@ -43,33 +43,39 @@ public class JobController(IMediator mediator) : ControllerBase
     }
     [HttpDelete]
     [Authorize(Roles = UserRoles.ADMIN)]
-    public async Task<IActionResult> DeleteBug(int bugID)
+    public async Task<IActionResult> DeleteJob(int jobID)
     {
-        await mediator.Send(new DeleteBugCommand(bugID));
+        await mediator.Send(new DeleteJobCommand(jobID));
         return NoContent();
     }
     [HttpPost]
-    public async Task<IActionResult> ClaimBug([FromQuery] int bugID)
+    public async Task<IActionResult> ClaimJob([FromQuery] int jobID)
     {
-        var result = await mediator.Send(new ClaimBugCommand(bugID));
+        var result = await mediator.Send(new ClaimJobCommand(jobID));
         return Ok(result);
     }
     [HttpPost]
-    public async Task<IActionResult> AbandonBug([FromQuery] int bugID)
+    public async Task<IActionResult> AbandonJob([FromQuery] int jobID)
     {
-        var result = await mediator.Send(new AbandonBugCommand(bugID));
+        var result = await mediator.Send(new AbandonJobCommand(jobID));
         return Ok(result);
     }
     [HttpPost]
-    public async Task<IActionResult> SaveBug(SaveBugCommand comment)
+    public async Task<IActionResult> SaveBug(SaveBugCommand command)
     {
-        var result = await mediator.Send(comment);
+        var result = await mediator.Send(command);
         return Ok(result);
     }
     [HttpGet]
     public async Task<IActionResult> GetUserCounters()
     {
         var result = await mediator.Send(new GetUserCountersQuery());
+        return Ok(result);
+    }
+    [HttpGet]
+    public async Task<IActionResult> LinkJob(LinkJobCommand command)
+    {
+        var result = await mediator.Send(command);
         return Ok(result);
     }
 }

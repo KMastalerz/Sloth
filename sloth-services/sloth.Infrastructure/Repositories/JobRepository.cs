@@ -220,7 +220,6 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     public async Task<Bug?> GetBugAsync(int bugID)
     {
         var result = await dbContext.Bug
-            .Include(b => b.CurrentTeam)
             .Include(b => b.CreatedBy)
             .Include(b => b.ClosedBy)
             .Include(b => b.Client)
@@ -251,6 +250,14 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
                 .ThenInclude(sh => sh.NewStatus)
             .Include(b => b.Products)
             .Include(b => b.Functionalities)
+            .Include(b => b.ParentJobs)
+                .ThenInclude(p => p.ParentJob)
+            .Include(b => b.ChildJobs)
+                .ThenInclude(c => c.ChildJob)
+            .Include(b => b.ParentJobHistory)
+                .ThenInclude(p => p.ParentJob)
+            .Include(b => b.ChildJobHistory)
+                .ThenInclude(c => c.ChildJob)
             .FirstOrDefaultAsync(b=> b.BugID == bugID);
 
         return result;
@@ -337,5 +344,25 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .CountAsync();
 
         return result;
+    }
+    public async Task<Job?> GetJobAsync(int jobID)
+    {
+        var result = await dbContext.Job.FirstOrDefaultAsync(j => j.JobID == jobID);
+        return result;
+    }
+    public async Task<Bug?> GetBugByJobIDAsync(int jobID)
+    {
+        var result = await dbContext.Bug.FirstOrDefaultAsync(b=>b.JobID == jobID);
+        return result;
+    }
+    public async Task DeleteLinkedJobsAsync(int jobID)
+    {
+        var ancestory = await dbContext.JobAncestryLink.Where(l => l.ChildJobID == jobID).ToListAsync();
+        dbContext.JobAncestryLink.RemoveRange(ancestory);
+
+        var ancestoryHistory = await dbContext.JobAncestryLinkHistory.Where(l => l.ChildJobID == jobID).ToListAsync();
+        dbContext.JobAncestryLinkHistory.RemoveRange(ancestoryHistory);
+
+        await dbContext.SaveChangesAsync();
     }
 }
