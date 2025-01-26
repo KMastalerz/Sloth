@@ -29,20 +29,13 @@ public class Job
     public Priority? Priority { get; set; } = null;
     public Status? Status { get; set; } = null;
 
-    public ICollection<JobComment> Comments { get; set; } = [];
     public ICollection<JobAssignment> Assignments { get; set; } = [];
-    public ICollection<JobFile> Files { get; set; } = [];
-    public ICollection<Product> Products { get; set; } = [];
-    public ICollection<ProductFunctionality> Functionalities { get; set; } = [];
-    public ICollection<JobLink> ParentJobs { get; set; } = [];
     public ICollection<JobLink> ChildJobs { get; set; } = [];
-    public ICollection<JobLinkHistory> ChildJobHistory { get; set; } = [];
-    public ICollection<JobLinkHistory> ParentJobHistory { get; set; } = [];
-    public ICollection<JobAssignmentHistory> AssignmentHistory { get; set; } = [];
-    public ICollection<JobClientHistory> ClientHistory { get; set; } = [];
-    public ICollection<JobDetailHistory> DetailHistory { get; set; } = [];
-    public ICollection<JobFunctionalityHistory> FunctionalityHistory { get; set; } = [];
-    public ICollection<JobProductHistory> ProductHistory { get; set; } = [];
-    public ICollection<JobPriorityHistory> PriorityHistory { get; set; } = [];
-    public ICollection<JobStatusHistory> StatusHistory { get; set; } = [];
+    public ICollection<JobComment> Comments { get; set; } = [];
+    public ICollection<JobFile> Files { get; set; } = [];
+    public ICollection<ProductFunctionality> Functionalities { get; set; } = [];
+    public ICollection<JobHistory> History { get; set; } = [];
+    public ICollection<JobLink> ParentJobs { get; set; } = [];
+    public ICollection<Product> Products { get; set; } = [];
+
 }

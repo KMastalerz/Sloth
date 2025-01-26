@@ -226,37 +226,23 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .Include(b => b.UpdatedBy)
             .Include(b => b.Priority)
             .Include(b => b.Status)
+            .Include(b => b.History)
+                .ThenInclude(h => h.ChangedBy)
             .Include(b => b.Comments.OrderByDescending(c=>c.CommentDate))
                 .ThenInclude(c => c.CommentedBy)
             .Include(b => b.Comments)
                 .ThenInclude(c => c.PreviousEdits)
-            .Include(b => b.AssignmentHistory)
-                .ThenInclude(ah => ah.User)
-            .Include(b => b.AssignmentHistory)
-                .ThenInclude(ah => ah.ChangedBy)
             .Include(b => b.Assignments)
                 .ThenInclude(ah => ah.User)
             .Include(b => b.Assignments)
                 .ThenInclude(ah => ah.AssignedBy)
             .Include(b => b.Files)
                 .ThenInclude(f => f.AddedBy)
-            .Include(b => b.PriorityHistory)
-                .ThenInclude(ph => ph.ChangedBy)
-            .Include(b => b.PriorityHistory)
-                .ThenInclude(ph => ph.Priority)
-            .Include(b => b.StatusHistory)
-                .ThenInclude(sh => sh.ChangedBy)
-            .Include(b => b.StatusHistory)
-                .ThenInclude(sh => sh.Status)
             .Include(b => b.Products)
             .Include(b => b.Functionalities)
             .Include(b => b.ParentJobs)
                 .ThenInclude(p => p.ParentJob)
             .Include(b => b.ChildJobs)
-                .ThenInclude(c => c.ChildJob)
-            .Include(b => b.ParentJobHistory)
-                .ThenInclude(p => p.ParentJob)
-            .Include(b => b.ChildJobHistory)
                 .ThenInclude(c => c.ChildJob)
             .FirstOrDefaultAsync(b=> b.BugID == bugID);
 
@@ -312,44 +298,19 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         dbContext.JobAssignment.Remove(assignment);
         await dbContext.SaveChangesAsync();
     }
-    public async Task AddJobAssignmentHistoryAsync(JobAssignmentHistory assignmentHistory)
-    {
-        await dbContext.JobAssignmentHistory.AddAsync(assignmentHistory);
-        await dbContext.SaveChangesAsync();
-    }
     public async Task<Priority?> GetPriorityAsync(int priorityID)
     {
         var result = await dbContext.Priority.FirstOrDefaultAsync(p => p.PriorityID == priorityID);
         return result;
     }
-    public async Task AddJobStatusHistoryAsync(IEnumerable<JobStatusHistory> statusHistory)
+    public async Task AddJobHistory(JobHistory jobHistory)
     {
-        await dbContext.JobStatusHistory.AddRangeAsync(statusHistory);
+        await dbContext.JobHistory.AddAsync(jobHistory);
         await dbContext.SaveChangesAsync();
     }
-    public async Task AddJobPriorityHistoryAsync(IEnumerable<JobPriorityHistory> priorityHistory)
+    public async Task AddJobHistories(IEnumerable<JobHistory> jobHistories)
     {
-        await dbContext.JobPriorityHistory.AddRangeAsync(priorityHistory);
-        await dbContext.SaveChangesAsync();
-    }
-    public async Task AddJobClientHistoryAsync(IEnumerable<JobClientHistory> clientHistory)
-    {
-        await dbContext.JobClientHistory.AddRangeAsync(clientHistory);
-        await dbContext.SaveChangesAsync();
-    }
-    public async Task AddJobProductHistoryAsync(IEnumerable<JobProductHistory> productHistory)
-    {
-        await dbContext.JobProductHistory.AddRangeAsync(productHistory);
-        await dbContext.SaveChangesAsync();
-    }
-    public async Task AddJobFunctionalityHistoryAsync(IEnumerable<JobFunctionalityHistory> functionalityHistory)
-    {
-        await dbContext.JobFunctionalityHistory.AddRangeAsync(functionalityHistory);
-        await dbContext.SaveChangesAsync();
-    }
-    public async Task AddJobDetailsHistoryAsync(IEnumerable<JobDetailHistory> jobDetailHistory)
-    {
-        await dbContext.JobDetailHistory.AddRangeAsync(jobDetailHistory);
+        await dbContext.JobHistory.AddRangeAsync(jobHistories);
         await dbContext.SaveChangesAsync();
     }
     public async Task UpdateBugAsync(Bug bug)
@@ -377,12 +338,17 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
     }
     public async Task DeleteLinkedJobsAsync(int jobID)
     {
-        var ancestory = await dbContext.JobAncestryLink.Where(l => l.ChildJobID == jobID).ToListAsync();
-        dbContext.JobAncestryLink.RemoveRange(ancestory);
+        var links = await dbContext.JobLink.Where(l => l.ChildJobID == jobID).ToListAsync();
+        dbContext.JobLink.RemoveRange(links);
 
-        var ancestoryHistory = await dbContext.JobAncestryLinkHistory.Where(l => l.ChildJobID == jobID).ToListAsync();
-        dbContext.JobAncestryLinkHistory.RemoveRange(ancestoryHistory);
+        //var ancestoryHistory = await dbContext.JobAncestryLinkHistory.Where(l => l.ChildJobID == jobID).ToListAsync();
+        //dbContext.JobAncestryLinkHistory.RemoveRange(ancestoryHistory);
 
         await dbContext.SaveChangesAsync();
+    }
+    public async Task<Client?> GetClientByIDAsync(Guid clientID)
+    {
+        var result = await dbContext.Client.FirstOrDefaultAsync(c=> c.ClientID == clientID);
+        return result;
     }
 }

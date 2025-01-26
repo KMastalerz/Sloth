@@ -9,6 +9,6 @@ public class ClientProfile: Profile
     {
         CreateMap<Client, CacheClientItem>();
 
-        CreateMap<Client, GetClientBugItem>().ReverseMap();
+        CreateMap<Client, GetClientBugItem>();
     }
 }

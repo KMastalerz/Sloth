@@ -1,4 +1,6 @@
-﻿namespace sloth.Application.Models.Jobs;
+﻿using sloth.Domain.Entities;
+
+namespace sloth.Application.Models.Jobs;
 public class GetBugItem
 {
     public int JobID { get; set; }
@@ -16,18 +18,14 @@ public class GetBugItem
     public GetUserBugItem? UpdatedBy { get; set; } = null;
     public GetPriorityBugItem? Priority { get; set; } = null;
     public GetStatusBugItem? Status { get; set; } = null;
-    public List<GetCommentBugItem> Comments { get; set; } = [];
-    public List<GetAssignmentHistoryBugItem> AssignmentHistory { get; set; } = [];
-    public List<GetAssignmentBugItem> Assignments { get; set; } = [];
-    public List<GetFileBugItem> Files { get; set; } = [];
-    public List<GetPriorityHistoryBugItem> PriorityHistory { get; set; } = [];
-    public List<GetStatusHistoryBugItem> StatusHistory { get; set; } = [];
-    public List<GetProductBugItem> Products { get; set; } = [];
-    public List<GetFunctionalityBugItem> Functionalities { get; set; } = [];
-    public List<GetChildJobLinkBugItem> ChildJobs { get; set; } = [];
-    public List<GetParentJobLinkBugItem> ParentJobs { get; set; } = [];
-    public List<GetParentJobLinkHistoryBugItem> ParentJobHistory { get; set; } = [];
-    public List<GetChildJobLinkHistoryBugItem> ChildJobHistory { get; set; } = [];
+    public IEnumerable<GetAssignmentBugItem> Assignments { get; set; } = [];
+    public IEnumerable<GetChildJobLinkBugItem> ChildJobs { get; set; } = [];
+    public IEnumerable<GetCommentBugItem> Comments { get; set; } = [];
+    public IEnumerable<GetFileBugItem> Files { get; set; } = [];
+    public IEnumerable<GetFunctionalityBugItem> Functionalities { get; set; } = [];
+    public IEnumerable<JobHistory> History { get; set; } = [];
+    public IEnumerable<GetParentJobLinkBugItem> ParentJobs { get; set; } = [];
+    public IEnumerable<GetProductBugItem> Products { get; set; } = [];
 }
 public class GetAssignmentBugItem
 {
@@ -38,17 +36,6 @@ public class GetAssignmentBugItem
     public string AssignedBy { get; set; } = default!;
     public string AssignedByFullName { get; set; } = default!;
     public string AssignedByEmail { get; set; } = default!;
-}
-public class GetAssignmentHistoryBugItem
-{
-    public DateTime ChangedDate { get; set; }
-    public string UserName { get; set; } = default!;
-    public string UserFullName { get; set; } = default!;
-    public string UserEmail { get; set; } = default!;
-    public string Action { get; set; } = default!;
-    public string ChangedBy { get; set; } = default!;
-    public string ChangedByFullName { get; set; } = default!;
-    public string ChangedByEmail { get; set; } = default!;
 }
 public class GetClientBugItem
 {
@@ -92,17 +79,6 @@ public class GetPriorityBugItem
     public string? TagColor { get; set; } = default;
     public string? Description { get; set; } = null;
 }
-public class GetPriorityHistoryBugItem
-{
-    public DateTime ChangedDate { get; set; }
-    public string ChangedBy { get; set; } = default!;
-    public string ChangedByEmail { get; set; } = default!;
-    public string ChangedByFullName { get; set; } = default!;
-    public int? PriorityID { get; set; } = null;
-    public string? PriorityTag { get; set; } = null;
-    public string? PriorityTagColor { get; set; } = null;
-    public string? PriorityDescription { get; set; } = null;
-}
 public class GetProductBugItem
 {
     public int ProductID { get; set; }
@@ -116,17 +92,6 @@ public class GetStatusBugItem
     public string Tag { get; set; } = default!;
     public string? TagColor { get; set; } = default;
     public string? Description { get; set; } = null;
-}
-public class GetStatusHistoryBugItem
-{
-    public DateTime ChangedDate { get; set; }
-    public string ChangedBy { get; set; } = default!;
-    public string ChangedByEmail { get; set; } = default!;
-    public string ChangedByFullName { get; set; } = default!;
-    public int? StatusID { get; set; } = null;
-    public string? StatusTag { get; set; } = null;
-    public string? StatusTagColor { get; set; } = null;
-    public string? StatusDescription { get; set; } = null;
 }
 public class GetTeamBugItem
 {
@@ -155,16 +120,3 @@ public class GetJobLinkBugItem
 }
 public class GetParentJobLinkBugItem : GetJobLinkBugItem;
 public class GetChildJobLinkBugItem : GetJobLinkBugItem;
-public class GetJobLinkHistoryBugItem
-{
-    public int JobID { get; set; } = default;
-    public string JobHeader { get; set; } = default!;
-    public string JobDescription { get; set; } = default!;
-    public DateTime ChangeDate { get; set; } = default!;
-    public string Action { get; set; } = default!;
-    public string ChangedBy { get; set; } = default!;
-    public string ChangedByFullName { get; set; } = default!;
-    public string ChangedByEmail { get; set; } = default!;
-}
-public class GetParentJobLinkHistoryBugItem : GetJobLinkHistoryBugItem;
-public class GetChildJobLinkHistoryBugItem : GetJobLinkHistoryBugItem;

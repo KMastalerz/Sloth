@@ -6,6 +6,7 @@ using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
 using sloth.Utilities.Extensions;
+using System.Text.Json;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
@@ -47,90 +48,113 @@ public class SaveBugCommandHandler(
 
         using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions, TransactionScopeAsyncFlowOption.Enabled))
         {
+
+            var jobHistories = new List<JobHistory>();
             if (request.StatusChanged)
             {
-                var statusHistory = new List<JobStatusHistory> {
+                Status? status = null;
+
+                if(request.NewStatusID is not null)
+                    status = await jobRepository.GetStatusAsync((int)request.NewStatusID);
+
+                jobHistories.AddRange(
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        StatusID = bug.StatusID,
-                        Action = "Delete"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Status",
+                        Action = "Delete",
+                        Value = JsonSerializer.Serialize(bug.Status),
                     },
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        StatusID = request.NewStatusID,
-                        Action = "Add"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Status",
+                        Action = "Add",
+                        Value = status != null ? JsonSerializer.Serialize(status) : null,
                     }
-                };
+                );
+
                 bug.StatusID = request.NewStatusID;
-                await jobRepository.AddJobStatusHistoryAsync(statusHistory);
             }
 
             if (request.PriorityChanged)
             {
-                var priorityHistory = new List<JobPriorityHistory> {
+                Priority? priority = null;
+
+                if (request.NewPriorityID is not null)
+                    priority = await jobRepository.GetPriorityAsync((int)request.NewPriorityID);
+
+                jobHistories.AddRange(
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        PriorityID = bug.PriorityID,
-                        Action = "Delete"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Priority",
+                        Action = "Delete",
+                        Value = JsonSerializer.Serialize(bug.Priority),
                     },
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        PriorityID = request.NewPriorityID,
-                        Action = "Add"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Priority",
+                        Action = "Add",
+                        Value = priority != null ? JsonSerializer.Serialize(priority) : null,
                     }
-                };
+                );
+
                 bug.PriorityID = (int)request.NewPriorityID!;
-                await jobRepository.AddJobPriorityHistoryAsync(priorityHistory);
             }
 
             if (request.ClientChanged)
             {
-                var clientHistory = new List<JobClientHistory> {
+                Client? client = null;
+
+                if (request.NewClientID is not null)
+                    client = await jobRepository.GetClientByIDAsync((Guid)request.NewClientID);
+
+                jobHistories.AddRange(
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        ClientID = bug.ClientID,
-                        Action = "Delete"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Client",
+                        Action = "Delete",
+                        Value = JsonSerializer.Serialize(bug.Priority),
                     },
                     new()
                     {
                         JobID = bug.JobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        ClientID = request.NewClientID,
-                        Action = "Add"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Client",
+                        Action = "Add",
+                        Value = client != null ? JsonSerializer.Serialize(client) : null,
                     }
-                };
+                );
+
                 bug.ClientID = request.NewClientID;
-                await jobRepository.AddJobClientHistoryAsync(clientHistory);
             }
 
-            var detailHistory = new List<JobDetailHistory>();
             if (request.NewHeader is not null)
             {
                 bug.Header = request.NewHeader;
-                detailHistory.Add(
+                jobHistories.Add(
                     new()
                     {
                         JobID = bug.JobID,
-                        Field = "Header",
+                        ChangedByID = user.UserGuid,
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Header",
+                        Action = "Change",
                         Value = request.NewHeader,
-                        ChangedDate = DateTime.UtcNow,
-                        ChangedByID = user.UserGuid
                     }
                 );
             }
@@ -138,90 +162,90 @@ public class SaveBugCommandHandler(
             if (request.NewDescription is not null)
             {
                 bug.Description = request.NewDescription;
-                detailHistory.Add(
+                jobHistories.Add(
                     new()
                     {
                         JobID = bug.JobID,
-                        Field = "Description",
+                        ChangedByID = user.UserGuid,
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Description",
+                        Action = "Change",
                         Value = request.NewDescription,
-                        ChangedDate = DateTime.UtcNow,
-                        ChangedByID = user.UserGuid
                     }
                 );
             }
 
-            if(detailHistory.Any())
-            {
-                await jobRepository.AddJobDetailsHistoryAsync(detailHistory);
-            }
+            var products = await jobRepository.ListProductsAsync();
 
-            var productHistory = new List<JobProductHistory>();
             if (request.RemovedProductIDs.Any()) 
             {
-                productHistory.AddRange(request.RemovedProductIDs.Select(p => new JobProductHistory()
-                {
-                    JobID = bug.JobID,
-                    ProductID = p,
-                    ChangedByID = user.UserGuid,
-                    ChangedDate = DateTime.UtcNow,
-                    Action = "Delete"
-                }));
                 bug.Products = bug.Products.Where(p => !request.RemovedProductIDs.Any(rp => rp == p.ProductID)).ToList();
             }
            
-            if(request.NewProductIDs.Any())
+            if (request.NewProductIDs.Any())
             {
-                productHistory.AddRange(request.NewProductIDs.Select(p => new JobProductHistory()
+                jobHistories.AddRange(request.NewProductIDs.Select(p => new JobHistory()
                 {
                     JobID = bug.JobID,
-                    ProductID = p,
                     ChangedByID = user.UserGuid,
-                    ChangedDate = DateTime.UtcNow,
-                    Action = "Add"
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Product",
+                    Action = "Add",
+                    Value = JsonSerializer.Serialize(products.FirstOrDefault(pr => pr.ProductID == p))
                 }));
-                var products = await jobRepository.ListProductsAsync();
                 var newProducts = products.Where(p => request.NewProductIDs.Any(np => np == p.ProductID)).ToList();
                 bug.Products.AddRange(newProducts);
             }
 
-            if (productHistory.Any())
+            if (request.RemovedProductIDs.Any())
             {
-                await jobRepository.AddJobProductHistoryAsync(productHistory);
-            }
-
-            var functionalityHistory = new List<JobFunctionalityHistory>();
-            if (request.RemovedFunctionalityIDs.Any())
-            {
-                functionalityHistory.AddRange(request.RemovedFunctionalityIDs.Select(p => new JobFunctionalityHistory()
+                jobHistories.AddRange(request.RemovedProductIDs.Select(p => new JobHistory()
                 {
                     JobID = bug.JobID,
-                    FunctionalityID = p,
                     ChangedByID = user.UserGuid,
-                    ChangedDate = DateTime.UtcNow,
-                    Action = "Delete"
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Product",
+                    Action = "Delete",
+                    Value = JsonSerializer.Serialize(products.FirstOrDefault(pr => pr.ProductID == p))
                 }));
+            } 
+
+            var functionalities = await jobRepository.ListFunctionalitiesAsync();
+            if (request.RemovedFunctionalityIDs.Any())
+            { 
                 bug.Functionalities = bug.Functionalities.Where(p => !request.RemovedFunctionalityIDs.Any(rp => rp == p.FunctionalityID)).ToList();
             }
 
             if (request.NewFunctionalityIDs.Any())
             {
-                functionalityHistory.AddRange(request.NewFunctionalityIDs.Select(p => new JobFunctionalityHistory()
+                jobHistories.AddRange(request.NewFunctionalityIDs.Select(f => new JobHistory()
                 {
                     JobID = bug.JobID,
-                    FunctionalityID = p,
                     ChangedByID = user.UserGuid,
-                    ChangedDate = DateTime.UtcNow,
-                    Action = "Add"
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Functionality",
+                    Action = "Add",
+                    Value = JsonSerializer.Serialize(functionalities.FirstOrDefault(fu => fu.ProductID == f))
                 }));
-                var functionalities = await jobRepository.ListFunctionalitiesAsync();
                 var newFunctionalities = functionalities.Where(f => request.NewFunctionalityIDs.Any(np => np == f.FunctionalityID)).ToList();
                 bug.Functionalities.AddRange(newFunctionalities);
             }
 
-            if (functionalityHistory.Any())
+            if (request.RemovedFunctionalityIDs.Any())
             {
-                await jobRepository.AddJobFunctionalityHistoryAsync(functionalityHistory);
+                jobHistories.AddRange(request.RemovedFunctionalityIDs.Select(f => new JobHistory()
+                {
+                    JobID = bug.JobID,
+                    ChangedByID = user.UserGuid,
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Functionality",
+                    Action = "Delete",
+                    Value = JsonSerializer.Serialize(functionalities.FirstOrDefault(fu => fu.ProductID == f))
+                }));
             }
+
+            if(jobHistories.Any()) 
+                await jobRepository.AddJobHistories(jobHistories);
 
             await jobRepository.UpdateBugAsync(bug);
             scope.Complete();

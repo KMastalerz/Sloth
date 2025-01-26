@@ -5,6 +5,7 @@ using sloth.Application.UserIdentity;
 using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
+using System.Text.Json;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
@@ -25,10 +26,15 @@ public class AbandonJobCommandHandler(
         var jobAssignment = await jobRepository.GetJobAssignment(request.JobID, user.UserGuid)
             ?? throw new MissingEntryException(nameof(JobAssignment));
 
-        var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(jobAssignment);
-        jobAssignmentHistory.Action = "Delete";
-        jobAssignmentHistory.ChangedDate = DateTime.UtcNow;
-
+        var jobHistory = new JobHistory()
+        {
+            JobID = request.JobID,
+            ChangedByID = user.UserGuid,
+            ChangeDate = DateTime.UtcNow,
+            Type = "Assignment",
+            Action = "Delete",
+            Value = JsonSerializer.Serialize(jobAssignment)
+        };
         var transactionOptions = new TransactionOptions
         {
             IsolationLevel = IsolationLevel.ReadCommitted,
@@ -37,7 +43,7 @@ public class AbandonJobCommandHandler(
 
         using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions, TransactionScopeAsyncFlowOption.Enabled))
         {
-            await jobRepository.AddJobAssignmentHistoryAsync(jobAssignmentHistory);
+            await jobRepository.AddJobHistory(jobHistory);
 
             await jobRepository.RemoveJobAssignmentAsync(jobAssignment);
             scope.Complete();

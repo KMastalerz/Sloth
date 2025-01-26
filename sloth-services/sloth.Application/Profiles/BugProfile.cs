@@ -8,7 +8,7 @@ public class BugProfile : Profile
 {
     public BugProfile()
     {
-        CreateMap<Bug, GetBugItem>().ReverseMap();
+        CreateMap<Bug, GetBugItem>();
 
         CreateMap<CreateJobCommand, Bug>();
 

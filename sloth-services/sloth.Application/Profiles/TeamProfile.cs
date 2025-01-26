@@ -7,6 +7,6 @@ public class TeamProfile : Profile
 {
     public TeamProfile()
     {
-        CreateMap<Team, GetTeamBugItem>().ReverseMap();
+        CreateMap<Team, GetTeamBugItem>();
     }
 }

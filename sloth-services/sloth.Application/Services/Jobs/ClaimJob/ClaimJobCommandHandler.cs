@@ -5,6 +5,7 @@ using sloth.Application.UserIdentity;
 using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
+using System.Text.Json;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs.ClaimBug;
@@ -40,10 +41,17 @@ public class ClaimBugCommandHandler(
         {
             await jobRepository.AddJobAssignmentAsync(newJobAssignment);
 
-            var jobAssignmentHistory = mapper.Map<JobAssignmentHistory>(newJobAssignment);
-            jobAssignmentHistory.Action = "Add";
+            var jobHistory = new JobHistory()
+            {
+                JobID = request.JobID,
+                ChangedByID = user.UserGuid,
+                ChangeDate = DateTime.UtcNow,
+                Type = "Assignment",
+                Action = "Add",
+                Value = JsonSerializer.Serialize(newJobAssignment)
+            };
 
-            await jobRepository.AddJobAssignmentHistoryAsync(jobAssignmentHistory);
+            await jobRepository.AddJobHistory(jobHistory);
 
             scope.Complete();
         }

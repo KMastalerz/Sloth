@@ -1,12 +1,12 @@
 ﻿namespace sloth.Application.Models.Jobs;
 public class ListJobDataCacheItem
 {
-    public List<CacheClientItem> Clients { get; set; } = [];
-    public List<CachePriorityItem> Priorities { get; set; } = [];
-    public List<CacheProductItem> Products { get; set; } = [];
-    public List<CacheFunctionalityItem> Functionalities { get; set; } = [];
-    public List<CacheStatusItem> Statuses { get; set; } = [];
-    public List<CacheAssigneeItem> Assignees { get; set; } = [];
+    public IEnumerable<CacheClientItem> Clients { get; set; } = [];
+    public IEnumerable<CachePriorityItem> Priorities { get; set; } = [];
+    public IEnumerable<CacheProductItem> Products { get; set; } = [];
+    public IEnumerable<CacheFunctionalityItem> Functionalities { get; set; } = [];
+    public IEnumerable<CacheStatusItem> Statuses { get; set; } = [];
+    public IEnumerable<CacheAssigneeItem> Assignees { get; set; } = [];
 }
 
 public class CacheClientItem

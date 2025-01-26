@@ -12,7 +12,7 @@ using sloth.Infrastructure.DatabaseContext;
 namespace sloth.Infrastructure.Migrations
 {
     [DbContext(typeof(SlothDbContext))]
-    [Migration("20250126193740_Init")]
+    [Migration("20250126203412_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -179,60 +179,6 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobAssignment");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobAssignmentHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "UserID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("JobAssignmentHistory");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobClientHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClientID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "ClientID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("ClientID");
-
-                    b.ToTable("JobClientHistory");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
                 {
                     b.Property<int>("CommentID")
@@ -271,30 +217,6 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobComment");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobDetailHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Field")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "Field", "Value");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.ToTable("JobDetailHistory");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobFile", b =>
                 {
                     b.Property<Guid>("FileID")
@@ -330,33 +252,6 @@ namespace sloth.Infrastructure.Migrations
                     b.ToTable("JobFile");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("FunctionalityID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "FunctionalityID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("FunctionalityID");
-
-                    b.ToTable("JobFunctionalityHistory");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityLink", b =>
                 {
                     b.Property<int>("JobID")
@@ -370,6 +265,34 @@ namespace sloth.Infrastructure.Migrations
                     b.HasIndex("FunctionalityID");
 
                     b.ToTable("JobFunctionalityLink");
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobHistory", b =>
+                {
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ChangedByID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("JobID", "ChangedByID", "ChangeDate", "Type", "Action");
+
+                    b.HasIndex("ChangedByID");
+
+                    b.ToTable("JobHistory");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobLink", b =>
@@ -392,88 +315,7 @@ namespace sloth.Infrastructure.Migrations
 
                     b.HasIndex("LinkedByID");
 
-                    b.ToTable("JobAncestryLink");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobLinkHistory", b =>
-                {
-                    b.Property<int>("ParentJobID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChildJobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ParentJobID", "ChildJobID", "ChangeDate", "ChangedByID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("ChildJobID");
-
-                    b.ToTable("JobAncestryLinkHistory");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PriorityID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "PriorityID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("PriorityID");
-
-                    b.ToTable("JobPriorityHistory");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobProductHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "ProductID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("JobProductHistory");
+                    b.ToTable("JobLink");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobProductLink", b =>
@@ -489,33 +331,6 @@ namespace sloth.Infrastructure.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("JobProductLink");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobStatusHistory", b =>
-                {
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ChangedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ChangedByID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("StatusID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobID", "ChangedDate", "ChangedByID", "StatusID");
-
-                    b.HasIndex("ChangedByID");
-
-                    b.HasIndex("StatusID");
-
-                    b.ToTable("JobStatusHistory");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.LockedPassword", b =>
@@ -1019,56 +834,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobAssignmentHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("AssignmentHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobClientHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("ClientHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("Client");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.User", "CommentedBy")
@@ -1091,23 +856,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Navigation("CommentedBy");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobDetailHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("DetailHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobFile", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.User", "AddedBy")
@@ -1125,31 +873,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Navigation("AddedBy");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.ProductFunctionality", "Functionality")
-                        .WithMany()
-                        .HasForeignKey("FunctionalityID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("FunctionalityHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("Functionality");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobFunctionalityLink", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.ProductFunctionality", null)
@@ -1163,6 +886,23 @@ namespace sloth.Infrastructure.Migrations
                         .HasForeignKey("JobID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("sloth.Domain.Entities.JobHistory", b =>
+                {
+                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("ChangedByID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("sloth.Domain.Entities.Job", null)
+                        .WithMany("History")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChangedBy");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobLink", b =>
@@ -1192,83 +932,6 @@ namespace sloth.Infrastructure.Migrations
                     b.Navigation("ParentJob");
                 });
 
-            modelBuilder.Entity("sloth.Domain.Entities.JobLinkHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", "ChildJob")
-                        .WithMany("ParentJobHistory")
-                        .HasForeignKey("ChildJobID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", "ParentJob")
-                        .WithMany("ChildJobHistory")
-                        .HasForeignKey("ParentJobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("ChildJob");
-
-                    b.Navigation("ParentJob");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobPriorityHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("PriorityHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Priority", "Priority")
-                        .WithMany()
-                        .HasForeignKey("PriorityID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("Priority");
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobProductHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("ProductHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("sloth.Domain.Entities.JobProductLink", b =>
                 {
                     b.HasOne("sloth.Domain.Entities.Job", null)
@@ -1282,31 +945,6 @@ namespace sloth.Infrastructure.Migrations
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("sloth.Domain.Entities.JobStatusHistory", b =>
-                {
-                    b.HasOne("sloth.Domain.Entities.User", "ChangedBy")
-                        .WithMany()
-                        .HasForeignKey("ChangedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Job", null)
-                        .WithMany("StatusHistory")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("sloth.Domain.Entities.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ChangedBy");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.LockedPassword", b =>
@@ -1455,33 +1093,17 @@ namespace sloth.Infrastructure.Migrations
 
             modelBuilder.Entity("sloth.Domain.Entities.Job", b =>
                 {
-                    b.Navigation("AssignmentHistory");
-
                     b.Navigation("Assignments");
-
-                    b.Navigation("ChildJobHistory");
 
                     b.Navigation("ChildJobs");
 
-                    b.Navigation("ClientHistory");
-
                     b.Navigation("Comments");
-
-                    b.Navigation("DetailHistory");
 
                     b.Navigation("Files");
 
-                    b.Navigation("FunctionalityHistory");
-
-                    b.Navigation("ParentJobHistory");
+                    b.Navigation("History");
 
                     b.Navigation("ParentJobs");
-
-                    b.Navigation("PriorityHistory");
-
-                    b.Navigation("ProductHistory");
-
-                    b.Navigation("StatusHistory");
                 });
 
             modelBuilder.Entity("sloth.Domain.Entities.JobComment", b =>

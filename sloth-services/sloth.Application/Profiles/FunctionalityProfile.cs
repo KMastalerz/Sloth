@@ -7,11 +7,11 @@ public class FunctionalityProfile : Profile
 {
     public FunctionalityProfile()
     {
-        CreateMap<ProductFunctionality, ListBugFunctionalityItem>().ReverseMap();
+        CreateMap<ProductFunctionality, ListBugFunctionalityItem>();
 
         CreateMap<ProductFunctionality, CacheFunctionalityItem>()
            .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null));
 
-        CreateMap<ProductFunctionality, GetFunctionalityBugItem>().ReverseMap();
+        CreateMap<ProductFunctionality, GetFunctionalityBugItem>();
     }
 }

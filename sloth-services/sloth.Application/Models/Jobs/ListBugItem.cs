@@ -25,8 +25,8 @@ public class ListBugItem
     public Guid? ClientID { get; set; } = null;
     public string? Client { get; set; } = null;
     public bool IsBlocker { get; set; } = false;
-    public List<ListBugProductItem>? Products { get; set; } = null;
-    public List<ListBugFunctionalityItem>? Functionalities { get; set; } = null;
+    public IEnumerable<ListBugProductItem>? Products { get; set; } = null;
+    public IEnumerable<ListBugFunctionalityItem>? Functionalities { get; set; } = null;
 }
 
 public class ListBugProductItem()

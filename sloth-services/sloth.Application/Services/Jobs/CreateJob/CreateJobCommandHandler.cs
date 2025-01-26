@@ -7,6 +7,7 @@ using sloth.Domain.Entities;
 using sloth.Domain.Exceptions;
 using sloth.Domain.Repositories;
 using sloth.Utilities.Constants;
+using System.Text.Json;
 using System.Transactions;
 
 namespace sloth.Application.Services.Jobs;
@@ -115,100 +116,100 @@ public class CreateJobCommandHandler(
                     await jobRepository.AddJobFunctionalityLinksAsync(jobFunctionalityLinks);
 
                 // add history entries to job
-                if(request.StatusID is not null)
+                var jobHistories = new List<JobHistory>();
+
+                jobHistories.Add(new()
                 {
-                    var statusHistory = new List<JobStatusHistory> {
-                    new()
-                        {
-                            JobID = jobID,
-                            ChangedByID = user.UserGuid,
-                            ChangedDate = DateTime.UtcNow,
-                            StatusID = request.StatusID,
-                            Action = "Add"
-                        }
-                    };
-                    await jobRepository.AddJobStatusHistoryAsync(statusHistory);
+                    JobID = jobID,
+                    ChangedByID = user.UserGuid,
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Description",
+                    Action = "Add",
+                    Value = request.Description
+                });
+
+                jobHistories.Add(new()
+                {
+                    JobID = jobID,
+                    ChangedByID = user.UserGuid,
+                    ChangeDate = DateTime.UtcNow,
+                    Type = "Header",
+                    Action = "Add",
+                    Value = request.Header
+                });
+
+                if (request.StatusID is not null)
+                {
+                    var status = await jobRepository.GetStatusAsync((int)request.StatusID);
+                    jobHistories.Add(new()
+                    {
+                        JobID = jobID,
+                        ChangedByID = user.UserGuid,
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Status",
+                        Action = "Add",
+                        Value = JsonSerializer.Serialize(status)
+                    });
                 }
 
                 if(request.PriorityID is not null)
                 {
-                    var priorityHistory = new List<JobPriorityHistory> {
-                    new()
-                        {
-                            JobID = jobID,
-                            ChangedByID = user.UserGuid,
-                            ChangedDate = DateTime.UtcNow,
-                            PriorityID = request.PriorityID,
-                            Action = "Add"
-                        }
-                    };
-                    await jobRepository.AddJobPriorityHistoryAsync(priorityHistory);
+                    var priority = await jobRepository.GetPriorityAsync((int)request.PriorityID);
+                    jobHistories.Add(new()
+                    {
+                        JobID = jobID,
+                        ChangedByID = user.UserGuid,
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Priority",
+                        Action = "Add",
+                        Value = JsonSerializer.Serialize(priority)
+                    });
                 }
 
                 if(request.ClientID is not null)
                 {
-                    var clientHistory = new List<JobClientHistory>
-                    {
-                    new()
-                        {
-                            JobID = jobID,
-                            ChangedByID = user.UserGuid,
-                            ChangedDate = DateTime.UtcNow,
-                            ClientID = request.ClientID,
-                            Action = "Add"
-                        }
-                    };
-                    await jobRepository.AddJobClientHistoryAsync(clientHistory);
-                }
-
-                var detailHistory = new List<JobDetailHistory>
-                {
-                    new()
-                    {
-                        JobID = jobID,
-                        Field = "Header",
-                        Value = request.Header,
-                        ChangedDate = DateTime.UtcNow,
-                        ChangedByID = user.UserGuid
-                    },
-                    new()
-                    {
-                        JobID = jobID,
-                        Field = "Description",
-                        Value = request.Description,
-                        ChangedDate = DateTime.UtcNow,
-                        ChangedByID = user.UserGuid
-                    }
-                };
-                await jobRepository.AddJobDetailsHistoryAsync(detailHistory);
-
-                if(request.Products.Any())
-                {
-                    var productHistory = new List<JobProductHistory>();
-                    productHistory.AddRange(request.Products.Select(p => new JobProductHistory()
+                    var client = await jobRepository.GetClientByIDAsync((Guid)request.ClientID);
+                    jobHistories.Add(new()
                     {
                         JobID = jobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        ProductID = p,
-                        Action = "Add"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Client",
+                        Action = "Add",
+                        Value = JsonSerializer.Serialize(client)
+                    });
+                }
+
+                if(request.Products.Any())
+                {
+                    var products = await jobRepository.ListProductsAsync();
+                    jobHistories.AddRange(request.Products.Select(p => new JobHistory()
+                    {
+                        JobID = jobID,
+                        ChangedByID = user.UserGuid,
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Product",
+                        Action = "Add",
+                        Value = JsonSerializer.Serialize(products.FirstOrDefault(pr => pr.ProductID == p))
                     }));
-                    await jobRepository.AddJobProductHistoryAsync(productHistory);
                 }
 
                 if(request.Functionalities.Any())
                 {
-                    var functionalityHistory = new List<JobFunctionalityHistory>();
-                    functionalityHistory.AddRange(request.Products.Select(f => new JobFunctionalityHistory()
+                    var functionalities = await jobRepository.ListFunctionalitiesAsync();
+                    jobHistories.AddRange(request.Functionalities.Select(f => new JobHistory()
                     {
                         JobID = jobID,
                         ChangedByID = user.UserGuid,
-                        ChangedDate = DateTime.UtcNow,
-                        FunctionalityID = f,
-                        Action = "Add"
+                        ChangeDate = DateTime.UtcNow,
+                        Type = "Functionality",
+                        Action = "Add",
+                        Value = JsonSerializer.Serialize(functionalities.FirstOrDefault(fu => fu.ProductID == f))
                     }));
-                    await jobRepository.AddJobFunctionalityHistoryAsync(functionalityHistory);
                 }
+
+                if(jobHistories.Any())
+                    await jobRepository.AddJobHistories(jobHistories);
 
                 // add files if such was requested for add
                 if (request.Files is not null && request.Files.Any())

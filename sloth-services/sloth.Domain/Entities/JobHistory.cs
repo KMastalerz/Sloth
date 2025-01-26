@@ -6,6 +6,7 @@ public class JobHistory
     public DateTime ChangeDate { get; set; }
     /// <summary>
     /// Accepts:
+    /// - Assignment
     /// - ChildJob
     /// - Client
     /// - Description

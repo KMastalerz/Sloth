@@ -20,19 +20,12 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
     internal DbSet<ClientProductLink> ClientProductLink { get; set; }
     internal DbSet<Job> Job { get; set; }
     internal DbSet<JobAssignment> JobAssignment { get; set; }
-    internal DbSet<JobAssignmentHistory> JobAssignmentHistory { get; set; }
-    internal DbSet<JobClientHistory> JobClientHistory { get; set; }
     internal DbSet<JobComment> JobComment { get; set; }
-    internal DbSet<JobDetailHistory> JobDetailHistory { get; set; }
     internal DbSet<JobFile> JobFile { get; set; }
-    internal DbSet<JobFunctionalityHistory> JobFunctionalityHistory { get; set; }
     internal DbSet<JobFunctionalityLink> JobFunctionalityLink { get; set; }
-    internal DbSet<JobLink> JobAncestryLink { get; set; }
-    internal DbSet<JobLinkHistory> JobAncestryLinkHistory { get; set; }
-    internal DbSet<JobPriorityHistory> JobPriorityHistory { get; set; }
-    internal DbSet<JobProductHistory> JobProductHistory { get; set; }
+    internal DbSet<JobHistory> JobHistory { get; set; }
+    internal DbSet<JobLink> JobLink { get; set; }
     internal DbSet<JobProductLink> JobProductLink { get; set; }
-    internal DbSet<JobStatusHistory> JobStatusHistory { get; set; }
     internal DbSet<OwnerStatusMap> OwnerStatusMap { get; set; }
     internal DbSet<Priority> Priority { get; set; }
     internal DbSet<Product> Product { get; set; }
@@ -210,11 +203,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
 
             job.HasKey(j => j.JobID);
 
-            job.HasMany(j => j.AssignmentHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
             job.HasMany(j => j.Assignments)
                 .WithOne()
                 .HasForeignKey(h => h.JobID)
@@ -224,16 +212,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .WithOne()
                 .HasForeignKey(h => h.ParentJobID);
 
-            job.HasMany(j => j.ChildJobHistory)
-                .WithOne()
-                .HasForeignKey(h => h.ParentJobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            job.HasMany(j => j.ClientHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
             job.HasOne(j => j.Client)
                 .WithMany()
                 .HasForeignKey(j => j.ClientID);
@@ -241,11 +219,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
             job.HasMany(j => j.Comments)
                 .WithOne()
                 .HasForeignKey(c => c.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            job.HasMany(j => j.DetailHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             job.HasMany(f => f.Functionalities)
@@ -258,33 +231,23 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                         link.HasKey(l => new { l.JobID, l.FunctionalityID });
                     });
 
-            job.HasMany(j => j.FunctionalityHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
             job.HasMany(j => j.Files)
                 .WithOne()
                 .HasForeignKey(f => f.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            job.HasMany(j => j.History)
+                .WithOne()
+                .HasForeignKey(c => c.JobID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             job.HasMany(j => j.ParentJobs)
                 .WithOne()
                 .HasForeignKey(h => h.ChildJobID);
 
-            job.HasMany(j => j.ParentJobHistory)
-                .WithOne()
-                .HasForeignKey(h => h.ChildJobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
             job.HasOne(j => j.Priority)
                 .WithMany()
                 .HasForeignKey(j => j.PriorityID);
-
-            job.HasMany(j => j.PriorityHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
 
             job.HasMany(p => p.Products)
                 .WithMany()
@@ -296,19 +259,9 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                         link.HasKey(l => new { l.JobID, l.ProductID });
                     });
 
-            job.HasMany(j => j.ProductHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
             job.HasOne(j => j.Status)
                 .WithMany()
                 .HasForeignKey(j => j.StatusID);
-
-            job.HasMany(j => j.StatusHistory)
-                .WithOne()
-                .HasForeignKey(h => h.JobID)
-                .OnDelete(DeleteBehavior.Cascade);
         });
 
         builder.Entity<JobAssignment>(assignment =>
@@ -326,36 +279,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<JobAssignmentHistory>(history =>
-        {
-            history.HasKey(h=> new { h.JobID, h.ChangedDate, h.ChangedByID, h.UserID});
-
-            history.HasOne(h => h.User)
-                .WithMany()
-                .HasForeignKey(h => h.UserID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
-        builder.Entity<JobClientHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.ClientID });
-
-            history.HasOne(h => h.Client)
-                .WithMany()
-                .HasForeignKey(h => h.ClientID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
         builder.Entity<JobComment>(comment =>
         {
             comment.HasKey(c => c.CommentID);
@@ -369,16 +292,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .WithOne()
                 .HasForeignKey(c => c.OriginalCommentID)
                 .OnDelete(DeleteBehavior.Restrict);
-        });
-
-        builder.Entity<JobDetailHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.Field, h.Value });
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Entity<JobFile>(file =>
@@ -397,21 +310,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<JobFunctionalityHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.FunctionalityID });
-
-            history.HasOne(h => h.Functionality)
-                .WithMany()
-                .HasForeignKey(h => h.FunctionalityID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
         builder.Entity<JobFunctionalityLink>(link =>
         {
             link.HasKey(l => new { l.JobID, l.FunctionalityID });
@@ -427,6 +325,14 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .HasForeignKey(l => l.FunctionalityID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<JobHistory>(history => {
+            history.HasKey(h => new { h.JobID, h.ChangedByID, h.ChangeDate, h.Type, h.Action });
+            history.HasOne(h => h.ChangedBy)
+                .WithMany()
+                .HasForeignKey(history => history.ChangedByID)
+                .OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Entity<JobLink>(link =>
@@ -449,56 +355,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<JobLinkHistory>(history =>
-        {
-            history.HasKey(h => new { h.ParentJobID, h.ChildJobID, h.ChangeDate, h.ChangedByID });
-
-            history.HasOne(h => h.ParentJob)
-                .WithMany(j => j.ChildJobHistory)
-                .HasForeignKey(h => h.ParentJobID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            history.HasOne(h => h.ChildJob)
-                .WithMany(j => j.ParentJobHistory)
-                .HasForeignKey(h => h.ChildJobID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
-        builder.Entity<JobPriorityHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.PriorityID });
-
-            history.HasOne(h => h.Priority)
-                .WithMany()
-                .HasForeignKey(h => h.PriorityID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
-        builder.Entity<JobProductHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.ProductID });
-
-            history.HasOne(h => h.Product)
-                .WithMany()
-                .HasForeignKey(h => h.ProductID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
-
         builder.Entity<JobProductLink>(link => {
             link.HasKey(l => new { l.JobID, l.ProductID });
 
@@ -513,21 +369,6 @@ internal class SlothDbContext(DbContextOptions<SlothDbContext> options) : DbCont
                 .HasForeignKey(l => l.ProductID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        builder.Entity<JobStatusHistory>(history =>
-        {
-            history.HasKey(h => new { h.JobID, h.ChangedDate, h.ChangedByID, h.StatusID });
-
-            history.HasOne(h => h.Status)
-                .WithMany()
-                .HasForeignKey(h => h.StatusID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            history.HasOne(h => h.ChangedBy)
-                .WithMany()
-                .HasForeignKey(h => h.ChangedByID)
-                .OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Entity<OwnerStatusMap>(statusMap =>

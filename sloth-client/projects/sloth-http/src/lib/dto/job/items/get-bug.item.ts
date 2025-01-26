@@ -15,18 +15,13 @@ export interface GetBugItem {
     priority: GetPriorityBugItem | null;
     status: GetStatusBugItem | null;
 
-    comments: GetCommentBugItem[];
-    assignmentHistory: GetAssignmentHistoryBugItem[];
     assignments: GetAssignmentBugItem[];
+    childJobs: GetJobLinkBugItem[];
+    comments: GetCommentBugItem[];
     files: GetFileBugItem[];
-    priorityHistory: GetPriorityHistoryBugItem[];
-    statusHistory: GetStatusHistoryBugItem[];
-    products: GetProductBugItem[];
     functionalities: GetFunctionalityBugItem[];
     parentJobs: GetJobLinkBugItem [];
-    childJobs: GetJobLinkBugItem[];
-    parentJobHistory: GetJobAncestryHistoryBugItem[];
-    childJobHistory: GetJobAncestryHistoryBugItem[];
+    products: GetProductBugItem[];
   }
   
   export interface GetAssignmentBugItem {
@@ -38,18 +33,6 @@ export interface GetBugItem {
     assignedByFullName: string;
     assignedByEmail: string;
   }
-  
-  export interface GetAssignmentHistoryBugItem {
-    changedDate: Date;
-    userName: string;
-    userFullName: string;
-    userEmail: string;
-    action: string;
-    changedBy: string;
-    changedByFullName: string;
-    changedByEmail: string;
-  }
-  
   export interface GetClientBugItem {
     clientID: string;
     name: string;
@@ -91,17 +74,7 @@ export interface GetBugItem {
     tagColor: string | null;
     description: string | null;
   }
-  
-  export interface GetPriorityHistoryBugItem {
-    changedDate: Date;
-    changedBy: string;
-    changedByEmail: string;
-    changedByFullName: string;
-    PriorityTag: string | null;
-    PriorityTagColor: string | null;
-    PriorityDescription: string | null;
-  }
-  
+
   export interface GetProductBugItem {
     productID: number;
     alias: string;
@@ -114,16 +87,6 @@ export interface GetBugItem {
     tag: string;
     tagColor: string | null;
     description: string | null;
-  }
-  
-  export interface GetStatusHistoryBugItem {
-    changedDate: Date;
-    changedBy: string;
-    changedByEmail: string;
-    changedByFullName: string;
-    StatusTag: string | null;
-    StatusTagColor: string | null;
-    StatusDescription: string | null;
   }
   
   export interface GetTeamBugItem {
@@ -141,20 +104,6 @@ export interface GetBugItem {
     email: string;
   }
 
-  export interface GetJobAncestryHistoryBugItem {
-    parentJobID: number;
-    parentJobHeader: number;
-    parentJobDescription: number;
-    childJobID: number;
-    childJobHeader: number;
-    childJobDescription: number;
-    changeDate: string;
-    action: string;
-    changedBy: string;
-    changedByFullName: string;
-    changedByEmail: string;
-  }  
-  
   export interface GetJobLinkBugItem {
     parentJobID: number;
     parentJobHeader: number;
