@@ -8,6 +8,7 @@ export * from './lib/auth/auth-state.service';
 export * from './lib/generic/array/array.service';
 export * from './lib/generic/form-data/form-data.service';
 export * from './lib/generic/form-group/form-group.service';
+export * from './lib/router/router.service';
 export * from './lib/string/string.service';
 export * from './lib/styles/hex.service';
 

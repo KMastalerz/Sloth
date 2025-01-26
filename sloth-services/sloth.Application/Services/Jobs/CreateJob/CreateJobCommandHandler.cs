@@ -20,9 +20,9 @@ public class CreateJobCommandHandler(
     private readonly string jobsPath = Path.Combine(Directory.GetCurrentDirectory(), "Jobs");
     public async Task Handle(CreateJobCommand request, CancellationToken cancellationToken)
     {
-        var currentUser = userContext.GetCurrentUser();
+        var user = userContext.GetCurrentUser();
 
-        if (currentUser == null)
+        if (user == null)
             throw new InvalidUserException();
 
         // get initial project status from IConfiguration
@@ -55,7 +55,7 @@ public class CreateJobCommandHandler(
                             StatusID = request.StatusID,
                             Type = request.Type,
                             PriorityID = request.PriorityID,
-                            CreatedByID = currentUser.UserGuid,
+                            CreatedByID = user.UserGuid,
                             CreatedDate = newJobDate,
                             ClientID = request.ClientID,
                             RaisedDate = request.RaisedDate?.ToUniversalTime() ?? newJobDate
@@ -76,7 +76,7 @@ public class CreateJobCommandHandler(
                             StatusID = request.StatusID,
                             Type = request.Type,
                             PriorityID = request.PriorityID,
-                            CreatedByID = currentUser.UserGuid,
+                            CreatedByID = user.UserGuid,
                             CreatedDate = newJobDate,
                             ClientID = request.ClientID,
                             RaisedDate = request.RaisedDate?.ToUniversalTime() ?? newJobDate
@@ -101,17 +101,114 @@ public class CreateJobCommandHandler(
                 });
 
                 // link functionalities to this job
-                var jobFunctionalityLinks = request.Functionalities?.Select(item => new JobFunctionalityLink
+                var jobFunctionalityLinks = request.Functionalities.Select(item => new JobFunctionalityLink
                 {
                     JobID = jobID,
                     FunctionalityID = item
                 });
 
                 // link products to job
-                await jobRepository.AddJobProductLinksAsync(jobProductLinks);
+                if (jobProductLinks.Any())
+                    await jobRepository.AddJobProductLinksAsync(jobProductLinks);
 
-                if(jobFunctionalityLinks is not null)
+                if(jobFunctionalityLinks.Any())
                     await jobRepository.AddJobFunctionalityLinksAsync(jobFunctionalityLinks);
+
+                // add history entries to job
+                if(request.StatusID is not null)
+                {
+                    var statusHistory = new List<JobStatusHistory> {
+                    new()
+                        {
+                            JobID = jobID,
+                            ChangedByID = user.UserGuid,
+                            ChangedDate = DateTime.UtcNow,
+                            StatusID = request.StatusID,
+                            Action = "Add"
+                        }
+                    };
+                    await jobRepository.AddJobStatusHistoryAsync(statusHistory);
+                }
+
+                if(request.PriorityID is not null)
+                {
+                    var priorityHistory = new List<JobPriorityHistory> {
+                    new()
+                        {
+                            JobID = jobID,
+                            ChangedByID = user.UserGuid,
+                            ChangedDate = DateTime.UtcNow,
+                            PriorityID = request.PriorityID,
+                            Action = "Add"
+                        }
+                    };
+                    await jobRepository.AddJobPriorityHistoryAsync(priorityHistory);
+                }
+
+                if(request.ClientID is not null)
+                {
+                    var clientHistory = new List<JobClientHistory>
+                    {
+                    new()
+                        {
+                            JobID = jobID,
+                            ChangedByID = user.UserGuid,
+                            ChangedDate = DateTime.UtcNow,
+                            ClientID = request.ClientID,
+                            Action = "Add"
+                        }
+                    };
+                    await jobRepository.AddJobClientHistoryAsync(clientHistory);
+                }
+
+                var detailHistory = new List<JobDetailHistory>
+                {
+                    new()
+                    {
+                        JobID = jobID,
+                        Field = "Header",
+                        Value = request.Header,
+                        ChangedDate = DateTime.UtcNow,
+                        ChangedByID = user.UserGuid
+                    },
+                    new()
+                    {
+                        JobID = jobID,
+                        Field = "Description",
+                        Value = request.Description,
+                        ChangedDate = DateTime.UtcNow,
+                        ChangedByID = user.UserGuid
+                    }
+                };
+                await jobRepository.AddJobDetailsHistoryAsync(detailHistory);
+
+                if(request.Products.Any())
+                {
+                    var productHistory = new List<JobProductHistory>();
+                    productHistory.AddRange(request.Products.Select(p => new JobProductHistory()
+                    {
+                        JobID = jobID,
+                        ChangedByID = user.UserGuid,
+                        ChangedDate = DateTime.UtcNow,
+                        ProductID = p,
+                        Action = "Add"
+                    }));
+                    await jobRepository.AddJobProductHistoryAsync(productHistory);
+                }
+
+                if(request.Functionalities.Any())
+                {
+                    var functionalityHistory = new List<JobFunctionalityHistory>();
+                    functionalityHistory.AddRange(request.Products.Select(f => new JobFunctionalityHistory()
+                    {
+                        JobID = jobID,
+                        ChangedByID = user.UserGuid,
+                        ChangedDate = DateTime.UtcNow,
+                        FunctionalityID = f,
+                        Action = "Add"
+                    }));
+                    await jobRepository.AddJobFunctionalityHistoryAsync(functionalityHistory);
+                }
 
                 // add files if such was requested for add
                 if (request.Files is not null && request.Files.Any())
@@ -123,7 +220,7 @@ public class CreateJobCommandHandler(
                         Name = file.FileName,
                         Size = file.Length,
                         Extension = Path.GetExtension(file.FileName),
-                        AddedByID = currentUser.UserGuid,
+                        AddedByID = user.UserGuid,
                         AddedDate = newJobDate
                     });
 
@@ -146,10 +243,10 @@ public class CreateJobCommandHandler(
                             await item.CopyToAsync(stream, cancellationToken);
                         }
                         addedFiles.Add(filePath);
-                        logger.LogInformation("New file {FileName} was added by: {UserName}", item.FileName, currentUser.UserName);
+                        logger.LogInformation("New file {FileName} was added by: {UserName}", item.FileName, user.UserName);
                     }
                 }
-                logger.LogInformation("New {Type}: {id} was created by: {UserName}", request.Type.ToLower(), id, currentUser.UserName);
+                logger.LogInformation("New {Type}: {id} was created by: {UserName}", request.Type.ToLower(), id, user.UserName);
                 transactionScope.Complete();
             }
             catch

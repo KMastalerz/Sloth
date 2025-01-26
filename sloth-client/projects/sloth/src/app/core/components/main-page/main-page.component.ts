@@ -11,12 +11,11 @@ import { GetUserCountersItem, JobService } from 'sloth-http';
 
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
-import { NavigationHeaderComponent } from './navigation-header/navigation-header.component';
 
 @Component({
   selector: 'sl-main-page',
   imports: [MatSidenavModule, MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatBadgeModule, 
-    MatDividerModule, RouterOutlet, SideNavigationComponent, MainHeaderComponent, NavigationHeaderComponent],
+    MatDividerModule, RouterOutlet, SideNavigationComponent, MainHeaderComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })

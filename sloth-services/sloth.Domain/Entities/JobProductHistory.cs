@@ -1,8 +1,8 @@
 ﻿namespace sloth.Domain.Entities;
-public class JobPriorityHistory
+public class JobProductHistory
 {
     public int JobID { get; set; }
-    public int? PriorityID { get; set; } = null;
+    public int? ProductID { get; set; } = null;
     public Guid ChangedByID { get; set; }
     public DateTime ChangedDate { get; set; }
     public string Action { get; set; } = default!;
@@ -11,5 +11,5 @@ public class JobPriorityHistory
     /// External properties
     /// </summary>
     public User ChangedBy { get; set; } = default!;
-    public Priority? Priority { get; set; } = null;
+    public Product? Product { get; set; } = null;
 }

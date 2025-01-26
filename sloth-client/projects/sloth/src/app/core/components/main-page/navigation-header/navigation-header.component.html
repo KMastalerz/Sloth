@@ -1,4 +1,6 @@
 <mat-toolbar>
     <sl-button mat-flat-button (onClick)="addBug()" label="Add item" [isHeader]="true" displayType="add"/>
     <sl-header-link label="My items"/>
+    <ng-content></ng-content>
 </mat-toolbar>
+<mat-divider></mat-divider>

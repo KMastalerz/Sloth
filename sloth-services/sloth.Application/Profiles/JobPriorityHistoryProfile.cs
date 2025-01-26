@@ -11,9 +11,9 @@ public class JobPriorityHistoryProfile : Profile
            .ForMember(dest => dest.ChangedBy, opt => opt.MapFrom(src =>  src.ChangedBy.UserName))
            .ForMember(dest => dest.ChangedByEmail, opt => opt.MapFrom(src => src.ChangedBy.Email))
            .ForMember(dest => dest.ChangedByFullName, opt => opt.MapFrom(src => $"{src.ChangedBy.FirstName} {src.ChangedBy.LastName}"))
-           .ForMember(dest => dest.NewPriorityID, opt => opt.MapFrom(src => src.NewPriorityID))
-           .ForMember(dest => dest.NewPriorityTag, opt => opt.MapFrom(src => src.NewPriority != null ? src.NewPriority.Tag : null))
-           .ForMember(dest => dest.NewPriorityTagColor, opt => opt.MapFrom(src => src.NewPriority != null ? src.NewPriority.TagColor : null))
-           .ForMember(dest => dest.NewPriorityDescription, opt => opt.MapFrom(src => src.NewPriority != null ? src.NewPriority.Description : null));
+           .ForMember(dest => dest.PriorityID, opt => opt.MapFrom(src => src.PriorityID))
+           .ForMember(dest => dest.PriorityTag, opt => opt.MapFrom(src => src.Priority != null ? src.Priority.Tag : null))
+           .ForMember(dest => dest.PriorityTagColor, opt => opt.MapFrom(src => src.Priority != null ? src.Priority.TagColor : null))
+           .ForMember(dest => dest.PriorityDescription, opt => opt.MapFrom(src => src.Priority != null ? src.Priority.Description : null));
     }
 }

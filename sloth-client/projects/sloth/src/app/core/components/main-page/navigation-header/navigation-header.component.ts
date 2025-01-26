@@ -5,11 +5,12 @@ import { AddJobDialogComponent } from './navigation-header-dialogs/add-bug-dialo
 import { ButtonComponent, HeaderLinkComponent} from 'sloth-ui';
 import { CreateJobParam, JobService } from 'sloth-http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDivider } from '@angular/material/divider';
 
 
 @Component({
   selector: 'navigation-header',
-  imports: [MatToolbar, ButtonComponent, HeaderLinkComponent],
+  imports: [MatToolbar, ButtonComponent, HeaderLinkComponent, MatDivider],
   templateUrl: './navigation-header.component.html',
   styleUrl: './navigation-header.component.scss'
 })

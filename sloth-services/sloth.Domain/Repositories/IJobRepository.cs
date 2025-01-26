@@ -27,8 +27,12 @@ public interface IJobRepository
     Task RemoveJobAssignmentAsync(JobAssignment assignment);
     Task AddJobAssignmentHistoryAsync(JobAssignmentHistory assignmentHistory);
     Task<Priority?> GetPriorityAsync(int priorityID);
-    Task AddJobStatusHistoryAsync(JobStatusHistory statusHistory);
-    Task AddJobPriorityHistoryAsync(JobPriorityHistory priorityHistory);
+    Task AddJobStatusHistoryAsync(IEnumerable<JobStatusHistory> statusHistory);
+    Task AddJobPriorityHistoryAsync(IEnumerable<JobPriorityHistory> priorityHistory);
+    Task AddJobClientHistoryAsync(IEnumerable<JobClientHistory> clientHistory);
+    Task AddJobProductHistoryAsync(IEnumerable<JobProductHistory> productHistory);
+    Task AddJobFunctionalityHistoryAsync(IEnumerable<JobFunctionalityHistory> functionalityHistory);
+    Task AddJobDetailsHistoryAsync(IEnumerable<JobDetailHistory> jobDetailHistory);
     Task UpdateBugAsync(Bug bug);
     Task<int> GetBugCountByUserAsync(Guid userID);
     Task<Job?> GetJobAsync (int jobID);

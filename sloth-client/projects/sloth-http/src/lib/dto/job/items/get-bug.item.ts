@@ -97,9 +97,9 @@ export interface GetBugItem {
     changedBy: string;
     changedByEmail: string;
     changedByFullName: string;
-    newPriorityTag: string | null;
-    newPriorityTagColor: string | null;
-    newPriorityDescription: string | null;
+    PriorityTag: string | null;
+    PriorityTagColor: string | null;
+    PriorityDescription: string | null;
   }
   
   export interface GetProductBugItem {
@@ -121,9 +121,9 @@ export interface GetBugItem {
     changedBy: string;
     changedByEmail: string;
     changedByFullName: string;
-    newStatusTag: string | null;
-    newStatusTagColor: string | null;
-    newStatusDescription: string | null;
+    StatusTag: string | null;
+    StatusTagColor: string | null;
+    StatusDescription: string | null;
   }
   
   export interface GetTeamBugItem {

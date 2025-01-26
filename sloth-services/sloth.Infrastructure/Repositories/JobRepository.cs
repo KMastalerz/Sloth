@@ -243,11 +243,11 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
             .Include(b => b.PriorityHistory)
                 .ThenInclude(ph => ph.ChangedBy)
             .Include(b => b.PriorityHistory)
-                .ThenInclude(ph => ph.NewPriority)
+                .ThenInclude(ph => ph.Priority)
             .Include(b => b.StatusHistory)
                 .ThenInclude(sh => sh.ChangedBy)
             .Include(b => b.StatusHistory)
-                .ThenInclude(sh => sh.NewStatus)
+                .ThenInclude(sh => sh.Status)
             .Include(b => b.Products)
             .Include(b => b.Functionalities)
             .Include(b => b.ParentJobs)
@@ -322,14 +322,34 @@ internal class JobRepository(SlothDbContext dbContext) : IJobRepository
         var result = await dbContext.Priority.FirstOrDefaultAsync(p => p.PriorityID == priorityID);
         return result;
     }
-    public async Task AddJobStatusHistoryAsync(JobStatusHistory statusHistory)
+    public async Task AddJobStatusHistoryAsync(IEnumerable<JobStatusHistory> statusHistory)
     {
-        await dbContext.JobStatusHistory.AddAsync(statusHistory);
+        await dbContext.JobStatusHistory.AddRangeAsync(statusHistory);
         await dbContext.SaveChangesAsync();
     }
-    public async Task AddJobPriorityHistoryAsync(JobPriorityHistory priorityHistory)
+    public async Task AddJobPriorityHistoryAsync(IEnumerable<JobPriorityHistory> priorityHistory)
     {
-        await dbContext.JobPriorityHistory.AddAsync(priorityHistory);
+        await dbContext.JobPriorityHistory.AddRangeAsync(priorityHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobClientHistoryAsync(IEnumerable<JobClientHistory> clientHistory)
+    {
+        await dbContext.JobClientHistory.AddRangeAsync(clientHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobProductHistoryAsync(IEnumerable<JobProductHistory> productHistory)
+    {
+        await dbContext.JobProductHistory.AddRangeAsync(productHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobFunctionalityHistoryAsync(IEnumerable<JobFunctionalityHistory> functionalityHistory)
+    {
+        await dbContext.JobFunctionalityHistory.AddRangeAsync(functionalityHistory);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task AddJobDetailsHistoryAsync(IEnumerable<JobDetailHistory> jobDetailHistory)
+    {
+        await dbContext.JobDetailHistory.AddRangeAsync(jobDetailHistory);
         await dbContext.SaveChangesAsync();
     }
     public async Task UpdateBugAsync(Bug bug)

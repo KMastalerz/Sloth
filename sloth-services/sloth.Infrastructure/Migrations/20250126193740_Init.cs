@@ -262,7 +262,7 @@ namespace sloth.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Header = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PriorityID = table.Column<int>(type: "int", nullable: false),
+                    PriorityID = table.Column<int>(type: "int", nullable: true),
                     StatusID = table.Column<int>(type: "int", nullable: true),
                     ClientID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -286,8 +286,7 @@ namespace sloth.Infrastructure.Migrations
                         name: "FK_Job_Priority_PriorityID",
                         column: x => x.PriorityID,
                         principalTable: "Priority",
-                        principalColumn: "PriorityID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PriorityID");
                     table.ForeignKey(
                         name: "FK_Job_Status_StatusID",
                         column: x => x.StatusID,
@@ -585,6 +584,37 @@ namespace sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobClientHistory",
+                columns: table => new
+                {
+                    JobID = table.Column<int>(type: "int", nullable: false),
+                    ClientID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobClientHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.ClientID });
+                    table.ForeignKey(
+                        name: "FK_JobClientHistory_Client_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Client",
+                        principalColumn: "ClientID");
+                    table.ForeignKey(
+                        name: "FK_JobClientHistory_Job_JobID",
+                        column: x => x.JobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobClientHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobComment",
                 columns: table => new
                 {
@@ -621,6 +651,32 @@ namespace sloth.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobDetailHistory",
+                columns: table => new
+                {
+                    JobID = table.Column<int>(type: "int", nullable: false),
+                    Field = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobDetailHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.Field, x.Value });
+                    table.ForeignKey(
+                        name: "FK_JobDetailHistory_Job_JobID",
+                        column: x => x.JobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobDetailHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobFile",
                 columns: table => new
                 {
@@ -647,6 +703,37 @@ namespace sloth.Infrastructure.Migrations
                         principalTable: "User",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobFunctionalityHistory",
+                columns: table => new
+                {
+                    JobID = table.Column<int>(type: "int", nullable: false),
+                    FunctionalityID = table.Column<int>(type: "int", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobFunctionalityHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.FunctionalityID });
+                    table.ForeignKey(
+                        name: "FK_JobFunctionalityHistory_Job_JobID",
+                        column: x => x.JobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobFunctionalityHistory_ProductFunctionality_FunctionalityID",
+                        column: x => x.FunctionalityID,
+                        principalTable: "ProductFunctionality",
+                        principalColumn: "FunctionalityID");
+                    table.ForeignKey(
+                        name: "FK_JobFunctionalityHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -678,14 +765,14 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    NewPriorityID = table.Column<int>(type: "int", nullable: false),
+                    PriorityID = table.Column<int>(type: "int", nullable: false),
                     ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousPriorityID = table.Column<int>(type: "int", nullable: true)
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobPriorityHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.NewPriorityID });
+                    table.PrimaryKey("PK_JobPriorityHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.PriorityID });
                     table.ForeignKey(
                         name: "FK_JobPriorityHistory_Job_JobID",
                         column: x => x.JobID,
@@ -693,17 +780,43 @@ namespace sloth.Infrastructure.Migrations
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobPriorityHistory_Priority_NewPriorityID",
-                        column: x => x.NewPriorityID,
-                        principalTable: "Priority",
-                        principalColumn: "PriorityID");
-                    table.ForeignKey(
-                        name: "FK_JobPriorityHistory_Priority_PreviousPriorityID",
-                        column: x => x.PreviousPriorityID,
+                        name: "FK_JobPriorityHistory_Priority_PriorityID",
+                        column: x => x.PriorityID,
                         principalTable: "Priority",
                         principalColumn: "PriorityID");
                     table.ForeignKey(
                         name: "FK_JobPriorityHistory_User_ChangedByID",
+                        column: x => x.ChangedByID,
+                        principalTable: "User",
+                        principalColumn: "UserID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobProductHistory",
+                columns: table => new
+                {
+                    JobID = table.Column<int>(type: "int", nullable: false),
+                    ProductID = table.Column<int>(type: "int", nullable: false),
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobProductHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.ProductID });
+                    table.ForeignKey(
+                        name: "FK_JobProductHistory_Job_JobID",
+                        column: x => x.JobID,
+                        principalTable: "Job",
+                        principalColumn: "JobID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobProductHistory_Product_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Product",
+                        principalColumn: "ProductID");
+                    table.ForeignKey(
+                        name: "FK_JobProductHistory_User_ChangedByID",
                         column: x => x.ChangedByID,
                         principalTable: "User",
                         principalColumn: "UserID");
@@ -738,14 +851,14 @@ namespace sloth.Infrastructure.Migrations
                 columns: table => new
                 {
                     JobID = table.Column<int>(type: "int", nullable: false),
-                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NewStatusID = table.Column<int>(type: "int", nullable: false),
+                    StatusID = table.Column<int>(type: "int", nullable: false),
                     ChangedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreviousStatusID = table.Column<int>(type: "int", nullable: true)
+                    ChangedByID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobStatusHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.NewStatusID });
+                    table.PrimaryKey("PK_JobStatusHistory", x => new { x.JobID, x.ChangedDate, x.ChangedByID, x.StatusID });
                     table.ForeignKey(
                         name: "FK_JobStatusHistory_Job_JobID",
                         column: x => x.JobID,
@@ -753,13 +866,8 @@ namespace sloth.Infrastructure.Migrations
                         principalColumn: "JobID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobStatusHistory_Status_NewStatusID",
-                        column: x => x.NewStatusID,
-                        principalTable: "Status",
-                        principalColumn: "StatusID");
-                    table.ForeignKey(
-                        name: "FK_JobStatusHistory_Status_PreviousStatusID",
-                        column: x => x.PreviousStatusID,
+                        name: "FK_JobStatusHistory_Status_StatusID",
+                        column: x => x.StatusID,
                         principalTable: "Status",
                         principalColumn: "StatusID");
                     table.ForeignKey(
@@ -879,6 +987,16 @@ namespace sloth.Infrastructure.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobClientHistory_ChangedByID",
+                table: "JobClientHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobClientHistory_ClientID",
+                table: "JobClientHistory",
+                column: "ClientID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobComment_CommentedByID",
                 table: "JobComment",
                 column: "CommentedByID");
@@ -894,6 +1012,11 @@ namespace sloth.Infrastructure.Migrations
                 column: "OriginalCommentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobDetailHistory_ChangedByID",
+                table: "JobDetailHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobFile_AddedByID",
                 table: "JobFile",
                 column: "AddedByID");
@@ -902,6 +1025,16 @@ namespace sloth.Infrastructure.Migrations
                 name: "IX_JobFile_JobID",
                 table: "JobFile",
                 column: "JobID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobFunctionalityHistory_ChangedByID",
+                table: "JobFunctionalityHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobFunctionalityHistory_FunctionalityID",
+                table: "JobFunctionalityHistory",
+                column: "FunctionalityID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobFunctionalityLink_FunctionalityID",
@@ -914,14 +1047,19 @@ namespace sloth.Infrastructure.Migrations
                 column: "ChangedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobPriorityHistory_NewPriorityID",
+                name: "IX_JobPriorityHistory_PriorityID",
                 table: "JobPriorityHistory",
-                column: "NewPriorityID");
+                column: "PriorityID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobPriorityHistory_PreviousPriorityID",
-                table: "JobPriorityHistory",
-                column: "PreviousPriorityID");
+                name: "IX_JobProductHistory_ChangedByID",
+                table: "JobProductHistory",
+                column: "ChangedByID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobProductHistory_ProductID",
+                table: "JobProductHistory",
+                column: "ProductID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobProductLink_ProductID",
@@ -934,14 +1072,9 @@ namespace sloth.Infrastructure.Migrations
                 column: "ChangedByID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobStatusHistory_NewStatusID",
+                name: "IX_JobStatusHistory_StatusID",
                 table: "JobStatusHistory",
-                column: "NewStatusID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobStatusHistory_PreviousStatusID",
-                table: "JobStatusHistory",
-                column: "PreviousStatusID");
+                column: "StatusID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OwnerStatusMap_StatusID",
@@ -1044,16 +1177,28 @@ namespace sloth.Infrastructure.Migrations
                 name: "JobAssignmentHistory");
 
             migrationBuilder.DropTable(
+                name: "JobClientHistory");
+
+            migrationBuilder.DropTable(
                 name: "JobComment");
 
             migrationBuilder.DropTable(
+                name: "JobDetailHistory");
+
+            migrationBuilder.DropTable(
                 name: "JobFile");
+
+            migrationBuilder.DropTable(
+                name: "JobFunctionalityHistory");
 
             migrationBuilder.DropTable(
                 name: "JobFunctionalityLink");
 
             migrationBuilder.DropTable(
                 name: "JobPriorityHistory");
+
+            migrationBuilder.DropTable(
+                name: "JobProductHistory");
 
             migrationBuilder.DropTable(
                 name: "JobProductLink");

@@ -98,10 +98,10 @@ public class GetPriorityHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
-    public int? NewPriorityID { get; set; } = null;
-    public string? NewPriorityTag { get; set; } = null;
-    public string? NewPriorityTagColor { get; set; } = null;
-    public string? NewPriorityDescription { get; set; } = null;
+    public int? PriorityID { get; set; } = null;
+    public string? PriorityTag { get; set; } = null;
+    public string? PriorityTagColor { get; set; } = null;
+    public string? PriorityDescription { get; set; } = null;
 }
 public class GetProductBugItem
 {
@@ -123,10 +123,10 @@ public class GetStatusHistoryBugItem
     public string ChangedBy { get; set; } = default!;
     public string ChangedByEmail { get; set; } = default!;
     public string ChangedByFullName { get; set; } = default!;
-    public int? NewStatusID { get; set; } = null;
-    public string? NewStatusTag { get; set; } = null;
-    public string? NewStatusTagColor { get; set; } = null;
-    public string? NewStatusDescription { get; set; } = null;
+    public int? StatusID { get; set; } = null;
+    public string? StatusTag { get; set; } = null;
+    public string? StatusTagColor { get; set; } = null;
+    public string? StatusDescription { get; set; } = null;
 }
 public class GetTeamBugItem
 {

@@ -9,10 +9,11 @@ import { BehaviorSubject } from 'rxjs';
 import { JobService, ListBugItem } from 'sloth-http';
 import { PaginatorComponent, PaginatorEvent, RegularLinkComponent, TagComponent } from 'sloth-ui';
 import { StringService } from 'sloth-utilities';
+import { NavigationHeaderComponent } from '../../../core/components/main-page/navigation-header/navigation-header.component';
 
 @Component({
     selector: 'app-bugs',
-    imports: [MatTableModule, MatButtonModule, MatMenuModule, MatPaginatorModule, DatePipe, TagComponent, RegularLinkComponent, PaginatorComponent],
+    imports: [MatTableModule, MatButtonModule, MatMenuModule, MatPaginatorModule, DatePipe, TagComponent, RegularLinkComponent, PaginatorComponent, NavigationHeaderComponent],
     templateUrl: './bugs.component.html',
     styleUrl: './bugs.component.scss'
 })
@@ -47,6 +48,8 @@ export class BugsComponent implements OnInit {
             .subscribe(d=> {
                 this.dataSource.data = d;
         });
+
+        
     }
 
     async ngOnInit(): Promise<void> {

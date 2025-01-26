@@ -1,15 +1,14 @@
 ﻿namespace sloth.Domain.Entities;
-public class JobPriorityHistory
+public class JobDetailHistory
 {
     public int JobID { get; set; }
-    public int? PriorityID { get; set; } = null;
+    public string Field { get; set; } = default!;
+    public string Value { get; set; } = default!; 
     public Guid ChangedByID { get; set; }
     public DateTime ChangedDate { get; set; }
-    public string Action { get; set; } = default!;
 
     /// <summary>
     /// External properties
     /// </summary>
     public User ChangedBy { get; set; } = default!;
-    public Priority? Priority { get; set; } = null;
 }

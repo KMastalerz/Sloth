@@ -2,10 +2,10 @@
 public class JobStatusHistory
 {
     public int JobID { get; set; }
-    public Guid ChangedByID { get; set; }
-    public int? PreviousStatusID { get; set; } = null;
-    public int? NewStatusID { get; set; } = null;
+    public int? StatusID { get; set; } = null;
     public DateTime ChangedDate { get; set; }
+    public Guid ChangedByID { get; set; }
+    public string Action { get; set; } = default!;
 
 
     /// <summary>
@@ -13,6 +13,5 @@ public class JobStatusHistory
     /// </summary>
 
     public User ChangedBy { get; set; } = default!;
-    public Status? PreviousStatus { get; set; } = null;
-    public Status? NewStatus { get; set; } = null;
+    public Status? Status { get; set; } = null;
 }
