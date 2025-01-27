@@ -63,5 +63,22 @@ mat-tooltip-component .mdc-tooltip__surface {
 .mat-mdc-menu-content {
   padding: 0 !important;
 }
+
+.cdk-overlay-pane {
+  z-index: 500 !important;
+}
+
+:root {
+  --sl-error-background: light-dark(#b41c2b, #581919);
+  --sl-error-on-background: light-dark(#ffffff, #ffffff);
+  --sl-warning-background: light-dark(#f0ad4e, #71532a);
+  --sl-warning-on-background: light-dark(#000000, #ffffff);
+  --sl-success-background: light-dark(#009f42, #184d25);
+  --sl-success-on-background: light-dark(#000000, #ffffff);
+  --sl-info-background: light-dark(#388cfa, #284475);
+  --sl-info-on-background: light-dark(#000000, #ffffff);
+}
+
 @import "resets";
+@import "controls";
 @import "display";

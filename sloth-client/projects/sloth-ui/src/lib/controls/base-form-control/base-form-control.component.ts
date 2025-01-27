@@ -39,6 +39,7 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
 
   // Basic sample logic for canEdit
   isEditMode = computed<Boolean>(() => this.formMode() === FormMode.Edit);
+  isRequired = computed<boolean>(()=> true);
 
   private valueChangeSub: Subscription | undefined = undefined;
   private onChangeFn: (value: any) => void = () => {};
@@ -103,10 +104,5 @@ export class BaseFormControlComponent implements ControlValueAccessor, OnInit, O
       if(isDisabled !== ctrl.disabled)
         isDisabled ? ctrl.disable() : ctrl.enable();
     }
-  }
-
-  onValueChange(newValue: any): void {
-    this.value.set(newValue);
-    this.onChangeFn(newValue);
   }
 }

@@ -4,7 +4,7 @@
 
 /* Controls */
 export * from './lib/controls/button/button/button.component';
-export * from './lib/controls/input/date-picker/date-picker.component';
+export * from './lib/controls/input/datetime-picker/datetime-picker.component';
 export * from './lib/controls/input/file-input/file-input.component';
 export * from './lib/controls/input/markup-input/markup-input.component';
 export * from './lib/controls/input/password-input/password-input.component';

@@ -41,10 +41,8 @@
                                 [multiple]="true" 
                                 label="Functionalities"
                                 formControlName="functionalities"/>
-                <sl-date-picker label="Raised date"
-                                formControlName="raisedDate"/>
-                <sl-time-picker label="Raised time"
-                                formControlName="raisedDate"/>
+                <sl-datetime-picker label="Raised date"
+                                    formControlName="raisedDate"/>
             </mat-step>
             <mat-step [stepControl]="jobForm">
                 <ng-template matStepLabel>Attach file</ng-template>

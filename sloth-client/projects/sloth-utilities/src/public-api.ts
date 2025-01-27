@@ -3,8 +3,9 @@
  */
 
 // services
-export * from './lib/cache/cache.service';
 export * from './lib/auth/auth-state.service';
+export * from './lib/cache/cache.service';
+export * from './lib/date/date.service';
 export * from './lib/generic/array/array.service';
 export * from './lib/generic/form-data/form-data.service';
 export * from './lib/generic/form-group/form-group.service';
