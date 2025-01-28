@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline"
+                [matTooltipDisabled]="hideTooltip()"
+                [matTooltip]="tooltip()"
+                [matTooltipPosition]="tooltipPosition()">
+    @if( label() ) {
+        <mat-label>{{ label() }}</mat-label>
+    }
+    <input  matInput 
+            [matDatepicker]="picker"
+            [(ngModel)]="value"
+            [name]="name()"
+            [placeholder]="placeholder()"/>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
