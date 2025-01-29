@@ -1,46 +1,54 @@
-import { AfterViewInit, Component, computed, ElementRef, forwardRef, inject, input, OnInit, signal, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, forwardRef, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 import { v4 as uuidv4 } from 'uuid';
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
 import { BaseFormControlComponent } from '../../base-form-control/base-form-control.component';
-import { MarkupSelectionDetails } from '../../../models/markup.model';
+import { MarkdownSelectionDetails } from '../../../models/markdown.model';
+import { MarkdownService } from 'sloth-utilities';
 
 @Component({
-  selector: 'sl-markup-input',
-  imports: [ReactiveFormsModule, MatInputModule, FormsModule, MatTooltipModule],
-  templateUrl: './markup-input.component.html',
-  styleUrl: './markup-input.component.scss',
+  selector: 'sl-markdown-input',
+  imports: [ReactiveFormsModule, MatInputModule, FormsModule, MatTooltipModule, MatButtonModule],
+  templateUrl: './markdown-input.component.html',
+  styleUrl: './markdown-input.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MarkupInputComponent),
+      useExisting: forwardRef(() => MarkdownInputComponent),
       multi: true
     }
   ],
 })
-export class MarkupInputComponent extends BaseFormControlComponent implements OnInit, AfterViewInit {
-  // markupInnerInput = viewChild('markup', { read: ElementRef });
-  // markupInput = computed(()=> this.markupInnerInput()!.nativeElement)
-  private readonly sanitizer = inject(DomSanitizer);
+export class MarkdownInputComponent extends BaseFormControlComponent implements OnInit, AfterViewInit {
+  private readonly markdownService = inject(MarkdownService);
+  markdownInput = viewChild('markdown', { read: ElementRef<HTMLTextAreaElement> });
+  
   name = input<string>(this.formControlName() ?? uuidv4());
-  sanitizedValue = signal<SafeHtml>('');
   placeholder = input<string>('');
   label = input<string | null>(null);
   tooltip = input<string | null>(null);
   tooltipPosition = input<'above' | 'below' | 'left' | 'right'>('below');
+  showLabelOnReadModel = input<boolean>(false);
+  isFullView = input<boolean>(false);
+
+  sanitizedValue = signal<SafeHtml>('');
+  isPreview = signal<boolean>(false);
   hideTooltip = computed(() => !this.tooltip());
+  modeSelectionText = computed(() => this.isPreview() ? this.prompts().markdown : this.prompts().preview);
   valueHistory: string[] = [];
 
-  @ViewChild('markup', { read: ElementRef }) markupInput!: ElementRef<HTMLTextAreaElement>;
-
-  override ngOnInit(): void {
+  override async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    this.sanitizeValue();
+    this.sanitizedValue.set(await this.markdownService.sanitizeValue(this.value()));
+
+    this.value.subscribe(async (value)=> {
+      this.sanitizedValue.set(await this.markdownService.sanitizeValue(value));
+    })
+   
   }
 
   ngAfterViewInit(): void {
@@ -77,8 +85,13 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     bulletList: 'Bullet list',
     addFile: 'Add file',
     addImage: 'Add image',
-    strikethrough: 'Strikethrough'
+    strikethrough: 'Strikethrough',
+    markdown: 'Markdown'
   });
+
+  toggleMode(): void {
+    this.isPreview.set(!this.isPreview());
+  }
 
   toggleHeader(): void {
       const details = this.getSelectionDetails();
@@ -128,9 +141,9 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     this.toggleTwoSidedMarker('~~', details);
   }
 
-  private getSelectionDetails(): MarkupSelectionDetails {
-    const startIndex = this.markupInput.nativeElement.selectionStart;
-    const endIndex = this.markupInput.nativeElement.selectionEnd;
+  private getSelectionDetails(): MarkdownSelectionDetails {
+    const startIndex = this.markdownInput()!.nativeElement.selectionStart;
+    const endIndex = this.markdownInput()!.nativeElement.selectionEnd;
     const selectionText = this.value().substring(startIndex, endIndex);
     const beforeText = this.value().substring(0, startIndex);
     const afterText = this.value().substring(endIndex, this.value().length);
@@ -168,7 +181,7 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     const newEndIndex = endIndex + indexShift;
 
     setTimeout(() => {
-      this.markupInput.nativeElement.setSelectionRange(newStartIndex, newEndIndex);
+      this.markdownInput()!.nativeElement.setSelectionRange(newStartIndex, newEndIndex);
     },1);
   }
 
@@ -179,7 +192,7 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     return startsWithMarker && endsWithMarker;
   }
 
-  private toggleTwoSidedMarker (marker: string, details: MarkupSelectionDetails) {
+  private toggleTwoSidedMarker (marker: string, details: MarkdownSelectionDetails) {
     let { startIndex, endIndex, selectionText, beforeText, afterText } = details;
     let originalStartIndex = startIndex;
     let originalEndIndex = endIndex;
@@ -294,41 +307,8 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     this.onValueChange(value);
   }
 
-  private async sanitizeValue(): Promise<void> {
-    if(!this.value()) {
-      this.sanitizedValue.set('');
-      return;
-    }
-
-    const renderer = new marked.Renderer();
-
-    renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
-      const escapedCode = DOMPurify.sanitize(text.trim());
-      
-      return `
-        <div class="custom-code-block">
-          <div class="copy-button">
-            <button data-code="${escapedCode}">
-              <span class="icon-span">content_copy</span>
-            </button>
-          </div>
-          <pre><code class="language-${lang ?? 'plaintext'}">${escapedCode}</code></pre>
-        </div>
-      `;
-    };
-
-    marked.setOptions({ 
-      renderer,  
-      breaks: true });
-
-    const rawHtml = await marked(this.value());
-    const cleanHtml = DOMPurify.sanitize(rawHtml);
-    this.sanitizedValue.set(this.sanitizer.bypassSecurityTrustHtml(cleanHtml));
-  }
-
-  onValueChange(value: string) {
+  onValueChange(value: string) : void {
     this.valueHistory.push(value);
-    this.sanitizeValue();
   }
 
   copyCodeToClipboard(button: Element): void {

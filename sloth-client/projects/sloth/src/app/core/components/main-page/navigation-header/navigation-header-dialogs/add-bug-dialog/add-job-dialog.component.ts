@@ -4,10 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ListSelectComponent, MarkupInputComponent, TextInputComponent, 
-  ToggleListComponent, UploadInputComponent,
-  TimePickerComponent,
-  DatePickerComponent} from 'sloth-ui';
+import { ListSelectComponent, MarkdownInputComponent, TextInputComponent, 
+  ToggleListComponent, UploadInputComponent, TimePickerComponent, DatePickerComponent} from 'sloth-ui';
 import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CreateJobParam } from 'sloth-http';
 import { JobDataCacheService } from '../../../../../../services/job-data-cache/job-data-cache.service';
 
@@ -15,7 +13,7 @@ import { JobDataCacheService } from '../../../../../../services/job-data-cache/j
   selector: 'app-add-bug-dialog',
   imports: [MatDialogContent, MatDialogActions, MatButtonModule,
     ReactiveFormsModule, MatDialogTitle, ListSelectComponent,
-    MarkupInputComponent, ToggleListComponent, TextInputComponent,
+    MarkdownInputComponent, ToggleListComponent, TextInputComponent,
     UploadInputComponent, MatStepperModule, DatePickerComponent,
     TimePickerComponent],
   templateUrl: './add-job-dialog.component.html',

@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { CacheService } from '../cache/cache.service';
-import { CookieKeys } from '../cache/cache.model';
-import { User } from '../shared-models/auth/user.item';
-import { AccessTokenResponse } from '../shared-models/auth/access-token-response.item';
+import { CookieKeys } from '../../models/cache.model';
+import { User } from '../../shared-models/auth/user.item';
+import { AccessTokenResponse } from '../../shared-models/auth/access-token-response.item';
 
 @Injectable({
   providedIn: 'root'

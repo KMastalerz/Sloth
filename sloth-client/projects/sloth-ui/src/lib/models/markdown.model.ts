@@ -1,4 +1,4 @@
-export interface MarkupSelectionDetails {
+export interface MarkdownSelectionDetails {
     startIndex: number;
     endIndex: number;
     selectionText: string,
@@ -10,7 +10,7 @@ export interface MarkupSelectionDetails {
 }
 
   
-export enum MarkupMarker {
+export enum MarkdownMarker {
     Quote,
     Code,
     Bold,

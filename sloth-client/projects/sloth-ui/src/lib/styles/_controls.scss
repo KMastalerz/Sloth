@@ -1,0 +1,11 @@
+.control-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.control-label {
+    margin-left: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

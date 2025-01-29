@@ -1,0 +1,85 @@
+<div class="control-container">
+
+        @if(isEditMode()) {
+                @if( label() ) {
+                        <label class="control-label">{{ label() }}</label>
+                }
+                <div    class="markdown-container"
+                        [matTooltipDisabled]="hideTooltip()"
+                        [matTooltip]="tooltip()"
+                        [matTooltipPosition]="tooltipPosition()">
+                        <div class="markdown-helper-panel">
+                                <button class="markdown-type"       
+                                        [matTooltip]="prompts().header"
+                                        matTooltipPosition="below"
+                                        (click)="toggleMode()">{{modeSelectionText()}}</button>
+                                <div class="markdown-helper-buttons">
+                                        <button class="markdown-helper"    
+                                                [matTooltip]="prompts().header"
+                                                matTooltipPosition="below"
+                                                (click)="toggleHeader()"><span>format_h1</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().bold"
+                                                matTooltipPosition="below"
+                                                (click)="toggleBold()"><span>format_bold</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().italic"
+                                                matTooltipPosition="below"
+                                                (click)="toggleItalic()"><span>format_italic</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().strikethrough"
+                                                matTooltipPosition="below"
+                                                (click)="toggleStrikethrough()"><span>strikethrough_s</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().quote"
+                                                matTooltipPosition="below"><span>format_quote</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().codeBlock"
+                                                matTooltipPosition="below"
+                                                (click)="toggleCodeBlock()"><span>code</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().url"
+                                                matTooltipPosition="below"><span class="transform-negative-45">link</span></button>
+                                        <!-- <hr> -->
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().numberedList"
+                                                matTooltipPosition="below"><span>format_list_numbered</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().bulletList"
+                                                matTooltipPosition="below"><span>format_list_bulleted</span></button>
+                                        <!-- <hr> -->
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().addFile"
+                                                matTooltipPosition="below"><span class="transform-45">attach_file</span></button>
+                                        <button class="markdown-helper"
+                                                [matTooltip]="prompts().addImage"
+                                                matTooltipPosition="below"><span>add_photo_alternate</span></button>
+                                </div>
+                        </div>
+                        @if(!isPreview()) {
+                                <textarea matInput 
+                                        #markdown
+                                        [(ngModel)]="value"
+                                        (ngModelChange)="onValueChange($event)"
+                                        [name]="name()"
+                                        [placeholder]="placeholder()">
+                                </textarea>
+                        }
+                        @else {
+                                <div class="markdown-preview markdown-body"
+                                [innerHTML]="sanitizedValue()"></div>
+                        }
+        
+                </div>
+        }
+        @else {
+                @if( label() && showLabelOnReadModel()) {
+                        <label class="control-label">{{ label() }}</label>
+                }        
+                <div>
+                <div class="markdown-body" [class]="{
+                        'markdown-small': !isFullView()
+                        }" [innerHTML]="sanitizedValue()"></div>
+                </div>
+        }
+</div>

@@ -1,9 +1,8 @@
 <div class="comment-container">
-    <p 
-    class="comment-text" 
-    [ngClass]="{
+    <div class="markdown-body comment" [class]="{
         'comment-author': isAuthor()
-    }">{{ commentText() }}</p>
+    }"
+         [innerHTML]="sanitizedValue()"></div>
     <div 
     class="comment-details"
     [ngClass]="{

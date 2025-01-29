@@ -1,6 +1,7 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, inject, input, model, OnInit, signal } from '@angular/core';
-import { AuthStateService, User } from 'sloth-utilities';
+import { SafeHtml } from '@angular/platform-browser';
+import { AuthStateService, MarkdownService, User } from 'sloth-utilities';
 
 @Component({
   selector: 'sl-comment',
@@ -10,6 +11,7 @@ import { AuthStateService, User } from 'sloth-utilities';
 })
 export class CommentComponent implements OnInit {
   private readonly authStateService = inject(AuthStateService);
+  private readonly markdownService = inject(MarkdownService);
   private user = signal<User | undefined | null>(undefined)
   protected isAuthor = computed<boolean>(() => {
     if(!this.user()) return false;
@@ -29,9 +31,15 @@ export class CommentComponent implements OnInit {
   commentedByKey = input<string | null | undefined>(undefined);
   commentedByUserNameKey = input<string | null | undefined>(undefined);
 
-  ngOnInit(): void {
+  sanitizedValue = signal<SafeHtml>('');
+  
+  async ngOnInit(): Promise<void> {
     this.user.set(this.authStateService.user);
     
+    this.commentText.subscribe(async (value)=> {
+      this.sanitizedValue.set(await this.markdownService.sanitizeValue(value));
+    })
+
     if(this.comment()) {
       if(this.commentTextKey()) {
         this.commentText.set(this.comment()[this.commentTextKey()!])
@@ -49,5 +57,7 @@ export class CommentComponent implements OnInit {
         this.commentID.set(this.comment()[this.commentIDKey()!])
       }
     }
+
+    
   }
 }

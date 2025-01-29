@@ -39,13 +39,13 @@
                                     label="Header"
                                     [formMode]="formMode()"/>
                 }
-                <sl-markup-input 
+                <sl-markdown-input 
                     name="description"
                     label="Description"
                     formControlName="description"
                     [formMode]="formMode()"/>
                 <section>
-                    <sl-markup-input 
+                    <sl-markdown-input 
                         (keyDownEnter)="onAddComment()"
                         label="Comment"
                         [(value)]="comment"/>

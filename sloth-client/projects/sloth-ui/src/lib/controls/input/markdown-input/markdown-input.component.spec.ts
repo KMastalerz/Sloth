@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarkupInputComponent } from './markup-input.component';
+import { MarkdownInputComponent } from './markdown-input.component';
 
-describe('MarkupInputComponent', () => {
-  let component: MarkupInputComponent;
-  let fixture: ComponentFixture<MarkupInputComponent>;
+describe('MarkdownInputComponent', () => {
+  let component: MarkdownInputComponent;
+  let fixture: ComponentFixture<MarkdownInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MarkupInputComponent]
+      imports: [MarkdownInputComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MarkupInputComponent);
+    fixture = TestBed.createComponent(MarkdownInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

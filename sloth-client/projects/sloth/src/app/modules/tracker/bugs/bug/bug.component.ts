@@ -6,7 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CacheClientItem, CacheFunctionalityItem, CachePriorityItem, CacheProductItem, CacheStatusItem, GetAssignmentBugItem, GetBugItem, GetCommentBugItem, GetFunctionalityBugItem, GetProductBugItem, JobService, SaveBugParam } from 'sloth-http';
 import { ButtonComponent, CommentListComponent, FormComponent, FormMode, ListSelectComponent, 
-    MarkupInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, TagComponent, TagListComponent, ToggleListComponent,
+    MarkdownInputComponent, SectionComponent, SideFormComponent, SideSectionComponent, TagComponent, TagListComponent, ToggleListComponent,
     TextInputComponent} from 'sloth-ui';
 import { ArrayService, AuthStateService, FormGroupService } from 'sloth-utilities';
 import { JobDataCacheService } from '../../../../services/job-data-cache/job-data-cache.service';
@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
     selector: 'app-bug',
     imports: [FormComponent, SideFormComponent, SectionComponent,
-    MarkupInputComponent, SideSectionComponent, TagComponent,
+    MarkdownInputComponent, SideSectionComponent, TagComponent,
     ButtonComponent, MatDivider, ReactiveFormsModule,
     TagListComponent, CommentListComponent, TextInputComponent, ListSelectComponent, ToggleListComponent],
     templateUrl: './bug.component.html',

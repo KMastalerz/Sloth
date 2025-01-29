@@ -1,35 +1,30 @@
 .comment-container {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
     height: fit-content;
+    gap: 0.2rem;
 }
 
 .comment-details {
     display: flex;
     gap: 0.4rem;
     font-size: 0.7rem;
-    opacity: 0.8;
+    color: var(--mat-sys-primary)
 }
 
-.comment-text {
-    white-space: pre;
-    background-color: #d7e3ff;
-    color: #121316;
-    padding: 0.6rem;
-    width: fit-content;
-    border-radius: 1.6rem;
-    font-size: small;
-    font-weight: 500;
+.comment {
+    background-color: light-dark(#E8E8E8, #121212);
+    color: light-dark(#1A1A1A, #BABABA);
+    border-radius: 0.8rem;
+    padding: 1.2rem;
     max-width: 70%;
 }
 
 .comment-author {
-    background-color: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
+    background-color: light-dark(#EBF0F8, #1a253b);
+    color: light-dark(#1A1A1A, #E8E8E8);
     align-self: flex-end;
 }
-
 
 .details-author {
     align-self: flex-end;
