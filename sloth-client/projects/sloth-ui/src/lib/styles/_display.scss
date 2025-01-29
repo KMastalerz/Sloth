@@ -19,3 +19,17 @@
     width: 18rem;
     gap: 0.5rem;
 }
+
+tt,
+code, 
+samp {
+    font-family: "Roboto Mono", serif; 
+    font-optical-sizing: auto;
+}
+
+.icon-span {
+    font-family: "Material Symbols Outlined";
+    font-size: 1.4rem;
+    width: 1.4rem;
+    height: 1.4rem;
+}

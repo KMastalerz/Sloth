@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, forwardRef, inject, input, OnInit, signal, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, forwardRef, inject, input, OnInit, signal, ViewChild, viewChild } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -22,7 +22,7 @@ import { MarkupSelectionDetails } from '../../../models/markup.model';
     }
   ],
 })
-export class MarkupInputComponent extends BaseFormControlComponent implements OnInit {
+export class MarkupInputComponent extends BaseFormControlComponent implements OnInit, AfterViewInit {
   // markupInnerInput = viewChild('markup', { read: ElementRef });
   // markupInput = computed(()=> this.markupInnerInput()!.nativeElement)
   private readonly sanitizer = inject(DomSanitizer);
@@ -41,6 +41,26 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     super.ngOnInit();
 
     this.sanitizeValue();
+  }
+
+  ngAfterViewInit(): void {
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+
+      const button = target.closest('.copy-button button');
+      if (button) {
+        this.copyCodeToClipboard(button);
+        return; 
+      }
+  
+      if (target.tagName === 'A' && target.hasAttribute('href')) {
+        const href = target.getAttribute('href');
+        if (href && !href.startsWith('/')) {
+          event.preventDefault(); 
+          window.open(href, '_blank');
+        }
+      }
+    });
   }
 
   public prompts = signal<any>({
@@ -275,15 +295,34 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
   }
 
   private async sanitizeValue(): Promise<void> {
-    console.log('sanitizing');
-
-    let rawHtml = '';
-    if(this.value()) {
-      rawHtml = await marked(this.value());
+    if(!this.value()) {
+      this.sanitizedValue.set('');
+      return;
     }
 
-    const cleanHtml = DOMPurify.sanitize(rawHtml);
+    const renderer = new marked.Renderer();
 
+    renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
+      const escapedCode = DOMPurify.sanitize(text.trim());
+      
+      return `
+        <div class="custom-code-block">
+          <div class="copy-button">
+            <button data-code="${escapedCode}">
+              <span class="icon-span">content_copy</span>
+            </button>
+          </div>
+          <pre><code class="language-${lang ?? 'plaintext'}">${escapedCode}</code></pre>
+        </div>
+      `;
+    };
+
+    marked.setOptions({ 
+      renderer,  
+      breaks: true });
+
+    const rawHtml = await marked(this.value());
+    const cleanHtml = DOMPurify.sanitize(rawHtml);
     this.sanitizedValue.set(this.sanitizer.bypassSecurityTrustHtml(cleanHtml));
   }
 
@@ -292,5 +331,20 @@ export class MarkupInputComponent extends BaseFormControlComponent implements On
     this.sanitizeValue();
   }
 
+  copyCodeToClipboard(button: Element): void {
+    const codeBlock = button.closest('.custom-code-block')?.querySelector('code');
+  
+    if (codeBlock) {
+      const textToCopy = codeBlock.textContent || '';
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Change icon to success check mark
+        button.innerHTML = "<span class='icon-span'>done</span>";
+        // Revert back after 2 seconds
+        setTimeout(() => {
+          button.innerHTML = "<span class='icon-span'>content_copy</span>";
+        }, 2000);
+      });
+    }
+  }
 }
 
